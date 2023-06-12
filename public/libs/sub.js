@@ -1,0 +1,82 @@
+$(function(){
+    gallerySlide();
+    lnbFn();
+    imgSwitch();
+    subTab();
+    productOthers();
+    dropDown();
+    dealBox();
+});
+
+function gallerySlide(){
+    var gallerySlide = new Swiper('.gallery-mainSlide .swiper', {
+        slidesPerView: 2,
+        spaceBetween:14,
+        navigation: {
+            nextEl: '.gallery-mainSlide .swiper-button-next',
+            prevEl: '.gallery-mainSlide .swiper-button-prev',
+        },
+    })
+}
+
+function lnbFn(){
+    $('.lnb-tit').click(function(){
+        $(this).toggleClass('is-close');
+        if($(this).hasClass('is-close')){
+            $(this).next().slideDown();
+        }else{
+            $(this).next().slideUp();
+        }
+    })
+    $('.lnb-cont--artist .lnb-cont__list button').on('click',function(){
+        $('.lnb-cont--artist .lnb-cont__list button').removeClass('is-active');
+        $(this).addClass('is-active');
+    })
+}
+
+function imgSwitch(){
+    $('.imgGroup-detail__favor').click(function() {
+        $(this).toggleClass('is-click');
+    });
+}
+
+function subTab(){
+    $('.tab-link button').click(function(){
+        const $this = $(this),
+        $dataId = $this.data('id'),
+        $contId = $('#' + $dataId);
+        $('.tab-link button').removeClass('is-active');
+        $('.tab-purchace .tab-cont').removeClass('is-open');
+        $(this).addClass('is-active');
+        $contId.addClass('is-open');
+    })
+}
+
+function productOthers(){
+    var othersSlide = new Swiper('.product-others .swiper', {
+        slidesPerView : 'auto',
+        spaceBetween:43,
+        navigation:{
+            nextEl: '.product-others .swiper-button-next',
+            prevEl: '.product-others .swiper-button-prev',
+        }
+    });
+}
+
+function dropDown(){
+    $('.faq-item').click(function(){
+        $(this).next().slideToggle();
+    });
+    $('.dropDown-tit button').click(function(){
+        var $this = $(this),
+        dropDownTit = $this.parent();
+        dropDownTit.toggleClass('is-click').next().slideToggle();
+    });
+}
+
+function dealBox(){
+    $('.deal-box .form-row').click(function(){
+        $('.deal-box .form-row').removeClass('is-click');
+        $(this).addClass('is-click');
+    });
+}

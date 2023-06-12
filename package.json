@@ -1,0 +1,30 @@
+{
+  "name": "art_meteor",
+  "private": true,
+  "scripts": {
+    "start": "meteor --port 16005",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.22.3",
+    "caniuse-lite": "^1.0.30001491",
+    "jquery": "^3.6.0",
+    "meteor-node-stubs": "^1.2.1"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.js",
+      "server": "server/server.js"
+    },
+    "testModule": "tests/main.js"
+  },
+  "packages": {
+    "mongo": {
+      "options": {
+        "tls": true
+      }
+    }
+  }
+}

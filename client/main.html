@@ -1,0 +1,30 @@
+<head>
+  <title>Influx</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+  />
+  <script type="text/javascript" src="/libs/jquery/jquery-3.6.1.min.js"></script>
+  <script type="text/javascript" src="/libs/swiper.min.js"></script>
+  <script type="text/javascript" src="/libs/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/libs/tweenmax.min.js"></script>
+  <link rel="stylesheet" href="/css/lib/swiper.min.css">
+  <link rel="stylesheet" href="/css/ux-common.css">
+  <link rel="stylesheet" href="/css/more.css">
+</head>
+<body>
+  <script type="text/javascript" src="/libs/common.js"></script>
+  {{#if subFlag}}
+    <link rel="stylesheet" href="/css/main.css">
+    <script type="text/javascript" src="/libs/home.js"></script>
+  {{else}}
+    <link rel="stylesheet" href="/css/sub.css">
+    <script type="text/javascript" src="/libs/sub.js"></script>
+  {{/if}}
+  <div class="wrap">
+    <header class="header">
+      {{> header pageInfo}}
+    </header>
+    <!-- {{> Template.dynamic template=changePage}} -->
+  </div>
+</body>

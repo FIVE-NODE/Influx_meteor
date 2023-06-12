@@ -1,0 +1,39 @@
+@charset 'UTF-8';
+
+.table{
+    &-wrap{
+        table{
+            table-layout: fixed;
+        }
+    }
+    &-basic{
+        tr{
+            &:last-child{
+                td{
+                    border-bottom:1px solid #585858;
+                }
+            }
+        }
+        th{
+            padding:1rem 0;
+            font-size:1.4rem;
+            font-weight:500;
+            background-color:#E2E2E2;
+            border-top:1px solid #585858;
+            border-left:1px solid #585858;
+            &:last-child{
+                border-right:1px solid #585858;
+            }
+        }
+        td{
+            padding:1.5rem 0;
+            font-size:1.4rem;
+            font-weight:500;
+            border-top:1px solid #585858;
+            border-left:1px solid #585858;
+            &:last-child{
+                border-right:1px solid #585858;
+            }
+        }
+    }
+}

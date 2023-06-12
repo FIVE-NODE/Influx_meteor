@@ -1,0 +1,48 @@
+{
+    "nicNmChgMM": "",
+    "pwChgDt": "",
+    "mob": "",
+    "ntcn": [
+        {
+            "ntDt": "",
+            "ntMsg": "",
+            "ntYn": ""
+        }
+    ],
+    "addr2": "",
+    "recptnYn": "",
+    "addr1": "",
+    "memYn": "",
+    "secsnTp": "",
+    "deliv": [
+        {
+            "recptnNm": "",
+            "delivNm": "",
+            "mob": "",
+            "phone": "",
+            "zipCd": "",
+            "addr1": "",
+            "addr2": "",
+            "defDelivYn": "",
+            "delivReq": "",
+            "delivReqEtc": ""
+        }
+    ],
+    "zipCd": "",
+    "good": [
+        ""
+    ],
+    "cart": [
+        ""
+    ],
+    "nicNmChgCnt": 0,
+    "secsnDt": "",
+    "pfImg": "",
+    "secsnRsn": "",
+    "nicNm": "",
+    "ID": "",
+    "pwd": "",
+    "email": "",
+    "nm": "",
+    "cid": ""
+}

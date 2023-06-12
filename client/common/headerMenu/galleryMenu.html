@@ -1,0 +1,116 @@
+<template name="galleryMenu">
+    <article class="slideMenu-cont--gallery d-flex menu-position" id="clickToGallery" style="margin-top:10px;">
+        <div class="artwork-tit col-2">
+            <p class="artwork-tit__p">갤 러 리</p>
+        </div>
+        <div class="artwork-wrap col-10 d-flex">
+            <div class="artwork-group col-7 justify-around">
+                <div class="artwork-list col-6 ml-auto artwork-list--area">
+                    <p class="artwork-list__tit">지역별</p>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__area01" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__area01" class="form-check__label">서 울 </label>
+                        </div>
+                    </div>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__area02" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__area02" class="form-check__label">광주</label>
+                        </div>
+                    </div>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__area03" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__area03" class="form-check__label">인천</label>
+                        </div>
+                    </div>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__area04" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__area04" class="form-check__label">부산</label>
+                        </div>
+                    </div>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__area05" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__area05" class="form-check__label">대전.세종</label>
+                        </div>
+                    </div>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__area06" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__area06" class="form-check__label">제주</label>
+                        </div>
+                    </div>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__area07" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__area07" class="form-check__label">대구</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="artwork-list col-3 ml-auto">
+                    <p class="artwork-list__tit">전시회 및 이벤트</p>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__event01" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__event01" class="form-check__label">원 화</label>
+                        </div>
+                    </div>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__event02" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__event02" class="form-check__label">디지털 아트</label>
+                        </div>
+                    </div>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__event03" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__event03" class="form-check__label">카툰 / 일러스트</label>
+                        </div>
+                    </div>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__event04" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__event04" class="form-check__label">사 진</label>
+                        </div>
+                    </div>
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input type="checkbox" name="chk" class="form-check__input" id="check-gallery__event05" />
+                            <span class="form-check__span"></span>
+                            <label for="check-gallery__event05" class="form-check__label">A.I</label>
+                        </div>
+                    </div>
+                </div>
+                <p class="artwork-caution color--sea">*원하는 조건 선택 후 (가격외 복수 선택 가능)  검색 버튼  클릭해 주세요</p>
+            </div>
+            <div class="artwork-submit col-5">
+                <div class="form-sch">
+                    <div class="form-input">
+                        <input type="text" class="form-sch__input" placeholder="갤러리 이름 입력" />
+                    </div>
+                    <button type="button" class="slideMenu-sch" title="slidemenu 검색">
+                        <img src="/image/common/icon/icon-search.png" alt="">
+                    </button>
+                </div>
+                <button name="allCancel" type="button" class="check-reset" title="전체선택 해제">
+                    <img src="/image/common/icon/icon-reset.png" alt="">
+                    <span>전체선택 해제</span>
+                </button>
+            </div>
+        </div>
+    </article>
+</template>

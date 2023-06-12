@@ -1,0 +1,146 @@
+<template name="zFive">
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <h3 class="subTit">
+                    <span class="subTit__inner">
+                        FAQ
+                    </span>
+                </h3>
+                <div class="sub-content">
+                    <div class="sub-content__faq">
+                        <div class="faq-wrap">
+                            <div class="faq-list">
+                                <p class="faq-list__tit">자주 묻는 질문</p>
+                                <button type="button" class="faq-item">
+                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
+                                    회원탈퇴 어떻게 되나요?
+                                </button>
+                                <p class="faq-cont">faq 내용입니다.</p>
+                                <button type="button" class="faq-item">
+                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
+                                    회원탈퇴 어떻게 되나요?
+                                </button>
+                                <p class="faq-cont">faq 내용입니다.</p>
+                                <button type="button" class="faq-item">
+                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
+                                    회원탈퇴 어떻게 되나요?
+                                </button>
+                                <p class="faq-cont">faq 내용입니다.</p>
+                                <button type="button" class="faq-item">
+                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
+                                    회원탈퇴 어떻게 되나요?
+                                </button>
+                                <p class="faq-cont">faq 내용입니다.</p>
+                                <button type="button" class="faq-item">
+                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
+                                    회원탈퇴 어떻게 되나요?
+                                </button>
+                                <p class="faq-cont">faq 내용입니다.</p>
+                                <button type="button" class="faq-item">
+                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
+                                    회원탈퇴 어떻게 되나요?
+                                </button>
+                                <p class="faq-cont">faq 내용입니다.</p>
+                            </div>
+                            <div class="faq-askBox">
+                                <p>
+                                    궁금한 내용을 찾지 못하셨나요?<br/>
+                                    걱정하지 마시고 <span class="color-blue">이메일 문의하기</span> 로 문의해 주세요.
+                                </p>
+                                <button type="button" class="btn btn--white bg--none btn-inquire--email ml-auto popup" data-id="popup_askBy_email">이메일 문의하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /container -->
+
+    <!-- popup -->
+    <div class="popup-layout" id="popup_askBy_email">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:797px;height:800px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit">이메일 문의하기</p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont popup-cont--askEmail">
+                    <p class="mb-25 font-20 fontW-b">이메일 문의하기</p>
+                    <div class="ov-auto scrollbar" style="height:545px;">
+                        <div class="form-wrap">
+                            <div class="form-select form-select-custom width--336">
+                                <button type="button" class="custom-select__tit">문의 유형</button>
+                                <ul class="custom-select__options">
+                                    <li class="is-active"><button type="button">문의 유형</button></li>
+                                    <li><button type="button">쿠폰 / 포인트 문의</button></li>
+                                    <li><button type="button">주문 / 결제 관련 문의</button></li>
+                                    <li><button type="button">취소 / 환불 관련 문의</button></li>
+                                    <li><button type="button">배송 관련 문의</button></li>
+                                    <li><button type="button">주문 전 상품 정보 문의</button></li>
+                                    <li><button type="button">배송 관련 문의</button></li>
+                                    <li><button type="button">주문 전 상품 정보 문의</button></li>
+                                    <li><button type="button">서비스 개선 제안</button></li>
+                                    <li><button type="button">시스템 오류 제보</button></li>
+                                    <li><button type="button">불편신고</button></li>
+                                    <li><button type="button">기타문의</button></li>
+                                </ul>
+                            </div>
+                            <p class="my-10 pl-15 color--gray font-12 line-15">
+                                앱 개선 제안은 '서비스 개선 제안'으로 선택해 주세요.<br/>
+                                앱 장애 신고는 '시스템 오류 제보'로 선택해 주세요.
+                            </p>
+                            <div class="form-input">
+                                <input type="text" class="width--336" placeholder="이름" />
+                            </div>
+                            <div class="form-input mt-15">
+                                <input type="text" class="width--336" placeholder="이메일" />
+                            </div>
+                            <div class="form-input mt-15">
+                                <input type="text" class="width--336" placeholder="제목" />
+                            </div>
+                            <div class="form-textarea mt-15">
+                                <textarea name="" id="" placeholder="문의내용" style="height:189px;"></textarea>
+                                <p class="mt-10 color--gray font-12 ta-r">0자 / 최대 500자</p>
+                            </div>
+                            <div class="d-flex mt-15">
+                                <div class="form-input form-row form-file">
+                                    <input class="upload-name" />
+                                    <label for="file-upload" class="form-file__label">첨부파일</label> 
+                                    <input type="file" id="file-upload" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="privateInfo-admit">
+                            <div class="form-wrap">
+                                <div class="form-input form-check form-row">
+                                    <input type="checkbox" class="form-check__input" id="check-privateAdmit" />
+                                    <label for="check-privateAdmit" class="form-check__label">
+                                        개인정보 수집 및 이용동의
+                                        <span class="essential">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <ul class="lists lists-num mt-10">
+                                <li>수집하는 개인정보 항목 : 이름, 이메일</li>
+                                <li>수집 목적 : 문의자 확인, 문의에 대한 회신 등의 처리</li>
+                                <li>보유 기간 : 목적 달성 후 파기, 단, 관계법령에 따라 또는 회사 정책에 따른 정보보유사유가 발생하여 보존할 필요가 있는 경우에는 필요한 기간 동안 해당 정보를 보관합니다. 전자상거래 등에서의 소비자 보호에 관한 법률, 전자금융거래법, 통신비밀보호법 등 법령에서 일정기간 정보의 보관을 규정하는 경우, 이 기간 동안 법령의 규정에 따라 개인정보를 보관하며, 다른 목적으로는 절대 이용하지 않습니다. (개인정보처리방침 참고)</li>
+                                <li>귀하는 회사의 정보수집에 대해 동의하지 않거나 거부할 수 있습니다. 다만, 이때 원활한 문의 및 서비스 이용 등이 제한될 수 있습니다</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="btn-wrap d-flex justify-center mt-60">
+                        <button type="button" class="btn btn--white btn--medium">취소</button>
+                        <button type="button" class="btn btn--blue btn--medium ml-40">제출하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+</template>

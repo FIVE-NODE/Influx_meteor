@@ -1,0 +1,123 @@
+<template name="signUp">
+    <section class="section-seperate section-seperate--join bg--gray h-auto">
+        <div class="section-seperate__inner width--650 mx-auto bg--white">
+            <h1 class="section-seperate__logo">
+                <a href="">
+                    <img src="/image/common/img-logo-join.png" alt="">
+                </a>
+            </h1>
+            <h2 class="section-seperate__tit ta-c">회원가입</h2>
+            <div class="width--332">
+                <p class="mt-40 font-12 color--gray fontW-b ta-c">SNS계정으로 간편하게 회원가입</p>
+                <div class="d-flex link-to-sns justify-center mt-15">
+                    <a href="">
+                        <img src="/image/sub/img-sns--kakao.png" alt="">
+                    </a>
+                    <a href="" class="ml-20">
+                        <img src="/image/sub/img-sns--naver.png" alt="">
+                    </a>
+                </div>
+                <div class="form-wrap mt-30">
+                    <div class="form-input">
+                        <p class="form-input__capt" name="userEmail">이 메 일</p>
+                        <div class="form-row">
+                            <input type="text" name="email" placeholder="이메일" class="placeholder-center" />
+                            <span class="mx-5 font-14 fontW-b">@</span>
+                            <div class="form-select form-select--default w-100">
+                                <select name="emailSelect" id="" class="w-100">
+                                    <option value="">선택해주세요</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="daum.net">daum.net</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- email-inquire -->
+                    <button type="button" name="emailSend" class="btn btn--gray mt-10 email-inquire" disabled={{emailSendFlag}}>이메일 인증하기</button>
+                    <!-- {{#if emailSendFlag}} -->
+                    <div class="form-row code-inquire">
+                        <div class="form-input form-row">
+                            <input type="text" name="userEmailCode" class="code-inquire__input col-10" placeholder="인증코드 6자리 입력" />
+                            {{#unless emailChk}}
+                                <span name="emailAuthTime">{{emailTimer}}</span>
+                            {{/unless}}
+                        </div>
+                        <button type="button" name="emailAuthChk" class="btn code-inquire__btn col-2">확 인</button>
+                    </div>
+                    <!-- {{/if}} -->
+                </div>
+                <!-- {{#if emailSendFlag}} -->
+                <p class="d-flex align-center mt-15 font-11 color--black">
+                    <img src="/image/common/icon/icon-exclamation.png" alt="" class="mr-5">
+                    {{#if emailChk}}
+                        이메일 인증이 완료 되었습니다.
+                    {{else}}
+                        이메일을 받지 못하셨나요?  이메일<a href="" name="emailReSend" class="ml-5 fontW-b underline">재전송하기</a>
+                    {{/if}}
+                </p>
+                <!-- {{/if}}  -->
+                <div class="form-wrap mt-30">
+                    <div class="form-input">
+                        <p class="form-input__capt">비 밀 번 호</p>
+                        <p class="w-100 mt-10 font-12 color--gray ta-l">영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</p>
+                        <input type="password" name="password" class="mt-10 placeholder-fw--300" placeholder="비 밀 번 호" />
+                        <input type="password" name="passwordChk" class="mt-10 placeholder-fw--300" placeholder="비밀번호 재입력" />
+                    </div>
+                    <div class="form-input mt-30">
+                        <p class="form-input__capt">닉 네 임</p>
+                        <p class="w-100 mt-10 font-12 color--gray ta-l">다른 유저와 겹치지 않도록 입력해주세요. (2~15자)</p>
+                        <input type="text" name="nickName" class="mt-10 placeholder-fw--300" placeholder="닉 네 임" />
+                    </div>
+                    <div class="form-input mt-30">
+                        <p class="form-input__capt">약관동의</p>
+                        <div class="form-input__box mt-10 terms-admit">
+                            <div class="form-check form-row terms-admit__tit">
+                                <input type="checkbox" name="allCheck" class="form-check__input" id="check-join-termsAdmit--all" />
+                                <label  class="form-check__label" for="check-join-termsAdmit--all">
+                                    <span class="fontW-b">전체동의</span> 선택 항목에 대한 동의 포함
+                                </label>
+                            </div>
+                            <div class="form-check form-row">
+                                <input type="checkbox" name="essChk" class="form-check__input" id="check-join-termsAdmit--01" />
+                                <label  class="form-check__label" for="check-join-termsAdmit--01">
+                                    만 14세 이상입니다. <span class="color-blue">(필수)</span>
+                                </label>
+                            </div>
+                            <div class="form-check form-row mt-15">
+                                <input type="checkbox" name="essChk" class="form-check__input"/>
+                                <label  class="form-check__label popup" for="" data-id="popup_askBy_termUse">
+                                    <a href="">이용약관 <span class="color-blue">(필수)</span></a>
+                                </label>
+                            </div>
+                            <div class="form-check form-row mt-15">
+                                <input type="checkbox" name="essChk" class="form-check__input"/>
+                                <label  class="form-check__label popup" for="" data-id="popup_askBy_termPersonal">
+                                    <a href="">개인정보수집 및 이용동의 <span class="color-blue">(필수)</span></a>
+                                </label>
+                            </div>
+                            <div class="form-check form-row mt-15">
+                                <input type="checkbox" name="chk" class="form-check__input"/>
+                                <label  class="form-check__label popup" for="" data-id="popup_askBy_termMarketing">
+                                    <a href="">개인정보마케팅 활용 동의 <span class="color-blue">(선택)</span></a>
+                                </label>
+                            </div>
+                            <div class="form-check form-row mt-15">
+                                <input type="checkbox" name="chk" class="form-check__input" id="check-join-termsAdmit--05" />
+                                <label  class="form-check__label" for="check-join-termsAdmit--05">
+                                    이벤트, 쿠폰, 특가 알림 메일 및 SMS 등 수신  <span class="color-blue">(선택)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" name="sginUp" class="btn btn--blue mt-20 w-100 height-45 font-14">회 원 가 입 하 기</button>
+            </div>
+        </div>
+    </section>
+    <!-- 팝업 템플릿 -->
+    {{> termUse}}       <!-- 이용약관 (필수) -->
+    {{> termPersonal}}  <!-- 개인정보수집 및 이용동의 (필수)-->
+    {{> termMarketing}} <!-- 개인정보마케팅 활용동의 (선택)-->
+    {{> utilsPopUp popup}}
+</template>

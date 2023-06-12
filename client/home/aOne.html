@@ -1,0 +1,271 @@
+<template name="aOne">
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <article class="banner-list banner-list--main">
+                    <div class="banner-item">
+                        <a href="/">
+                            <span class="banner-item__img">
+                                <img src="/image/main/img-mainBanner--01.png" alt="">
+                            </span>
+                            <span class="banner-item__txt">
+                                <strong>큐레이터 Pick!!!</strong>
+                                <b>K-팝 아티스트</b>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="banner-item">
+                        <a href="">
+                            <span class="banner-item__img">
+                                <img src="/image/main/img-mainBanner--02.png" alt="">
+                            </span>
+                            <span class="banner-item__txt">
+                                <strong>NEW! 입점 작품</strong>
+                                <em>
+                                    <b>홍길동</b><br/>
+                                    무제, 1200X600, 2001, ₩ 2,500,000
+                                </em>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="banner-item">
+                        <a href="">
+                            <span class="banner-item__img">
+                                <img src="/image/main/img-mainBanner--03.png" alt="">
+                            </span>
+                            <span class="banner-item__txt">
+                                <strong>갤러리</strong>
+                                <em>
+                                    갤러리 K<br/>
+                                    서울 성북구 평창동
+                                </em>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="banner-item">
+                        <a href="">
+                            <span class="banner-item__img">
+                                <img src="/image/main/img-mainBanner--04.png" alt="">
+                            </span>
+                            <span class="banner-item__txt">
+                                <strong>전시회 / 이벤트</strong>
+                                <b>젊은 작가전</b>
+                                <em>2023. 4. 25 ~ 5. 25, 갤러리 SUN, 3F</em>
+                            </span>
+                        </a>
+                    </div>
+                </article>
+                <article class="slide-list slide-list--product">
+                    <div class="slide-list__tit">
+                        <p>큐레이터 Pick !!!</p>
+                        <div class="btn-wrap slide-list--tab">
+                            <button type="button" name="pickOg" class="is-active">원 화</button>
+                            <button type="button" name="pickDt">디지털 에디션 판화</button>
+                            <button type="button" name="pickAtst">작 가</button>
+                        </div>
+                    </div>
+                    <div class="slide-wrap slide-wrap--curator">
+                        <!-- 큐레이터 Pick 로직 -->
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                {{#if pick}}
+                                    {{#each pick.atstAtwrk}}
+                                        <div class="swiper-slide">
+                                            <div class="btn-wrap btn-slide--check">
+                                                <button type="button" title="장바구니 넣기">
+                                                    <img src="/image/main/icon/icon-basket.png" alt="">
+                                                </button>
+                                                <button type="button" title="찜하기">
+                                                    <img src="/image/main/icon/icon-favor.png" alt="">
+                                                </button>
+                                            </div>
+                                            <a href="">
+                                                <img class="sampleTest" src='{{testImage}}' alt="">
+                                            </a>
+                                            <p class="swiper-slide__tit">{{atstNm}}</p>
+                                            <p class="swiper-slide__txt">
+                                                <em>{{atwrkNm}}, {{wSize}}x{{hSize}}, {{medium}}</em>
+                                                <em>{{pick.glry.glryNm}}</em>
+                                                <em>{{pric}} 원</em>
+                                            </p>
+                                        </div>
+                                    {{/each}}
+                                {{/if}}
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                    <!-- 입점 작품 -->
+                    <div class="slide-list__tit">
+                        <p>NEW! 입점 작품</p>
+                    </div>
+                    <div class="slide-wrap slide-wrap--newProduct">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                {{#each atwrk}}
+                                    <div class="swiper-slide">
+                                        <div class="btn-wrap btn-slide--check">
+                                            <button type="button" title="장바구니 넣기">
+                                                <img src="/image/main/icon/icon-basket.png" alt="">
+                                            </button>
+                                            <button type="button" title="찜하기">
+                                                <img src="/image/main/icon/icon-favor.png" alt="">
+                                            </button>
+                                        </div>
+                                        <a href="">
+                                            <img src="/image/main/img-mainSlide--product--0101.png" alt="">
+                                        </a>
+                                        <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
+                                        <p class="swiper-slide__txt">
+                                            <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{ogPrt.metRias}}</em>
+                                            <em>{{glry.glryNm}}</em>
+                                            <em>{{ogPrt.pric}} 원</em>
+                                        </p>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                    <!-- 디지털 판화 -->
+                    <div class="slide-list__tit">
+                        <p>디지털 에디션 판화 </p>
+                    </div>
+                    <div class="slide-wrap slide-wrap--digital">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                {{#each dtpHome}}
+                                    <div class="swiper-slide">
+                                        <div class="btn-wrap btn-slide--check">
+                                            <button type="button" title="장바구니 넣기">
+                                                <img src="/image/main/icon/icon-basket.png" alt="">
+                                            </button>
+                                            <button type="button" title="찜하기">
+                                                <img src="/image/main/icon/icon-favor.png" alt="">
+                                            </button>
+                                        </div>
+                                        <a href="">
+                                            <img src="/image/main/img-mainSlide--product--0201.png" alt="">
+                                        </a>
+                                        <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
+                                        <p class="swiper-slide__txt">
+                                            <em>{{dtPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{dtPrt.base}}</em>
+                                            <em>{{glry.glryNm}}</em>
+                                            <em>{{dtPrt.mPric}} 원</em>
+                                        </p>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                    <div class="slide-list__tit">
+                        <p>원    화</p>
+                    </div>
+                    <div class="slide-wrap slide-wrap--original">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                {{#each ogHome}}
+                                    <div class="swiper-slide">
+                                        <div class="btn-wrap btn-slide--check">
+                                            <button type="button" title="장바구니 넣기">
+                                                <img src="/image/main/icon/icon-basket.png" alt="">
+                                            </button>
+                                            <button type="button" title="찜하기">
+                                                <img src="/image/main/icon/icon-favor.png" alt="">
+                                            </button>
+                                        </div>
+                                        <a href="">
+                                            <img src="/image/main/img-mainSlide--product--0301.png" alt="">
+                                        </a>
+                                        <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
+                                        <p class="swiper-slide__txt">
+                                            <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{ogPrt.metRias}}</em>
+                                            <em>{{glry.glryNm}}</em>
+                                            <em>{{ogPrt.pric}} 원</em>
+                                        </p>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </article>
+                <article class="slide-list slide-list--gallery">
+                    <div class="slide-list__tit">
+                        <p>전 시 회 / 이 벤 트</p>
+                    </div>
+                    <div class="slide-wrap slide-wrap--event">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                {{#each evntHome}}
+                                    <div class="swiper-slide">
+                                        <div class="btn-wrap btn-slide--check">
+                                            <button type="button" title="장바구니 넣기">
+                                                <img src="/image/main/icon/icon-basket.png" alt="">
+                                            </button>
+                                            <button type="button" title="찜하기">
+                                                <img src="/image/main/icon/icon-favor.png" alt="">
+                                            </button>
+                                        </div>
+                                        <a href="">
+                                            <img src="/image/main/img-mainSlide--gallery--0101.png" alt="">
+                                        </a>
+                                        <div class="swiper-slide__cont">
+                                            <p class="swiper-slide__tit">{{title}}</p>
+                                            <p class="swiper-slide__txt">
+                                                <em>{{strDt}} ~ {{endDt}}</em>
+                                                <em>{{glry.glryNm}}, {{glry.area}} {{glry.dong}}</em>
+                                            </p>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                    <div class="slide-list__tit">
+                        <p>갤러리</p>
+                    </div>
+                    <div class="slide-wrap slide-wrap--gallery">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                {{#each glryHome}}
+                                    <div class="swiper-slide">
+                                        <div class="btn-wrap btn-slide--check">
+                                            <button type="button" title="장바구니 넣기">
+                                                <img src="/image/main/icon/icon-basket.png" alt="">
+                                            </button>
+                                            <button type="button" title="찜하기">
+                                                <img src="/image/main/icon/icon-favor.png" alt="">
+                                            </button>
+                                        </div>
+                                        <a href="">
+                                            <img src="/image/main/img-mainSlide--gallery--0101.png" alt="">
+                                        </a>
+                                        <div class="swiper-slide__cont">
+                                            <p class="swiper-slide__tit">{{glryNm}}</p>
+                                            <p class="swiper-slide__txt">
+                                                <em>{{area}} {{dong}}</em>
+                                            </p>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+      {{> footer}}
+    </footer>
+</template>

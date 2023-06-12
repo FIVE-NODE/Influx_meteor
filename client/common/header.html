@@ -1,0 +1,127 @@
+<template name="header">
+    <section class="header__inner">
+        <div name="headerMenu" style="display: none;">
+            {{#if menuKind}}
+                {{> Template.dynamic template=(menuKind)}}
+            {{/if}}
+        </div>
+        <div class="header__top">
+            <div class="header__top__inner">
+                <h1 class="header-logo">
+                    <a href="/">
+                        <img src="/image/common/img-logo-main.png" alt="INFLUX">
+                    </a>
+                </h1>
+                <div class="slideMenu">
+                    <button name="artMenu" type="button" class="" title="ARTWORK 슬라이드 메뉴 열림">ARTWORK</button>
+                    <button name="galleryMenu" type="button" class="" title="GALLERY 슬라이드 메뉴 열림">GALLERY</button>
+                    <button name="artistMenu" type="button" class="" title="ARTIST 슬라이드 메뉴 열림">ARTIST</button>
+                    <button type="button" class="slideMenu-sch" title="ARTIST 슬라이드 메뉴 열림">
+                        <img src="/image/common/icon/icon-search.png" alt="">
+                    </button>
+                </div>
+           
+                <nav>
+                    <button type="button" class="nav-btn nav-btn--alarm">
+                        <span class="nav-btn__img">
+                            <img src="/image/common/icon/icon-bell.png" alt="">
+                        </span>
+                        <span class="nav-btn__txt">알 림</span>
+                    </button>
+                    <button type="button" class="nav-btn nav-btn--favor">
+                        <span class="nav-btn__img">
+                            <img src="/image/common/icon/icon-heart.png" alt="">
+                        </span>
+                        <span class="nav-btn__txt">관 심</span>
+                    </button>
+                    <button type="button" class="nav-btn nav-btn--basket">
+                        <span class="nav-btn__img">
+                            <img src="/image/common/icon/icon-shopping-cart.png" alt="">
+                        </span>
+                        <span class="nav-btn__txt">장바구니</span>
+                    </button>
+                    <button data-id="myPageSimple_popup" type="button" name="myPage" class="nav-btn nav-btn--mypage popup">
+                        <span class="nav-btn__img">
+                            <img src="/image/common/icon/icon-user.png" alt="">
+                        </span>
+                        <span class="nav-btn__txt">MY페이지</span>
+                    </button>
+                </nav>
+            </div>
+        </div> <!-- /header__top -->
+        <div class="header__bottom">
+            <div class="header__bottom__inner">
+                <div class="gnb">
+                    <a href="">
+                        <span class="gnb__img">
+                            <img src="/image/common/icon/img-gnb--picture.png" alt="">
+                        </span>
+                        <h2>원   화</h2>
+                    </a>
+                    <a href="">
+                        <span class="gnb__img">
+                            <img src="/image/common/icon/img-gnb--digital.png" alt="">
+                        </span>
+                        <h2>디지털 에디션 판화</h2>
+                    </a>
+                    <a href="">
+                        <span class="gnb__img">
+                            <img src="/image/common/icon/img-gnb--curator.png" alt="">
+                        </span>
+                        <h2>큐레이터Pick</h2>
+                    </a>
+                    <a href="">
+                        <span class="gnb__img">
+                            <img src="/image/common/icon/img-gnb--product.png" alt="">
+                        </span>
+                        <h2>NEW!! 입점작품</h2>
+                    </a>
+                    <a href="">
+                        <span class="gnb__img">
+                            <img src="/image/common/icon/img-gnb--gallery.png" alt="">
+                        </span>
+                        <h2>갤러리</h2>
+                    </a>
+                    <a href="">
+                        <span class="gnb__img">
+                            <img src="/image/common/icon/img-gnb--event.png" alt="">
+                        </span>
+                        <h2>전시회/이벤트</h2>
+                    </a>
+                    <a href="">
+                        <span class="gnb__img">
+                            <img src="/image/common/icon/img-gnb--oil.png" alt="">
+                        </span>
+                        <h2>유   화</h2>
+                    </a>
+                    <a href="">
+                        <span class="gnb__img">
+                            <img src="/image/common/icon/img-gnb--cartoon.png" alt="">
+                        </span>
+                        <h2>카툰/일러스트</h2>
+                    </a>
+                    <a href="">
+                        <span class="gnb__img">
+                            <img src="/image/common/icon/img-gnb--midPrice.png" alt="">
+                        </span>
+                        <h2>20만원 미만</h2>
+                    </a>
+                    <a href="">
+                        <span class="gnb__img">
+                            <img src="/image/common/icon/img-gnb--largePrice.png" alt="">
+                        </span>
+                        <h2>500만원 이상</h2>
+                    </a>
+                </div>
+                {{#if logedInChk}}
+                    <div class="bradCrumb">
+                        <a href="/login">로 그 인 </a>
+                        <a href="/signUp">회원가입</a>
+                    </div>
+                {{/if}}
+            </div>
+        </div> <!-- /header__bottom -->
+    </section>
+
+    {{> myPageSimple}}
+</template>

@@ -1,0 +1,247 @@
+@charset 'UTF-8';
+
+input[type="text"], input[type="password"]{
+    &:disabled{
+        background-color:#E2E2E2;
+        border:1px solid #b9b9b9;
+    }
+}
+
+.form{
+    &-row{
+        display:flex;
+        align-items:center;
+        &.align-start{
+            align-items: flex-start;
+        }
+    }
+    &-input{
+        input[type='text']{
+            height:4.8rem;
+            border-radius:.5rem;
+            font-size:1.4rem;
+            text-indent:1.5rem;
+            &::placeholder{
+                font-size:1.4rem;
+                font-weight:700;
+                color:#B9B9B9;
+            }
+            &.height{
+                &-45{
+                    height:4.5rem;
+                }
+            }
+        }
+        &__capt{
+            margin-bottom:.7rem;
+            font-size:1.4rem;
+            font-weight:700;
+            text-align:left;
+            color:#585858;
+        }
+        &__box{
+            padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+            border:1px solid #B9B9B9;
+            border-radius: .5rem;
+        }
+    }
+    &-select{
+        select{
+            height:4.8rem;
+            border-radius:.5rem;
+        }
+        &-custom{
+            position:relative;
+        }
+        &--default{
+            select{
+                font-size:1.4rem;
+                background:url(../image/common/icon/icon-select--default.png) no-repeat calc(100% - 1.5rem) center/1rem .7rem;
+                option{
+                    font-size:1.4rem;
+                }
+            }
+        }
+    }
+    &-textarea{
+        textarea{
+            width:100%;
+            padding:2rem 0;
+            font-size:1.4rem;
+            border-radius:.5rem;
+            outline:none;
+            resize:none;
+            border:1px solid #B9B9B9;
+            text-indent:2rem;
+            box-sizing:border-box;
+            &::placeholder{
+                font-size:1.4rem;
+                font-weight:700;
+                color:#B9B9B9;
+            }
+            &.resize{
+                &-on{
+                    resize:auto;
+                }
+            }
+        }
+    }
+    &-radio{
+        &__input{
+            position:relative;
+            width:1.2rem;
+            height:1.2rem;
+            margin-right:1.5rem;
+            border-radius:100%;
+            border:1px solid #585858;
+            appearance: none;
+            &:checked{
+                border:1px solid #02A4FF;
+                &::before{
+                    @include pos(absolute, $t:50%, $l:50%);
+                    width:.6rem;
+                    height:.6rem;
+                    border-radius:100%;
+                    background-color:#02A4FF;
+                    transform:translate(-50%, -50%);
+                    content:""
+                }
+            }
+        }
+        &__label{
+            font-size:1.4rem;
+            font-weight:500;
+            color:#585858;
+        }
+    }
+    &-check{
+        &__input{
+            appearance: none;
+            width:1.1rem;
+            height:1.1rem;
+            margin-right:1.5rem;
+            border-radius:2px;
+            border:1px solid #585858;
+            &:checked{
+                background-color:#02A4FF;
+            }
+        }
+        &__label{
+            font-size:1.4rem;
+            font-weight:500;
+            color:#585858;
+        }
+    }
+    &-sch{
+        display:flex;
+        align-items:center;
+        margin-top:auto;
+        .slideMenu-sch{
+            margin-top:0;
+            margin-left:4rem;
+        }
+        &__input{
+            width:30.8rem;
+            border-radius:2.3rem;
+            box-shadow:0 0 9px rgba(0, 0, 0, 0.22);
+            text-indent:2.5rem;
+            &::placeholder{
+                font-size:1.4rem;
+                color:#b9b9b9;
+            }
+        }
+    }
+    &-file{
+        font-size:0;
+        .upload-name{
+            display:inline-block;
+            width:17.7rem;
+            height:4.8rem;
+            vertical-align: middle;
+            border: 1px solid #B9B9B9;
+            border-radius:.5rem;
+            font-size:1.4rem;
+        }
+        input[type="file"]{
+            overflow:hidden;
+            position:absolute;
+            width:0;
+            height:0;
+            padding:0;
+            border:0;
+        }
+        &__label{
+            display:flex;
+            align-items:center;
+            justify-content: center;
+            width:12.3rem;
+            height:4.8rem;
+            margin-left:2.3rem;
+            margin-right:0;
+            font-size:1.4rem;
+            font-weight:700;
+            border:1px solid #1868B7;
+            border-radius:.5rem;
+            color:#1868B7;
+            vertical-align:middle;
+        }
+    }
+}
+
+.custom{
+    &-select{
+        border-radius:.5rem;
+        &__tit{
+            width:100%;
+            height:4.8rem;
+            padding-left:2rem;
+            border:1px solid #B9B9B9;
+            border-radius:.5rem;
+            background:url(../image/common/icon/icon-select--down.png) no-repeat calc(100% - 20px) center/auto;
+            font-size:1.4rem;
+            font-weight:700;
+            color:#585858;
+            text-align:left;
+        }
+        &__options{
+            overflow:hidden;
+            position:absolute;
+            top:4.9rem;
+            left:0;
+            width:100%;
+            border:1px solid #B9B9B9;
+            border-radius:.5rem;
+            background-color:#fff;
+            z-index:1;
+            li{
+                width:100%;
+                background-color:#fff;
+                + li{
+                    margin-top:.3rem;
+                }
+                button{
+                    display:block;
+                    width:100%;
+                    height:2.3rem;
+                    padding:0 2rem;
+                    font-size:1.4rem;
+                    font-weight:700;
+                    color:#585858;
+                    background-color:#fff;
+                    text-align:left;
+                    &:hover{
+                        background-color:#1868B7;
+                        color:#fff;
+                    }
+                }
+                &.is-active{
+                    button{
+                        height:2.8rem;
+                        background-color:#d9d9d9;
+                        color:#fff;
+                    }
+                }
+            }
+        }
+    }
+}

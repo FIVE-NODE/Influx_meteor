@@ -1,0 +1,65 @@
+<template name="login">
+    <section class="section-seperate section-seperate--login bg--gray h-100">
+        <div class="section-seperate__inner width--650 mx-auto bg--white ta-c">
+            <h1 class="section-seperate__logo">
+                <a href="">
+                    <img src="/image/common/img-logo-default.png" alt="">
+                </a>
+            </h1>
+            {{#if loginFlag}}
+                <div class="tab-wrap tab-wrap--join">
+                    <a name="user" href="" class="is-active">가 입 회 원</a>
+                    <a name="nouser" href="" class="">비회원 주문 조회</a>
+                </div>
+            {{else}}
+                <div class="tab-wrap tab-wrap--join">
+                    <a name="user" href="" class="">가 입 회 원</a>
+                    <a name="nouser" href="" class="is-active">비회원 주문 조회</a>
+                </div>
+            {{/if}}
+            <div class="width--257">
+                {{#if loginFlag}}
+                    <div class="form-wrap mt-15">
+                        <div class="form-input">
+                            <input type="text" name="loginEmail" placeholder="아이디" />
+                        </div>
+                        <div class="form-input mt-10">
+                            <input type="text" name="loginPwd" placeholder="비밀번호" />
+                        </div>
+                    </div>
+                    <button type="button" name="loginBtn" class="btn btn--blue mt-20">로 그 인</button>
+                    <div class="find-link d-flex justify-end mt-10">
+                        <a href="" class="color--gray font-12">아이디 찾기</a>
+                        <a href="" class="color--gray font-12">비밀번호 찾기</a>
+                    </div>
+                    <button type="button" class="btn btn--yellow d-flex mt-30">
+                        <img src="/image/sub/icon/icon-kakao.png" alt="">
+                        <span>카카오 로그인</span>
+                    </button>
+                    <button type="button" class="btn btn--green d-flex mt-10">
+                        <img src="/image/sub/icon/icon-naver.png" alt="">
+                        <span>네이버 로그인</span>
+                    </button>
+                    <a href="/signUp" class="link-to-join mt-15">회 원 가 입</a>
+                {{else}}
+                    <div class="form-wrap mt-30">
+                        <div class="form-input">
+                            <p class="form-input__capt">주문자명</p>
+                            <input type="text" placeholder="" />
+                        </div>
+                        <div class="form-input mt-10">
+                            <p class="form-input__capt">주문번호</p>
+                            <input type="text" placeholder="" />
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn--blue mt-20">주문 내역 조회하기</button>
+                    <a href="/signUp" class="link-to-join mt-15">회 원 가 입</a>
+                {{/if}}
+            </div>
+            <p class="copyright--join">
+                <img src="/image/common/img-logo-join.png" alt="">
+                <span>Copyright ⓒINFLUX Corp. All Rights Reserved.</span>
+            </p>
+        </div>
+    </section>
+</template>
