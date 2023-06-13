@@ -1,5 +1,3 @@
-'use strict'
-
 // jQuery
 $(function(){
     popup();
@@ -9,8 +7,9 @@ $(function(){
 
 function popup(){
     $('.popup').click(function(){
-        const $this = $(this),
-        dataId = $this.attr('data-id'),
+        const $this = $(this);
+        console.log($this);
+        dataId = $this.attr('data-id');
         contId = $('#' + dataId);
         contId.addClass('is-open');
     });
@@ -44,6 +43,10 @@ function selectFn(){
 
 function fileUpload(){
     $("#file-upload").on('change',function(){
+        var fileName = $("#file-upload").val();
+        $(".upload-name").val(fileName);
+    });
+    $('#file-upload-inq').click(function() {
         var fileName = $("#file-upload").val();
         $(".upload-name").val(fileName);
     });

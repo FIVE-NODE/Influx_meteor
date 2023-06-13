@@ -13,18 +13,19 @@
   <link rel="stylesheet" href="/css/more.css">
 </head>
 <body>
-  <script type="text/javascript" src="/libs/common.js"></script>
   {{#if subFlag}}
     <link rel="stylesheet" href="/css/main.css">
     <script type="text/javascript" src="/libs/home.js"></script>
+    <script type="text/javascript" src="/libs/common.js"></script>
   {{else}}
     <link rel="stylesheet" href="/css/sub.css">
     <script type="text/javascript" src="/libs/sub.js"></script>
+    <script type="text/javascript" src="/libs/common.js"></script>
   {{/if}}
   <div class="wrap">
     <header class="header">
       {{> header pageInfo}}
     </header>
     <!-- {{> Template.dynamic template=changePage}} -->
-  </div>
+  </div>  
 </body>

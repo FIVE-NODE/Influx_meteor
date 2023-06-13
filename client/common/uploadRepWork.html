@@ -1,0 +1,117 @@
+<template name="uploadRepWork">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <h3 class="subTit subTit--company">
+                    <div class="subTit__inner  d-flex align-center justify-center">
+                        <img src="/image/common/img-logo-default.png" alt="">
+                        스토어 관리센터
+                    </div>
+                </h3>
+                <h4 class="subTit-capt">대표 작품 올리기</h4>
+                <div class="sub-content">
+                    <div class="sub-content__company width--1160 mx-auto">
+                        <ul class="bradCrumb bradCrumb-sub">
+                            <li>입점신청</li>
+                            <li>대표작품올리기</li>
+                        </ul>
+                        <div class="represent-wrap mt-100">
+                            <div class="represent-list">
+                                <div class="represent-item">
+                                    <button type="button" class="popup" data-id="addImg-popup">
+                                        <img src="/image/sub/icon/icon-plus.png" class="default" alt="">
+                                    </button>
+                                </div>
+                                <div class="represent-item">
+                                    <button type="button" class="popup" data-id="addImg-popup">
+                                        <img src="/image/sub/icon/icon-plus.png" class="default" alt="">
+                                    </button>
+                                </div>
+                                <div class="represent-item">
+                                    <button type="button" class="popup" data-id="addImg-popup">
+                                        <img src="/image/sub/icon/icon-plus.png" class="default" alt="">
+                                    </button>
+                                </div>
+                                <div class="represent-item">
+                                    <button type="button" class="popup" data-id="addImg-popup">
+                                        <img src="/image/sub/icon/icon-plus.png" class="default" alt="">
+                                    </button>
+                                </div>
+                                <div class="represent-item">
+                                    <button type="button" class="popup" data-id="addImg-popup">
+                                        <img src="/image/sub/icon/icon-plus.png" class="default" alt="">
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="mt-20 font-14 fontW-500 color-blue">*대표하는 작가의 작품을 올려주세요 (최소 3명의 작가)</p>
+                            <p class="mt-10 font-14 fontW-500 color-blue">*작품을 잘 알아볼 수 있는 퀄리티 있는 이미지를 올려주세요 (JPG 형식, 최대 30MB)</p>
+                        </div>
+                        <div class="btn-wrap mt-100 mb-100 ta-c">
+                            <button type="button" onclick="history.back()" class="btn btn--white width--149">뒤로가기</button>
+                            <button type="button" class="btn btn--blue width--149 ml-40">저장하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="popup-layout" id="addImg-popup">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:445px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit">작품사진올리기</p>
+                    <button type="button" class="popup-close">
+                        <img src="../../resource/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont popup-cont--company__regist">
+                    <div class="ov-auto scrollbar width--315 mx-auto" style="">
+                        <div class="company-box company-box__product">
+                            <p class="company-box__tit">대표작품 이미지를 올려주세요</p>
+                            <button type="button" class="btn company-box__btn mt-20">사진 올리기</button>
+                            <ul class="lists lists-dot">
+                                <li>형식 : JPG</li>
+                                <li>최대크기 : 30 MB</li>
+                            </ul>
+                        </div>
+                        <div class="form-wrap company-form mt-15">
+                            <div class="form-input form-row">
+                                <label for="" class="col-3">작  품  명</label>
+                                <input type="text" class="col-9">
+                            </div>
+                            <div class="form-input form-row">
+                                <label for="" class="col-3">작  가  명</label>
+                                <input type="text" class="col-9">
+                            </div>
+                            <div class="form-input form-row">
+                                <label for="" class="col-3">제작연도</label>
+                                <input type="text" class="col-9">
+                            </div>
+                            <div class="form-input form-row">
+                                <label for="" class="col-3">크        기</label>
+                                <input type="text" class="col-9">
+                            </div>
+                            <div class="form-input form-row">
+                                <label for="" class="col-3">재        료</label>
+                                <input type="text" class="col-9">
+                            </div>
+                        </div>
+                        <p class="mt-25 font-14 fontW-b color--txt">기 타 설 명</p>
+                        <div class="box-wrap box-round mt-10">
+                            <ul class="lists lists-dot lists-dot--big">
+                                <li>원화가 따로 존재 하는 디지털 작품일 경우 명시 해주세요.</li>
+                                <li>디지털 작품을 경우 작품 원작자의 디지털 작품 사용에 대한 동의서 또는 합의서 여부를 알려주시기 바라며, 없을 경우 저작권 사용 권한에  대하여 설명해 주시기 바랍니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="btn-wrap d-flex justify-center mt-20">
+                        <button type="button" class="btn btn--white btn--round width--149 popup-close">취 소 하 기</button>
+                        <button type="button" class="btn btn--blue btn--round width--149 ml-20">저 장 하 기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

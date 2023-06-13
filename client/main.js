@@ -24,12 +24,17 @@ import './home/aOne.js';
 import './users/login.js';
 import './users/signUp.js';
 
+// 스토어 관리센터
+import './common/uploadRepWork.js';
+
+// 우편번호 찾기
+import './common/zipCode.js';
+
 import '../lib/status.js';
 import '../lib/common.js';
 import '../lib/router.js';
 
 Template.body.onCreated(function() {
-
 
   // chPage = new ReactiveVar('aOne');
 
@@ -58,7 +63,10 @@ Template.body.onRendered(function() {
 });
 
 Template.body.events({
- 
+  'click .popup'(evt, tmpl) {
+    console.log(" ============== ");
+    console.log(evt);
+  }
 });
 
 Template.body.helpers({
