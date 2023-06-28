@@ -1,5 +1,5 @@
 <template name="header">
-    <section class="header__inner">
+    <section class="header__inner" id="headerPs">
         <div name="headerMenu" style="display: none;">
             {{#if menuKind}}
                 {{> Template.dynamic template=(menuKind)}}
@@ -16,7 +16,7 @@
                     <button name="artMenu" type="button" class="" title="ARTWORK 슬라이드 메뉴 열림">ARTWORK</button>
                     <button name="galleryMenu" type="button" class="" title="GALLERY 슬라이드 메뉴 열림">GALLERY</button>
                     <button name="artistMenu" type="button" class="" title="ARTIST 슬라이드 메뉴 열림">ARTIST</button>
-                    <button type="button" class="slideMenu-sch" title="ARTIST 슬라이드 메뉴 열림">
+                    <button name="artMenu" type="button" class="slideMenu-sch" title="ARTIST 슬라이드 메뉴 열림">
                         <img src="/image/common/icon/icon-search.png" alt="">
                     </button>
                 </div>
@@ -52,66 +52,14 @@
         <div class="header__bottom">
             <div class="header__bottom__inner">
                 <div class="gnb">
-                    <a href="">
-                        <span class="gnb__img">
-                            <img src="/image/common/icon/img-gnb--picture.png" alt="">
-                        </span>
-                        <h2>원   화</h2>
-                    </a>
-                    <a href="">
-                        <span class="gnb__img">
-                            <img src="/image/common/icon/img-gnb--digital.png" alt="">
-                        </span>
-                        <h2>디지털 에디션 판화</h2>
-                    </a>
-                    <a href="">
-                        <span class="gnb__img">
-                            <img src="/image/common/icon/img-gnb--curator.png" alt="">
-                        </span>
-                        <h2>큐레이터Pick</h2>
-                    </a>
-                    <a href="">
-                        <span class="gnb__img">
-                            <img src="/image/common/icon/img-gnb--product.png" alt="">
-                        </span>
-                        <h2>NEW!! 입점작품</h2>
-                    </a>
-                    <a href="">
-                        <span class="gnb__img">
-                            <img src="/image/common/icon/img-gnb--gallery.png" alt="">
-                        </span>
-                        <h2>갤러리</h2>
-                    </a>
-                    <a href="">
-                        <span class="gnb__img">
-                            <img src="/image/common/icon/img-gnb--event.png" alt="">
-                        </span>
-                        <h2>전시회/이벤트</h2>
-                    </a>
-                    <a href="">
-                        <span class="gnb__img">
-                            <img src="/image/common/icon/img-gnb--oil.png" alt="">
-                        </span>
-                        <h2>유   화</h2>
-                    </a>
-                    <a href="">
-                        <span class="gnb__img">
-                            <img src="/image/common/icon/img-gnb--cartoon.png" alt="">
-                        </span>
-                        <h2>카툰/일러스트</h2>
-                    </a>
-                    <a href="">
-                        <span class="gnb__img">
-                            <img src="/image/common/icon/img-gnb--midPrice.png" alt="">
-                        </span>
-                        <h2>20만원 미만</h2>
-                    </a>
-                    <a href="">
-                        <span class="gnb__img">
-                            <img src="/image/common/icon/img-gnb--largePrice.png" alt="">
-                        </span>
-                        <h2>500만원 이상</h2>
-                    </a>
+                    {{#each quickMu}}
+                        <a href={{lnkUrl}}>
+                            <span class="gnb__img">
+                                <img src={{image}} alt="">
+                            </span>
+                            <h2>{{qMenuNm}}</h2>
+                        </a>
+                    {{/each}}
                 </div>
                 {{#if logedInChk}}
                     <div class="bradCrumb">

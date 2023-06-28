@@ -5,11 +5,12 @@ import { clientAtwrk, clientDtpHome, clientOgHome, clientEvntHome, clientBsnsMbe
 
 import './aOne.html';
 
-let pickCategory = new ReactiveVar('001');
-
+// 뉴임점작품 원화만
 function selectAtwrk() {
-    Meteor.call('selectNewAtwrk', function(a, data) {
+    Meteor.call('selectNewAtwrk', function(e, data) {
         if(data != undefined && clientAtwrk._collection._docs._map.size == 0) {
+        // if(data != undefined) {
+            clientAtwrk.remove();
             data.forEach(function(map){
                 map.ogPrt.pric = Meteor.commonUtils.priceComma(map.ogPrt.pric);
                 clientAtwrk.insert(map);
@@ -18,9 +19,11 @@ function selectAtwrk() {
     });   
 }
 
+// 디지털에디션 판화
 function selectDtpHome() {
     clientDtpHome.remove();
-    Meteor.call('selectDtpHome', function(a, data) {
+    Meteor.call('selectDtpHome', function(e, data) {
+        // if(data != undefined){
         if(data != undefined && clientDtpHome._collection._docs._map.size == 0) {
             data.forEach(function(map){
                 map.dtPrt.mPric = Meteor.commonUtils.priceComma(map.dtPrt.mPric);
@@ -30,9 +33,11 @@ function selectDtpHome() {
     });
 }
 
+// 원화 작품 만 조회
 function selectOgHome() {
     clientOgHome.remove();
-    Meteor.call('selectOgHome', function(a, data) {
+    Meteor.call('selectOgHome', function(e, data) {
+        // if(data != undefined) {
         if(data != undefined && clientOgHome._collection._docs._map.size == 0) {
             data.forEach(function(map){
                 map.ogPrt.pric = Meteor.commonUtils.priceComma(map.ogPrt.pric);
@@ -42,9 +47,11 @@ function selectOgHome() {
     });
 }
 
+// 전시 및 행사 조회
 function selectEvntHome() {
     clientEvntHome.remove();
-    Meteor.call('selectEvntHome', function(a, data) {
+    Meteor.call('selectEvntHome', function(e, data) {
+        // if(data != undefined) {
         if(data != undefined && clientEvntHome._collection._docs._map.size == 0) {
             data.forEach(function(map){
                 clientEvntHome.insert(map);
@@ -55,10 +62,21 @@ function selectEvntHome() {
 
 function selectGlry() {
     clientBsnsMber.remove();
-    Meteor.call('clientBsnsMber', function(a, data) {
+    Meteor.call('clientBsnsMber', function(e, data) {
         if(data != undefined && clientBsnsMber._collection._docs._map.size == 0) {
             data.forEach(function(map){
                 clientBsnsMber.insert(map);
+            });
+        }
+    });
+}
+
+function selectBanr() {
+    clientBanr.remove();
+    Meteor.call('selectBanr', function(e, data) {
+        if(data != undefined && clientBanr._collection._docs._map.size == 0) {
+            data.forEach(function(map) {
+                clientBanr.insert(map);
             });
         }
     });
@@ -68,7 +86,11 @@ Template.aOne.onCreated(async function() {
     const instance = this;
     instance.connectoin = new ReactiveVar();
 
-    console.log("test ", this);
+    pickCategory = new ReactiveVar('001');
+    dataComplet = new ReactiveVar(false);
+
+    //  selectBanr      배너
+    selectBanr();
     
     // selectAtwrk      작품
     selectAtwrk();
@@ -85,10 +107,17 @@ Template.aOne.onCreated(async function() {
     // selectGlry       갤러리
     selectGlry();
 
+
+
 });
 
 Template.aOne.onRendered(function() {
+    setTimeout(function() {
+        var location = $('#headerPs').offset().top;
+        Meteor.commonUtils.scrollTop(location);
+    }, 50);
 
+    dataComplet.set(true);
 });
 
 Template.aOne.events({
@@ -121,16 +150,32 @@ function selectPickCategory(category) {
 // 이벤트 용 함수 끝//
 
 Template.aOne.helpers({
+    isComplet() {
+        return dataComplet.get();
+    },
     banr() {
-        let data = Banr.find().fetch();
+        let data = clientBanr.find().fetch();
         return data;
     },
     pick() {
         let data = Pick.findOne({thmTp : pickCategory.get()});
-        return data;
+        
+        if(data != undefined) {
+            var atstAtwrkList = data.atstAtwrk;
+            atstAtwrkList.forEach(function(ele) {
+                ele.pric = Meteor.commonUtils.priceComma(ele.pric);
+            });
+            data.atstAtwrk = atstAtwrkList;
+
+            return data;
+        }
+        
     },
     atwrk() {
-        return clientAtwrk.find().fetch();
+        let res = clientAtwrk.find().fetch();
+        if(res != undefined) {
+            return res;
+        }
     },
     dtpHome() {
         return clientDtpHome.find().fetch();
@@ -143,5 +188,9 @@ Template.aOne.helpers({
     },
     glryHome() {
         return clientBsnsMber.find().fetch();
+    },
+    mainImgChk(rprsn) {
+        // 메인이미지 체크 여부
+        return rprsn == 'Y' ? true : false;
     }
 });

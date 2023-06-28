@@ -23,6 +23,7 @@
             border-left:1px solid #585858;
             &:last-child{
                 border-right:1px solid #585858;
+                vertical-align: middle;
             }
         }
         td{
@@ -31,8 +32,29 @@
             font-weight:500;
             border-top:1px solid #585858;
             border-left:1px solid #585858;
+            vertical-align: middle;
             &:last-child{
                 border-right:1px solid #585858;
+            }
+        }
+    }
+    &--list{
+        th{
+            height:6.4rem;
+            border:none;
+            border-top:1px solid #B9B9B9;
+            background:#fff;
+            vertical-align: middle;
+            &:last-child{
+                border-right:none;
+            }
+        }
+        td{
+            border:none;
+            border-top:1px solid #B9B9B9;
+            text-align: center;
+            &:last-child{
+                border-right:none;
             }
         }
     }

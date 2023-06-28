@@ -1,0 +1,30 @@
+{
+    "odPlace": "",
+    "mob": "",
+    "recvNm": "",
+    "addr2": "",
+    "odNo": "",
+    "addr1": "",
+    "odNm": "",
+    "zipCd": "",
+    "odAtwrk": [
+        {
+            "atwrkID": "",
+            "atwrkNm": "",
+            "bsnsID": "",
+            "bsnsNm": "",
+            "buyCnt": 0,
+            "amt": 0
+        }
+    ],
+    "sellSumAmt": 0,
+    "recvMob": "",
+    "sttus": "",
+    "payTp": "",
+    "delivInf": {
+        "delivNo": "",
+        "delivComp": "",
+        "sttus": ""
+    },
+    "email": ""
+}

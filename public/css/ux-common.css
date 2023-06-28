@@ -177,6 +177,9 @@
 .w-100 {
   width: 100%;
 }
+.w-50 {
+  width: 50%;
+}
 
 .h-100 {
   height: 100%;
@@ -194,6 +197,12 @@
 .width--112 {
   width: 11.2rem;
 }
+.width--120 {
+  width: 12rem;
+}
+.width--125 {
+  width: 12.5rem;
+}
 .width--135 {
   width: 13.5rem;
 }
@@ -203,14 +212,23 @@
 .width--170 {
   width: 17rem;
 }
+.width--196 {
+  width: 19.6rem;
+}
 .width--211 {
   width: 21.1rem;
+}
+.width--250 {
+  width: 25rem;
 }
 .width--257 {
   width: 25.7rem;
 }
 .width--266 {
   width: 26.6rem;
+}
+.width--300 {
+  width: 30rem;
 }
 .width--315 {
   width: 31.5rem;
@@ -227,6 +245,9 @@
 .width--650 {
   width: 65rem;
 }
+.width--725 {
+  width: 72.5rem;
+}
 .width--787 {
   width: 78.7rem;
 }
@@ -236,12 +257,21 @@
 .width--1160 {
   width: 116rem;
 }
+.width--1315 {
+  width: 131.5rem;
+}
+.width--1680 {
+  width: 168rem;
+}
 
 .height-40 {
   height: 4rem;
 }
 .height-45 {
   height: 4.5rem;
+}
+.height-66 {
+  height: 6.6rem;
 }
 
 .p-0 {
@@ -282,6 +312,15 @@
 }
 .pl-20 {
   padding-left: 2rem;
+}
+.pl-30 {
+  padding-left: 3rem;
+}
+.pl-40 {
+  padding-left: 4rem;
+}
+.pl-50 {
+  padding-left: 5rem;
 }
 .px-10 {
   padding-left: 1rem;
@@ -328,6 +367,12 @@
 .ml-100 {
   margin-left: 10rem;
 }
+.ml-150 {
+  margin-left: 15rem;
+}
+.mt-0 {
+  margin-top: 0;
+}
 .mt-5 {
   margin-top: 0.5rem;
 }
@@ -361,6 +406,18 @@
 .mt-100 {
   margin-top: 10rem;
 }
+.mb-0 {
+  margin-bottom: 0;
+}
+.mb-5 {
+  margin-bottom: 0.5rem;
+}
+.mb-10 {
+  margin-bottom: 1rem;
+}
+.mb-20 {
+  margin-bottom: 2rem;
+}
 .mb-25 {
   margin-bottom: 2.5rem;
 }
@@ -385,6 +442,9 @@
 .mr-10 {
   margin-right: 1rem;
 }
+.mr-15 {
+  margin-right: 1.5rem;
+}
 .mr-20 {
   margin-right: 2rem;
 }
@@ -394,6 +454,10 @@
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+.mx-3 {
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
 }
 .mx-5 {
   margin-left: 0.5rem;
@@ -406,6 +470,10 @@
 .my-10 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+.my-50 {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
 
 .lists li {
@@ -428,7 +496,7 @@
   top: 0.8rem;
   width: 0.3rem;
   height: 0.3rem;
-  border: radius 100%;
+  border-radius: 100%;
   background-color: #585858;
   content: "";
 }
@@ -493,7 +561,7 @@
   background-color: #606060;
 }
 .bg--gray {
-  background-color: #F5F5F5;
+  background-color: #D9D9D9;
 }
 .bg--white {
   background-color: #fff;
@@ -600,6 +668,9 @@
 .border-bottom {
   border-bottom: 1px solid #B9B9B9;
 }
+.border-bottom--1 {
+  border-bottom: 1px solid #B9B9B9;
+}
 .border-bottom--2 {
   border-bottom: 2px solid #B9B9B9;
 }
@@ -650,6 +721,82 @@ body {
   height: 10rem;
   margin: 0 auto;
   padding: 0 8rem;
+}
+.header__mid {
+  border-bottom: 1px solid #B9B9B9;
+}
+.header__mid__inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: 1680px;
+  width: 100%;
+  height: 8.7rem;
+  margin: 0 auto;
+  padding: 0 2.6rem;
+}
+.header__mid-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.header__mid-info__tit {
+  margin-right: 2.8rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #B9B9B9;
+}
+.header__mid-info__img {
+  margin-right: 1.4rem;
+}
+.header__mid-info__name {
+  margin-right: 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.header__mid-info__capt {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.header__mid-menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: calc(100% - 35.8rem);
+  padding: 0 10rem;
+  padding-right: 0;
+}
+.header__mid-menu a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: auto;
+  color: #585858;
+}
+.header__mid-menu a.is-active {
+  color: #02A4FF;
+}
+.header__mid-menu a .img-wrap {
+  margin-right: 1rem;
+}
+.header__mid-menu a .txt-wrap {
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 .header__bottom__inner {
   position: relative;
@@ -756,7 +903,6 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  width: 100%;
   margin-top: 1.6rem;
 }
 .bradCrumb a {
@@ -775,6 +921,8 @@ body {
 }
 .bradCrumb-sub {
   position: relative;
+  top: auto;
+  right: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1151,6 +1299,7 @@ address {
   margin-left: auto;
 }
 .popup-cont {
+  height: calc(100% - 4.7rem);
   padding: 2rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -1210,6 +1359,54 @@ address {
 }
 .tab-wrap--join a {
   width: 13.5rem;
+}
+.tab-basic {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: -1px;
+}
+.tab-basic > a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 28.8rem;
+  height: 5rem;
+  border: 1px solid #B9B9B9;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  background-color: #EDEDED;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #585858;
+}
+.tab-basic > a + a {
+  border-left: none;
+}
+.tab-basic > a.is-active {
+  border-bottom: 1px solid #fff;
+  background-color: #fff;
+}
+.tab-tit-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 11rem;
+  padding: 1.3rem 0;
+  border-bottom: 1px solid #B9B9B9;
+}
+.tab-tit-area .btn-wrap button + button {
+  margin-left: 1.9rem;
 }
 
 .underline {
@@ -1279,17 +1476,26 @@ address {
   font-weight: 500;
   border-radius: 0.5rem;
 }
-.btn.height-45 {
-  height: 4.5rem;
-}
 .btn.height-30 {
   height: 3rem;
+}
+.btn.height-36 {
+  height: 3.6rem;
+}
+.btn.height-40 {
+  height: 4rem;
+}
+.btn.height-45 {
+  height: 4.5rem;
 }
 .btn.font-11 {
   font-size: 1.1rem;
 }
 .btn.font-14 {
   font-size: 1.4rem;
+}
+.btn.fontW-b {
+  font-weight: 700;
 }
 .btn--medium {
   width: 15rem;
@@ -1306,6 +1512,15 @@ address {
   color: #1868B7;
   border: 1px solid #1868B7;
 }
+.btn--white-black {
+  border: 1px solid #585858;
+  color: #585858;
+}
+.btn--white-blue {
+  background-color: #fff;
+  border: 1px solid #1868B7;
+  color: #1868B7;
+}
 .btn--yellow {
   background-color: #FEE500;
   color: #000;
@@ -1317,6 +1532,14 @@ address {
 .btn--gray {
   background-color: #EDEDED;
   border: 1px solid #B9B9B9;
+}
+.btn--darkgray {
+  background-color: #585858;
+  color: #fff;
+}
+.btn--sea-white {
+  background-color: #02A4FF;
+  color: #fff;
 }
 .btn-inquire--email {
   font-size: 1.4rem;
@@ -1346,6 +1569,7 @@ address {
 }
 .table-basic th:last-child {
   border-right: 1px solid #585858;
+  vertical-align: middle;
 }
 .table-basic td {
   padding: 1.5rem 0;
@@ -1353,9 +1577,28 @@ address {
   font-weight: 500;
   border-top: 1px solid #585858;
   border-left: 1px solid #585858;
+  vertical-align: middle;
 }
 .table-basic td:last-child {
   border-right: 1px solid #585858;
+}
+.table--list th {
+  height: 6.4rem;
+  border: none;
+  border-top: 1px solid #B9B9B9;
+  background: #fff;
+  vertical-align: middle;
+}
+.table--list th:last-child {
+  border-right: none;
+}
+.table--list td {
+  border: none;
+  border-top: 1px solid #B9B9B9;
+  text-align: center;
+}
+.table--list td:last-child {
+  border-right: none;
 }
 
 input[type=text]:disabled, input[type=password]:disabled {
@@ -1376,38 +1619,38 @@ input[type=text]:disabled, input[type=password]:disabled {
       -ms-flex-align: start;
           align-items: flex-start;
 }
-.form-input input[type=text] {
+.form-input input[type=text], .form-input input[type=password] {
   height: 4.8rem;
   border-radius: 0.5rem;
   font-size: 1.4rem;
   text-indent: 1.5rem;
 }
-.form-input input[type=text]::-webkit-input-placeholder {
+.form-input input[type=text]::-webkit-input-placeholder, .form-input input[type=password]::-webkit-input-placeholder {
   font-size: 1.4rem;
   font-weight: 700;
   color: #B9B9B9;
 }
-.form-input input[type=text]::-moz-placeholder {
+.form-input input[type=text]::-moz-placeholder, .form-input input[type=password]::-moz-placeholder {
   font-size: 1.4rem;
   font-weight: 700;
   color: #B9B9B9;
 }
-.form-input input[type=text]:-ms-input-placeholder {
+.form-input input[type=text]:-ms-input-placeholder, .form-input input[type=password]:-ms-input-placeholder {
   font-size: 1.4rem;
   font-weight: 700;
   color: #B9B9B9;
 }
-.form-input input[type=text]::-ms-input-placeholder {
+.form-input input[type=text]::-ms-input-placeholder, .form-input input[type=password]::-ms-input-placeholder {
   font-size: 1.4rem;
   font-weight: 700;
   color: #B9B9B9;
 }
-.form-input input[type=text]::placeholder {
+.form-input input[type=text]::placeholder, .form-input input[type=password]::placeholder {
   font-size: 1.4rem;
   font-weight: 700;
   color: #B9B9B9;
 }
-.form-input input[type=text].height-45 {
+.form-input input[type=text].height-45, .form-input input[type=password].height-45 {
   height: 4.5rem;
 }
 .form-input__capt {
@@ -1475,6 +1718,9 @@ input[type=text]:disabled, input[type=password]:disabled {
 }
 .form-textarea textarea.resize-on {
   resize: auto;
+}
+.form-textarea textarea.width--650 {
+  width: 65rem;
 }
 .form-radio__input {
   position: relative;
@@ -1610,17 +1856,49 @@ input[type=text]:disabled, input[type=password]:disabled {
 .custom-select {
   border-radius: 0.5rem;
 }
+.custom-select--order {
+  margin-left: auto;
+}
+.custom-select--order .custom-select__tit {
+  height: 4rem;
+  padding-left: 3rem;
+  font-weight: 500;
+  border-radius: 0;
+  background-position: calc(100% - 1rem) center;
+}
+.custom-select--order .custom-select__tit::before {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: url(../image/sub/icon/icon-select-oder.png) no-repeat 0 0/cover;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  content: "";
+}
+.custom-select--order .custom-select__options {
+  top: 4.1rem;
+  border-radius: 0;
+}
+.custom-select--order .custom-select__options li button {
+  font-weight: 500;
+}
 .custom-select__tit {
+  position: relative;
   width: 100%;
   height: 4.8rem;
   padding-left: 2rem;
   border: 1px solid #B9B9B9;
   border-radius: 0.5rem;
-  background: url(../image/common/icon/icon-select--down.png) no-repeat calc(100% - 20px) center/auto;
+  background: url(../image/common/icon/icon-select--down.png) no-repeat calc(100% - 2rem) center/auto;
   font-size: 1.4rem;
   font-weight: 700;
   color: #585858;
   text-align: left;
+}
+.custom-select__tit.width--149 {
+  widtH: 14.9rem;
 }
 .custom-select__options {
   overflow: hidden;
@@ -1659,6 +1937,374 @@ input[type=text]:disabled, input[type=password]:disabled {
   height: 2.8rem;
   background-color: #d9d9d9;
   color: #fff;
+}
+
+input[class*=js-datepicker] {
+  width: 100%;
+  background: #fff url("../image/sub/icon/icon-calendar.png") no-repeat 90% center/17px 17px;
+}
+
+.bootstrap-datetimepicker-widget table td .glyphicon-chevron-up,
+.bootstrap-datetimepicker-widget table td .glyphicon-chevron-down,
+.bootstrap-datetimepicker-widget table td .glyphicon-screenshot,
+.bootstrap-datetimepicker-widget table td .glyphicon-time,
+.bootstrap-datetimepicker-widget table td .glyphicon-trash,
+.bootstrap-datetimepicker-widget table td .glyphicon-remove,
+.bootstrap-datetimepicker-widget table td .glyphicon-chevron-up:empty,
+.bootstrap-datetimepicker-widget table td .glyphicon-chevron-down:empty,
+.bootstrap-datetimepicker-widget table td .glyphicon-screenshot:empty,
+.bootstrap-datetimepicker-widget table td .glyphicon-time:empty,
+.bootstrap-datetimepicker-widget table td .glyphicon-trash:empty,
+.bootstrap-datetimepicker-widget table td .glyphicon-remove:empty {
+  display: block;
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-chevron-up:before {
+  content: "▲";
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-chevron-down:before {
+  content: "▼";
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-screenshot:before {
+  content: "⌖";
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-time:before {
+  content: "🕒";
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-calendar:before {
+  content: "▦";
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-trash:before {
+  content: "🗑";
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-remove:before {
+  content: "╳";
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 225px;
+  margin: 6px 0;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #b8c0cb;
+  background-color: #fff;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu:before,
+.bootstrap-datetimepicker-widget.dropdown-menu:after {
+  display: none;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu td {
+  border-top: 1px solid #f3f3f3 !important;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu.usetwentyfour.bottom::after,
+.bootstrap-datetimepicker-widget.dropdown-menu.usetwentyfour.bottom::before {
+  display: none;
+}
+
+.bootstrap-datetimepicker-widget .datepicker {
+  position: relative;
+  z-index: 0;
+}
+
+.bootstrap-datetimepicker-widget table {
+  table-layout: fixed;
+  padding: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.bootstrap-datetimepicker-widget table th,
+.bootstrap-datetimepicker-widget table td {
+  padding: 0;
+  width: auto;
+  height: auto;
+}
+
+.bootstrap-datetimepicker-widget table th.picker-switch {
+  width: auto;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 21px;
+  font-weight: 400;
+  vertical-align: middle;
+}
+
+.bootstrap-datetimepicker-widget table thead tr:first-child th.picker-switch:hover {
+  border-radius: 4px;
+  background-color: #f5f6f8;
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-chevron-left,
+.bootstrap-datetimepicker-widget .glyphicon-chevron-right {
+  display: block;
+  width: 2.4rem;
+  height: 2.7rem;
+  border-radius: 4px;
+  background: no-repeat 50% 50%;
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-chevron-right {
+  margin-left: auto;
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-chevron-left {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24'%3E%3Cg data-name='ic_prev_n' style='opacity:.9'%3E%3Cpath data-name='패스 3499' d='m1832 103 5 5 5-5' transform='rotate(90 968.25 -856.75)' style='fill:none;stroke:%23232931;stroke-width:1.5px'/%3E%3C/g%3E%3C/svg%3E%0A");
+}
+
+.bootstrap-datetimepicker-widget .glyphicon-chevron-right {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24'%3E%3Cg data-name='ic_next_n' style='opacity:.9'%3E%3Cpath data-name='패스 3499' d='m1832 103 5 5 5-5' transform='rotate(-90 874.75 974.25)' style='fill:none;stroke:%23232931;stroke-width:1.5px'/%3E%3C/g%3E%3C/svg%3E%0A");
+}
+
+.bootstrap-datetimepicker-widget th.prev.disabled .glyphicon-chevron-left {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24'%3E%3Cg data-name='ic_prev_n' style='opacity:.9'%3E%3Cpath data-name='패스 3499' d='m1832 103 5 5 5-5' transform='rotate(90 968.25 -856.75)' style='fill:none;stroke:%23232931;stroke-width:1.5px'/%3E%3C/g%3E%3C/svg%3E%0A");
+  opacity: 0.3;
+}
+
+.bootstrap-datetimepicker-widget th.next.disabled .glyphicon-chevron-right {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24'%3E%3Cg data-name='ic_next_n' style='opacity:.9'%3E%3Cpath data-name='패스 3499' d='m1832 103 5 5 5-5' transform='rotate(-90 874.75 974.25)' style='fill:none;stroke:%23232931;stroke-width:1.5px'/%3E%3C/g%3E%3C/svg%3E%0A");
+  opacity: 0.3;
+}
+
+.bootstrap-datetimepicker-widget table thead tr:first-child th.prev:hover,
+.bootstrap-datetimepicker-widget table thead tr:first-child th.next:hover {
+  background: none;
+}
+
+.bootstrap-datetimepicker-widget table thead tr:first-child th.prev:hover .glyphicon-chevron-left,
+.bootstrap-datetimepicker-widget table thead tr:first-child th.next:hover .glyphicon-chevron-right {
+  border-radius: 4px;
+  background-color: #f5f6f8;
+}
+
+.bootstrap-datetimepicker-widget table thead tr:first-child th.prev.disabled:hover .glyphicon-chevron-left,
+.bootstrap-datetimepicker-widget table thead tr:first-child th.next.disabled:hover .glyphicon-chevron-right {
+  background-color: transparent;
+}
+
+.bootstrap-datetimepicker-widget table thead th.dow,
+.bootstrap-datetimepicker-widget table tbody td[colspan="7"] {
+  padding-top: 12px;
+}
+
+.bootstrap-datetimepicker-widget table thead th.dow {
+  padding-bottom: 10px;
+  font-size: 13px;
+  line-height: 19px;
+  font-weight: 400;
+  color: inherit;
+}
+
+.bootstrap-datetimepicker-widget table td.day {
+  width: auto;
+  height: auto;
+  padding: 5px 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: inherit;
+}
+
+.bootstrap-datetimepicker-widget table tr:first-child td.day {
+  border-top: 1px solid #000;
+}
+
+.bootstrap-datetimepicker-widget table td.day.weekend:first-child {
+  color: #30b59c;
+}
+
+.bootstrap-datetimepicker-widget table td.day.weekend:last-child {
+  color: inherit;
+}
+
+.bootstrap-datetimepicker-widget table td.day:hover,
+.bootstrap-datetimepicker-widget table td.hour:hover,
+.bootstrap-datetimepicker-widget table td.minute:hover,
+.bootstrap-datetimepicker-widget table td.second:hover {
+  background: none;
+}
+
+.bootstrap-datetimepicker-widget table td.day:hover:before,
+.bootstrap-datetimepicker-widget table td.hour:hover:before,
+.bootstrap-datetimepicker-widget table td.minute:hover:before,
+.bootstrap-datetimepicker-widget table td.second:hover:before,
+.bootstrap-datetimepicker-widget table td.day.today:before,
+.bootstrap-datetimepicker-widget table td.active:before {
+  content: "";
+  display: block;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  margin: -2px 2px 0;
+  z-index: -1;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: #f5f6f8;
+}
+
+.bootstrap-datetimepicker-widget table td.active,
+.bootstrap-datetimepicker-widget table td.active:hover,
+.bootstrap-datetimepicker-widget table td.active.day.weekend:first-child,
+.bootstrap-datetimepicker-widget table td.active.day.weekend:first-child:hover,
+.bootstrap-datetimepicker-widget table td.active.day.weekend:last-child,
+.bootstrap-datetimepicker-widget table td.active.day.weekend:last-child:hover {
+  color: #fff;
+  text-shadow: none;
+  background: none;
+}
+
+.bootstrap-datetimepicker-widget table td.active:before,
+.bootstrap-datetimepicker-widget table td.active:hover:before {
+  background-color: #30b59c;
+}
+
+.bootstrap-datetimepicker-widget table td.old,
+.bootstrap-datetimepicker-widget table td.new {
+  opacity: 0.6;
+}
+
+.bootstrap-datetimepicker-widget table td.disabled,
+.bootstrap-datetimepicker-widget table td.disabled:hover {
+  opacity: 0.2;
+}
+
+.bootstrap-datetimepicker-widget table td.disabled:before,
+.bootstrap-datetimepicker-widget table td.disabled:hover:before {
+  display: none;
+}
+
+.bootstrap-datetimepicker-widget table td.day.today:before {
+  border: 1px solid #30b59c;
+  bottom: auto;
+  right: auto;
+  background-color: transparent;
+}
+
+.bootstrap-datetimepicker-widget table td.day {
+  text-align: center;
+}
+
+.bootstrap-datetimepicker-widget table td.day.today:hover:before {
+  background-color: #f5f6f8;
+}
+
+.bootstrap-datetimepicker-widget table td.day.today.active:before {
+  background-color: #30b59c;
+}
+
+.bootstrap-datetimepicker-widget table tbody td[colspan="7"]:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.bootstrap-datetimepicker-widget table td span.month,
+.bootstrap-datetimepicker-widget table td span.year,
+.bootstrap-datetimepicker-widget table td span.decade {
+  display: block;
+  float: left;
+  width: 25%;
+  height: auto;
+  margin: 0;
+  font-size: 13px;
+  line-height: 21px;
+  padding: 13px 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.bootstrap-datetimepicker-widget table td span.month:hover,
+.bootstrap-datetimepicker-widget table td span.year:hover,
+.bootstrap-datetimepicker-widget table td span.decade:hover {
+  background: none;
+}
+
+.bootstrap-datetimepicker-widget table td span.month:hover:before,
+.bootstrap-datetimepicker-widget table td span.month.active:before,
+.bootstrap-datetimepicker-widget table td span.year:hover:before,
+.bootstrap-datetimepicker-widget table td span.year.active:before,
+.bootstrap-datetimepicker-widget table td span.decade:hover:before,
+.bootstrap-datetimepicker-widget table td span.decade.active:before {
+  content: "";
+  display: block;
+  position: absolute;
+  margin: -9px 5px 0;
+  z-index: -1;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: #f5f6f8;
+}
+
+.bootstrap-datetimepicker-widget table td span.month.active,
+.bootstrap-datetimepicker-widget table td span.year.active,
+.bootstrap-datetimepicker-widget table td span.decade.active {
+  text-shadow: none;
+  background: none;
+}
+
+.bootstrap-datetimepicker-widget table td span.month.active:before,
+.bootstrap-datetimepicker-widget table td span.month.active:hover:before,
+.bootstrap-datetimepicker-widget table td span.year.active:before,
+.bootstrap-datetimepicker-widget table td span.year.active:hover:before,
+.bootstrap-datetimepicker-widget table td span.decade.active:before,
+.bootstrap-datetimepicker-widget table td span.decade.active:hover:before {
+  background-color: #30b59c;
+}
+
+.bootstrap-datetimepicker-widget table td span.month.disabled,
+.bootstrap-datetimepicker-widget table td span.month.disabled:hover,
+.bootstrap-datetimepicker-widget table td span.year.disabled,
+.bootstrap-datetimepicker-widget table td span.year.disabled:hover,
+.bootstrap-datetimepicker-widget table td span.decade.disabled,
+.bootstrap-datetimepicker-widget table td span.decade.disabled:hover {
+  opacity: 0.2;
+}
+
+.bootstrap-datetimepicker-widget table td span.month.disabled:before,
+.bootstrap-datetimepicker-widget table td span.month.disabled:hover:before,
+.bootstrap-datetimepicker-widget table td span.year.disabled:before,
+.bootstrap-datetimepicker-widget table td span.year.disabled:hover:before,
+.bootstrap-datetimepicker-widget table td span.decade.disabled:before,
+.bootstrap-datetimepicker-widget table td span.decade.disabled:hover:before {
+  display: none;
+}
+
+.bootstrap-datetimepicker-widget .datepicker-decades .decade {
+  font-size: 12px;
+  line-height: 16px !important;
+  height: 62px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.bootstrap-datetimepicker-widget table td span.decade {
+  width: 33.333333%;
+}
+
+.bootstrap-datetimepicker-widget table td span.decade:hover:before,
+.bootstrap-datetimepicker-widget table td span.decade.active:before {
+  margin: -10px 0 0 -4px;
+  width: 52px;
+  height: 52px;
+}
+
+.bootstrap-datetimepicker-widget table td span:empty {
+  display: none;
 }
 
 .icon {

@@ -7,11 +7,17 @@
     font-weight:500;
     border-radius:.5rem;
     &.height{
-        &-45{
-            height:4.5rem;
-        }
         &-30{
             height:3rem;
+        }
+        &-36{
+            height:3.6rem;
+        }
+        &-40{
+            height:4rem;
+        }
+        &-45{
+            height:4.5rem;
         }
     }
     &.font{
@@ -20,6 +26,11 @@
         }
         &-14{
             font-size:1.4rem;
+        }
+        &W{
+            &-b{
+                font-weight:700;
+            }
         }
     }
     &--large{
@@ -42,6 +53,15 @@
         background-color:#fff;
         color:#1868B7;
         border:1px solid #1868B7;
+        &-black{
+            border:1px solid #585858;
+            color:#585858;
+        }
+        &-blue{
+            background-color:#fff;
+            border:1px solid #1868B7;
+            color:#1868B7;
+        }
     }
     &--yellow{
         background-color:#FEE500;
@@ -54,6 +74,16 @@
     &--gray{
         background-color:#EDEDED;
         border:1px solid #B9B9B9;
+    }
+    &--darkgray{
+        background-color:#585858;
+        color:#fff;
+    }
+    &--sea{
+        &-white{
+            background-color:#02A4FF;
+            color:#fff;
+        }
     }
     &-inquire{
         &--email{

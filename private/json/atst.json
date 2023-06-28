@@ -1,0 +1,27 @@
+{
+    "atstDesc": "",
+    "atstID": "",
+    "birthYY": "",
+    "birthDt": "",
+    "atstAtwrk": [
+        {
+            "atwrkNm": "",
+            "mkYY": "",
+            "mkDt": "",
+            "atwrkDesc": "",
+            "medium": "",
+            "metRias": "",
+            "style": "",
+            "pric": 0,
+            "sellTp": "",
+            "wartyYn": "",
+            "catgYn": "",
+            "etc": "",
+            "wSize": 0,
+            "hSize": 0
+        }
+    ],
+    "sex": "",
+    "style": "",
+    "atstNm": ""
+}

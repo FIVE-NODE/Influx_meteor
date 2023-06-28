@@ -122,6 +122,9 @@
     &-100{
         width:100%;
     }
+    &-50{
+        width:50%;
+    }
 }
 .h{
     &-100{
@@ -141,6 +144,12 @@
     &--112{
         width:11.2rem;
     }
+    &--120{
+        width:12rem;
+    }
+    &--125{
+        width:12.5rem;
+    }
     &--135{
         width:13.5rem;
     }
@@ -150,14 +159,23 @@
     &--170{
         width:17rem;
     }
+    &--196{
+        width:19.6rem;
+    }
     &--211{
         width:21.1rem;
+    }
+    &--250{
+        width:25rem;
     }
     &--257{
         width:25.7rem;
     }
     &--266{
         width:26.6rem;
+    }
+    &--300{
+        width:30rem;
     }
     &--315{
         width:31.5rem;
@@ -174,6 +192,9 @@
     &--650{
         width:65rem;
     }
+    &--725{
+        width:72.5rem;
+    }
     &--787{
         width:78.7rem;
     }
@@ -183,6 +204,12 @@
     &--1160{
         width:116rem;
     }
+    &--1315{
+        width:131.5rem;
+    }
+    &--1680{
+        width:168rem;
+    }
 }
 .height{
     &-40{
@@ -190,6 +217,9 @@
     }
     &-45{
         height:4.5rem;
+    }
+    &-66{
+        height:6.6rem;
     }
 }
 .p{
@@ -234,6 +264,15 @@
         }
         &-20{
             padding-left:2rem;
+        }
+        &-30{
+            padding-left:3rem;
+        }
+        &-40{
+            padding-left:4rem;
+        }
+        &-50{
+            padding-left:5rem;
         }
     }
     &x{
@@ -287,8 +326,14 @@
         &-100{
             margin-left:10rem;
         }
+        &-150{
+            margin-left:15rem;
+        }
     }
     &t{
+        &-0{
+            margin-top:0;
+        }
         &-5{
             margin-top:.5rem;
         }
@@ -324,6 +369,18 @@
         }
     }
     &b{
+        &-0{
+            margin-bottom:0;
+        }
+        &-5{
+            margin-bottom:.5rem;
+        }
+        &-10{
+            margin-bottom:1rem;
+        }
+        &-20{
+            margin-bottom:2rem;
+        }
         &-25{
             margin-bottom:2.5rem;
         }
@@ -350,6 +407,9 @@
         &-10{
             margin-right:1rem;
         }
+        &-15{
+            margin-right:1.5rem;
+        }
         &-20{
             margin-right:2rem;
         }
@@ -361,6 +421,10 @@
         &-auto{
             margin-left:auto;
             margin-right:auto;
+        }
+        &-3{
+            margin-left:.3rem;
+            margin-right:.3rem;
         }
         &-5{
             margin-left:.5rem;
@@ -375,6 +439,10 @@
         &-10{
             margin-top:1rem;
             margin-bottom:1rem;
+        }
+        &-50{
+            margin-top:5rem;
+            margin-bottom:5rem;
         }
     }
 }
@@ -406,7 +474,7 @@
                     top:.8rem;
                     width:.3rem;
                     height:.3rem;
-                    border: radius 100%;
+                    border-radius: 100%;
                     background-color:#585858;
                     content:""
                 }
@@ -490,7 +558,7 @@
         background-color:#606060;
     }
     &--gray{
-        background-color:#F5F5F5;
+        background-color:#D9D9D9;
     }
     &--white{
         background-color:#fff;
@@ -587,6 +655,9 @@
     }
     &-bottom{
         border-bottom:1px solid #B9B9B9;
+        &--1{
+            border-bottom:1px solid #B9B9B9;
+        }
         &--2{
             border-bottom:2px solid #B9B9B9;
         }

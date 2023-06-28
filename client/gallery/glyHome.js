@@ -1,0 +1,98 @@
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+
+import './glyHome.html';
+
+// DB 조회
+// ethodNm  - Meteor.call URL
+// query    - 조회 조건문
+// datas    - ReactiveDict 상태 값 저장용
+function findDBs(methodNm, query, datas, total) {
+    Meteor.call(methodNm, query, function(err, data) {
+        if(data != undefined) {
+            datas.set(methodNm, data.list);
+            total.set(data.total);
+        }
+    }); 
+}
+
+// query 셋팅
+function setQuery() {
+    var addr = $('input[name=addr]').val().split(',');
+    var area = addr[0] != undefined ? addr[0] : '';
+    var dong = addr[1] != undefined ? addr[1] : '';
+    var glryNm =  $('input[name=glryNm]').val();
+    
+    query = {
+        area : area,
+        dong : dong,
+        glryNm : glryNm,
+        skip : skip.get(),
+        limit : limit.get()
+    };
+
+    return query;
+}
+
+Template.glyHome.onCreated(function() {
+    this.filterCriteria = new ReactiveVar('');
+
+    datas = new ReactiveDict();
+    
+    // pageing 처리를 위한 변수
+    curPage = new ReactiveVar(1);
+    skip = new ReactiveVar(0);
+    limit = new ReactiveVar(2);
+    total = new ReactiveVar(0);
+
+    query = {
+        dong : '',
+        area : '',
+        glryNm : '',
+        skip : skip.get(),
+        limit: limit.get()
+    };
+
+    findDBs('selectNewGallery', query, datas, total);
+
+    findDBs('selectGallery', query, datas, total);
+    
+});
+
+Template.glyHome.onRendered(function() {
+});
+
+Template.glyHome.events({
+    'click button[name=searchBtn]'() {
+        findDBs('selectGallery', setQuery(), datas, total);
+    },
+    'click a[name=detail]'() {
+        FlowRouter.go(`/atwrkList/${this._id}`);
+        document.location.reload(true);
+    },
+    'click a[name=prev]'() {
+        Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip);
+        findDBs('selectGallery', setQuery(), datas, total);
+    },
+    'click a[name=next]'() {
+        Meteor.clientCommonUtils.nextPage(curPage, total.get(), limit, skip);
+        findDBs('selectGallery', setQuery(), datas, total);
+    },
+    'click a[name=pageNum]'() {
+        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num);
+        findDBs('selectGallery', setQuery(), datas, total);
+    }
+});
+
+Template.glyHome.helpers({
+    newGallery() {
+        return datas.get('selectNewGallery');
+    },
+    searchGallery() {
+        return datas.get('selectGallery');
+    },
+    page() {
+        let res = Meteor.clientCommonUtils.setPage(limit.get(), total.get());
+        return res;
+    }
+    
+});

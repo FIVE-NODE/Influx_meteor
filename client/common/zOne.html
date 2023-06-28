@@ -1,9 +1,10 @@
 <template name="zOne">
+    {{#if renderChk}}
     <section class="container">
         <div class="content">
             <div class="content__inner">
                 <h3 class="subTit">
-                    <span class="subTit__inner">
+                    <span class="subTit__inner" id="move">
                         회사소개
                     </span>
                 </h3>
@@ -48,6 +49,7 @@
             </div>
         </div>
     </section>
+    {{/if}}
     <footer class="footer">
         {{> footer}}
     </footer>

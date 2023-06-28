@@ -16,7 +16,7 @@ input[type="text"], input[type="password"]{
         }
     }
     &-input{
-        input[type='text']{
+        input[type='text'], input[type="password"]{
             height:4.8rem;
             border-radius:.5rem;
             font-size:1.4rem;
@@ -83,6 +83,9 @@ input[type="text"], input[type="password"]{
                 &-on{
                     resize:auto;
                 }
+            }
+            &.width--650{
+                width:65rem;
             }
         }
     }
@@ -191,17 +194,55 @@ input[type="text"], input[type="password"]{
 .custom{
     &-select{
         border-radius:.5rem;
+        &--order{
+            margin-left:auto;
+            .custom{
+                &-select{
+                    &__tit{
+                        height:4rem;
+                        padding-left:3rem;
+                        font-weight:500;
+                        border-radius:0;
+                        background-position:calc(100% - 1rem) center;
+                        &::before{
+                            @include pos(absolute, $t:50%, $l:1rem);
+                            width:1.4rem;
+                            height:1.4rem;
+                            background:url(../image/sub/icon/icon-select-oder.png) no-repeat 0 0/cover;
+                            transform:translateY(-50%);
+                            content:""
+                        }
+                    }
+                    &__options{
+                        top:4.1rem;
+                        border-radius: 0;
+                        li{
+                            button{
+                                font-weight:500;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         &__tit{
+            position:relative;
             width:100%;
             height:4.8rem;
             padding-left:2rem;
             border:1px solid #B9B9B9;
             border-radius:.5rem;
-            background:url(../image/common/icon/icon-select--down.png) no-repeat calc(100% - 20px) center/auto;
+            background:url(../image/common/icon/icon-select--down.png) no-repeat calc(100% - 2rem) center/auto;
             font-size:1.4rem;
             font-weight:700;
             color:#585858;
             text-align:left;
+            &.width{
+                &--149{
+                    widtH:14.9rem;
+                }
+                
+            }
         }
         &__options{
             overflow:hidden;

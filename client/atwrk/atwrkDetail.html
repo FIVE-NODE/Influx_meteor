@@ -1,0 +1,230 @@
+<template name="atwrkDetail">
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__product">
+                        <div class="product-wrap">
+                            <div class="product-view">
+                                <ul class="bradCrumb bradCrumb-sub w-100">
+                                    <li>갤러리</li>
+                                    {{#with atwrkDetail}}
+                                    <li>{{atwrkDetail.glry.glryNm}}</li>
+                                    {{/with}}
+                                    <li>작품 상세정보</li>
+                                </ul>
+                                <div class="product-view__imgGroup">
+                                    <div class="imgGroup-list">
+                                        {{#each detailImages}}
+                                            <button type="button">
+                                                <img src={{imgID}} alt="">
+                                            </button>
+                                        {{/each}}
+                                    </div>
+                                    <div class="imgGroup-detail">
+                                        <div class="imgGroup-detail__img">
+                                            <img src={{mainImage.imgID}} style="max-width: 650px;" alt="">
+                                        </div>
+                                        <button type="button" class="imgGroup-detail__favor">
+                                            <img src="/image/sub/icon/icon-favor.png" alt="">
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="product-view__purchase">
+                                    <div class="tab-wrap tab-purchace">
+                                        <div class="tab-link">
+                                            {{#if orgDtFlag.both}}
+                                                <button type="button" name="ogPrtTab" class="is-active" data-id="purchace--01">원    화</button>
+                                                <button type="button" name="dtPrtTab" data-id="purchace--02">디지털 에디션 판화</button>
+                                            {{else}}
+                                                {{#if orgDtFlag.inboth}}
+                                                    <button type="button" class="is-active" data-id="purchace--01">원    화</button>
+                                                {{else}}
+                                                    <button type="button" data-id="purchace--02">디지털 에디션 판화</button>
+                                                {{/if}}
+                                            {{/if}}
+                                        </div>
+                                        {{#if atwrkDetail}}
+                                            <!-- 원 화 부분 -->
+                                            <div class="tab-cont is-open" id="purchace--01">
+                                                <div class="purchace-wrap">
+                                                    <div class="purchace-top">
+                                                        <p class="purchace__tit">{{atwrkDetail.atstInfo.atstNm}}</p>
+                                                        <p class="purchace__subtit mt-30">{{atwrkDetail.ogPrt.atwrkNm}}, {{atwrkDetail.ogPrt.mkYY}}</p>
+                                                        <span class="purchace__info mt-20">
+                                                            {{atwrkDetail.ogPrt.metRias}}<br/>
+                                                            {{atwrkDetail.ogPrt.wSize}} x {{atwrkDetail.ogPrt.hSize}} cm                                                        
+                                                        </span>
+                                                        <p class="purchace__price mt-30">{{atwrkDetail.ogPrt.pric}} 원</p>
+                                                        <div class="btn-wrap purchace__btns mt-50">
+                                                            <a href="" class="btn btn--blue btn--round">구 매 하 기</a>
+                                                            <a href="" class="btn btn--blue btn--round">장 바 구 니</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="purchace-mid">
+                                                        <div class="d-flex purchace-comp">
+                                                            <p class="purchace-comp__tit">{{atwrkDetail.glry.glryNm}}</p>
+                                                            <p class="purchace-comp__addr">{{atwrkDetail.glry.area}} {{atwrkDetail.glry.sigungu}} {{atwrkDetail.glry.dong}}</p>
+                                                            <button type="button" class="purchace-comp__btn">
+                                                                <img src="/image/sub/icon/icon-alarm.png" alt="">
+                                                                소 식 받 기
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="purchace-bot">
+                                                        <div class="purchace-policy">
+                                                            <p>
+                                                                <span>
+                                                                    <img src="/image/sub/icon/icon-check.png" alt="">
+                                                                </span>
+                                                                운송비 정책
+                                                            </p>
+                                                            <p>
+                                                                <span>
+                                                                    <img src="/image/sub/icon/icon-check.png" alt="">
+                                                                </span>
+                                                                구매 후 15일 반품 정책
+                                                            </p>
+                                                        </div>
+                                                        <div class="purchace-counts mt-40">
+                                                            <button name="itemGood" disabled={{loginChk}}>
+                                                                <p class="purchace-counts__favor">
+                                                                    <span class="purchace-counts__favor--img"><img src="/image/sub/icon/icon-favor__count.png" alt=""></span>
+                                                                    <span>{{atwrkDetail.ogPrt.goodCnt}}</span>
+                                                                </p>
+                                                            </button> 
+                                                            <p class="purchace-counts__views">
+                                                                <span>{{atwrkDetail.ogPrt.viewCnt}}</span> Views
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <!-- 디지털 에디션 판화 부분 -->
+                                            {{#if atwrkDetail.dtPrt.atwrkNm}}
+                                            <div class="tab-cont" id="purchace--02">
+                                                <div class="purchace-wrap">
+                                                    <div class="purchace-top">
+                                                        <p class="purchace__tit">{{atwrkDetail.atstInfo.atstNm}}</p>
+                                                        <p class="purchace__subtit mt-30">{{atwrkDetail.dtPrt.atwrkNm}}, {{atwrkDetail.dtPrt.mkYY}}</p>
+                                                        <!-- <span class="purchace__info mt-20">
+                                                            Oil on canvas...<br/>
+                                                            460 x 200 cm  ...                                                      
+                                                        </span> -->
+                                                        <p class="purchace__price mt-30">{{atwrkDetail.dtPrt.mPric}} 원</p>
+                                                        <div class="btn-wrap purchace__btns mt-50">
+                                                            <a href="" class="btn btn--blue btn--round">구 매 하 기</a>
+                                                            <a href="" class="btn btn--blue btn--round">장 바 구 니</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="purchace-mid">
+                                                        <div class="d-flex purchace-comp">
+                                                            <p class="purchace-comp__tit">{{atwrkDetail.glry.glryNm}}</p>
+                                                            <p class="purchace-comp__addr">{{atwrkDetail.glry.area}} {{atwrkDetail.glry.sigungu}} {{atwrkDetail.glry.dong}}</p>
+                                                            <button type="button" class="purchace-comp__btn">
+                                                                <img src="/image/sub/icon/icon-alarm.png" alt="">
+                                                                소 식 받 기
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="purchace-bot">
+                                                        <div class="purchace-policy">
+                                                            <p>
+                                                                <span>
+                                                                    <img src="/image/sub/icon/icon-check.png" alt="">
+                                                                </span>
+                                                                운송비 정책
+                                                            </p>
+                                                            <p>
+                                                                <span>
+                                                                    <img src="/image/sub/icon/icon-check.png" alt="">
+                                                                </span>
+                                                                구매 후 15일 반품 정책
+                                                            </p>
+                                                        </div>
+                                                        <div class="purchace-counts mt-40">
+                                                            <p class="purchace-counts__favor">
+                                                                <span class="purchace-counts__favor--img"><img src="/image/sub/icon/icon-favor__count.png" alt=""></span>
+                                                                <span>{{atwrkDetail.dtPrt.goodCnt}}</span>
+                                                            </p>
+                                                            <p class="purchace-counts__views">
+                                                                <span>{{atwrkDetail.dtPrt.viewCnt}}</span> Views
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{/if}}
+                                        {{/if}}
+                                    </div>
+                                </div>
+                                <div class="product-view__info">
+                                    {{#with atstInfo}}
+                                        <div class="product-view__info--author">
+                                            <div class="author-name">
+                                                <span class="author-name__img">
+                                                    <img src="/image/sub/img-product__author--img01.png" alt="">
+                                                </span>
+                                                    {{atstInfo.atstNm}}
+                                            </div>
+                                            <div class="author-profile">
+                                                {{atstInfo.atstDesc}}
+                                            </div>
+                                        </div>
+                                        {{#if atstInfo.atstAddDesc}}
+                                            <div class="product-view__info--history">
+                                                <div class="author-history">
+                                                    {{atstInfo.atstAddDesc}}
+                                                    <a href="" class="underline">더보기</a>
+                                                </div>
+                                            </div>
+                                        {{/if}}
+                                    {{/with}}
+                                </div>
+                            </div>
+                            <div class="product-others">
+                                {{#with atwrkDetail}}
+                                    <p class="product-others__tit"> {{atwrkDetail.glry.glryNm}} 다른 작품들</p>
+                                {{/with}}
+                                <div class="slide-wrap slide-list--product mt-50">
+                                    <div class="swiper">
+                                        <div class="swiper-wrapper">
+                                            {{#each atwrkList}}
+                                                <div class="swiper-slide">
+                                                    <div class="btn-wrap btn-slide--check">
+                                                        <button type="button" title="장바구니 넣기">
+                                                            <img src="/image/main/icon/icon-basket.png" alt="">
+                                                        </button>
+                                                        <button type="button" title="찜하기">
+                                                            <img src="/image/main/icon/icon-favor.png" alt="">
+                                                        </button>
+                                                    </div>
+                                                    <a href="" value={{_id}}>
+                                                        <!-- 임시로 max-width 280px 넣음 -->
+                                                        <img style="max-width: 280px;" src={{imgInfo.imgID}} alt="">
+                                                    </a>
+                                                    <p class="swiper-slide__tit">{{atstNm}}</p>
+                                                    <p class="swiper-slide__txt">
+                                                        <em>{{atwrkNm}}, {{wSize}} x {{hSize}}, {{ogPrt}}</em>
+                                                        <em>{{glryNm}}</em>
+                                                        <em>{{pric}} 원</em>
+                                                    </p>
+                                                </div>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                    <div class="swiper-button-prev"></div>
+                                    <div class="swiper-button-next"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+</template>

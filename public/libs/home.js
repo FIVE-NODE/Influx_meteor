@@ -1,5 +1,13 @@
 // 스와이프 설정 셋팅
 $(function() {
+    const curatorBanr = new Swiper('.slide-wrap--banr .swiper', {
+        slidesPerView:'auto',
+        spaceBetween:13,
+        navigation:{
+            nextEl: '.slide-wrap--banr .swiper-button-next',
+            prevEl: '.slide-wrap--banr .swiper-button-prev',
+        }
+    });
     const curatorSwiper = new Swiper('.slide-wrap--curator .swiper', {
       slidesPerView:'auto',
       spaceBetween:13,

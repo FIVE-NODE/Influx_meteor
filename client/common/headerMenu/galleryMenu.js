@@ -10,6 +10,11 @@ Template.galleryMenu.events({
     'click button[name=allCancel]'() {
         $('input[name=chk]').prop("checked", false);
     },
+    'click button[name=schBtn]'(evt, tmpl) {
+        console.log('Gallery menu');
+        console.log(evt);
+        console.log(tmpl);
+    }
 });
 
 Template.galleryMenu.helpers({

@@ -21,12 +21,16 @@ Template.login.events({
         loginFlag.set(false);
     },
     'click button[name=loginBtn]'() {
-        var email = $('input[name=loginEmail]').val();
-        var pwd = $('input[name=loginPwd]').val();
-        Meteor.call('selectMBer', { email: email, pwd: pwd } , function(err, res) {
-            Meteor.commonUtils.logedIn();
-            FlowRouter.go('aOne');
-        });
+        if(loginFlag.get()) {
+            var email = $('input[name=loginEmail]').val();
+            var pwd = $('input[name=loginPwd]').val();
+            Meteor.call('selectMBer', { email: email, pwd: pwd } , function(err, res) {
+                Meteor.commonUtils.logedIn(res);
+                FlowRouter.go('aOne');
+            });
+        } else {
+
+        }
     }
 });
 

@@ -4,7 +4,8 @@ Template.zTwo.onCreated(function() {
 });
 
 Template.zTwo.onRendered(function() {
-
+    var location = $('#move').offset().top;
+    Meteor.commonUtils.scrollTop(location);
 });
 
 Template.zTwo.events({

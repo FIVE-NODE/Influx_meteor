@@ -1,0 +1,79 @@
+{
+    "image": [
+        {
+            "atwrkTp": "",
+            "imgID": "",
+            "imgSortNo": 0,
+            "rprsn": "",
+            "size": ""
+        }
+    ],
+    "dtPrt": {
+        "atwkNm": "",
+        "mkYY": "",
+        "base": "",
+        "style1": "",
+        "style2": "",
+        "leCnt": 0,
+        "selCnt": 0,
+        "selStrDt": "",
+        "selEndDt": "",
+        "viewCnt": 0,
+        "goodCnt": 0,
+        "sPric": 0,
+        "mPric": 0,
+        "lPric": 0
+    },
+    "atstInfo": {
+        "atstNm": "",
+        "atstDesc": "",
+        "atstAddDesc": "",
+        "atstImage": "",
+        "invNm": ""
+    },
+    "sngl": "",
+    "insDt": "",
+    "ogPrt": {
+        "atwrkNm": "",
+        "mkYY": "",
+        "medium": "",
+        "metRias": "",
+        "style1": "",
+        "style2": "",
+        "pric": 0,
+        "sellTp": "",
+        "wartyYn": "",
+        "catgYn": "",
+        "viewCnt": 0,
+        "goodCnt": 0,
+        "bid": {
+            "strAmt": 0,
+            "strDt": "",
+            "endDt": "",
+            "immdPurchPric": 0,
+            "bidInfo": [
+                {
+                    "bidInfoID": "",
+                    "bidInfoMob": "",
+                    "bidInfoAmt": 0,
+                    "bidInfoDt": ""
+                }
+            ],
+            "nPric": 0
+        },
+        "wSize": 0,
+        "hSize": 0,
+        "dSize": 0
+    },
+    "atwrkID": "",
+    "sellYn": "",
+    "glry": {
+        "bsnsID": "",
+        "glryNm": "",
+        "area": "",
+        "dong": "",
+        "sigungu": ""
+    },
+    "atwrkRgst": "",
+    "updDt": ""
+}

@@ -1,0 +1,77 @@
+<template name="atwrkList">
+    {{#if renderFlag}}
+    <section class="container" id="move">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content">
+                    <div class="sub-content__product">
+                        <div class="product-wrap">
+                            {{#if details}}
+                            {{glryNm}}
+                                <div class="product-comp">
+                                    <div class="product-comp__inner">
+                                        <span class="product-comp__img">
+                                            <img src="/image/sub/img-product--comp01.png" alt="">
+                                        </span>
+                                        <p class="product-comp__name">{{details.glryNm}}</p>
+                                        <p class="product-comp__info">About
+{{details.atwrkDesc}}
+
+위치: {{details.addr1}}
+{{details.homeUrl}}             
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="product-capt">
+                                    <div class="product-capt__img">
+                                        <img src="/image/sub/img-product--capt01.png" alt="">
+                                    </div>
+                                    <p class="product-capt__info">
+                                        기획전
+                                        <span>Focal Point, 2023. 3.10 ~ 3. 27,  Presented by {{glryNm}}</span>
+                                    </p>
+                                    <a href="/glyDipEvt" class="product-capt__btn">상 세 보 기</a>
+                                </div>
+                            {{/if}}
+                            <div class="product-group">
+                                {{> searchFilter}}
+                                <div class="product-list">
+                                    {{#if atwrk}}
+                                        {{#each atwrk}}                                    
+                                            <div class="product-item product-item{{imgInfo.size}}">
+                                                <a name="atwrkDetail" value={{_id}} href="">
+                                                    <span class="product-item__img">
+                                                        <img src="{{imgInfo.imgID}}" alt="">
+                                                    </span>
+                                                    <span class="product-item__tit">{{atstNm}}</span>
+                                                    <span class="product-item__cont">
+                                                        {{atwrkNm}}, {{wSize}} x {{hSize}}, {{pgPrt}}<br/>
+                                                        {{glryNm}}<br/>
+                                                        {{pric}} 원
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        {{/each}}
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination-wrap mt-40 mb-40">
+                            <div class="pagination">
+                                <a href="" name="prev" class="link-prev"></a>
+                                {{#each page}}
+                                    <a href="" id="pageNum{{num}}" name="pageNum" class="{{active}}">{{num}}</a>
+                                {{/each}}
+                                <a href="" name="next" class="link-next"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+    {{/if}}
+</template>

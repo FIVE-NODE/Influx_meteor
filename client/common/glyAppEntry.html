@@ -1,4 +1,5 @@
 <template name="glyAppEntry">
+    <script type="text/javascript" src="/libs/common.js"></script>
     <section class="container">
         <div class="content">
             <div class="content__inner">
@@ -28,7 +29,7 @@
                                     <dd>
                                         <div class="form-wrap">
                                             <div class="form-input">
-                                                <input type="text" class="width--420" />
+                                                <input name="companyNm" type="text" class="width--420" />
                                                 <label for="" class="d-block mt-5 font--14 color--gray">
                                                     ※ 사업자등록증의 법인명 또는 상호명을 입력하세요.
                                                 </label>
@@ -42,29 +43,35 @@
                                         <div class="form-wrap form-row width--420">
                                             <div class="form-row flex-9">
                                                 <div class="form-input flex-1 mr-5">
-                                                    <input type="text" class="w-100" />
+                                                    <input name="bNum1" maxlength="3" type="number" class="w-100" />
                                                 </div>
                                                 -
                                                 <div class="form-input flex-1 ml-5 mr-5">
-                                                    <input type="text" class="w-100" />
+                                                    <input name="bNum2" maxlength="2" type="number" class="w-100" />
                                                 </div>
                                                 -
                                                 <div class="form-input flex-1 ml-5">
-                                                    <input type="text" class="w-100" />
+                                                    <input name="bNum3" maxlength="5" type="number" class="w-100" />
                                                 </div>
                                             </div>
                                             <div class="btn-wrap flex-3 ml-10">
-                                                <button type="button" class="btn btn--blue">사업자 확인</button>
+                                                <button type="button" name="bsNumChk" class="btn btn--blue">사업자 확인</button>
                                             </div>
                                         </div>
+                                        {{#if bnsChk.chk}}
+                                            <div style="margin-top: 10px;">
+                                                <em style="color: #FF0000;">{{bnsChk.message}}</em>
+                                            </div>
+                                        {{/if}}
                                     </dd>
+                                    
                                     <dt class="mt-10">
                                         <em>홈페이지</em>
                                     </dt>
                                     <dd class="mt-10">
                                         <div class="form-wrap">
                                             <div class="form-input">
-                                                <input type="text" class="width--420" />
+                                                <input name="homeUrl" type="text" class="width--420" />
                                             </div>
                                         </div>
                                     </dd>
@@ -79,7 +86,7 @@
                                     <dd>
                                         <div class="form-wrap">
                                             <div class="form-input">
-                                                <input type="text" class="width--420" />
+                                                <input name="smaNm" type="text" class="width--420" />
                                             </div>
                                         </div>
                                     </dd>
@@ -90,15 +97,15 @@
                                         <div class="form-wrap form-row width--420">
                                             <div class="form-row">
                                                 <div class="form-input flex-1 mr-5">
-                                                    <input type="text" class="w-100" />
+                                                    <input maxlength="3" name="smaPhone" type="text" class="w-100" />
                                                 </div>
                                                 -
                                                 <div class="form-input flex-1 ml-5 mr-5">
-                                                    <input type="text" class="w-100" />
+                                                    <input maxlength="4" name="smaPhone" type="text" class="w-100" />
                                                 </div>
                                                 -
                                                 <div class="form-input flex-1 ml-5">
-                                                    <input type="text" class="w-100" />
+                                                    <input maxlength="4" name="smaPhone" type="text" class="w-100" />
                                                 </div>
                                             </div>
                                         </div>
@@ -109,7 +116,7 @@
                                     <dd class="mt-10">
                                         <div class="form-wrap">
                                             <div class="form-input">
-                                                <input type="text" class="width--420" />
+                                                <input name="smaEmail" type="" class="width--420" />
                                             </div>
                                         </div>
                                     </dd>
@@ -124,7 +131,7 @@
                                     <dd>
                                         <div class="form-wrap">
                                             <div class="form-input">
-                                                <input type="text" class="width--420" placeholder="※ 사업자등록증의 상호명과 같을 경우 동일한 이름을 적어주세요." />
+                                                <input name="glyNm" type="text" class="width--420" placeholder="※ 사업자등록증의 상호명과 같을 경우 동일한 이름을 적어주세요." />
                                             </div>
                                         </div>
                                     </dd>
@@ -134,40 +141,40 @@
                                     <dd class="mt-10">
                                         <div class="form-wrap form-row flex-wrap width--420">
                                             <div class="form-input mr-5">
-                                                <input type="text" class="w-100" disabled="disabled" />
+                                                <input name="zipCode" type="text" class="w-100" disabled="disabled" />
                                             </div>
                                             <div class="btn-wrap ml-10">
-                                                <button type="button" class="btn btn--blue">사업자 확인</button>
+                                                <button type="button" class="btn btn--blue popup" data-id="addrs-Popup">사업자 확인</button>
                                             </div>
                                             <div class="form-input w-100 mt-10">
-                                                <input type="text" class="w-100" disabled="disabled" />
+                                                <input name="address" type="text" class="w-100" disabled="disabled" />
                                             </div>
                                             <div class="form-input w-100 mt-10">
-                                                <input type="text" class="w-100" placeholder="상세주소" />
+                                                <input name="detail" type="text" class="w-100" placeholder="상세주소" />
                                             </div>
                                         </div>
                                     </dd>
                                     <dt class="mt-10">
-                                        <em>소장작품 설명</em><span class="essential">*</span>
+                                        <em class="somthingDisabled">소장작품 설명</em><span class="essential somthingDisabled">*</span>
                                     </dt>
                                     <dd class="mt-10">
                                         <div class="form-wrap">
                                             <div class="form-textarea">
-                                                <textarea name="" id="" class="w-100" placeholder="※ 주로다루는 작품(Fine Art, 유화,수체화,일러스트, 디지털 아트, 카툰 등), 소장 작품의 수, 대표하는 장르 등 적어주세요."></textarea>
+                                                <textarea disabled name="" id="" class="w-100 somthingDisabled" placeholder="※ 주로다루는 작품(Fine Art, 유화,수체화,일러스트, 디지털 아트, 카툰 등), 소장 작품의 수, 대표하는 장르 등 적어주세요."></textarea>
                                             </div>
                                         </div>
                                     </dd>
                                     <dt class="mt-10">
-                                        <em>대표 작품</em><span class="essential">*</span>
+                                        <em class="somthingDisabled">대표 작품</em><span class="essential somthingDisabled">*</span>
                                     </dt>
                                     <dd class="mt-10">
                                         <div class="d-flex flex-wrap align-center">
-                                            <a href="/uploadRepWork"><button type="button" class="btn btn--blue col-3">대표 작품 올리기</button></a>
-                                            <p class="ml-10 font-13">선택된 파일이 없습니다.</p>
-                                            <p class="w-100 mt-10 font-13 fontW-500 color-blue">
+                                            <a href="/uploadRepWork"><button type="button" class="btn btn--blue col-3 somthingDisabledBackground" disabled>대표 작품 올리기</button></a>
+                                            <p class="ml-10 font-13 somthingDisabled">선택된 파일이 없습니다.</p>
+                                            <p class="w-100 mt-10 font-13 fontW-500 color-blue somthingDisabled">
                                                 *대표하는 작가의 작품을 올려주세요 (최소 다른 3명의 작가의 작품)
                                             </p>
-                                            <p class="w-100 mt-10 font-13 fontW-500 color-blue">
+                                            <p class="w-100 mt-10 font-13 fontW-500 color-blue somthingDisabled">
                                                 *작품을 볼 수 있는 홈페이지나 다른 URL주소가  있다면 소장작품 설명 입력창에 남겨주세요
                                             </p>
                                         </div>
@@ -202,7 +209,14 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap mt-50 ta-c">
-                                    <button type="button" class="btn btn--blue">입점 신청 완료</button>
+                                    <button type="button" name="bnsSubmit" class="btn btn--blue">입점 신청 완료</button>
+                                </div>
+                                <div class="betaVersionDiv">
+                                    <ul>
+                                        <li class="betaVersion">· 현재 베타 버젼으로 서비스 운영 중입니다.</li>
+                                        <li class="betaVersion">· 갤러리 및 사업장 기본 정보를 입력하여 신청해 주시면 임시 비밀번호가 발급됩니다.</li>
+                                        <li class="betaVersion">· 베타버젼 서비스 종료 후 본 서비스의 이용을 위해 입점신청을 완료해야 합니다.</li>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="form-write form-write--admit px-100 py-40">
@@ -219,6 +233,10 @@
             </div>
         </div>
     </section>
+    <footer class="footer">
+        {{> footer}}
+    </footer>
 
-    {{> zipCode}}
+    {{> zipCode addr}}
+    {{> utilsPopUp popup}}
 </template>

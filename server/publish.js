@@ -1,8 +1,12 @@
 import { Meteor } from 'meteor/meteor';
-import { Pick, Atwrk } from '../lib/collections.js';
+import { Pick, Atwrk, Mber } from '../lib/collections.js';
 
 Meteor.publish('ArtStartPub', function() {
+});
 
+Meteor.publish('atwrkSch', function(data) {
+    console.log(data);
+    return data;
 });
 
 Meteor.publish('Pick', function() {
@@ -11,4 +15,8 @@ Meteor.publish('Pick', function() {
 
 Meteor.publish('Atwrk', function() {
     return Atwrk.find();
+});
+
+Meteor.publish('User', function(_id) {
+    return Mber.find({});
 });

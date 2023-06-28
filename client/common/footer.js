@@ -3,8 +3,16 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import './footer.html';
 
+import '../popup/utilsPopUp.js';
+
+// 팝업 메시지 띄우기
+function messagePopup(message) {
+    popUpMessage.set(message);
+    $('#utilsPopUp').addClass('is-open');
+}
+
 Template.footer.onCreated(function() {
-    this.subscribe("footer");
+    popUpMessage    = new ReactiveVar('');      // 팝업 메시지
 });
 
 Template.footer.onRendered(function() {
@@ -12,32 +20,20 @@ Template.footer.onRendered(function() {
 });
 
 Template.footer.events({
-    'click a[name=zOne]'() {
-        FlowRouter.go('zOne');
-        // this.changePage.set('zOne');
+    'click a[name=facebook]'() {
+        messagePopup({message: '페이스북 연동 준비중입니다.'});
     },
-    'click a[name=zTwo]'() {
-        FlowRouter.go('zTwo');
-        // this.changePage.set('zTwo');
+    'click a[name=insta]'() {
+        messagePopup({message: '인스타그램 연동 준비중입니다.'});
     },
-    'click a[name=zThre]'() {
-        FlowRouter.go('zThre');
-        // this.changePage.set('zThre');
+    'click a[name=twitter]'() {
+        messagePopup({message: '트위터 연동 준비중입니다.'});
     },
-    'click a[name=zFour]'() {
-        FlowRouter.go('zFour');
-        // this.changePage.set('zFour');
-    },
-    'click a[name=zFive]'() {
-        FlowRouter.go('zFive');
-        // this.changePage.set('zFour');
-    },
-    'click button[name=glyAppEntry]'() {
-        FlowRouter.go('glyAppEntry');
-    }
 });
 
 Template.footer.helpers({
-
+    popup() {
+        return popUpMessage.get();
+    }
 });
 

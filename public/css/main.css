@@ -247,6 +247,20 @@
 .btn-slide--check button + button {
   margin-left: 0.5rem;
 }
+
 .sampleTest {
   max-height: 250px;
+}
+
+.sampleTest2 {
+  max-height: 317px;
+  min-width: 380px;
+  max-width: 380px;
+}
+
+.sampleBaner {
+  border-radius: 20px;
+  max-height: 380px;
+  min-height: 380px;
+  object-fit: cover;
 }

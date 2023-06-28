@@ -1,60 +1,35 @@
 <template name="aOne">
-    <section class="container">
+    {{#if isComplet}}
+    <section class="container" id="move">
         <div class="content">
             <div class="content__inner">
-                <article class="banner-list banner-list--main">
-                    <div class="banner-item">
-                        <a href="/">
-                            <span class="banner-item__img">
-                                <img src="/image/main/img-mainBanner--01.png" alt="">
-                            </span>
-                            <span class="banner-item__txt">
-                                <strong>큐레이터 Pick!!!</strong>
-                                <b>K-팝 아티스트</b>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="banner-item">
-                        <a href="">
-                            <span class="banner-item__img">
-                                <img src="/image/main/img-mainBanner--02.png" alt="">
-                            </span>
-                            <span class="banner-item__txt">
-                                <strong>NEW! 입점 작품</strong>
-                                <em>
-                                    <b>홍길동</b><br/>
-                                    무제, 1200X600, 2001, ₩ 2,500,000
-                                </em>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="banner-item">
-                        <a href="">
-                            <span class="banner-item__img">
-                                <img src="/image/main/img-mainBanner--03.png" alt="">
-                            </span>
-                            <span class="banner-item__txt">
-                                <strong>갤러리</strong>
-                                <em>
-                                    갤러리 K<br/>
-                                    서울 성북구 평창동
-                                </em>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="banner-item">
-                        <a href="">
-                            <span class="banner-item__img">
-                                <img src="/image/main/img-mainBanner--04.png" alt="">
-                            </span>
-                            <span class="banner-item__txt">
-                                <strong>전시회 / 이벤트</strong>
-                                <b>젊은 작가전</b>
-                                <em>2023. 4. 25 ~ 5. 25, 갤러리 SUN, 3F</em>
-                            </span>
-                        </a>
+                <article class="slide-list slide-list--product">
+                    <div class="slide-wrap slide-wrap--banr">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                {{#each banr}}
+                                    <div class="swiper-slide">
+                                        <div class="banner-item">
+                                            <a href="/">
+                                                <span class="banner-item__img">
+                                                    <img class="sampleBaner" src={{image}} alt="">
+                                                </span>
+                                                <span class="banner-item__txt">
+                                                    <strong>{{title}}</strong>
+                                                    <b>{{addInput1}}</b>
+                                                    <en>{{addInput2}}</en>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
                     </div>
                 </article>
+
                 <article class="slide-list slide-list--product">
                     <div class="slide-list__tit">
                         <p>큐레이터 Pick !!!</p>
@@ -75,7 +50,7 @@
                                                 <button type="button" title="장바구니 넣기">
                                                     <img src="/image/main/icon/icon-basket.png" alt="">
                                                 </button>
-                                                <button type="button" title="찜하기">
+                                                <button value type="button" title="찜하기">
                                                     <img src="/image/main/icon/icon-favor.png" alt="">
                                                 </button>
                                             </div>
@@ -113,9 +88,13 @@
                                                 <img src="/image/main/icon/icon-favor.png" alt="">
                                             </button>
                                         </div>
-                                        <a href="">
-                                            <img src="/image/main/img-mainSlide--product--0101.png" alt="">
-                                        </a>
+                                        {{#each image}}
+                                            {{#if mainImgChk rprsn}}
+                                                <a href="">
+                                                    <img class="sampleTest" src={{imgID}} alt="">
+                                                </a>
+                                            {{/if}}
+                                        {{/each}}
                                         <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
                                         <p class="swiper-slide__txt">
                                             <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{ogPrt.metRias}}</em>
@@ -146,9 +125,13 @@
                                                 <img src="/image/main/icon/icon-favor.png" alt="">
                                             </button>
                                         </div>
-                                        <a href="">
-                                            <img src="/image/main/img-mainSlide--product--0201.png" alt="">
-                                        </a>
+                                        {{#each image}}
+                                            {{#if mainImgChk rprsn}}
+                                                <a href="">
+                                                    <img class="sampleTest" src={{imgID}} alt="">
+                                                </a>
+                                            {{/if}}
+                                        {{/each}}
                                         <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
                                         <p class="swiper-slide__txt">
                                             <em>{{dtPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{dtPrt.base}}</em>
@@ -178,9 +161,13 @@
                                                 <img src="/image/main/icon/icon-favor.png" alt="">
                                             </button>
                                         </div>
-                                        <a href="">
-                                            <img src="/image/main/img-mainSlide--product--0301.png" alt="">
-                                        </a>
+                                        {{#each image}}
+                                            {{#if mainImgChk rprsn}}
+                                                <a href="">
+                                                    <img class="sampleTest" src={{imgID}} alt="">
+                                                </a>
+                                            {{/if}}
+                                        {{/each}}
                                         <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
                                         <p class="swiper-slide__txt">
                                             <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{ogPrt.metRias}}</em>
@@ -213,7 +200,7 @@
                                             </button>
                                         </div>
                                         <a href="">
-                                            <img src="/image/main/img-mainSlide--gallery--0101.png" alt="">
+                                            <img class="sampleTest2" src={{image}} alt="">
                                         </a>
                                         <div class="swiper-slide__cont">
                                             <p class="swiper-slide__tit">{{title}}</p>
@@ -246,7 +233,7 @@
                                             </button>
                                         </div>
                                         <a href="">
-                                            <img src="/image/main/img-mainSlide--gallery--0101.png" alt="">
+                                            <img class="sampleTest2" src={{glryImage}} alt="">
                                         </a>
                                         <div class="swiper-slide__cont">
                                             <p class="swiper-slide__tit">{{glryNm}}</p>
@@ -265,7 +252,8 @@
             </div>
         </div>
     </section>
+    {{/if}}
     <footer class="footer">
-      {{> footer}}
+        {{> footer}}
     </footer>
 </template>

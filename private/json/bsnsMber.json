@@ -1,0 +1,41 @@
+{
+    "pwChgDt": "",
+    "area": "",
+    "dong": "",
+    "sigungu": "",
+    "bsnsChagEmail": "",
+    "glryNm": "",
+    "ntcn": [
+        ""
+    ],
+    "bsnsChagNm": "",
+    "addr2": "",
+    "addr1": "",
+    "bsnsChagMob": "",
+    "atwrkDesc": "",
+    "zipCd": "",
+    "rprsnAtst": [
+        ""
+    ],
+    "glryImage": "",
+    "homeUrl": "",
+    "bsnsTP": "",
+    "bsnsID": "",
+    "bsnsNm": "",
+    "rprsnAtwrk": [
+        {
+            "atwrkNm": "",
+            "atstNm": "",
+            "mkYY": "",
+            "size": "",
+            "metRias": "",
+            "image": ""
+        }
+    ],
+    "pwChgYn": "",
+    "pwd": "",
+    "ctrt": {
+        "stndPntReqID": "",
+        "ctrtInfo": ""
+    }
+}

@@ -162,7 +162,7 @@ $n-breakpoint: map-get($n-breakpoints, n-sm);
     display: -ms-flexbox;
     display:-webkit-flex;
 }
-@mixin d-flex-extend{
+@mixin flex-extend{
     display:flex;
     -ms-display: flexbox;      /* Over IE10 */
     display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
@@ -170,7 +170,7 @@ $n-breakpoint: map-get($n-breakpoints, n-sm);
     display: -ms-flexbox;      /* TWEENER - IE 10 */
     display: -webkit-flex;     /* NEW - Chrome */
 }
-@mixin d-flex-center {
+@mixin flex-c {
     @include d-flex;
     @include align-center;
     @include justify-center;
@@ -202,12 +202,12 @@ $n-breakpoint: map-get($n-breakpoints, n-sm);
         weight:$w;
     }
 }
-@mixin border($w, $s, $c , $r){
+@mixin border($w:1px, $s:solid, $c:null , $r:null){
     border: {
-        width:$w + px;
+        width:$w;
+        color:$c;
         style:$s;
-        color:#{'#'} + $c;
-        radius:$r;
+        radius:$r + #{'rem'};
     }
     @content;
 }
