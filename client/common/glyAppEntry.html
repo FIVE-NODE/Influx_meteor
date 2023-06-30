@@ -97,15 +97,15 @@
                                         <div class="form-wrap form-row width--420">
                                             <div class="form-row">
                                                 <div class="form-input flex-1 mr-5">
-                                                    <input maxlength="3" name="smaPhone" type="text" class="w-100" />
+                                                    <input maxlength="3" name="smaPhone" type="number" class="w-100" />
                                                 </div>
                                                 -
                                                 <div class="form-input flex-1 ml-5 mr-5">
-                                                    <input maxlength="4" name="smaPhone" type="text" class="w-100" />
+                                                    <input maxlength="4" name="smaPhone" type="number" class="w-100" />
                                                 </div>
                                                 -
                                                 <div class="form-input flex-1 ml-5">
-                                                    <input maxlength="4" name="smaPhone" type="text" class="w-100" />
+                                                    <input maxlength="4" name="smaPhone" type="number" class="w-100" />
                                                 </div>
                                             </div>
                                         </div>
@@ -116,7 +116,7 @@
                                     <dd class="mt-10">
                                         <div class="form-wrap">
                                             <div class="form-input">
-                                                <input name="smaEmail" type="" class="width--420" />
+                                                <input name="smaEmail" type="email" class="width--420" />
                                             </div>
                                         </div>
                                     </dd>
@@ -154,31 +154,35 @@
                                             </div>
                                         </div>
                                     </dd>
-                                    <dt class="mt-10">
-                                        <em class="somthingDisabled">소장작품 설명</em><span class="essential somthingDisabled">*</span>
-                                    </dt>
-                                    <dd class="mt-10">
-                                        <div class="form-wrap">
-                                            <div class="form-textarea">
-                                                <textarea disabled name="" id="" class="w-100 somthingDisabled" placeholder="※ 주로다루는 작품(Fine Art, 유화,수체화,일러스트, 디지털 아트, 카툰 등), 소장 작품의 수, 대표하는 장르 등 적어주세요."></textarea>
+
+                                    <div style="opacity: 0.4;">
+                                        <dt class="mt-10">
+                                            <em class="somthingDisabled">소장작품 설명</em><span class="essential somthingDisabled">*</span>
+                                        </dt>
+                                        <dd class="mt-10">
+                                            <div class="form-wrap">
+                                                <div class="form-textarea">
+                                                    <textarea disabled name="" id="" class="w-100 somthingDisabled" placeholder="※ 주로다루는 작품(Fine Art, 유화,수체화,일러스트, 디지털 아트, 카툰 등), 소장 작품의 수, 대표하는 장르 등 적어주세요."></textarea>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </dd>
-                                    <dt class="mt-10">
-                                        <em class="somthingDisabled">대표 작품</em><span class="essential somthingDisabled">*</span>
-                                    </dt>
-                                    <dd class="mt-10">
-                                        <div class="d-flex flex-wrap align-center">
-                                            <a href="/uploadRepWork"><button type="button" class="btn btn--blue col-3 somthingDisabledBackground" disabled>대표 작품 올리기</button></a>
-                                            <p class="ml-10 font-13 somthingDisabled">선택된 파일이 없습니다.</p>
-                                            <p class="w-100 mt-10 font-13 fontW-500 color-blue somthingDisabled">
-                                                *대표하는 작가의 작품을 올려주세요 (최소 다른 3명의 작가의 작품)
-                                            </p>
-                                            <p class="w-100 mt-10 font-13 fontW-500 color-blue somthingDisabled">
-                                                *작품을 볼 수 있는 홈페이지나 다른 URL주소가  있다면 소장작품 설명 입력창에 남겨주세요
-                                            </p>
-                                        </div>
-                                    </dd>
+                                        </dd>
+                                        <dt class="mt-10">
+                                            <em class="somthingDisabled">대표 작품</em><span class="essential somthingDisabled">*</span>
+                                        </dt>
+                                        <dd class="mt-10">
+                                            <div class="d-flex flex-wrap align-center">
+                                                <a href="/uploadRepWork"><button type="button" class="btn btn--blue col-3 somthingDisabledBackground" disabled>대표 작품 올리기</button></a>
+                                                <p class="ml-10 font-13 somthingDisabled">선택된 파일이 없습니다.</p>
+                                                <p class="w-100 mt-10 font-13 fontW-500 color-blue somthingDisabled">
+                                                    *대표하는 작가의 작품을 올려주세요 (최소 다른 3명의 작가의 작품)
+                                                </p>
+                                                <p class="w-100 mt-10 font-13 fontW-500 color-blue somthingDisabled">
+                                                    *작품을 볼 수 있는 홈페이지나 다른 URL주소가  있다면 소장작품 설명 입력창에 남겨주세요
+                                                </p>
+                                            </div>
+                                        </dd>
+                                    </div> 
+
                                 </dl>
                             </div>
                             <div class="form-write form-write--admit px-100 py-40">

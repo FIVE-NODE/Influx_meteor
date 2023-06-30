@@ -29,6 +29,7 @@ Template.header.onRendered(function() {
 
 Template.header.events({
     'click button[name=artMenu]'(evt, tmpl) {
+        console.log(' =============== ');
         menuFun('artMenu');
     },
     'click button[name=galleryMenu]'(evt, tmpl) {
@@ -43,20 +44,10 @@ Template.header.events({
 });
 
 function menuFun(menu) {
-    if(menuFlag.get() && menu === menuKind.get()) {
-        $('div[name=headerMenu]').hide();
-        menuFlag.set(false);
-    } else if(!menuFlag.get() || menu != menuKind.get()){
-        $('div[name=headerMenu]').show();
-        menuFlag.set(true);
-        menuKind.set(menu);
-    }
+
 }
 
 Template.header.helpers({
-    menuKind() {
-        return menuKind.get();
-    },
     logedInChk() {
         var logedIn = JSON.parse(sessionStorage.getItem('art_session_index'));
         if(logedIn != null) return logedIn.index === 0 ? true : false;

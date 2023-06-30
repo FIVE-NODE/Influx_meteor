@@ -1,5 +1,7 @@
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
+import { clientSchAtwrk } from '../lib/clientCollections.js';
+
 import './atwrkList.html';
 
 Template.atwrkList.onCreated(function() {
@@ -25,48 +27,70 @@ Template.atwrkList.onCreated(function() {
     // 작품 정보
     atwrkInfo   = new ReactiveVar();
 
-    // 검색한 정보
-    schData =  new ReactiveVar();
-    schData.set(JSON.parse(this.data.schQueryData()));
+    // 왼쪽 필터링 정보 저장용
+    this.data.filterQuery = new ReactiveVar({});
 
     // 검색으로 들어왔는지 여부 확인
-    var flagChk = FlowRouter.getParam('_id');
+    flagChk = new ReactiveVar(FlowRouter.getParam('_id'));
+
+    // 검색한 정보
+    if(flagChk.get() === 'sch') {
+        this.data.schData =  new ReactiveVar(JSON.parse(this.data.schQueryData()));
+        console.log(this.data.schData);
+    }
+
+    // 아티스트 정보 리스트
+    this.data.atstInfoList = ReactiveVar();
 
     // 검색전용 작품리스트 
-    this.selectSchForAtwrk = function(queryData) {
-        Meteor.call('selectSchForAtwrk', queryData, query, function(err, res) {
-            atwrkInfo.set(res.list);
-            total.set(res.total);
+    this.selectSchForAtwrk = function(schQueryData, atstInfoList) {
+        Meteor.call('selectSchForAtwrk', schQueryData, query, function(err, res) {
+            var resList = res.list;
+            var atstList = [];
+            resList.forEach(function(map) {
+                // map['ogPrt']['pric'] = Meteor.commonUtils.priceComma(map['ogPrt']['pric']);
+                // clientSchAtwrk.insert(map);
+                atstList.push(map.atstInfo.atstNm);
+            });
+
+             // 아티스트 정보
+            if(atstInfoList != undefined) atstInfoList.set([... new Set(atstList)]);
+
+            atwrkInfo.set(res.list);    // 작품 정보
+
+            total.set(res.total);       // 검색한 총 갯수
             return res;
         });
     };
 
-    if(flagChk != 'sch') {
-        // 갤러리 리스트를 통해 들어왔을때
-        this.data.glryDetail = new ReactiveVar();
-        selectGlryDetail(this.data.glryDetail);
-        selectAtwrkForBsns();
-    } else {
-        // 검색으로 들어 왔을때.
-        // schQueryData 검색용 데이터
-        this.selectSchForAtwrk(schData.get());
-    }
-    
-    // 갤러리 정보 (특정 갤러리 작품 보기 전용)
-    function selectGlryDetail(sample) {
+     // 갤러리 정보 (특정 갤러리 작품 보기 전용)
+     this.selectGlryDetail = function(atstInfoList) {
         Meteor.call('selectGlryDetail', FlowRouter.getParam("_id"), function(err, res) {
             glryDetail.set(res);
-            sample.set(res);
+            atstInfoList.set(res);
+            console.log(res);
             return res;
         });
     };
 
     // 비즈니스에 등록되어 있는 작품 정보 (특정 갤러리 작품 보기 전용)  
-    function selectAtwrkForBsns() {
-        Meteor.call('selectAtwrkForBsns', FlowRouter.getParam("_id"), function(err, res) {
-            atwrkInfo.set(res);
+    this.selectAtwrkForBsns = function() {
+        Meteor.call('selectAtwrkForBsns', FlowRouter.getParam("_id"), query , function(err, res) {
+            atwrkInfo.set(res.list);
+            total.set(res.total);
             return res;
         });
+    }
+
+    if(flagChk.get() != 'sch') {
+        // 갤러리 리스트를 통해 들어왔을때
+        this.data.atstInfoList = new ReactiveVar();
+        this.selectGlryDetail(this.data.atstInfoList);
+        this.selectAtwrkForBsns();
+    } else {
+        // 검색으로 들어 왔을때.
+        // schQueryData 검색용 데이터
+        this.selectSchForAtwrk(this.data.schData.get(), this.data.atstInfoList);
     }
 });
 
@@ -99,29 +123,63 @@ Template.atwrkList.events({
         
     },
     'click a[name=prev]'(evt, tmpl) {
-        Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip);
-        setQuery();
-        tmpl.selectSchForAtwrk(schData.get());
-        scrollMove();
+        if(Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip));
+        else {
+            setQuery();
+            if(flagChk === 'sch') tmpl.selectSchForAtwrk(tmpl.data.schData.get());
+            else tmpl.selectAtwrkForBsns();
+            scrollMove();
+        }
     },
     'click a[name=next]'(evt, tmpl) {
-        Meteor.clientCommonUtils.nextPage(curPage, total.get(), limit, skip);
-        setQuery();
-        tmpl.selectSchForAtwrk(schData.get());
-        // selectSchForAtwrk(schData.get());
-        scrollMove();
+        if(Meteor.clientCommonUtils.nextPage(curPage, total.get(), limit, skip)) ;
+        else {
+            setQuery();
+            if(flagChk === 'sch') tmpl.selectSchForAtwrk(tmpl.data.schData.get());
+            else tmpl.selectAtwrkForBsns();
+            scrollMove();
+        }
     },
     'click a[name=pageNum]'(evt, tmpl) {
-        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num);
-        setQuery();
-        tmpl.selectSchForAtwrk(schData.get());
-        scrollMove();
+        if(Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num));
+        else {
+            setQuery();
+            if(flagChk === 'sch') tmpl.selectSchForAtwrk(tmpl.data.schData.get());
+            else tmpl.selectAtwrkForBsns();
+            scrollMove();
+        }
     }
 });
 
 Template.atwrkList.helpers({
     atwrk() {
         var res = [];
+
+        // var data = clientSchAtwrk.find(this.filterQuery.get()).fetch();
+
+        // if(data != undefined) {
+        //     for(idx in data) {
+        //         var resInfo = {};
+        //         var images = data[idx].image;
+
+        //         for(dx in images) {
+        //             if(images[dx].rprsn === 'Y') {
+        //                 resInfo.imgInfo = images[dx];
+        //             }
+        //         }
+
+        //         resInfo._id = data[idx]._id;
+        //         resInfo.pric = Meteor.commonUtils.priceComma(data[idx].ogPrt.pric);
+        //         resInfo.atwrkNm = data[idx].ogPrt.atwrkNm;
+        //         resInfo.ogPrt = data[idx].ogPrt.metRias;
+        //         resInfo.wSize = data[idx].ogPrt.wSize;
+        //         resInfo.hSize = data[idx].ogPrt.hSize;
+        //         resInfo.atstNm = data[idx].atstInfo.atstNm;
+        //         resInfo.glryNm = data[idx].glry.glryNm;
+    
+        //         res.push(resInfo);
+        //     }
+        // }
 
         if(atwrkInfo.get() != undefined) {
             var info = atwrkInfo.get();
@@ -165,5 +223,5 @@ Template.atwrkList.helpers({
     page() {
         let res = Meteor.clientCommonUtils.setPage(limit.get(), total.get());
         return res;
-    }
+    },
 });

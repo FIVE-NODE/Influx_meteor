@@ -5,39 +5,61 @@
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
   />
   <link rel="stylesheet" href="/css/lib/swiper.min.css">
+  <link rel="stylesheet" href="/css/lib/jquery-ui.css">
   <link rel="stylesheet" href="/css/ux-common.css">
-  <link rel="stylesheet" href="/css/more.css">
+  <!-- <link rel="stylesheet" href="/css/lib/bootstrap-datetimepicker.min.css"> -->
+  <!-- <link rel="stylesheet" href="/css/lib/bootstrap.min.css"> -->
+  <!-- <link rel="stylesheet" href="/css/more.css"> -->
+  <!-- <link rel="stylesheet" href="/css/font.css"> -->
+  <!-- <link rel="stylesheet" href="/css/reset.css"> -->
+
+  <script type="text/javascript" src="/libs/jquery/jquery-3.6.1.min.js"></script>
+  <script type="text/javascript" src="/libs/jquery/jquery-ui.js"></script>
+  <script type="text/javascript" src="/libs/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/libs/swiper.min.js"></script>
+  <script type="text/javascript" src="/libs/moment.min.js"></script>
+  <script type="text/javascript" src="/libs/timepicker.js"></script>
+  <script type="text/javascript" src="/libs/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript" src="/libs/tweenmax.min.js"></script>
+  <script type="text/javascript" src="/libs/common.js"></script>
+  <script type="text/javascript" src="/libs/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="/libs/dayjs.min.js"></script>
+  <script type="text/javascript" src="/libs/fontawesome.js"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
 
 
 <body>
-  <script type="text/javascript" src="/libs/jquery/jquery-3.6.1.min.js"></script>
+  {{#if subFlag}}
+    <script type="text/javascript" src="/libs/home.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+  {{else}}
+    <!-- <script type="text/javascript" src="/libs/sub.js"></script> -->
+    <link rel="stylesheet" href="/css/sub.css">
+  {{/if}}
+
+  <!-- <script type="text/javascript" src="/libs/jquery/jquery-3.6.1.min.js"></script>
   <script type="text/javascript" src="/libs/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/libs/tweenmax.min.js"></script>
   <script type="text/javascript" src="/libs/swiper.min.js"></script>
   <script type="text/javascript" src="/libs/common.js"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-  {{#if subFlag}}
+  <script type="text/javascript" src="/libs/sub.js"></script> -->
+  <!-- {{#if subFlag}}
     <link rel="stylesheet" href="/css/main.css">
     <script type="text/javascript" src="/libs/home.js"></script>
   {{else}}
     <link rel="stylesheet" href="/css/sub.css">
-    <script type="text/javascript" src="/libs/sub.js"></script>
-  {{/if}}
+  {{/if}} -->
 
   <div class="wrap">
     <header class="header">
       {{> header pageInfo}}
     </header>
 
-  
     <!-- {{> Template.dynamic template=__blaze-root}} -->
-    
-  <!-- <footer class="footer">
-    {{> footer}}
-  </footer> -->
+
   </div>
 </body>
 

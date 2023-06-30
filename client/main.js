@@ -10,6 +10,7 @@ import './common/header.js';
 import './common/footer.js';
 import './common/zOne.js';
 import './common/announcement/zTwo.js';
+import './common/announcement/zTwoA.js';
 import './common/zThre.js';
 import './common/zFour.js';
 import './common/zFive.js';
@@ -44,10 +45,15 @@ import '../lib/code.js';
 // 클라이언트 공통
 import '../client/lib/clientCommonUtils.js';
 
+import '../public/libs/sub.js'
+
 // 서버
 import '../lib/status.js';
 import '../lib/common.js';
 import '../lib/router.js';
+
+// 공통 도우미
+import './lib/helpers.js';
 
 Template.body.onCreated(function() {
 
@@ -80,7 +86,7 @@ Template.body.events({
   'click .popup'(evt, tmpl) {
     console.log(" ============== ");
     console.log(evt);
-  }
+  },
 });
 
 Template.body.helpers({
@@ -95,6 +101,7 @@ Template.body.helpers({
     return true;
   },
   subFlag() {
+    console.log(FlowRouter.getRouteName() === 'aOne' ? true : false);
     return FlowRouter.getRouteName() === 'aOne' ? true : false;
   },
 });

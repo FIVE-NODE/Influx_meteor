@@ -9,15 +9,17 @@
             <div class="lnb-cont__list">
                 {{#if rprsnAtst}}
                     {{#each rprsnAtst}}
-                        <button value={{this}} name="rprsnAtst" type="button" class="is-active">{{this}}</button>
+                        <button value="{{this}}" name="rprsnAtst" type="button" class="">{{this}}</button>
                     {{/each}}
                 {{/if}}
             </div>
             <div class="lnb-cont__link">
                 <a href="">더보기</a>
-                <button type="button">선택해제</button>
+                <button  name="atstAllDeSelect" type="button">선택해제</button>
             </div>
         </div>
+
+        <!-- 스타일 -->
         <button type="button" class="lnb-tit is-close">
             스타일
             <span></span>
@@ -25,37 +27,21 @@
         <div class="lnb-cont lnb-cont--style">
             <div class="lnb-cont__list">
                 <div class="form-wrap">
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--style01">
-                        <label for="check-lnb--style01">컨템포러리 (현대미술)</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--style02">
-                        <label for="check-lnb--style02">팝아트</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--style03">
-                        <label for="check-lnb--style03">사실주의</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--style04">
-                        <label for="check-lnb--style04">추상표현</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--style05">
-                        <label for="check-lnb--style05">인상주의</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--style06">
-                        <label for="check-lnb--style06">단색화</label>
-                    </div>
+                    {{#each style}}
+                        <div class="form-check form-row">
+                            <input value="STYLE-{{code}}" name="style" type="checkbox" class="form-check__input" id="check-lnb--style{{code}}">
+                            <label for="check-lnb--style{{code}}">{{name}}</label>
+                        </div>
+                    {{/each}}
                 </div>
             </div>
             <div class="lnb-cont__link">
                 <a href="">더보기</a>
-                <button type="button">선택해제</button>
+                <button name="styleAllDeSelect" type="button">선택해제</button>
             </div>
         </div>
+
+        <!-- 가격(단위, 만원) -->
         <button type="button" class="lnb-tit is-close">
             가격(단위, 만원)
             <span></span>
@@ -63,41 +49,21 @@
         <div class="lnb-cont lnb-cont--price">
             <div class="lnb-cont__list">
                 <div class="form-wrap">
-                    <div class="form-radio form-row">
-                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price01">
-                        <label for="radio-lnb--price01">50만원 미만</label>
-                    </div>
-                    <div class="form-radio form-row">
-                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price02">
-                        <label for="radio-lnb--price02">50~100만원</label>
-                    </div>
-                    <div class="form-radio form-row">
-                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price03">
-                        <label for="radio-lnb--price03">100~200만원</label>
-                    </div>
-                    <div class="form-radio form-row">
-                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price04">
-                        <label for="radio-lnb--price04">200~500만원</label>
-                    </div>
-                    <div class="form-radio form-row">
-                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price05">
-                        <label for="radio-lnb--price05">500~1000만원</label>
-                    </div>
-                    <div class="form-radio form-row">
-                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price06">
-                        <label for="radio-lnb--price06">1000~5000만원</label>
-                    </div>
-                    <div class="form-radio form-row">
-                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price07">
-                        <label for="radio-lnb--price07">5000만원 이상</label>
-                    </div>
+                    {{#each price}}
+                        <div class="form-radio form-row">
+                            <input value="PRICE-{{code}}" type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price{{code}}">
+                            <label for="radio-lnb--price{{code}}">{{name}}</label>
+                        </div>
+                    {{/each}}
                 </div>
             </div>
             <div class="lnb-cont__link">
                 <a href="">더보기</a>
-                <button type="button">선택해제</button>
+                <button name="priceAllDeSelect" type="button">선택해제</button>
             </div>
         </div>
+
+        <!-- 재료  -->
         <button type="button" class="lnb-tit is-close">
             재료
             <span></span>
@@ -105,41 +71,20 @@
         <div class="lnb-cont lnb-cont--material">
             <div class="lnb-cont__list">
                 <div class="form-wrap">
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--material01">
-                        <label for="check-lnb--material01">아크리릭 (Acrylic)</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--material02">
-                        <label for="check-lnb--material02">오 일 (Oil)</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--material03">
-                        <label for="check-lnb--material03">수 채 (Watercolor)</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--material04">
-                        <label for="check-lnb--material04">혼합재료 (Mixed)</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--material05">
-                        <label for="check-lnb--material05">파스텔, 색연필</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--material06">
-                        <label for="check-lnb--material06">잉크, 연필, 목탄</label>
-                    </div>
-                    <div class="form-check form-row">
-                        <input type="checkbox" class="form-check__input" id="check-lnb--material07">
-                        <label for="check-lnb--material07">그외 기타재료</label>
-                    </div>
+                    {{#each materials}}
+                        <div class="form-check form-row">
+                            <input value="METERIALS-{{code}}" name="materials" type="checkbox" class="form-check__input" id="check-lnb--material{{code}}">
+                            <label for="check-lnb--material{{code}}">{{name}}</label>
+                        </div>
+                    {{/each}}
                 </div>
             </div>
             <div class="lnb-cont__link">
                 <a href="">더보기</a>
-                <button type="button">선택해제</button>
+                <button name="materialsAllDeSelect" type="button">선택해제</button>
             </div>
         </div>
+
         <div class="btn-wrap border-top pt-30 ta-r">
             <button type="button" class="uncheck-all">전체 선택 해제</button>
         </div>

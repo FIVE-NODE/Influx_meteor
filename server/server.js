@@ -8,6 +8,7 @@ import './publish.js';
 
 import './mberServer.js';
 import './utilsServer.js';
+import './noticeServer.js';
 
 const crypto = require('crypto');
 const key = 'tester1234567890tester1234567890';

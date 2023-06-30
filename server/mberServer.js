@@ -127,9 +127,12 @@ Meteor.methods({
       }
     },
     // 사업자 ID 로 작품조회
-    selectAtwrkForBsns: function(_id) {
+    selectAtwrkForBsns: function(_id, options) {
       try{
-        let res = Atwrk.find({'glry.bsnsID' : _id}).fetch();
+        let res = {};
+
+        res.list = Atwrk.find({'glry.bsnsID' : _id}, options).fetch();
+        res.total = Atwrk.find({'glry.bsnsID' : _id}).count();
 
         return res;
       } catch(e) {
@@ -185,12 +188,15 @@ Meteor.methods({
         var metRias = data.MATERIAL != undefined ?
           { 'ogPrt.metRias' : { $in : data.MATERIAL} } : {};
 
+        var filter = data.FILTER != undefined ?
+          {} : {};
+
         var options = {
           limit : option.limit,
           skip  : option.skip,
         };
 
-        var queryData = { $and : [ price, medium, mkYear, style1, style2, metRias ] }
+        var queryData = { $and : [ price, medium, mkYear, style1, style2, metRias, filter ] }
 
         let res = {};
         res.total = Atwrk.find(queryData).count();

@@ -1,5 +1,5 @@
 <template name="zFive">
-    <script type="text/javascript" src="/libs/common.js"></script>
+    <!-- <script type="text/javascript" src="/libs/common.js"></script> -->
     <section class="container">
         <div class="content">
             <div class="content__inner">
@@ -8,42 +8,21 @@
                         FAQ
                     </span>
                 </h3>
+                {{#if renderFlag}}
                 <div class="sub-content">
                     <div class="sub-content__faq">
                         <div class="faq-wrap">
                             <div class="faq-list">
                                 <p class="faq-list__tit">자주 묻는 질문</p>
-                                <button type="button" class="faq-item">
-                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
-                                    회원탈퇴 어떻게 되나요?
-                                </button>
-                                <p class="faq-cont">faq 내용입니다.</p>
-                                <button type="button" class="faq-item">
-                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
-                                    회원탈퇴 어떻게 되나요?
-                                </button>
-                                <p class="faq-cont">faq 내용입니다.</p>
-                                <button type="button" class="faq-item">
-                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
-                                    회원탈퇴 어떻게 되나요?
-                                </button>
-                                <p class="faq-cont">faq 내용입니다.</p>
-                                <button type="button" class="faq-item">
-                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
-                                    회원탈퇴 어떻게 되나요?
-                                </button>
-                                <p class="faq-cont">faq 내용입니다.</p>
-                                <button type="button" class="faq-item">
-                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
-                                    회원탈퇴 어떻게 되나요?
-                                </button>
-                                <p class="faq-cont">faq 내용입니다.</p>
-                                <button type="button" class="faq-item">
-                                    <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
-                                    회원탈퇴 어떻게 되나요?
-                                </button>
-                                <p class="faq-cont">faq 내용입니다.</p>
+                                {{#each faqInfo}}
+                                    <button type="button" class="faq-item">
+                                        <img src="/image/sub/icon/icon-faq-bullet.png" alt="">
+                                        {{title}}
+                                    </button>
+                                    <p class="faq-cont">{{desc}}</p>
+                                {{/each}}
                             </div>
+
                             <div class="faq-askBox">
                                 <p>
                                     궁금한 내용을 찾지 못하셨나요?<br/>
@@ -54,6 +33,7 @@
                         </div>
                     </div>
                 </div>
+                {{/if}}
             </div>
         </div>
     </section>

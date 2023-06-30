@@ -3,6 +3,7 @@ import './glyAppEntry.html';
 import '../popup/utilsPopUp.js';
 
 var regExpPhone = /^\d{2,3}\d{3,4}\d{4}$/;
+var regExpEmail = /[^a-z0-9@_.-]/gi;
 
 Template.glyAppEntry.onCreated(function() {
     const instance = this;
@@ -20,15 +21,20 @@ Template.glyAppEntry.onCreated(function() {
 });
 
 Template.glyAppEntry.onRendered(function() {
+
+    Meteor.clientCommonUtils.scrollToClass('subTit__inner');
 });
 
 Template.glyAppEntry.events({
-    'click span[name=appEntryFaq]'() {
-        
+    'keyup input[name=homeUrl]'(evt, tmpl) {
+        var evtTarget = $(evt.target);
+        evtTarget.val(Meteor.clientCommonUtils.emailConsistency(evtTarget.val()));
+    },
+    'keyup input[name=smaEmail]'(evt, tmpl) {
+        var evtTarget = $(evt.target);
+        evtTarget.val(Meteor.clientCommonUtils.emailConsistency(evtTarget.val()));
     },
     'click .popup-close'(evt, tmpl) {
-        console.log(tmpl);
-        console.log(this);
     },
     'click button[name=bsNumChk]' (evt, tmpl) {
         var bNum = $('input[name=bNum1]').val() + $('input[name=bNum2]').val() + $('input[name=bNum3]').val();
@@ -52,8 +58,6 @@ Template.glyAppEntry.events({
         });
     },
     'click button[name=bnsSubmit]'() {
-        console.log(this);
-
         var companyNm   = $('input[name=companyNm]').val();
         var smaNm       = $('input[name=smaNm]').val();
         var smaPhone    = $('input[name=smaPhone]');
@@ -65,15 +69,33 @@ Template.glyAppEntry.events({
         var homeUrl     = $('input[name=homeUrl]').val();
         smaPhone = smaPhone[0].value + smaPhone[1].value + smaPhone[2].value;
 
-        if(companyNm === '') messagePopup({message : '회사이름을 입력해주세요'});
-        else if(!bnsNumberVal.get()) messagePopup({message : '사업자번호를 확인해 주세요'});
-        else if(smaNm === '') messagePopup({message : '담당자 이름을 입력해주세요'});
-        else if(!regExpPhone.test(smaPhone)) messagePopup({message : '담당자 전화번호를 정확히 입력해주세요'});
-        else if(smaEmail === '') messagePopup({message : '담당자 이메일을 입력해주세요'});
-        else if(glyNm === '') messagePopup({message : '갤러리 이름을 입력해주세요'});
-        else if(zipCode === '') messagePopup({message : '주소를 입력해주세요'});
-        else if(address === '') messagePopup({message : '주소를 입력해주세요'});
-        else {
+        if(companyNm === '') {
+            messagePopup({message : '회사이름을 입력해주세요'}); Meteor.clientCommonUtils.scrollToName('companyNm');
+        } else if(!bnsNumberVal.get()) {
+            messagePopup({message : '사업자번호를 확인해 주세요'});
+            Meteor.clientCommonUtils.scrollToName('companyNm');
+        } else if(smaNm === '') {
+            messagePopup({message : '담당자 이름을 입력해주세요'});
+            Meteor.clientCommonUtils.scrollToName('smaNm');
+        } else if(!regExpPhone.test(smaPhone)) {
+            messagePopup({message : '담당자 전화번호를 정확히 입력해주세요'});
+            Meteor.clientCommonUtils.scrollToName('smaPhone');
+        } else if(smaEmail === '') {
+            messagePopup({message : '담당자 이메일을 입력해주세요'});
+            Meteor.clientCommonUtils.scrollToName('smaEmail');
+        } else if(!regExpEmail.test(smaEmail)) {
+            messagePopup({message : '이메일을 정확하게 입력해주세요'});
+            Meteor.clientCommonUtils.scrollToName('smaEmail');
+        } else if(glyNm === '') {
+            messagePopup({message : '갤러리 이름을 입력해주세요'});
+            Meteor.clientCommonUtils.scrollToName('glyNm');
+        } else if(zipCode === '') {
+            messagePopup({message : '주소를 입력해주세요'});
+            Meteor.clientCommonUtils.scrollToName('zipCode');
+        } else if(address === '') {
+            messagePopup({message : '주소를 입력해주세요'});
+            Meteor.clientCommonUtils.scrollToName('address');
+        } else {
             var bsnsData = {
                 bsnsTP  : '001',
                 bsnsID  : bsnsID.get(),

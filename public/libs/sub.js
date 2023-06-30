@@ -6,7 +6,11 @@ $(function(){
     productOthers();
     dropDown();
     dealBox();
+    // datepickerFn();
 });
+
+var $win = $(window);
+var $doc = $(document);
 
 function gallerySlide(){
     var gallerySlide = new Swiper('.gallery-mainSlide .swiper', {
@@ -66,17 +70,64 @@ function productOthers(){
 function dropDown(){
     $('.faq-item').click(function(){
         $(this).next().slideToggle();
-    });
+    })
     $('.dropDown-tit button').click(function(){
         var $this = $(this),
         dropDownTit = $this.parent();
         dropDownTit.toggleClass('is-click').next().slideToggle();
-    });
+    })
 }
 
 function dealBox(){
     $('.deal-box .form-row').click(function(){
         $('.deal-box .form-row').removeClass('is-click');
         $(this).addClass('is-click');
-    });
+    })
 }
+
+// function uiDatePicker($root) {
+//     if (!$root) {
+//         $root = $doc;
+//     }
+//     $root.find('.js-datepicker-range').each(function () {
+//         var $this = $(this);
+//         var $min = $this.find('.js-datepicker-range__min');
+//         var $max = $this.find('.js-datepicker-range__max');
+//         $min.datetimepicker({
+//             locale: 'ko',
+//             format: 'YYYY-MM-DD',
+//             dayViewHeaderFormat: 'YYYY년 MMMM',
+//         });
+//         $max.datetimepicker({
+//             locale: 'ko',
+//             format: 'YYYY-MM-DD',
+//             dayViewHeaderFormat: 'YYYY년 MMMM',
+//             useCurrent: false,
+//         });
+//         $min.off('dp.change.uiJSDatepickerRange').on('dp.change.uiJSDatepickerRange', function (e) {
+//             $max.data('DateTimePicker').minDate(e.date);
+//         });
+//         $max.off('dp.change.uiJSDatepickerRange').on('dp.change.uiJSDatepickerRange', function (e) {
+//             $min.data('DateTimePicker').maxDate(e.date);
+//         });
+//     });
+//     $root.find('.js-datepicker').datetimepicker({
+//         locale: 'ko',
+//         format: 'YYYY-MM-DD',
+//         dayViewHeaderFormat: 'YYYY년 MMMM'
+//     });
+//     $root.find('.js-monthpicker').datetimepicker({
+//         locale: 'ko',
+//         viewMode: 'years',
+//         format: 'YYYY년 M월'
+//     });
+// }
+
+// function datepickerFn($root){
+//     if (!$root) {
+//         $root = $doc;
+//     }
+//     uiDatePicker($root);
+// }
+
+// window.datepickerFn = datepickerFn;

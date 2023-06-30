@@ -5,7 +5,7 @@ import './artMenu.html';
 Template.artMenu.onCreated(function() {
     
     // 원화 와 디지털 판화 변경시 바뀌는 플레그
-    artKindFlag = new ReactiveVar('art');
+    artKindFlag = new ReactiveVar('ogPrt');
 });
 
 Template.artMenu.onRendered(function() {
@@ -19,10 +19,12 @@ Template.artMenu.events({
         $('input[name=chk]').prop('checked', false);
     },
     'click button[name=art]'() {
-        artKindFlag.set('art');
+        artKindFlag.set('ogPrt');
+        $('input[name=chk]').prop('checked', false);
     },
     'click button[name=dtp]'() {
-        artKindFlag.set('dtp');
+        artKindFlag.set('ogDtp');
+        $('input[name=chk]').prop('checked', false);
     },
     'click button[name=schBtn]'(evt, tmpl) {
         var chked = $('input[name=chk]:checked');
@@ -33,6 +35,8 @@ Template.artMenu.events({
             var queryData = {};
             var dataList = [];
             var beforKind = '';
+
+            queryData.kind = artKindFlag.get();
 
             // query 데이터 설정
             for(var i=0; i < chked.length; i++) {
@@ -66,8 +70,16 @@ Template.artMenu.events({
 function dataSet(kind, code) {
     var res;
     switch(kind) {
-        case 'ARTWORK_PRICE':
-            var price = Meteor.codes.ARTWORK_PRICE();
+        case 'ARTWORK_PRICE_OGPRT':
+            var price = Meteor.codes.ARTWORK_PRICE_OGPRT();
+            price.forEach(function(val, idx) {
+                if(code === val.code) {
+                    res = val;
+                }
+            });
+            break;
+        case 'ARTWORK_PRICE_OGDTP':
+            var price = Meteor.codes.ARTWORK_PRICE_OGDTP();
             price.forEach(function(val, idx) {
                 if(code === val.code) {
                     res = val;
@@ -92,10 +104,13 @@ function dataSet(kind, code) {
 
 Template.artMenu.helpers({
     kindFlag() {
-        return artKindFlag.get() === 'dtp' ? false : true;
+        return artKindFlag.get() === 'ogDtp' ? false : true;
     },
-    price() {
-        return Meteor.codes.ARTWORK_PRICE();
+    priceOgPrt() {
+        return Meteor.codes.ARTWORK_PRICE_OGPRT();
+    },
+    priceOgDtp() {
+        return Meteor.codes.ARTWORK_PRICE_OGDTP();
     },
     medium() {
         return Meteor.codes.MEDIUM();
@@ -111,6 +126,9 @@ Template.artMenu.helpers({
     },
     materials() {
         return Meteor.codes.MATERIAL();
+    },
+    base() {
+        return Meteor.codes.BASE();
     }
 });
 

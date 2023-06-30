@@ -1,10 +1,5 @@
 <template name="header">
     <section class="header__inner" id="headerPs">
-        <div name="headerMenu" style="display: none;">
-            {{#if menuKind}}
-                {{> Template.dynamic template=(menuKind)}}
-            {{/if}}
-        </div>
         <div class="header__top">
             <div class="header__top__inner">
                 <h1 class="header-logo">
@@ -12,13 +7,20 @@
                         <img src="/image/common/img-logo-main.png" alt="INFLUX">
                     </a>
                 </h1>
-                <div class="slideMenu">
-                    <button name="artMenu" type="button" class="" title="ARTWORK 슬라이드 메뉴 열림">ARTWORK</button>
-                    <button name="galleryMenu" type="button" class="" title="GALLERY 슬라이드 메뉴 열림">GALLERY</button>
-                    <button name="artistMenu" type="button" class="" title="ARTIST 슬라이드 메뉴 열림">ARTIST</button>
-                    <button name="artMenu" type="button" class="slideMenu-sch" title="ARTIST 슬라이드 메뉴 열림">
+                <div class="slideMenu ml-100">
+                    <button name="artMenu" data-id="clickToArtwork" type="button" class="slideMenu__btn" title="ARTWORK 슬라이드 메뉴 열림">ARTWORK</button>
+                    <button name="galleryMenu" data-id="clickToGallery" type="button" class="slideMenu__btn" title="GALLERY 슬라이드 메뉴 열림">GALLERY</button>
+                    <button name="artistMenu" data-id="clickToArtist" type="button" class="slideMenu__btn" title="ARTIST 슬라이드 메뉴 열림">ARTIST</button>
+                    <button name="artMenu" data-id="clickToArtwork" type="button" class="slideMenu-sch" title="ARTIST 슬라이드 메뉴 열림">
                         <img src="/image/common/icon/icon-search.png" alt="">
                     </button>
+                    <div class="slideMenu-cont-wrap">
+                        <div class="slideMenu-cont">
+                            {{> artMenu}}
+                            {{> artistMenu}}
+                            {{> galleryMenu}}
+                        </div>
+                    </div>
                 </div>
            
                 <nav>

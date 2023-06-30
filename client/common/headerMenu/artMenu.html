@@ -1,313 +1,163 @@
 <template name="artMenu">
-    <section class="slideMenu-cont">
-        {{#if kindFlag}}
-            <!-- {{#each medinum}}
-                {{value}}
-            {{/each}} -->
-            <!-- 원화 -->
-            <article class="slideMenu-cont--artwork d-flex menu-position" id="clickToArtwork">
-                <div class="artwork-tit col-2">
-                    <button name="art" type="button" class="artwork-tit__btn is-active">원             화</button>
-                    <button name="dtp" type="button" class="artwork-tit__btn">디지털 판화</button>
+    <!-- 원화 -->
+    <article class="slideMenu-cont--artwork d-flex" id="clickToArtwork">
+
+        <div class="artwork-tit col-2">
+            <button name="art" type="button" class="artwork-tit__btn is-active" data-id="slideMenu-artwork-cont01">원             화</button>
+            <button name="dtp" type="button" class="artwork-tit__btn" data-id="slideMenu-artwork-cont02">디지털 판화</button>
+        </div>
+
+        <div class="artwork-wrap col-10 d-flex is-open" id="slideMenu-artwork-cont01">
+            <div class="artwork-group col-10">
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">가 격(단위 만원)</p>
+                    {{#each priceOgPrt}}
+                        <div class="artwork-item">
+                            <div class="form-input form-radio  form-row">
+                                <input value="ARTWORK_PRICE-{{code}}" type="radio" class="form-radio__input" name="chk" id="radio-artwork--price{{code}}" />
+                                <span class="form-radio__span"></span>
+                                <label for="radio-artwork--price{{code}}" class="form-radio__label">{{name}}</label>
+                            </div>
+                        </div>
+                    {{/each}}
                 </div>
-                <div class="artwork-wrap col-10 d-flex">
-                    <div class="artwork-group col-10">
-                        <div class="artwork-list">
-                            <p class="artwork-list__tit">가 격(단위 만원)</p>
-                            {{#each price}}
-                                <div class="artwork-item">
-                                    <div class="form-input form-radio  form-row">
-                                        <input value="ARTWORK_PRICE-{{code}}" type="radio" class="form-radio__input" name="chk" id="radio-artwork--price{{code}}" />
-                                        <span class="form-radio__span"></span>
-                                        <label for="radio-artwork--price{{code}}" class="form-radio__label">{{name}}</label>
-                                    </div>
-                                </div>
-                            {{/each}}
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">미디엄(Medium)</p>
+                    {{#each medium}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input value="MEDIUM-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-medium{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artwork-medium{{code}}" class="form-check__label">{{name}}</label>
+                            </div>
                         </div>
-                        <div class="artwork-list">
-                            <p class="artwork-list__tit">미디엄(Medium)</p>
-                            {{#each medium}}
-                                <div class="artwork-item">
-                                    <div class="form-input form-check  form-row">
-                                        <input value="MEDIUM-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-medium{{code}}" />
-                                        <span class="form-check__span"></span>
-                                        <label for="check-artwork-medium{{code}}" class="form-check__label">{{name}}</label>
-                                    </div>
-                                </div>
-                            {{/each}}
-                        </div>
-                        <div class="artwork-list">
-                            <p class="artwork-list__tit">제작연도 </p>
-                            {{#each mkyy}}
-                                <div class="artwork-item">
-                                    <div class="form-input form-check  form-row">
-                                        <input value="MK_YEAR-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-year{{code}}" />
-                                        <span class="form-check__span"></span>
-                                        <label for="check-artwork-year{{code}}" class="form-check__label">{{name}}</label>
-                                    </div>
-                                </div>
-                            {{/each}}
-                        </div>
-                        <div class="artwork-list">
-                            <p class="artwork-list__tit">스타일1(Styles1) </p>
-                            {{#each style1}}
-                                <div class="artwork-item">
-                                    <div class="form-input form-check  form-row">
-                                        <input value="STYLE_1-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-01-{{code}}" />
-                                        <span class="form-check__span"></span>
-                                        <label for="check-artwork-style-01-{{code}}" class="form-check__label">{{name}}</label>
-                                    </div>
-                                </div>
-                            {{/each}}
-                        </div>
-                        <div class="artwork-list">
-                            <p class="artwork-list__tit">스타일2(Styles1) </p>
-                            {{#each style2}}
-                                <div class="artwork-item">
-                                    <div class="form-input form-check  form-row">
-                                        <input value="STYLE_2-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-02-{{code}}" />
-                                        <span class="form-check__span"></span>
-                                        <label for="check-artwork-style-02-{{code}}" class="form-check__label">{{name}}</label>
-                                    </div>
-                                </div>
-                            {{/each}}
-                        </div>
-                        <div class="artwork-list">
-                            <p class="artwork-list__tit">재료(Materials) </p>
-                            {{#each materials}}
-                                <div class="artwork-item">
-                                    <div class="form-input form-check  form-row">
-                                        <input value="MATERIAL-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-material{{code}}" />
-                                        <span class="form-check__span"></span>
-                                        <label for="check-artwork-material{{code}}" class="form-check__label">{{name}}</label>
-                                    </div>
-                                </div>
-                            {{/each}}
-                        </div>
-                        <p class="artwork-caution color--sea">*원하는 조건 선택 후 (가격외 복수 선택 가능)  검색 버튼  클릭해 주세요</p>
-                    </div>
-                    <div class="artwork-submit col-2">
-                        <button name="schBtn" type="button" class="slideMenu-sch" title="slidemenu 검색">
-                            <img src="/image/common/icon/icon-search.png" alt="">
-                        </button>
-                        <button name="allCancel" type="button" class="check-reset" title="전체선택 해제">
-                            <img src="/image/common/icon/icon-reset.png" alt="">
-                            <span>전체선택 해제</span>
-                        </button>
-                    </div>
+                    {{/each}}
                 </div>
-            </article>
-            <!-- 원화 끝 -->
-        {{else}}
-            <!-- 디지털 판화 -->
-            <article class="slideMenu-cont--digital d-flex menu-position" id="clickToDigital">
-                <div class="artwork-tit col-2">
-                    <button name="art" type="button" class="artwork-tit__btn">원             화</button>
-                    <button name="dtp" type="button" class="artwork-tit__btn is-active">디지털 판화</button>
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">제작연도 </p>
+                    {{#each mkyy}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input value="MK_YEAR-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-year{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artwork-year{{code}}" class="form-check__label">{{name}}</label>
+                            </div>
+                        </div>
+                    {{/each}}
                 </div>
-                <div class="artwork-wrap col-10 d-flex">
-                    <div class="artwork-group col-10">
-                        <div class="artwork-list">
-                            <p class="artwork-list__tit">가 격(단위 만원)</p>
-                            <div class="artwork-item">
-                                <div class="form-input form-radio  form-row">
-                                    <input type="radio" class="form-radio__input" name="radio-artwork--price" id="radio-artwork__degital--price01" />
-                                    <span class="form-radio__span"></span>
-                                    <label for="radio-artwork__degital--price01" class="form-radio__label">100 만원 이상</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-radio  form-row">
-                                    <input  type="radio" class="form-radio__input" name="radio-artwork__degital--price" id="radio-artwork__degital--price02" />
-                                    <span class="form-radio__span"></span>
-                                    <label for="radio-artwork__degital--price02" class="form-radio__label">50~100 만원</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-radio  form-row">
-                                    <input type="radio" class="form-radio__input" name="radio-artwork__degital--price" id="radio-artwork__degital--price03" />
-                                    <span class="form-radio__span"></span>
-                                    <label for="radio-artwork__degital--price03" class="form-radio__label">30~50 만원</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-radio  form-row">
-                                    <input type="radio" class="form-radio__input" name="radio-artwork__degital--price" id="radio-artwork__degital--price04" />
-                                    <span class="form-radio__span"></span>
-                                    <label for="radio-artwork__degital--price04" class="form-radio__label">10~30 만원 </label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-radio  form-row">
-                                    <input type="radio" class="form-radio__input" name="radio-artwork__degital--price" id="radio-artwork__degital--price05" />
-                                    <span class="form-radio__span"></span>
-                                    <label for="radio-artwork__degital--price05" class="form-radio__label">10 만원 미만 </label>
-                                </div>
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">스타일1(Styles1) </p>
+                    {{#each style1}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input value="STYLE_1-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-01-{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artwork-style-01-{{code}}" class="form-check__label">{{name}}</label>
                             </div>
                         </div>
-                        <div class="artwork-list">
-                            <p class="artwork-list__tit">베이스(Base)</p>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork-base01" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork-base01" class="form-check__label">원 화</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork-base02" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork-base02" class="form-check__label">디지털 아트</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork-base03" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork-base03" class="form-check__label">카툰 / 일러스트</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork-base04" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork-base04" class="form-check__label">사 진</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork-base05" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork-base05" class="form-check__label">A.I</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="artwork-list">
-                            <p class="artwork-list__tit">스타일1(Styles1) </p>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input  type="checkbox" class="form-check__input" id="check-artwork__digital-style-01-01" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-01-01" class="form-check__label">컨템포러리(현대미술)</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-01-02" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-01-02" class="form-check__label">단색화</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-01-03" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-01-03" class="form-check__label">추상표현</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-01-04" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-01-04" class="form-check__label">팝아트</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-01-05" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-01-05" class="form-check__label">미니멀리즘</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-01-06" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-01-06" class="form-check__label">사실주의 / 극사실주의</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-01-07" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-01-07" class="form-check__label">인상주의</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-01-08" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-01-08" class="form-check__label">기 타</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="artwork-list">
-                            <p class="artwork-list__tit">스타일2(Styles1) </p>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-02-01" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-02-01" class="form-check__label">인물화</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-02-02" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-02-02" class="form-check__label">정물화</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-02-03" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-02-03" class="form-check__label">풍경화</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-02-04" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-02-04" class="form-check__label">캐릭터</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-02-05" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-02-05" class="form-check__label">자연물</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-02-06" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-02-06" class="form-check__label">인공물</label>
-                                </div>
-                            </div>
-                            <div class="artwork-item">
-                                <div class="form-input form-check  form-row">
-                                    <input name="chk" type="checkbox" class="form-check__input" id="check-artwork__digital-style-02-07" />
-                                    <span class="form-check__span"></span>
-                                    <label for="check-artwork__digital-style-02-07" class="form-check__label">S.F</label>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="artwork-caution color--sea">*원하는 조건 선택 후 (가격외 복수 선택 가능)  검색 버튼  클릭해 주세요</p>
-                    </div>
-                    <div class="artwork-submit col-2">
-                        <button name="schBtn" type="button" class="slideMenu-sch" title="slidemenu 검색">
-                            <img src="/image/common/icon/icon-search.png" alt="">
-                        </button>
-                        <button name="allCancel" type="button" class="check-reset" title="전체선택 해제">
-                            <img src="/image/common/icon/icon-reset.png" alt="">
-                            <span>전체선택 해제</span>
-                        </button>
-                    </div>
+                    {{/each}}
                 </div>
-            </article>
-            <!-- 디지털 판화 끝 -->
-        {{/if}}
-    </section>
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">스타일2(Styles1) </p>
+                    {{#each style2}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input value="STYLE_2-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-02-{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artwork-style-02-{{code}}" class="form-check__label">{{name}}</label>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">재료(Materials) </p>
+                    {{#each materials}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input value="MATERIAL-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-material{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artwork-material{{code}}" class="form-check__label">{{name}}</label>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+                <p class="artwork-caution color--sea">*원하는 조건 선택 후 (가격외 복수 선택 가능)  검색 버튼  클릭해 주세요</p>
+            </div>
+            <div class="artwork-submit col-2">
+                <button name="schBtn" type="button" class="slideMenu-sch" title="slidemenu 검색">
+                    <img src="/image/common/icon/icon-search.png" alt="">
+                </button>
+                <button name="allCancel" type="button" class="check-reset" title="전체선택 해제">
+                    <img src="/image/common/icon/icon-reset.png" alt="">
+                    <span>전체선택 해제</span>
+                </button>
+            </div>
+      </div>
+    <!-- 원화 끝 -->
+
+    <!-- 디지털 판화 -->
+    <div class="artwork-wrap col-10 d-flex" id="slideMenu-artwork-cont02">
+        <div class="artwork-group col-10">
+            <div class="artwork-list">
+                <p class="artwork-list__tit">가 격(단위 만원)</p>
+                {{#each priceOgDtp}}
+                    <div class="artwork-item">
+                        <div class="form-input form-radio  form-row">
+                            <input value="ARTWORK_PRICE-{{code}}" type="radio" class="form-radio__input" name="chk" id="radio-artwork__degital--price{{code}}" />
+                            <span class="form-radio__span"></span>
+                            <label for="radio-artwork__degital--price{{code}}" class="form-radio__label">{{name}}</label>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            <div class="artwork-list">
+                <p class="artwork-list__tit">베이스(Base)</p>
+                {{#each base}}
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input value="BASE-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-base{{code}}" />
+                            <span class="form-check__span"></span>
+                            <label for="check-artwork-base{{code}}" class="form-check__label">{{name}}</label>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            <div class="artwork-list">
+                <p class="artwork-list__tit">스타일1(Styles1) </p>
+                {{#each style1}}
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input value="STYLE_1-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-dtp-01-{{code}}" />
+                            <span class="form-check__span"></span>
+                            <label for="check-artwork-style-01-{{code}}" class="form-check__label">{{name}}</label>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            <div class="artwork-list">
+                <p class="artwork-list__tit">스타일2(Styles1) </p>
+                {{#each style2}}
+                    <div class="artwork-item">
+                        <div class="form-input form-check  form-row">
+                            <input value="STYLE_2-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-dtp-02-{{code}}" />
+                            <span class="form-check__span"></span>
+                            <label for="check-artwork-style-02-{{code}}" class="form-check__label">{{name}}</label>
+                        </div>
+                    </div>
+                {{/each}}
+        </div>
+            <p class="artwork-caution color--sea">*원하는 조건 선택 후 (가격외 복수 선택 가능)  검색 버튼  클릭해 주세요</p>
+        </div>
+        <div class="artwork-submit col-2">
+            <button name="schBtn" type="button" class="slideMenu-sch" title="slidemenu 검색">
+                <img src="/image/common/icon/icon-search.png" alt="">
+            </button>
+            <button name="allCancel" type="button" class="check-reset" title="전체선택 해제">
+                <img src="/image/common/icon/icon-reset.png" alt="">
+                <span>전체선택 해제</span>
+            </button>
+        </div>
+    </div>
+</article>
+<!-- 디지털 판화 끝 -->
 </template>

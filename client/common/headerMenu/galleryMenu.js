@@ -1,3 +1,5 @@
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+
 import './galleryMenu.html';
 
 Template.galleryMenu.onCreated(function() {
