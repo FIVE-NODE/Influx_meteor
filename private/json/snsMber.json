@@ -18,7 +18,7 @@
     ],
     "glryImage": "",
     "homeUrl": "",
-    "bsnsTP": "",
+    "snsTp": "",
     "bsnsID": "",
     "bsnsNm": "",
     "rprsnAtwrk": [
@@ -36,5 +36,13 @@
     "ctrt": {
         "stndPntReqID": "",
         "ctrtInfo": ""
-    }
+    },
+    "dtPrtGood": [
+    ],
+    "ogPrtGood": [
+    ],
+    "dtPrtView" : [
+    ],
+    "ogPrtView" : [
+    ]
 }

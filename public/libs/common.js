@@ -1,11 +1,9 @@
-'use strict'
-
 // jQuery
 $(function(){
     popup();
     selectFn();
     fileUpload();
-    buttonCount();
+    // buttonCount();
     slideMenu();
 });
 
@@ -59,6 +57,9 @@ function popup(){
     $('.popup-close').click(function(){
         $(this).parents('.popup-layout').removeClass('is-open');
     });
+    $('.popup-chk').click(function() {
+        $(this).parents('.popup-layout').removeClass('is-open');
+    });
 }
 
 function selectFn(){
@@ -97,22 +98,22 @@ function buttonCount(){
     var num;
 
     $('.button-count:first-child').click(function(){
-    num = parseInt($('input:text').val());
-    if (num > 1) {
-        $('input:text').val(num - 1);
-    }
-    if (num == 2) {
-        $('.button-count:first-child').prop('disabled', true);
-    }
-    if (num == 100) {
-        $('.button-count:last-child').prop('disabled', false);
-    }
+        num = parseInt($('.number-product').val());
+        if (num > 1) {
+            $('.number-product').val(num - 1);
+        }
+        if (num == 2) {
+            $('.button-count:first-child').prop('disabled', true);
+        }
+        if (num == 100) {
+            $('.button-count:last-child').prop('disabled', false);
+        }
     });
 
     $('.button-count:last-child').click(function(){
-    num = parseInt($('input:text').val());
+    num = parseInt($('.number-product').val());
     if (num < 100) {
-        $('input:text').val(num + 1);
+        $('.number-product').val(num + 1);
     }
     if (num > 0) {
         $('.button-count:first-child').prop('disabled', false);

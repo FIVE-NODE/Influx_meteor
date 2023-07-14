@@ -46,8 +46,8 @@ function imgSwitch(){
 
 function subTab(){
     $('.tab-link button').click(function(){
-        const $this = $(this),
-        $dataId = $this.data('id'),
+        const $this = $(this);
+        $dataId = $this.data('id');
         $contId = $('#' + $dataId);
         $('.tab-link button').removeClass('is-active');
         $('.tab-purchace .tab-cont').removeClass('is-open');

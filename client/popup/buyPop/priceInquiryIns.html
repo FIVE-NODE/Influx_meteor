@@ -1,0 +1,44 @@
+<template name="priceInquiryIns">
+    <div class="wrap">
+        <!-- popup -->
+        <div class="popup-layout" id="priceInquiryIns">
+            <div class="popup-wrap">
+                <div class="popup-inner" style="width:463px;">
+                    <div class="popup-head">
+                        <p class="popup-head__tit">작품가격문의 </p>
+                        <button type="button" class="popup-close">
+                            <img src="/image/common/icon/icon-popup-close.png" alt="">
+                        </button>
+                    </div>
+                    <div class="popup-cont popup-cont--priceAsk">
+                        <p class="font-14 fontW-500 color--txt underline">받는사람:{{this.glry.glryNm}}</p>
+                        <div class="priceAsk-wrap">
+                            <div class="priceAsk-tit">
+                                <span class="priceAsk-tit__img">
+                                    <img class="popupAtarkSize" src="{{selectMainImage this}}" alt="">
+                                </span>
+                                <span class="priceAsk-tit__txt">
+                                    <em>{{this.atstInfo.atstNm}}</em>
+                                    <em>{{this.ogPrt.atwrkNm}}, {{this.ogPrt.mkYY}}</em>
+                                    <em>{{this.ogPrt.wSize}}x{{this.ogPrt.hSize}} cm, {{codeToName this.ogPrt.metRias "MATERIAL"}}</em>
+                                </span>
+                            </div>
+                            <div class="priceAsk-msg">
+                                <p class="priceAsk-msg__tit">메세지</p>
+                                <div class="form-wrap">
+                                    <div class="form-textarea">
+                                        <textarea id="inquiryMsg"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-wrap d-flex justify-center mt-30">
+                            <button type="button" class="btn btn--white btn--round width--170 height-45 font-pre popup-close">취         소</button>
+                            <button type="button" name="sendInquiry" class="btn btn--blue btn--round width--170 height-45 ml-40">문의하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

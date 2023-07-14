@@ -1,0 +1,128 @@
+<template name="bidAmtProcess">
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <div class="wrap">
+        <!-- popup -->
+        <div class="popup-layout" id="bidAmtProcess">
+            <div class="popup-wrap">
+                <div class="popup-inner" style="width:391px;">
+                    <div class="popup-head">
+                        <p class="popup-head__tit">인증 / 응찰</p>
+                        <button type="button" class="popup-close">
+                            <img src="/image/common/icon/icon-popup-close.png" alt="">
+                        </button>
+                    </div>
+                    <div class="popup-cont popup-cont--bidding">
+                        <div class="bid-wrap">
+                            <div class="bid-write bid-write--inquire">
+                                <div class="width--266 mx-auto">
+                                    <p class="bid-txt bid-txt--price01">
+                                        <span>비 딩 금 액</span>
+                                        <em>{{bidPirc}}원</em>
+                                    </p>
+                                    <p class="bid-txt bid-txt--price02">
+                                        <span>부가세 (15%)</span>
+                                        <em>{{bidVat}}원</em>
+                                    </p>
+                                    <p class="bid-txt bid-txt--price03">
+                                        <span>예상 결제 금액</span>
+                                        <em>{{bidPuyPric}}원</em>
+                                    </p>
+                                    <h4 class="mt-30 font-12 fontW-b color--txt ta-l">
+                                        휴대폰 인증
+                                        <span class="color-blue">*</span>
+                                    </h4>
+                                    <div class="form-wrap mt-5">
+                                        <div class="form-row form-input inquire-request">
+                                            <input type="text" class="" placeholder="">
+                                            <button name="mobileReq" type="button">인증번호 요청</button>
+                                        </div>
+                                        <div class="form-row form-input mt-10  inquire-submit">
+                                            <input type="text" class="" placeholder="인증번호 입력">
+                                            <button name="mobileAuth" type="button">인 증</button>
+                                        </div>
+                                    </div>
+                                    <div class="dropDown-wrap mt-25">
+                                        <div class="dropDown-list dropDown-list--inquire">
+                                            <div class="dropDown-tit">
+                                                <button type="button" class="">
+                                                    온라인 응찰 안내
+                                                </button>
+                                            </div>
+                                            <div class="dropDown-cont">
+                                                <ul class="lists lists-dot lists-dot--big">
+                                                    <li>낙찰시, 낙찰금의 X%(부가세별도)의 구매수수료가 발생합니다. </li>
+                                                    <li class="color-blue">응찰 및 낙찰은 취소가 불가능합니다. </li>
+                                                    <li class="color-blue">낙찰 철회 시 낙찰가의 X%에 해당하는 낙찰철회비가 부괴되오니 신중히 응찰 바랍니다. </li>
+                                                    <li>응찰은 작품 컨디션 확인 후 진행 되는 것을 전제로 하며, 작품 컨디션에 액자 상태는 포함되지 않습니다. </li>
+                                                    <li>마감시간 30초 내에 응찰이 있을 경우, 자동으로 30초 연장됩니다. </li>
+                                                    <li>접속자의 컴퓨터, 인터넷 환경에 따라 반영 속도 차이가 있을 수 있으니 비딩시 유의해 주시기 바랍니다. </li>
+                                                    <li class="color-blue">남은 시간 1초 미만 시 응찰은 서버 반영 전 종료 될 수 있으니, 주의가 필요합니다.</li>
+                                                </ul>
+                                            </div>
+                                            <div class="dropDown-tit d-flex">
+                                                <div class="form-wrap">
+                                                    <div class="form-check">
+                                                        <input name="allChkTerm" type="checkbox">
+                                                        <span></span>
+                                                    </div>
+                                                </div>
+                                                <button type="button" name="allTerm" class="">
+                                                    약관에 모두 동의합니다.
+                                                </button>
+                                            </div>
+                                            <div class="dropDown-cont">
+                                                <div class="form-wrap">`
+                                                    <div class="form-row align-start">
+                                                        <div class="form-check">
+                                                            <input name="term" type="checkbox" id="check-dropDown__admit01">
+                                                            <span></span>
+                                                        </div>
+                                                        <label for="check-dropDown__admit01">
+                                                            본인은 인플럭스 비딩 (옥션) 약관을 모두 읽고 <br/>
+                                                            이해하였으며, 그 적용에 동의합니다.                                                             
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-row align-start">
+                                                        <div class="form-check">
+                                                            <input name="term" type="checkbox" id="check-dropDown__admit02">
+                                                            <span></span>
+                                                        </div>
+                                                        <label for="check-dropDown__admit02">
+                                                            응찰은 작품 실물 및 컨디션을 확인하였음을 전제로 합니다.                                                        
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-row align-start">
+                                                        <div class="form-check">
+                                                            <input name="term" type="checkbox" id="check-dropDown__admit03">
+                                                            <span></span>
+                                                        </div>
+                                                        <label for="check-dropDown__admit03">
+                                                            낙찰자는 낙찰 후 5일 이내에 부가세를 포함한 판매가를 결제하여야 합니다.                                                        
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-row align-start">
+                                                        <div class="form-check">
+                                                            <input name="term" type="checkbox" id="check-dropDown__admit04">
+                                                            <span></span>
+                                                        </div>
+                                                        <label class="color-blue" for="check-dropDown__admit04">
+                                                            낙찰자가 지정된 기일에 낙찰대금을 납부하지 않거나, 부득이한 낙찰을 철회하는 경우, 낙찰가의 15%에 해당하는 금액을 낙찰 철회비(위약금)로 납부하여야 합니다.                                                           
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-wrap d-flex justify-center mt-30">
+                                    <button name="backPop" type="button" class="btn btn--white width--135 font-11">수 정</button>
+                                    <button name="bidDone" type="button" class="btn btn--blue width--135 ml-20 font-11">비 딩</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

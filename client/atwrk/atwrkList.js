@@ -1,7 +1,5 @@
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
-import { clientSchAtwrk } from '../lib/clientCollections.js';
-
 import './atwrkList.html';
 
 Template.atwrkList.onCreated(function() {
@@ -24,6 +22,9 @@ Template.atwrkList.onCreated(function() {
     // 갤러리 정보
     glryDetail  = new ReactiveVar();
 
+    // 갤러리 전시/행사 정보
+    glryEvtInfo = new ReactiveVar();
+
     // 작품 정보
     atwrkInfo   = new ReactiveVar();
 
@@ -36,7 +37,6 @@ Template.atwrkList.onCreated(function() {
     // 검색한 정보
     if(flagChk.get() === 'sch') {
         this.data.schData =  new ReactiveVar(JSON.parse(this.data.schQueryData()));
-        console.log(this.data.schData);
     }
 
     // 아티스트 정보 리스트
@@ -68,10 +68,17 @@ Template.atwrkList.onCreated(function() {
         Meteor.call('selectGlryDetail', FlowRouter.getParam("_id"), function(err, res) {
             glryDetail.set(res);
             atstInfoList.set(res);
-            console.log(res);
             return res;
         });
     };
+
+    // 갤러리 전시/행상 이벤트 관련 정보
+    this.selectEvntHome = function() {
+        Meteor.call('selectEvntHome', FlowRouter.getParam("_id"), function(err, res) {
+            glryEvtInfo.set(res);
+            return res;
+        });
+    }
 
     // 비즈니스에 등록되어 있는 작품 정보 (특정 갤러리 작품 보기 전용)  
     this.selectAtwrkForBsns = function() {
@@ -86,6 +93,7 @@ Template.atwrkList.onCreated(function() {
         // 갤러리 리스트를 통해 들어왔을때
         this.data.atstInfoList = new ReactiveVar();
         this.selectGlryDetail(this.data.atstInfoList);
+        this.selectEvntHome();
         this.selectAtwrkForBsns();
     } else {
         // 검색으로 들어 왔을때.
@@ -113,6 +121,11 @@ function scrollMove() {
 Template.atwrkList.onRendered(function() {
     // 랜더링 완료 후 화면 보여지게 설정
     renderFlag.set(true);
+
+    setTimeout(function() {
+        var location = $('#headerPs').offset().top;
+        Meteor.commonUtils.scrollTop(location);
+    }, 50);
 });
 
 Template.atwrkList.events({
@@ -154,33 +167,7 @@ Template.atwrkList.events({
 Template.atwrkList.helpers({
     atwrk() {
         var res = [];
-
-        // var data = clientSchAtwrk.find(this.filterQuery.get()).fetch();
-
-        // if(data != undefined) {
-        //     for(idx in data) {
-        //         var resInfo = {};
-        //         var images = data[idx].image;
-
-        //         for(dx in images) {
-        //             if(images[dx].rprsn === 'Y') {
-        //                 resInfo.imgInfo = images[dx];
-        //             }
-        //         }
-
-        //         resInfo._id = data[idx]._id;
-        //         resInfo.pric = Meteor.commonUtils.priceComma(data[idx].ogPrt.pric);
-        //         resInfo.atwrkNm = data[idx].ogPrt.atwrkNm;
-        //         resInfo.ogPrt = data[idx].ogPrt.metRias;
-        //         resInfo.wSize = data[idx].ogPrt.wSize;
-        //         resInfo.hSize = data[idx].ogPrt.hSize;
-        //         resInfo.atstNm = data[idx].atstInfo.atstNm;
-        //         resInfo.glryNm = data[idx].glry.glryNm;
-    
-        //         res.push(resInfo);
-        //     }
-        // }
-
+        
         if(atwrkInfo.get() != undefined) {
             var info = atwrkInfo.get();
 
@@ -188,19 +175,24 @@ Template.atwrkList.helpers({
                 var resInfo = {};
                 var images = info[idx].image;
     
-                
                 for(dx in images) {
                     if(images[dx].rprsn === 'Y'){
                         resInfo.imgInfo = images[dx];
                     }
                 }
-    
+
+                var prtFlag = '';
+                var pricFlag = 'pric';
+
+                prtFlag = Object.keys(info[idx].ogPrt).includes('atwrkNm') ? 'ogPrt' : 'dtPrt'
+                pricFlag = prtFlag === 'ogPrt' ? 'pric' : 'mPric';
+
                 resInfo._id = info[idx]._id;
-                resInfo.pric = Meteor.commonUtils.priceComma(info[idx].ogPrt.pric);
-                resInfo.atwrkNm = info[idx].ogPrt.atwrkNm;
-                resInfo.ogPrt = info[idx].ogPrt.metRias;
-                resInfo.wSize = info[idx].ogPrt.wSize;
-                resInfo.hSize = info[idx].ogPrt.hSize;
+                resInfo.pric = Meteor.commonUtils.priceComma(info[idx][prtFlag][pricFlag]);
+                resInfo.atwrkNm = info[idx][prtFlag].atwrkNm;
+                resInfo[prtFlag] = info[idx][prtFlag].metRias;
+                resInfo.wSize = info[idx][prtFlag].wSize;
+                resInfo.hSize = info[idx][prtFlag].hSize;
                 resInfo.atstNm = info[idx].atstInfo.atstNm;
                 resInfo.glryNm = info[idx].glry.glryNm;
     
@@ -217,11 +209,21 @@ Template.atwrkList.helpers({
 
         return res;
     },
+    glryEvtInfo() {
+        var res = false;
+
+        if(glryEvtInfo.get() != undefined) res = glryEvtInfo.get();
+
+        return res;
+    },
     renderFlag() {
-        return renderFlag.get();
+        return renderFlag.get(); 
     },
     page() {
         let res = Meteor.clientCommonUtils.setPage(limit.get(), total.get());
         return res;
     },
+    dateFormat(date) {
+        return Meteor.clientCommonUtils.dateFormatChg(date);
+    }
 });

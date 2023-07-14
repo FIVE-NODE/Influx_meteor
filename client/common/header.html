@@ -11,7 +11,7 @@
                     <button name="artMenu" data-id="clickToArtwork" type="button" class="slideMenu__btn" title="ARTWORK 슬라이드 메뉴 열림">ARTWORK</button>
                     <button name="galleryMenu" data-id="clickToGallery" type="button" class="slideMenu__btn" title="GALLERY 슬라이드 메뉴 열림">GALLERY</button>
                     <button name="artistMenu" data-id="clickToArtist" type="button" class="slideMenu__btn" title="ARTIST 슬라이드 메뉴 열림">ARTIST</button>
-                    <button name="artMenu" data-id="clickToArtwork" type="button" class="slideMenu-sch" title="ARTIST 슬라이드 메뉴 열림">
+                    <button name="artMenu" data-id="clickToArtwork" type="button" class="slideMenu-sch slideMenu__btn" title="ARTIST 슬라이드 메뉴 열림">
                         <img src="/image/common/icon/icon-search.png" alt="">
                     </button>
                     <div class="slideMenu-cont-wrap">
@@ -55,9 +55,9 @@
             <div class="header__bottom__inner">
                 <div class="gnb">
                     {{#each quickMu}}
-                        <a href={{lnkUrl}}>
+                        <a href="{{lnkUrl}}">
                             <span class="gnb__img">
-                                <img src={{image}} alt="">
+                                <img src="{{image}}" alt="">
                             </span>
                             <h2>{{qMenuNm}}</h2>
                         </a>

@@ -130,7 +130,7 @@ Meteor.methods({
     selectAtwrkForBsns: function(_id, options) {
       try{
         let res = {};
-
+        
         res.list = Atwrk.find({'glry.bsnsID' : _id}, options).fetch();
         res.total = Atwrk.find({'glry.bsnsID' : _id}).count();
 
@@ -160,10 +160,10 @@ Meteor.methods({
     // 작품 검색
     selectSchForAtwrk: function(data, option) {
       try {
-        var price = data.ARTWORK_PRICE != undefined ? 
+        var price = data.ARTWORK_PRICE_OGPRT != undefined ? 
           { "ogPrt.pric" : { 
-            $gte : Number(data.ARTWORK_PRICE[0].min),
-            $lte : Number(data.ARTWORK_PRICE[0].max)
+            $gte : Number(data.ARTWORK_PRICE_OGPRT[0].min),
+            $lte : Number(data.ARTWORK_PRICE_OGPRT[0].max)
           }} : {};
         
         var medium = data.MEDIUM != undefined ? 
@@ -243,7 +243,6 @@ Meteor.methods({
     nickNameDuplicationChk: function(nickName) {
       try {
         let res = Mber.findOne({nicNm : nickName});
-        console.log(res);
 
         return res;
       } catch(e) {
@@ -284,8 +283,6 @@ Meteor.methods({
         var templeBsnsMber = {};
         templeBsnsMber = JSON.parse(Assets.getText('json/bsnsMber.json'));
 
-        console.log(bsnsData);
-
         templeBsnsMber._id = Meteor.commonUtils.generateUUID();
         templeBsnsMber.bsnsTP = bsnsData.bsnsTP;
         templeBsnsMber.bsnsID = bsnsData.bsnsID;
@@ -306,8 +303,6 @@ Meteor.methods({
 
         let res = BsnsMber.insert(templeBsnsMber);
 
-        console.log(res);
-
         return res;
       } catch(e) {
         console.log(e);
@@ -316,5 +311,53 @@ Meteor.methods({
           '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
         );
       } 
+    },
+    // 알림등록 / 소식받기 클릭 시 비즈니스 회원 알림 등록
+    insertNotice: function(userId, bsnsId) {
+      try {
+        let res = {};
+
+        res = BsnsMber.update({_id : bsnsId}, { $addToSet : { ntcn : userId }});
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 비딩 완료 프로세스
+    insertAtwrkBid: function(userId, atwrkId, mob, totalPric, selectBidPrice) {
+      try {
+        let res = {};
+
+        var date = new Date();
+        date = moment(date).format('YYYYMMDDHHmmss');
+
+        res =  Atwrk.update({_id : atwrkId}, { 
+          $addToSet : {
+            'ogPrt.bid.bidInfo' : {
+              bidInfoID : userId,   // userId - Mber _id or BsnsMber _id
+              bidInboMob : mob,     // 휴대폰 인증한 휴대폰번호
+              bidInfoAmt : totalPric,     // 비딩한 금액 
+              bidInfoDt : date      // 입찰시간
+            }
+          },
+          $set : {
+            'ogPrt.bid.nPric' : selectBidPrice
+          }
+        });
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+
     }
-});
+}); 

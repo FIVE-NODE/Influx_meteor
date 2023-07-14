@@ -81,5 +81,126 @@ Meteor.clientCommonUtils = {
     emailConsistency : function(email) {
         var emailChk = /[^a-z0-9@_.-]/gi;
         return email.replace(emailChk, '');
-    }
+    },
+    // 날짜 포맷
+    dateFormatChg : function(date) {
+        var format = /(\d{4})(\d{2})(\d{2})/g;
+        return date.replace(format, '$1.$2.$3');
+    },
+    // 장바구니 버튼 이벤트
+    basketBtnEvnt: function(userInfo, atwrkId) {
+        Meteor.call('decrypt', userInfo, function(err, res) {
+            res = JSON.parse(res);
+            var userTp = Object.keys(res).includes('snsTp') === false ? 'MBER' : 'SNSMBER';
+            Meteor.call('insertBasket', userTp, res._id, atwrkId);
+        });
+    },
+    // 좋아요 클릭한 사용자인지 확인
+    userGoodChk: function(userInfo, atwrkId, atwrkFlag) {
+        Meteor.call('decrypt', userInfo, function(err, res) {
+            var userData = JSON.parse(res);
+            var userTp = Object.keys(res).includes('snsTp') === false ? 'MBER' : 'SNSMBER';
+
+            Meteor.call('likeChkMber', userTp, userData._id, atwrkId, atwrkFlag, function(err, res) {
+                return res;
+            });
+        });
+    },
+    // 좋아요 버튼 이벤트
+    goodBtnEvnt: function(userInfo, atwrkId, atwrkFlag, bothFlag) {
+        Meteor.call('decrypt', userInfo, function(err, res) {
+            var userData = JSON.parse(res);
+            var userTp = Object.keys(res).includes('snsTp') === false ? 'MBER' : 'SNSMBER';
+
+            Meteor.call('likeChkMber', userTp, userData._id, atwrkId, atwrkFlag, bothFlag, function(err, res) {
+                if(res != undefined && res != null) {
+                    Meteor.call('removeGood', userTp, userData._id, atwrkId, atwrkFlag, bothFlag);
+                    Meteor.call('atwrkCancelGood', atwrkFlag, atwrkId, bothFlag);
+                } else {
+                    Meteor.call('insertGood', userTp, userData._id, atwrkId, atwrkFlag, bothFlag);
+                    Meteor.call('atwrkAddGood', atwrkFlag, atwrkId, bothFlag)
+                }
+            });
+        });
+    },
+    // 조회수 이벤트
+    viewCntEvnt: function(userInfo, atwrkId, atwrkFlag) {
+        Meteor.call('decrypt', userInfo, function(err, res) {
+            var userData = JSON.parse(res);
+            var userTp = Object.keys(res).includes('snsTp') === false ? 'MBER' : 'SNSMBER';
+
+            Meteor.call('viewHeistory', userTp, userData._id, atwrkId, atwrkFlag, function(err, res) {
+                if(res != undefined && res != null) {
+                } else {
+                    Meteor.call('insertViewCnt', userTp, userData._id, atwrkId, atwrkFlag);
+                    Meteor.call('viewsUp', atwrkId, atwrkFlag);
+                }
+            });
+        });
+    },
+    // 필터 또는 검색 데이터 셋팅
+    dataSet: function(kind, code) {
+        var res;
+
+        switch(kind) {
+            case 'ARTWORK_PRICE_OGPRT':
+                var price = Meteor.codes.ARTWORK_PRICE_OGPRT();
+                price.forEach(function(val, idx) {
+                    if(code === val.code) {
+                        res = val;
+                    }
+                });
+                break;
+            case 'ARTWORK_PRICE_DTPRT':
+                var price = Meteor.codes.ARTWORK_PRICE_DTPRT();
+                price.forEach(function(val, idx) {
+                    if(code === val.code) {
+                        res = val;
+                    }
+                });
+                break;
+            case 'MK_YEAR':
+                var mkyear = Meteor.codes.MK_YEAR();
+                mkyear.forEach(function(val, idx) {
+                    if(code === val.code) {
+                        res = val;
+                    }
+                });
+                break;
+            default:
+                res = code;
+                break;
+        }
+
+        return res;
+    },
+    // sort 정렬
+    pageSort: function(kind, flag) {
+        var res = {};
+        var key = '';
+
+        switch(kind) {
+            case 'date':
+                res = { insDt : -1 };
+                break;
+            case 'highPric':
+                key = flag === 'ogPrt' ? `${flag}.pric` : `${flag}.sPric`;
+                res = { [key] : -1 };
+                break;
+            case 'lowPric':
+                key = flag === 'ogPrt' ? `${flag}.pric` : `${flag}.sPric`;
+                res = { [key] : 1 };
+                break;
+            case 'good':
+                res = { [`${flag}.goodCnt`] : -1 };
+                break;
+            default:
+                res = { [`${flag}.viewCnt`] : -1 };
+                break;
+        }
+
+        return res;
+    },
+
+
 }

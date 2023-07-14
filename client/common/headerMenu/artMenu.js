@@ -23,12 +23,11 @@ Template.artMenu.events({
         $('input[name=chk]').prop('checked', false);
     },
     'click button[name=dtp]'() {
-        artKindFlag.set('ogDtp');
+        artKindFlag.set('dtPrt');
         $('input[name=chk]').prop('checked', false);
     },
     'click button[name=schBtn]'(evt, tmpl) {
         var chked = $('input[name=chk]:checked');
-        // var pricChked = $('input[name=radio-artwork--price]:checked');
 
         // 검색조건 하나라도 선택했을때
         if(chked.length > 0) {
@@ -43,7 +42,7 @@ Template.artMenu.events({
                 var splitVal = chked[i].value.split('-');
                 var kind = splitVal[0];
                 var code = splitVal[1];
-                var codeData = dataSet(kind, code);
+                var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
                 
                 if(beforKind != kind && beforKind != '') {
                     queryData[beforKind] = dataList;
@@ -56,8 +55,16 @@ Template.artMenu.events({
 
                 if(i === (chked.length -1)) queryData[beforKind] = dataList;
             }
+            // Session.set('data', queryData);
+
+            console.log('queryData', queryData);
+
+            if(artKindFlag.get() === 'ogPrt') {
+                FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+            } else {
+                FlowRouter.go('/digitalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+            }
             
-            FlowRouter.go(`/atwrkList/sch`, {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
             location.reload();
         } else {
             // 검색조건 하나도 선택하지 않았을때.
@@ -66,51 +73,15 @@ Template.artMenu.events({
     
 });
 
-// 검색 데이터 셋팅
-function dataSet(kind, code) {
-    var res;
-    switch(kind) {
-        case 'ARTWORK_PRICE_OGPRT':
-            var price = Meteor.codes.ARTWORK_PRICE_OGPRT();
-            price.forEach(function(val, idx) {
-                if(code === val.code) {
-                    res = val;
-                }
-            });
-            break;
-        case 'ARTWORK_PRICE_OGDTP':
-            var price = Meteor.codes.ARTWORK_PRICE_OGDTP();
-            price.forEach(function(val, idx) {
-                if(code === val.code) {
-                    res = val;
-                }
-            });
-            break;
-        case 'MK_YEAR':
-            var mkyear = Meteor.codes.MK_YEAR();
-            mkyear.forEach(function(val, idx) {
-                if(code === val.code) {
-                    res = val;
-                }
-            });
-            break;
-        default:
-            res = code;
-            break;
-    }
-
-    return res;
-}
-
 Template.artMenu.helpers({
     kindFlag() {
-        return artKindFlag.get() === 'ogDtp' ? false : true;
+        return artKindFlag.get() === 'dtPrt' ? false : true;
     },
     priceOgPrt() {
         return Meteor.codes.ARTWORK_PRICE_OGPRT();
     },
     priceOgDtp() {
-        return Meteor.codes.ARTWORK_PRICE_OGDTP();
+        return Meteor.codes.ARTWORK_PRICE_DTPRT();
     },
     medium() {
         return Meteor.codes.MEDIUM();

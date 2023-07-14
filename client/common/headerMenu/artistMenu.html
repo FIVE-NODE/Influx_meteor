@@ -7,145 +7,39 @@
             <div class="artwork-group col-7 justify-around">
                 <div class="artwork-list">
                     <p class="artwork-list__tit">스타일1(Styles1) </p>
+                    {{#each style1}}
                     <div class="artwork-item">
                         <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-01-01" />
+                            <input value="ARTIST_STYLE_1-{{code}}" name="artistChk" type="checkbox" class="form-check__input" id="check-artist-style-01-{{code}}" />
                             <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-01-01" class="form-check__label">컨템포러리(현대미술)</label>
+                            <label for="check-artist-style-01-{{code}}" class="form-check__label">{{name}}</label>
                         </div>
                     </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-01-02" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-01-02" class="form-check__label">단색화</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-01-03" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-01-03" class="form-check__label">추상표현</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-01-04" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-01-04" class="form-check__label">팝아트</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-01-05" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-01-05" class="form-check__label">미니멀리즘</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-01-06" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-01-06" class="form-check__label">사실주의 / 극사실주의</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-01-07" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-01-07" class="form-check__label">인상주의</label>
-                        </div>
-                    </div>
+                    {{/each}}
                 </div>
                 <div class="artwork-list">
                     <p class="artwork-list__tit">스타일2(Styles1) </p>
+                    {{#each style2}}
                     <div class="artwork-item">
                         <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-02-01" />
+                            <input value="STYLE_2-{{code}}" name="artistChk" type="checkbox" class="form-check__input" id="check-artist-style-02-{{code}}" />
                             <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-02-01" class="form-check__label">인물화</label>
+                            <label for="check-artist-style-02-{{code}}" class="form-check__label">{{name}}</label>
                         </div>
                     </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-02-02" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-02-02" class="form-check__label">정물화</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-02-03" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-02-03" class="form-check__label">풍경화</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-02-04" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-02-04" class="form-check__label">자화상</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-style-02-05" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-style-02-05" class="form-check__label">일러스트레이션</label>
-                        </div>
-                    </div>
+                    {{/each}}
                 </div>
                 <div class="artwork-list">
                     <p class="artwork-list__tit">제작연도 </p>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-year01" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-year01" class="form-check__label">2000년 대 이후</label>
+                    {{#each mkyy}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input value="MK_YEAR-{{code}}" name="artistChk" type="checkbox" class="form-check__input" id="check-artist-year{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artist-year{{code}}" class="form-check__label">{{name}}</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-year02" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-year02" class="form-check__label">1980 - 1990년 대</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-year03" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-year03" class="form-check__label">1960 - 1970년 대</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-year04" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-year04" class="form-check__label">1950 - 1960년 대</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-year05" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-year05" class="form-check__label">1930 - 1940년 대</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-year06" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-year06" class="form-check__label">1910 - 1920년 대</label>
-                        </div>
-                    </div>
-                    <div class="artwork-item">
-                        <div class="form-input form-check  form-row">
-                            <input type="checkbox" class="form-check__input" id="check-artwork__artist-year07" />
-                            <span class="form-check__span"></span>
-                            <label for="check-artwork__artist-year07" class="form-check__label">1910년 대 이전</label>
-                        </div>
-                    </div>
+                    {{/each}}
                 </div>
                 <p class="artwork-caution color--sea">*원하는 조건 선택 후 (가격외 복수 선택 가능)  검색 버튼  클릭해 주세요</p>
             </div>
@@ -154,11 +48,11 @@
                     <div class="form-input">
                         <input type="text" class="form-sch__input" placeholder="작가 이름 입력" />
                     </div>
-                    <button type="button" class="slideMenu-sch" title="slidemenu 검색">
+                    <button type="button" name="schBtn" class="slideMenu-sch" title="slidemenu 검색">
                         <img src="/image/common/icon/icon-search.png" alt="">
                     </button>
                 </div>
-                <button type="button" class="check-reset" title="전체선택 해제">
+                <button type="button" name="allCancel" class="check-reset" title="전체선택 해제">
                     <img src="/image/common/icon/icon-reset.png" alt="">
                     <span>전체선택 해제</span>
                 </button>

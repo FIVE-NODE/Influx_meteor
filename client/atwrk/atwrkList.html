@@ -7,11 +7,10 @@
                     <div class="sub-content__product">
                         <div class="product-wrap">
                             {{#if details}}
-                            {{glryNm}}
                                 <div class="product-comp">
                                     <div class="product-comp__inner">
                                         <span class="product-comp__img">
-                                            <img src="/image/sub/img-product--comp01.png" alt="">
+                                            <img src="{{details.glryImage}}" alt="">
                                         </span>
                                         <p class="product-comp__name">{{details.glryNm}}</p>
                                         <p class="product-comp__info">About
@@ -22,16 +21,18 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="product-capt">
-                                    <div class="product-capt__img">
-                                        <img src="/image/sub/img-product--capt01.png" alt="">
+                                {{#if glryEvtInfo}}
+                                    <div class="product-capt">
+                                        <div class="product-capt__img">
+                                            <img src="{{glryEvtInfo.image}}" alt="">
+                                        </div>
+                                            <p class="product-capt__info">
+                                                {{codeToName glryEvtInfo.evntTp "EVENT_TYPE"}}
+                                                <span>{{glryEvtInfo.title}} {{dateFormat glryEvtInfo.strDt}} ~ {{dateFormat glryEvtInfo.endDt}},  Presented by {{glryEvtInfo.glry.glryNm}}</span>
+                                            </p>
+                                            <a href="/glyDipEvt/{{glryEvtInfo._id}}" class="product-capt__btn">상 세 보 기</a>
                                     </div>
-                                    <p class="product-capt__info">
-                                        기획전
-                                        <span>Focal Point, 2023. 3.10 ~ 3. 27,  Presented by {{glryNm}}</span>
-                                    </p>
-                                    <a href="/glyDipEvt" class="product-capt__btn">상 세 보 기</a>
-                                </div>
+                                {{/if}}
                             {{/if}}
                             <div class="product-group">
                                 {{> searchFilter}}
@@ -39,13 +40,13 @@
                                     {{#if atwrk}}
                                         {{#each atwrk}}                                    
                                             <div class="product-item product-item{{imgInfo.size}}">
-                                                <a name="atwrkDetail" value={{_id}} href="">
+                                                <a name="atwrkDetail" value="{{_id}}" href="">
                                                     <span class="product-item__img">
                                                         <img src="{{imgInfo.imgID}}" alt="">
                                                     </span>
                                                     <span class="product-item__tit">{{atstNm}}</span>
                                                     <span class="product-item__cont">
-                                                        {{atwrkNm}}, {{wSize}} x {{hSize}}, {{pgPrt}}<br/>
+                                                        {{atwrkNm}}, {{wSize}} x {{hSize}}, {{codeToName ogPrt "MATERIAL"}}<br/>
                                                         {{glryNm}}<br/>
                                                         {{pric}} 원
                                                     </span>

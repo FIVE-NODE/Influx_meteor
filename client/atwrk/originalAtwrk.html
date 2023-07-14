@@ -1,0 +1,208 @@
+<template name="originalAtwrk">
+    <!-- <script type="text/javascript" src="/libs/common.js"></script> -->
+    <section class="container" id="move">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__product">
+                        <div class="product-wrap">
+                            <div class="product-kind product-kind--original">
+                                <ul class="bradCrumb bradCrumb-sub">
+                                    <li>
+                                        <a href="">메인</a>
+                                    </li>
+                                    <li>
+                                        <a href="">원화</a>
+                                    </li>
+                                </ul>
+                                <div class="product-kind-tit">
+                                    <p class="product-kind-tit__inner">
+                                        작가의 예술의 혼이 담긴 원화로 즐기세요
+                                    </p>
+                                </div>
+                                <div class="form-wrap">
+                                    <div class="form-select form-select-custom custom-select--order width--149">
+                                        <button type="button" class="custom-select__tit">정렬</button>
+                                        <ul class="custom-select__options" style="display: none;">
+                                            <li class="is-active"><button type="button">정렬</button></li>
+                                            <li><button name="sortList" value="date" type="button">최신 입점작 순</button></li>
+                                            <li><button name="sortList" value="lowPric" type="button">낮은 가격 순</button></li>
+                                            <li><button name="sortList" value="highPric" type="button">높은 가격 순</button></li>
+                                            <li><button name="sortList" value="good" type="button">좋아요 순</button></li>
+                                            <li><button name="sortList" value="view" type="button">많이 본 순</button></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product-group">
+                                    <!-- 필터 영역 -->
+                                    <div class="lnb-wrap">
+                                        <button type="button" class="lnb-tit is-close">
+                                            가격(단위, 만원)
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--price">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap">
+                                                    {{#each priceOgPrt}}
+                                                        <div class="form-radio form-row">
+                                                            <input {{leftFilterChk "ARTWORK_PRICE_OGPRT" this.code}} value="ARTWORK_PRICE_OGPRT-{{code}}" type="radio" name="filterChk" class="form-radio__input" id="radio-lnb--price{{code}}">
+                                                            <label for="radio-lnb--price{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="priceCancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            미디엄
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--medium">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap">
+                                                    {{#each medium}}
+                                                        <div class="form-check form-row">
+                                                            <input {{leftFilterChk "MEDIUM" this.code}} value="MEDIUM-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--medium{{code}}">
+                                                            <label for="check-lnb--medium{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="mediumCancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            제작연도
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--mkyy">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap">
+                                                    {{#each mkyy}}
+                                                        <div class="form-check form-row">
+                                                            <input {{leftFilterChk "MK_YEAR" this.code}} value="MK_YEAR-{{code}}" type="checkbox" name="filterChk" class="form-check__input" id="check-lnb--mkyy{{code}}">
+                                                            <label for="check-lnb--mkyy{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="mkyyCancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            스타일1
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--style1">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap">
+                                                    {{#each style1}}
+                                                        <div class="form-check form-row">
+                                                            <input {{leftFilterChk "STYLE_1" this.code}} value="STYLE_1-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-01-{{code}}">
+                                                            <label for="check-lnb--style-01-{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="style1CancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            스타일2
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--style2">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap">
+                                                    {{#each style2}}
+                                                        <div class="form-check form-row">
+                                                            <input {{leftFilterChk "STYLE_2" this.code}} value="STYLE_2-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-02-{{code}}">
+                                                            <label for="check-lnb--style-02-{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="style2CancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            재료
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--material">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap">
+                                                    {{#each materials}}
+                                                        <div class="form-check form-row">
+                                                            <input {{leftFilterChk "MATERIAL" this.code}} value="MATERIAL-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--material{{code}}">
+                                                            <label for="check-lnb--material{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="materialCancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap border-top pt-30 ta-r">
+                                            <button type="button" name="allCancel" class="uncheck-all">전체 선택 해제</button>
+                                        </div>
+                                    </div>
+                                    <!-- 필터 영역 끝 -->
+
+                                    <!-- 작품 데이터 영역 -->
+                                    <div class="product-list">
+                                        {{#each atwrkList}}
+                                            <div class="product-item product-item{{imgInfo.size}}">
+                                                <a name="atwrkDetail" value="{{_id}}" href="/atwrkDetail/{{_id}}">
+                                                    <span class="product-item__img">
+                                                        <img src="{{imgInfo.imgID}}" alt="">
+                                                    </span>
+                                                    <span class="product-item__tit">{{atstNm}}</span>
+                                                    <span class="product-item__cont">
+                                                        {{atwrkNm}}, {{wSize}} x {{hSize}}, {{codeToName ogPrt "MATERIAL"}}<br/>
+                                                        {{glryNm}}<br/>
+                                                        {{pric}} 원
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        {{/each}}
+                                    </div>
+                                    <!-- 작품 데이터 영역 끝 -->
+
+                                </div>
+
+                                <!-- 페이징 영역 -->
+                                <div class="pagination-wrap mt-40 mb-40">
+                                    <div class="pagination">
+                                        <a href="" name="prev" class="link-prev"></a>
+                                        {{#each page}}
+                                            <a href="" id="pageNum{{num}}" name="pageNum" class="{{active}}">{{num}}</a>
+                                        {{/each}}
+                                        <a href="" name="next" class="link-next"></a>
+                                    </div>
+                                </div>
+                                <!-- 페이징 영역 끝 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+</template>

@@ -7,19 +7,21 @@
                         <div class="product-wrap">
                             <div class="product-event">
                                 <div class="product-event__inner">
+                                {{#if evntInfo}}
                                     <span class="product-event__img">
-                                        <img src="/image/sub/img-product--event01.png" alt="">
+                                        <img src="{{evntInfo.image}}" alt="">
                                     </span>
-                                    <p class="product-event__info">
-                                        <span class="product-event__info--cate">기 획 전</span>
-                                        <strong class="product-event__info--tit">Focal Point</strong>
-                                        <span class="product-event__info--date">2023. 3. 10 ~ 3. 27</span>
-                                        <span class="product-event__info--site">K 갤러리, 오프닝 6:30, 4f</span>
+                                    <p class="product-event__info w-100">
+                                        <span class="product-event__info--cate">{{codeToName evntInfo.evntTp "EVENT_TYPE"}}</span>
+                                        <strong class="product-event__info--tit">{{evntInfo.title}}</strong>
+                                        <span class="product-event__info--date">{{dateFormat evntInfo.strDt}} ~ {{dateFormat evntInfo.endDt}}</span>
+                                        <span class="product-event__info--site">{{evntInfo.glry.glryNm}}, {{evntInfo.descDtl}}</span>
                                         <span class="product-event__info--cont">
-                                            이번 K 갤러리에서 기획한 Focal Pint 전시는  아직은 오래되지 않은 한국 화랑사에 있어서 미술문화 형성과 한국미술시장의 시작이라는 두 가지 역할을 담당해오며, 한국 근·현대미술을 주도해온 작가들의 전시를 기획하고 개최하면서 미술문화 발전에 기여하고 있다. 
+                                            {{evntInfo.desc}}
                                         </span>
-                                        <a href="" class="product-event__info--link">지난 전시회 및 행사 보기</a>
+                                        <a href="/glyHistoryDipEvt/{{evntInfo.glry.bsnsID}}" class="product-event__info--link">지난 전시회 및 행사 보기</a>
                                     </p>
+                                {{/if}}
                                 </div>
                             </div>
                             

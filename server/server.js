@@ -9,6 +9,7 @@ import './publish.js';
 import './mberServer.js';
 import './utilsServer.js';
 import './noticeServer.js';
+import './categoryServer.js';
 
 const crypto = require('crypto');
 const key = 'tester1234567890tester1234567890';
@@ -26,8 +27,7 @@ Meteor.startup(() => {
 
   process.env.MAIL_URL = 'smtp://' + smtp.username + ':' + smtp.password + '@' + smtp.server + ':' + smtp.port;
 
-  Meteor.call('fileFinds', '39f1db00-563e-4136-b10f-63a2b5da3285');
-
+  // Meteor.call('fileFinds', '39f1db00-563e-4136-b10f-63a2b5da3285');
 
 });
 
@@ -120,30 +120,26 @@ Meteor.methods({
     // 한달이내 작품 원화만 랜덤 조회
     // 기간조회 수정해야함.
     try {
-      var stDate = new Date();
-      var edDate = new Date(stDate);
-      edDate.setMonth((stDate.getMonth() - 1));
+      var toDate = new Date();
+      var agoDate = new Date(toDate);
+      agoDate.setMonth((toDate.getMonth() - 3));
 
-      // stDate = moment(stDate).format('YYYYMMDD');
-      // edDate = moment(edDate).format('YYYYMMDD');
+      toDate = moment(toDate).format('YYYYMMDD');
+      agoDate = moment(agoDate).format('YYYYMMDD');
 
       let res = Atwrk.find(
         {
           'ogPrt.atwrkNm' : { $exists : true },
-          // insDt : {
-          //   $gte : new Date(stDate),
-          //   $lte : new Date(edDate)
-          // }
+          insDt : {
+            $gte : agoDate,
+            $lte : toDate
+          }
         },
         { 
-          $sample : {size : 12},
-          // sort : { insDt : -1 }
+          $sample : { size : 12 },
+          sort : { insDt : -1 }
         }
       ).fetch();
-
-      // console.log(stDate);
-      // console.log(edDate);
-      // console.log(res);
 
       return res;
     } catch(e) {
@@ -185,10 +181,68 @@ Meteor.methods({
       )
     }
   },
-  // Evnt 전시 및 행사
-  selectEvntHome: function() {
+  // 홈화면 이벤트 여러건 조회
+  selectEvntList: function() {
     try {
-      let res = Evnt.find({}, {sort : { insDt : -1 }, limit : 12}).fetch();
+      let res = Evnt.find({}, { limit : 12, sort : { insDt : -1 }}).fetch();
+
+      return res;
+    } catch(e) {
+      console.log('Error : ', e);
+      throw new Meteor.Error(
+        500,
+        '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+      )
+    }
+  },
+  // Evnt 전시 및 행사 종료날짜가 끝나지 않은 이벤트로 단건만 조회
+  selectEvntHome: function(bsnsId) {
+    try {
+      var endDt = new Date();
+      endDt = moment(endDt).format('YYYYMMDD');
+
+      let res = Evnt.findOne({ 
+        'glry.bsnsID' : bsnsId,
+        endDt : {
+          $gte : endDt
+        }
+      }, { limit : 12})
+
+      return res;
+    } catch(e) {
+      console.log('Error : ', e);
+      throw new Meteor.Error(
+        500,
+        '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+      )
+    }
+  },
+  // Evnt 상세 조회
+  selectEvntDetail: function(_id) {
+    try {
+      let res = Evnt.findOne({ '_id' : _id });
+
+      return res;
+    } catch(e) {
+      console.log('Error : ', e);
+      throw new Meteor.Error(
+        500,
+        '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+      )
+    }
+  },
+  // 지난 전시/행사 조회
+  selectGlryHistEvt: function(bsnsId) {
+    try {
+      var endDt = new Date();
+      endDt = moment(endDt).format('YYYYMMDD');
+
+      let res = Evnt.find({
+        'glry.bsnsID' : bsnsId,
+        endDt : {
+          $lt : endDt
+        }
+      }, { limit : 12}).fetch();
 
       return res;
     } catch(e) {
@@ -207,12 +261,11 @@ Meteor.methods({
   encrypt: text => {
     let encodeData;
     try {
-      // let key = 'tester1234567890tester1234567890';
-      // let iv  = 'tester1234567890';
       
       const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
       encodeData = cipher.update(text, 'utf8', 'base64');
       encodeData += cipher.final('base64');
+
     } catch(e) {
       console.log('Error : ', e);
       throw new Meteor.Error(
@@ -235,23 +288,23 @@ Meteor.methods({
     }
     return decipheredPlaintext;
   },
-  fileFinds: function(filename) {
-    try {
-      let data =  Files.findOne({filename : filename});
-      let file =  Chunk.findOne({files_id : data._id});
+  // fileFinds: function(filename) {
+  //   try {
+  //     let data =  Files.findOne({filename : filename});
+  //     let file =  Chunk.findOne({files_id : data._id});
 
-      var blob = new Uint8Array(file.data);
-      // var base64String = btoa(String.fromCharCode.apply(null, blob));
-      // var src = 'data:image/png;base64,' + base64String + '';
+  //     var blob = new Uint8Array(file.data);
+  //     // var base64String = btoa(String.fromCharCode.apply(null, blob));
+  //     // var src = 'data:image/png;base64,' + base64String + '';
       
 
-    } catch(e) {
-      console.log('Error : ', e);
-      throw new Meteor.Error(
-        500,
-        '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
-      );
-    }
-  }
+  //   } catch(e) {
+  //     console.log('Error : ', e);
+  //     throw new Meteor.Error(
+  //       500,
+  //       '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+  //     );
+  //   }
+  // }
 });
  

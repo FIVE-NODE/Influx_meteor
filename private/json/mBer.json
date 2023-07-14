@@ -29,11 +29,15 @@
         }
     ],
     "zipCd": "",
-    "good": [
-        ""
+    "dtPrtGood": [
+    ],
+    "ogPrtGood": [
+    ],
+    "dtPrtView" : [
+    ],
+    "ogPrtView" : [
     ],
     "cart": [
-        ""
     ],
     "nicNmChgCnt": 0,
     "secsnDt": "",

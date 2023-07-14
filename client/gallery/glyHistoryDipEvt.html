@@ -11,42 +11,24 @@
                     <div class="sub-content__event">
                         <ul class="bradCrumb bradCrumb-sub">
                             <li>GALLERY</li>
-                            <li>갤러리 K</li>
+                            <li>{{glryInfo}}</li>
                             <li>전시 및 행사</li>
                             <li>지난전시 및 행사</li>
                         </ul>
                         <div class="event-wrap mt-30 mb-100">
                             <div class="event-list">
-                                <div class="event-item">
-                                    <a href="">
-                                        <span class="event-item__img">
-                                            <img src="../../resource/image/sub/img-event-item01.png" alt="">
-                                        </span>
-                                        <span class="event-item__cate">전 시 회</span>
-                                        <p class="event-item__tit">프리즘</p>
-                                        <em class="event-item__date">2.20 ~ 3.7.2023</em>
-                                    </a>
-                                </div>
-                                <div class="event-item">
-                                    <a href="">
-                                        <span class="event-item__img">
-                                            <img src="../../resource/image/sub/img-event-item02.png" alt="">
-                                        </span>
-                                        <span class="event-item__cate">전 시 회</span>
-                                        <p class="event-item__tit">Attitude</p>
-                                        <em class="event-item__date">2.1 ~ 2.15.2023</em>
-                                    </a>
-                                </div>
-                                <div class="event-item">
-                                    <a href="">
-                                        <span class="event-item__img">
-                                            <img src="../../resource/image/sub/img-event-item03.png" alt="">
-                                        </span>
-                                        <span class="event-item__cate">전 시 회</span>
-                                        <p class="event-item__tit">퍼스펙티브, 관 점</p>
-                                        <em class="event-item__date">2.1 ~ 2.15.2023</em>
-                                    </a>
-                                </div>
+                                {{#each historyInfo}}
+                                    <div class="event-item">
+                                        <a href="/glyDipEvt/{{_id}}">
+                                            <span class="event-item__img">
+                                                <img src="{{image}}" alt="">
+                                            </span>
+                                            <span class="event-item__cate">{{codeToName evntTp "EVENT_TYPE"}}</span>
+                                            <p class="event-item__tit">{{title}}</p>
+                                            <em class="event-item__date">{{dateFormat strDt}} ~ {{dateFormat endDt}}</em>
+                                        </a>
+                                    </div>
+                                {{/each}}
                             </div>
                         </div>
                     </div>

@@ -35,7 +35,7 @@ Template.signUp.onRendered(function() {
 Template.signUp.events({
     // 회원가입 버튼 누를경우 유효성 검사 및 가입시키기
     'click button[name=sginUp]'() {
-        var terms = $('input[name=essChk]:checked').length;     
+        var terms = $('input[name=essChk]:checked').length;
         if(!emailChk.get())         messagePopup({message : '이메일을 확인하세요.'});
         else if(!passwordChk.get()) messagePopup({message : '비밀번호를 확인하세요'});
         else if(!nikNameChk.get())  messagePopup({message : '닉네임을 확인하세요'});

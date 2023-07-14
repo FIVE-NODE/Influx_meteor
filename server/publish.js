@@ -5,7 +5,6 @@ Meteor.publish('ArtStartPub', function() {
 });
 
 Meteor.publish('atwrkSch', function(data) {
-    console.log(data);
     return data;
 });
 

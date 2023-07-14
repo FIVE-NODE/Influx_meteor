@@ -5,7 +5,6 @@ import './headerMenu/artMenu.js';
 import './headerMenu/artistMenu.js';
 import './headerMenu/galleryMenu.js';
 import './headerMenu/myPageSimple.js';
-// import '../../lib/code.js';
 
 function selectQuickMu() {
     Meteor.call('selectQuickMu', function(e, data) {
@@ -21,6 +20,11 @@ Template.header.onCreated(function() {
 
     quickMenu = new ReactiveVar();
 
+    logedInChk = new ReactiveVar(true);
+
+    var logedIn = JSON.parse(sessionStorage.getItem('art_session_index'));
+    if(logedIn != null) logedInChk.set(logedIn.index === 0 ? true : false);
+
     selectQuickMu();
 });
 
@@ -29,7 +33,6 @@ Template.header.onRendered(function() {
 
 Template.header.events({
     'click button[name=artMenu]'(evt, tmpl) {
-        console.log(' =============== ');
         menuFun('artMenu');
     },
     'click button[name=galleryMenu]'(evt, tmpl) {
@@ -39,19 +42,21 @@ Template.header.events({
         menuFun('artistMenu');
     },
     'click button[name=myPage]'(evt, tmpl) {
-        console.log(Session.get('art_session_user'));
     },
+    'click a'(evt, tmpl) {
+        setTimeout(function(){
+            location.reload();
+        }, 50);
+        
+    }
 });
 
 function menuFun(menu) {
-
 }
 
 Template.header.helpers({
     logedInChk() {
-        var logedIn = JSON.parse(sessionStorage.getItem('art_session_index'));
-        if(logedIn != null) return logedIn.index === 0 ? true : false;
-        else return false;
+        return logedInChk.get();
     },
     quickMu() {
         return quickMenu.get();

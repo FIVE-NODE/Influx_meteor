@@ -8,16 +8,28 @@ Template.utilsPopUp.onRendered(function() {
 });
 
 Template.utilsPopUp.events({
-    'click .popup-chk'() {
-        if(this.route != undefined) FlowRouter.go(this.route);
+    'click .popup-chk'(evt, tmpl) {
+        $(evt.target).parents('.popup-layout').removeClass('is-open');
     },
     'click .popup-close'() {
-        if(this.route != undefined) FlowRouter.go(this.route);
     }
 });
 
 Template.utilsPopUp.helpers({
     message() {
         return this.message;
+    },
+    btn() {
+        return this.btn;
+    },
+    routeFlag(flag) {
+        return flag === '';
+    },
+    divClassFlag() {
+        var res = "justify-center";
+        if(this.btn != undefined) res = "justify-between";
+        return res;
+        
     }
+
 });

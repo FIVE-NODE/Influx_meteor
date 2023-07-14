@@ -12,10 +12,22 @@
                     <div class="bid-wrap">
                         <div class="bid-write bid-write--inquire">
                             <div class="width--266 mx-auto">
-                                <p class="mt-20 font-14 fontW-b color--txt ta-c">{{message}}</p>
+                                <p class="mt-20 font-14 fontW-b color--txt ta-c">{{{message}}}</p>
                             </div>
-                            <div class="btn-wrap d-flex justify-center mt-30">
-                                <button type="button" class="btn btn--blue width--135 ml-20 font-11 popup-chk">확 인</button>
+                            <div class="btn-wrap d-flex {{divClassFlag}} mt-30">
+                                {{#if btn}}
+                                    {{#each btn}}
+                                        {{#if routeFlag route}}
+                                            <button type="button" class="popup-chk btn btn--blue width--135 font-11">{{name}}</button>
+                                        {{else}}
+                                            <a href="{{route}}">
+                                                <button type="button" class="popup-chk btn btn--blue width--135 font-11">{{name}}</button>
+                                            </a>
+                                        {{/if}}
+                                    {{/each}}
+                                {{else}}
+                                    <button type="button" class="popup-chk btn btn--blue width--135 mr-10 font-11">확 인</button>
+                                {{/if}}
                             </div>
                         </div>
                     </div>

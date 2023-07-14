@@ -54,8 +54,6 @@ Template.glyAppInq.events({
         inqType.set(evt.target.innerText);
     },
     'drop div[name=fileDrop]'(evt, tmpl) {
-        console.log("===== ");
-        console.log(evt);
     },
     'keyup input[name=pnrBnsNum]'(evt, tmpl) {
         var evtTarget = $(evt.target);
@@ -65,7 +63,7 @@ Template.glyAppInq.events({
         var pnrName = $('input[name=pnrName]').val();
         var pnrBnsNum = $('input[name=pnrBnsNum]').val();
         var inqDetail = $('textarea[name=inqDetail]').val();
-        console.log(inqDetail);
+        
         if(pnrName == undefined || pnrName == '') messagePopup({message : '파트너사명을 입력해주세요.'});
         else if(!bnsNumVal.test(pnrBnsNum)) messagePopup({message : '사업자 등록번호를 정확하게 입력해주세요.'});
         else if(inqDetail == undefined || inqDetail == '') messagePopup({message : '문의 내용을 입력해주세요.'});
@@ -78,7 +76,7 @@ Template.glyAppInq.events({
 function emailSendToAdmin() {
     var email =  $('input[name=emailAdd]').val();
     var desc = $('input[name=inqDetail]').val();
-    console.log(test);
+
     if(email != '') {
         Meteor.call('sendEmail', {
             to: 'patrick@5node.co.kr',

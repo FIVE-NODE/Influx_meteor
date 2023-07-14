@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import { Pick, Banr } from '../../lib/collections.js';
 import { clientAtwrk, clientDtpHome, clientOgHome, clientEvntHome, clientBsnsMber, clientBanr } from '../lib/clientCollections.js';
@@ -48,10 +49,9 @@ function selectOgHome() {
 }
 
 // 전시 및 행사 조회
-function selectEvntHome() {
+function selectEvntList() {
     clientEvntHome.remove();
-    Meteor.call('selectEvntHome', function(e, data) {
-        // if(data != undefined) {
+    Meteor.call('selectEvntList', function(e, data) {
         if(data != undefined && clientEvntHome._collection._docs._map.size == 0) {
             data.forEach(function(map){
                 clientEvntHome.insert(map);
@@ -102,7 +102,7 @@ Template.aOne.onCreated(async function() {
     selectOgHome();
 
     // selectEventHome  전시 및 행사
-    selectEvntHome();
+    selectEvntList();
 
     // selectGlry       갤러리
     selectGlry();
@@ -127,7 +127,7 @@ Template.aOne.events({
         pickCategory.set('001');
     },
     'click button[name=pickDt]'(evt, tmpl) {
-        // 큐레잍픽 디지털 에이션 판화
+        // 큐레잍픽 디지털 에디션 판화
         selectPickCategory('pickDt');
         pickCategory.set('002');
     },
@@ -136,10 +136,26 @@ Template.aOne.events({
         selectPickCategory('pickAtst');
         pickCategory.set('003');
     },
+    // 장바구니 버튼 이벤트 설정
+    'click button[name=shBasket]'(evt, tmpl) {
+        var userInfo = sessionStorage.getItem('art_dex');
+        var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
+
+        Meteor.clientCommonUtils.basketBtnEvnt(userInfo, atwrkId);
+    },
+    // 좋아요 버튼 이벤트 설정
+    'click button[name=goodBtn]' (evt, tmpl) {
+        var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
+        var atwrkFlag = $(evt.currentTarget).val();
+        var userInfo = sessionStorage.getItem('art_dex');
+
+        Meteor.clientCommonUtils.goodBtnEvnt(userInfo, atwrkId, atwrkFlag);
+    },
+    'click a[name=atDetail]'(evt, tmpl) {
+        // FlowRouter.go(`/atwrkDetail/${this.atwrkID}`);
+    }
 
 });
-
-// 이벤트 용 함수   //
 
 // 큐레이터 픽 카테고리
 function selectPickCategory(category) {
@@ -192,5 +208,9 @@ Template.aOne.helpers({
     mainImgChk(rprsn) {
         // 메인이미지 체크 여부
         return rprsn == 'Y' ? true : false;
+    },
+    chkDtp() {        
+        return !(pickCategory.get() === '002');
     }
+
 });

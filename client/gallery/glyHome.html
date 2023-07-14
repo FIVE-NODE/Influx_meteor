@@ -14,7 +14,7 @@
                                                 <div class="swiper-slide">
                                                     <a href="" name="detail" value="{{_id}}">
                                                         <span class="gallery-swiper__img">
-                                                            <img src="/image/sub/img-gallery-mainslide--default.png" alt="">
+                                                            <img class="glryHome-newGlry-maxSize" src="{{glryImage}}" alt="">
                                                         </span>
                                                         <span class="gallery-swiper__txt">
                                                             <em>{{bsnsNm}}</em>
@@ -36,7 +36,6 @@
                                         <div class="form-row">
                                             <label for="" class="form-input__label">갤러리 검색</label>
                                             <div class="form-input form-row">
-                                                <!-- 구, -->
                                                 <input type="text" name="addr" placeholder="지역 : 도시, 동" />
                                                 <button name="searchBtn" type="button">
                                                     <img src="/image/common/icon/icon-search--black.png" alt="">
@@ -58,7 +57,7 @@
                                         <div class="gallery-item">
                                             <a href="" name="detail" value="{{_id}}">
                                                 <span class="gallery-item__img">
-                                                    <img src="/image/sub/img-gallery-list--default.png" alt="">
+                                                    <img src="{{glryImage}}" alt="">
                                                 </span>
                                                 <span class="gallery-item__txt">
                                                     <em>{{bsnsNm}}</em>

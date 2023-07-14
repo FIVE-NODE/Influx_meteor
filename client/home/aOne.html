@@ -12,7 +12,7 @@
                                         <div class="banner-item">
                                             <a href="/">
                                                 <span class="banner-item__img">
-                                                    <img class="sampleBaner" src={{image}} alt="">
+                                                    <img class="sampleBaner" src="{{image}}" alt="">
                                                 </span>
                                                 <span class="banner-item__txt">
                                                     <strong>{{title}}</strong>
@@ -47,19 +47,25 @@
                                     {{#each pick.atstAtwrk}}
                                         <div class="swiper-slide">
                                             <div class="btn-wrap btn-slide--check">
-                                                <button type="button" title="장바구니 넣기">
+                                                <button name="shBasket" value="{{_id}}" type="button" title="장바구니 넣기">
                                                     <img src="/image/main/icon/icon-basket.png" alt="">
                                                 </button>
-                                                <button value type="button" title="찜하기">
-                                                    <img src="/image/main/icon/icon-favor.png" alt="">
-                                                </button>
+                                                {{#if chkDtp}}
+                                                    <button name="goodBtn" value="{{_id}}" type="button" title="찜하기">
+                                                        <img src="/image/main/icon/icon-favor.png" alt="">
+                                                    </button>
+                                                {{else}}
+                                                    <button value="dtPrt" name="goodBtn" type="button" title="찜하기">
+                                                        <img src="/image/main/icon/icon-favor.png" alt="">
+                                                    </button>
+                                                {{/if}}
                                             </div>
-                                            <a href="">
+                                            <a href="/atwrkDetail/{{atwrkID}}" name="atDetail" value="{{atwrkID}}">
                                                 <img class="sampleTest" src='{{testImage}}' alt="">
                                             </a>
                                             <p class="swiper-slide__tit">{{atstNm}}</p>
                                             <p class="swiper-slide__txt">
-                                                <em>{{atwrkNm}}, {{wSize}}x{{hSize}}, {{medium}}</em>
+                                                <em>{{atwrkNm}}, {{wSize}}x{{hSize}}{{#if chkDtp}}, {{codeToName metRias "MATERIAL"}}{{/if}}</em>
                                                 <em>{{pick.glry.glryNm}}</em>
                                                 <em>{{pric}} 원</em>
                                             </p>
@@ -81,23 +87,24 @@
                                 {{#each atwrk}}
                                     <div class="swiper-slide">
                                         <div class="btn-wrap btn-slide--check">
-                                            <button type="button" title="장바구니 넣기">
+                                            <button name="shBasket" type="button" title="장바구니 넣기">
                                                 <img src="/image/main/icon/icon-basket.png" alt="">
                                             </button>
-                                            <button type="button" title="찜하기">
+                                            <button name="goodBtn" type="button" title="찜하기">
                                                 <img src="/image/main/icon/icon-favor.png" alt="">
                                             </button>
                                         </div>
                                         {{#each image}}
                                             {{#if mainImgChk rprsn}}
-                                                <a href="">
-                                                    <img class="sampleTest" src={{imgID}} alt="">
+                                                <a href="/atwrkDetail/{{../_id}}" name="atDetail">
+                                                    <img class="sampleTest" src="{{imgID}}" alt="">
                                                 </a>
                                             {{/if}}
                                         {{/each}}
                                         <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
                                         <p class="swiper-slide__txt">
-                                            <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{ogPrt.metRias}}</em>
+                                            <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName ogPrt.metRias "MATERIAL"}}
+                                            </em>
                                             <em>{{glry.glryNm}}</em>
                                             <em>{{ogPrt.pric}} 원</em>
                                         </p>
@@ -118,23 +125,24 @@
                                 {{#each dtpHome}}
                                     <div class="swiper-slide">
                                         <div class="btn-wrap btn-slide--check">
-                                            <button type="button" title="장바구니 넣기">
+                                            <button name="shBasket" type="button" title="장바구니 넣기">
                                                 <img src="/image/main/icon/icon-basket.png" alt="">
                                             </button>
-                                            <button type="button" title="찜하기">
+                                            <button value="dtPrt" name="goodBtn"  type="button" title="찜하기">
                                                 <img src="/image/main/icon/icon-favor.png" alt="">
                                             </button>
                                         </div>
                                         {{#each image}}
                                             {{#if mainImgChk rprsn}}
-                                                <a href="">
-                                                    <img class="sampleTest" src={{imgID}} alt="">
+                                                <a href="/atwrkDetail/{{../_id}}">
+                                                    <img class="sampleTest" src="{{imgID}}" alt="">
                                                 </a>
                                             {{/if}}
                                         {{/each}}
                                         <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
                                         <p class="swiper-slide__txt">
-                                            <em>{{dtPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{dtPrt.base}}</em>
+                                            <em>{{dtPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName dtPrt.base "BASE"}}
+                                            </em>
                                             <em>{{glry.glryNm}}</em>
                                             <em>{{dtPrt.mPric}} 원</em>
                                         </p>
@@ -154,23 +162,23 @@
                                 {{#each ogHome}}
                                     <div class="swiper-slide">
                                         <div class="btn-wrap btn-slide--check">
-                                            <button type="button" title="장바구니 넣기">
+                                            <button name="shBasket" type="button" title="장바구니 넣기">
                                                 <img src="/image/main/icon/icon-basket.png" alt="">
                                             </button>
-                                            <button type="button" title="찜하기">
+                                            <button name="goodBtn" type="button" title="찜하기">
                                                 <img src="/image/main/icon/icon-favor.png" alt="">
                                             </button>
                                         </div>
                                         {{#each image}}
                                             {{#if mainImgChk rprsn}}
-                                                <a href="">
-                                                    <img class="sampleTest" src={{imgID}} alt="">
+                                                <a href="/atwrkDetail/{{../_id}}">
+                                                    <img class="sampleTest" src="{{imgID}}" alt="">
                                                 </a>
                                             {{/if}}
                                         {{/each}}
                                         <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
                                         <p class="swiper-slide__txt">
-                                            <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{ogPrt.metRias}}</em>
+                                            <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName ogPrt.metRias "MATERIAL"}}</em>
                                             <em>{{glry.glryNm}}</em>
                                             <em>{{ogPrt.pric}} 원</em>
                                         </p>
@@ -191,16 +199,8 @@
                             <div class="swiper-wrapper">
                                 {{#each evntHome}}
                                     <div class="swiper-slide">
-                                        <div class="btn-wrap btn-slide--check">
-                                            <button type="button" title="장바구니 넣기">
-                                                <img src="/image/main/icon/icon-basket.png" alt="">
-                                            </button>
-                                            <button type="button" title="찜하기">
-                                                <img src="/image/main/icon/icon-favor.png" alt="">
-                                            </button>
-                                        </div>
-                                        <a href="">
-                                            <img class="sampleTest2" src={{image}} alt="">
+                                        <a href="/">
+                                            <img class="sampleTest2" src="{{image}}" alt="">
                                         </a>
                                         <div class="swiper-slide__cont">
                                             <p class="swiper-slide__tit">{{title}}</p>
@@ -224,16 +224,8 @@
                             <div class="swiper-wrapper">
                                 {{#each glryHome}}
                                     <div class="swiper-slide">
-                                        <div class="btn-wrap btn-slide--check">
-                                            <button type="button" title="장바구니 넣기">
-                                                <img src="/image/main/icon/icon-basket.png" alt="">
-                                            </button>
-                                            <button type="button" title="찜하기">
-                                                <img src="/image/main/icon/icon-favor.png" alt="">
-                                            </button>
-                                        </div>
-                                        <a href="">
-                                            <img class="sampleTest2" src={{glryImage}} alt="">
+                                        <a href="/atwrkList/{{_id}}">
+                                            <img class="sampleTest2" src="{{glryImage}}" alt="">
                                         </a>
                                         <div class="swiper-slide__cont">
                                             <p class="swiper-slide__tit">{{glryNm}}</p>
