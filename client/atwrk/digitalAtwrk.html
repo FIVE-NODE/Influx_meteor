@@ -1,4 +1,6 @@
 <template name="digitalAtwrk">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
     <section class="container">
         <div class="content">
             <div class="content__inner">
@@ -65,7 +67,7 @@
                                         </button>
                                         <div class="lnb-cont lnb-cont--price">
                                             <div class="lnb-cont__list">
-                                                <div class="form-wrap">
+                                                <div class="form-wrap" id="artwork-price">
                                                     {{#each pricedtPrt}}
                                                         <div class="form-radio form-row">
                                                             <input {{leftFilterChk "ARTWORK_PRICE_DTPRT" this.code}} value="ARTWORK_PRICE_DTPRT-{{code}}" name="filterChk" type="radio" class="form-radio__input" id="radio-lnb--price{{code}}">
@@ -85,7 +87,7 @@
                                         </button>
                                         <div class="lnb-cont lnb-cont--style">
                                             <div class="lnb-cont__list">
-                                                <div class="form-wrap">
+                                                <div class="form-wrap" id="artwork-base">
                                                     {{#each base}}
                                                         <div class="form-check form-row">
                                                             <input {{leftFilterChk "BASE" this.code}} value="BASE-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--base{{code}}">
@@ -106,7 +108,7 @@
                                         </button>
                                         <div class="lnb-cont lnb-cont--style">
                                             <div class="lnb-cont__list">
-                                                <div class="form-wrap">
+                                                <div class="form-wrap" id="artwork-style1">
                                                     {{#each style1}}
                                                         <div class="form-check form-row">
                                                             <input {{leftFilterChk "STYLE_1" this.code}} value="STYLE_1-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-01-{{code}}">
@@ -127,7 +129,7 @@
                                         </button>
                                         <div class="lnb-cont lnb-cont--style">
                                             <div class="lnb-cont__list">
-                                                <div class="form-wrap">
+                                                <div class="form-wrap" id="artwork-style2">
                                                     {{#each style2}}
                                                         <div class="form-check form-row">
                                                             <input {{leftFilterChk "STYLE_2" this.code}} value="STYLE_2-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-02-{{code}}">

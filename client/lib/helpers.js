@@ -41,14 +41,15 @@ Template.registerHelper('codeToName', function(code, named) {
 
 // 메인 이미지만 가져온다
 Template.registerHelper('selectMainImage', function(data) {
+    console.log(data);
     var mainImage = '';
     var images = data.image;
     for(idx in images) {
         if(images[idx].rprsn === 'Y'){
             mainImage = images[idx].imgID;
+            return mainImage;
         }
     }
-    return mainImage;
 });
 
 // 날짜를 포멧 형식에 맞게 리턴 한다.

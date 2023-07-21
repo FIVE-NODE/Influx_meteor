@@ -1,0 +1,221 @@
+<template name="approval">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__mypage">
+                        <div class="mypage-subtit">
+                            <div class="mypage-subtit__inner">
+                                <p>주문 / 결제</p>
+                            </div>
+                        </div>
+                        <div class="basket-wrap basket-pay mt-50">
+                            <div class="basket-list">
+                                <div class="basket-item basket-item--orderer">
+                                    <p class="basket-item__tit">주문자</p>
+                                    <div class="basket-item__cont">
+                                        <dl class="basket-item__cont__dl">
+                                            <dt>이름</dt>
+                                            <dd>홍길동</dd>
+                                            <dt>이메일</dt>
+                                            <dd>hongildong@gmail.com</dd>
+                                            <dt>휴대전화</dt>
+                                            <dd>010-12**-45**</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="basket-item basket-item--area">
+                                    <p class="basket-item__tit">배송지</p>
+                                    <div class="form-wrap basket-item--areaSelect">
+                                        <div class="form-row">
+                                            <div class="form-radio">
+                                                <input type="radio" name="radio-basket-area" id="radio-basket-area--default">
+                                                <label for="radio-basket-area--default">기존배송지</label>
+                                            </div>
+                                            <div class="form-radio">
+                                                <input type="radio" name="radio-basket-area" id="radio-basket-area--new">
+                                                <label for="radio-basket-area--new">신규배송지</label>
+                                            </div>
+                                            <p>등록된 배송지가 없거나 새로운 배송지일 경우 ‘신규배송지’를 선택하면 등록할 수 있습니다.</p>
+                                        </div>
+                                    </div>
+                                    <div class="basket-item__cont">
+                                        <div class="addrWrite-wrap">
+                                            <dl class="addrWrite-dl">
+                                                <dt>수령인</dt>
+                                                <dd>
+                                                    <div class="form-wrap">
+                                                        <div class="form-input">
+                                                            <input type="text" class="width--196">
+                                                        </div>
+                                                    </div>
+                                                </dd>
+                                                <dt>배송자명(선택)</dt>
+                                                <dd>
+                                                    <div class="form-wrap">
+                                                        <div class="form-input">
+                                                            <input type="text" class="width--196">
+                                                        </div>
+                                                    </div>
+                                                </dd>
+                                                <dt>휴대전화</dt>
+                                                <dd>
+                                                    <div class="form-wrap">
+                                                        <div class="form-row width--196">
+                                                            <div class="form-input flex-1">
+                                                                <input type="text" class="w-100">
+                                                            </div>
+                                                            <span class="mx-3">-</span>
+                                                            <div class="form-input flex-1">
+                                                                <input type="text" class="w-100">
+                                                            </div>
+                                                            <span class="mx-3">-</span>
+                                                            <div class="form-input flex-1">
+                                                                <input type="text" class="w-100">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </dd>
+                                                <dt>전화번호</dt>
+                                                <dd>
+                                                    <div class="form-wrap form-row">
+                                                        <div class="form-row width--196">
+                                                            <div class="form-input flex-1">
+                                                                <input type="text" class="w-100">
+                                                            </div>
+                                                            <span class="mx-3">-</span>
+                                                            <div class="form-input flex-1">
+                                                                <input type="text" class="w-100">
+                                                            </div>
+                                                            <span class="mx-3">-</span>
+                                                            <div class="form-input flex-1">
+                                                                <input type="text" class="w-100">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-check form-row align-center ml-10">
+                                                            <input type="checkbox" name="" id="check-addrWrite--no">
+                                                            <label for="check-addrWrite--no" class="ml-5 font-12">없음</label>
+                                                        </div>
+                                                    </div>
+                                                </dd>
+                                                <dt>배송지 주소</dt>
+                                                <dd>
+                                                    <div class="form-wrap">
+                                                        <div class="form-input form-row flex-wrap">
+                                                            <input type="text" class="width--196" disabled="">
+                                                            <button type="button" class="btn btn--blue addrWrite-schBtn ml-10">검색</button>
+                                                            <input type="text" class="w-100 width--332 mt-5" disabled="">
+                                                            <input type="text" class="w-100 width--332 mt-5">
+                                                        </div>
+                                                        <div class="form-radio mt-5 ml-10">
+                                                            <input type="checkbox" id="check-addrWrite--default">
+                                                            <label for="check-addrWrite--default" class="font-12">기본 배송지 설정</label>
+                                                        </div>
+                                                    </div>
+                                                </dd>
+                                                <dt class="mb-0">배송요청사항(선택)</dt>
+                                                <dd class="mb-0">
+                                                    <div class="form-wrap">
+                                                        <div class="form-select form-select-custom width--332">
+                                                            <button type="button" class="custom-select__tit">배송시 요청사항을 선택해주세요.</button>
+                                                            <ul class="custom-select__options" style="display: none;">
+                                                                <li class="is-active"><button type="button">배송시 요청사항을 선택해주세요.</button></li>
+                                                                <li><button type="button">부재 시 경비실에 맡겨주세요</button></li>
+                                                                <li><button type="button">부재 시 택배함에 넣어주세요</button></li>
+                                                                <li><button type="button">부재 시 집 앞에 놔주세요</button></li>
+                                                                <li><button type="button">배송 전 연락 바랍니다. </button></li>
+                                                                <li><button type="button">파손의 위험이 있는 상품입니다. 배송 시 주의해 주세요.</button></li>
+                                                                <li><button type="button">직접입력</button></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="basket-item basket-item--company">
+                                    <p class="basket-item__tit">
+                                        갤러리 SUN
+                                        <span>배송비 6,000원</span>
+                                    </p>
+                                    <div class="basket-item__cont">
+                                        <div class="basket-item-detail">
+                                            <span class="basket-item-detail__img">
+                                                <img src="./image/sub/img-basket__item01.png" alt="">
+                                            </span>
+                                            <span class="basket-item-detail__txt">
+                                                <strong>[갤러리 SUN] 안경쓴여인 POP!! / 120X70cm 원목 액자</strong>
+                                                <em>일반택배</em>
+                                                <em class="mt-10">수량 1개</em>
+                                            </span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="basket-item basket-item--method">
+                                    <p class="basket-item__tit">결제수단</p>
+                                    <div class="basket-item__cont">
+                                        <div class="form-wrap">
+                                            <div class="form-raido">
+                                                <input type="radio" name="radio-basket--method" id="radio-basket--method01">
+                                                <label for="radio-basket--method01">카드</label>
+                                            </div>
+                                            <div class="form-raido">
+                                                <input type="radio" name="radio-basket--method" id="radio-basket--method02">
+                                                <label for="radio-basket--method02">무통장입금</label>
+                                            </div>
+                                            <div class="form-raido">
+                                                <input type="radio" name="radio-basket--method" id="radio-basket--method03">
+                                                <label for="radio-basket--method03">카카오페이</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="basket-price">
+                                <div class="basket-price__box">
+                                    <p class="basket-price__tit">결제금액</p>
+                                    <dl class="basket-price__box__dl">
+                                        <dt>총 상품금액</dt>
+                                        <dd>200,0000원</dd>
+                                        <dt>총 배송비 </dt>
+                                        <dd>+20,000원</dd>
+                                        <dt>총 활인금액</dt>
+                                        <dd>-10,000원</dd>
+                                        <dt>최종 결재 금액</dt>
+                                        <dd>
+                                            <strong>210,000</strong> 원
+                                        </dd>
+                                    </dl>
+                                    <div class="form-wrap">
+                                        <div class="form-check">
+                                            <input type="checkbox" id="check-basket-all">
+                                            <label for="check-basket-all">아래 내용에 모두 동의합니다. </label>
+                                        </div>
+                                        <div class="form-check mt-15">
+                                            <input type="checkbox" id="check-basket-price01">
+                                            <label for="check-basket-price01">개인정보 수집 이용 및 제 3자 제공 동의 (필수)</label>
+                                        </div>
+                                        <div class="form-check mt-15">
+                                            <input type="checkbox" id="check-basket-price02">
+                                            <label for="check-basket-price02">결제대행 서비스 이용야관 동의 (필수)</label>
+                                        </div>
+                                    </div>
+                                    <p class="mt-20 font-14 color--gray">본인은 만 14세 이상이며, 주문 내용을 확인하였습니다. </p>
+                                    <p class="mt-20 font-12 color--gray line-15">
+                                        (주) 인플럭스는 통신판매중개자로 거래 당사자가 아니므로, 판매자가 등록한 상품정보 및 거래 등에 대한 책음을 지지 않습니다. (단, (주)인플럭스가 판매자로 등록 판매한 상품은 판매자로서 책임을 부담합니다.                                         
+                                    </p>
+                                </div>
+                                <button type="button" class="btn btn--blue">210,000원 결제하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /container -->
+</template>

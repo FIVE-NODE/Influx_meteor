@@ -2822,3 +2822,23 @@ input[class*=js-datepicker] {
   background-size: 0.6rem 0.6rem;
   background-position: center center;
 }
+
+/* 신규추가 */
+
+/* 헤더 마이페이지 용 */
+.popup-layout-mypage {
+  position: absolute;
+  visibility: hidden;
+  transition: all 0.5s ease-in-out;
+  opacity: 0;
+  z-index: 3;
+  left: 82%;
+  top: 9%;
+}
+
+.popup-layout-mypage.is-open {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+} 

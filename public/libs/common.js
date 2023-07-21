@@ -51,9 +51,31 @@ function popup(){
         const $this = $(this),
         dataId = $this.attr('data-id'),
         contId = $('#' + dataId);
-        
         contId.addClass('is-open');
     });
+
+    $('.popup-mypage').mouseenter(function(){
+        const $this = $(this),
+        dataId = $this.attr('data-id'),
+        contId = $('#' + dataId);
+        contId.addClass('is-open');
+    });
+
+    $('.popup-mypage').mouseleave(function(){
+        setTimeout(function(){
+            var hoverChk = $('#myPageSimple_popup:hover').length;
+            if(hoverChk == 0) {
+                const myPageId = $('#myPageSimple_popup');
+                myPageId.removeClass('is-open');
+            }
+        }, 50);
+    });
+
+    $('#myPageSimple_popup').mouseleave(function() {
+        const myPageId = $('#myPageSimple_popup');
+        myPageId.removeClass('is-open');
+    });
+
     $('.popup-close').click(function(){
         $(this).parents('.popup-layout').removeClass('is-open');
     });

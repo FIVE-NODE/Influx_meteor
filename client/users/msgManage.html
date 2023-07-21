@@ -1,0 +1,111 @@
+<template name="msgManage">
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__mypage">
+                        <div class="message-wrap">
+                            <div class="message-list">
+                            {{#each msgList}}
+                                {{#if typeChk cmmncTp}}
+                                    <div class="message-item width--465">
+                                        <p class="message-item__tit">흥정답장</p>
+                                        <div class="message-item__view">
+                                            <div class="popup-wrap">
+                                                <div class="popup-inner" style="width:463px;">
+                                                    <div class="popup-head">
+                                                        <p class="popup-head__tit">흥  정 답 장 </p>
+                                                        <button type="button" class="popup-close">
+                                                            <img src="/image/common/icon/icon-popup-close.png" alt="">
+                                                        </button>
+                                                    </div>
+                                                    <div class="popup-cont popup-cont--deal">
+                                                        <p class="font-14 fontW-500 color--txt underline">받는사람:{{atwrkData.glry.glryNm}}</p>
+                                                        <p class="mt-30 font-16 fontW-b color--txt ta-c">흥정 (구매자 가격제안)이 수용 되었습니다. </p>
+                                                        <div class="deal-wrap mt-30">
+                                                            <p class="deal-txt">
+                                                                {{cn}}
+                                                            </p>
+                                                        </div>
+                                                        <p class="mt-20 font-12 fontW-b color--txt ta-c line-20">
+                                                            작품에 관심과 구매의사에 감사드립니다. <br>
+                                                            제안하신 <span class="color--sea fontW-b">{{commaPric bargainInfo.ratePric}} 원</span>을 기쁜 마음으로 수용하였습니다.  
+                                                        </p>
+                                                        <div class="btn-wrap d-flex justify-center mt-30">
+                                                            <button type="button" class="btn btn--white btn--round width--170 height-45 font-pre">닫         기</button>
+                                                            <button type="button" onclick="location.href='/approval'" class="btn btn--blue btn--round width--170 height-45 ml-40">결재하기</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{else}}
+                                    <div class="message-item width--465">
+                                        <p class="message-item__tit">가격문의 답장</p>
+                                        <div class="message-item__view">
+
+                                            <div class="popup-wrap">
+                                                <div class="popup-inner" style="width:463px;">
+                                                    <div class="popup-head">
+                                                        <p class="popup-head__tit">작품가격문의 답장</p>
+                                                        <button type="button" class="popup-close">
+                                                            <img src="/image/common/icon/icon-popup-close.png" alt="">
+                                                        </button>
+                                                    </div>
+                                                    <div class="popup-cont popup-cont--priceAsk">
+                                                        <p class="font-14 fontW-500 color--txt underline">받는사람:{{atwrkData.glry.glryNm}}</p>
+                                                        <div class="priceAsk-wrap">
+                                                            <div class="priceAsk-tit">
+                                                                <span class="priceAsk-tit__img">
+                                                                    <img class="msgPricImg" src="{{selectMainImage atwrkData}}" alt="">
+                                                                </span>
+                                                                <span class="priceAsk-tit__txt">
+                                                                    <em>{{atwrkData.atstInfo.atstNm}}</em>
+                                                                    <em>{{atwrkData.ogPrt.atwrkNm}}, {{atwrkData.ogPrt.mkYY}}</em>
+                                                                    <em>{{atwrkData.ogPrt.wSize}}x{{atwrkData.ogPrt.hSize}} cm, {{codeToName atwrkData.ogPrt.metRias "MATERIAL"}}</em>
+                                                                </span>
+                                                            </div>
+                                                            <div class="priceAsk-msg">
+                                                                <p class="priceAsk-msg__tit">메세지</p>
+                                                                <div class="form-wrap">
+                                                                    <div class="form-textarea">
+                                                                        <textarea name="" id="" disabled>{{answ}}</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="priceAsk-msg priceAsk-msg--reply">
+                                                                <p class="priceAsk-msg__tit">가격문의 답장</p>
+                                                                <div class="form-wrap">
+                                                                    <div class="form-textarea">
+                                                                        <textarea name="answInput" id="answ-{{@index}}"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <p class="mt-40 font-16 fontW-b color--txt ta-c">
+                                                            작품가격 <span class="font-20 fontW-b color--txt">{{commaPric atwrkData.ogPrt.pric}}  원</span>  입니다. 
+                                                        </p>
+                                                        <div class="btn-wrap d-flex justify-center mt-30">
+                                                            <button type="button" class="btn btn--white btn--round width--170 height-45 font-pre">취         소</button>
+                                                            <button type="button" name="sendToGlry" id="{{@index}}" class="btn btn--blue btn--round width--170 height-45 ml-40">문의하기</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+</template>

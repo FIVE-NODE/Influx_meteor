@@ -101,6 +101,9 @@ Template.digitalAtwrk.events({
         }
 
         filters.set(queryData);
+
+        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
+
         setQuery();
         tmpl.selectDigAtwrk();        
     },

@@ -16,20 +16,10 @@ Template.searchFilter.onCreated(function() {
 
     flagChk = FlowRouter.getParam('_id');
 
-    // 금액설정 검색과 금액 기준이 달라서 새로 만듬
-    price = new ReactiveVar();
-
-    var priceData = [
-        { code : '001', min : 0, max : 499999, name : '50만원 미만'},
-        { code : '002', min : 500000, max : 1000000, name : '50~100만원'},
-        { code : '003', min : 1000000, max : 2000000, name : '100~200만원'},
-        { code : '004', min : 2000000, max : 5000000, name : '200~500만원'},
-        { code : '005', min : 5000000, max : 10000000, name : '500~1000만원'},
-        { code : '006', min : 10000000, max : 50000000, name : '1000~5000만원'},
-        { code : '007', min : 50000000, max : 9999999999999, name : '5000만원 이상'},
-    ];
-
-    price.set(priceData);
+    options ={
+        skip : skip.get(),
+        limit: limit.get()
+    }
 
     if(flagChk === 'sch') console.log(JSON.parse(this.data.schQueryData()));
 
@@ -39,53 +29,94 @@ Template.searchFilter.onRendered(function() {
     renderFlag.set(true);
 });
 
+// DB 검색조건 수정 및 옵션 설정
+function setQuery() {
+    console.log(Template.instance().data.filterQuery.get());
+    query = Template.instance().data.filterQuery.get();
+    options = {
+        skip : skip.get(),
+        limit: limit.get()
+    };
+
+    return query;
+}
+
+// 선택해제 버튼 이벤트용 Func
+function cancelCheckBox(name) {
+    var input = $(`#artwork-${name} input`);
+    input.prop('checked', false);
+}
+
+// 아티스트 필터 해제 버튼용 Func
+function cancelCheckAtst() {
+    var rprAtst = $('button[name=rprsnAtst]');
+    rprAtst.removeClass('is-active');
+}
+
 Template.searchFilter.events({
     'click button[name=rprsnAtst]'(evt, tmpl) {
         var tar = $(evt.target);
         if(tar.hasClass('is-active')) {
             tar.removeClass('is-active');
         } else {
-            // var atstLists = atstListFilter.get();
-
             tar.addClass('is-active');
-
-            // console.log(tmpl.data.schData.get());
-
-            // var queryData = tmpl.data.schData.get();
-            // atstLists.push(this);
-
-            // queryData['FILTER'] = {
-            //     'ATSTNM' : atstLists
-            // }
-
-            // console.log(queryData);
-
         }
-
     },
     'click button[name=atstAllDeSelect]'(evt, tmpl) {
-        $('button[name=rprsnAtst]').removeClass('is-active');
+        cancelCheckAtst();
     },
-    'click button[name=styleAllDeSelect]'(evt, tmpl) {
-        $('input[name=style]').prop('checked', false);
+    'click button[name=allCancel]'() {
+        $('input[name=filterChk]').prop('checked', false);
+        cancelCheckAtst();
     },
-    'click button[name=priceAllDeSelect]'(evt, tmpl) {
-        $('input[name=product-price]').prop('checked', false);
+    'click button[name=priceCancelBtn]'() {
+        cancelCheckBox('price');
     },
-    'click button[name=materialsAllDeSelect]'(evt, tmpl) {
-        $('input[name=materials]').prop('checked', false);
+    'click button[name=mediumCancelBtn]'() {
+        cancelCheckBox('medium');
     },
-    'click .uncheck-all'(evt, tmpl) {
-        $('input[name=rprsnAtst]').prop('checked', false);
-        $('input[name=style]').prop('checked', false);
-        $('input[name=product-price]').prop('checked', false);
-        $('input[name=materials]').prop('checked', false);
+    'click button[name=mkyyCancelBtn]'() {
+        cancelCheckBox('mkyy');
     },
-    'change input'(evt, tmpl) {
-        console.log($(evt.target));
-        console.log(JSON.parse(tmpl.data.schQueryData()));
-        console.log(' change input');
-    }
+    'click button[name=style1CancelBtn]'() {
+        cancelCheckBox('style1');
+    },
+    'click button[name=style2CancelBtn]'() {
+        cancelCheckBox('style2');
+    },
+    'click button[name=materialCancelBtn]'() {
+        cancelCheckBox('material');
+    },
+    // 필터 이벤트
+    'change input[name=filterChk]'(evt, tmpl) {
+        var chked = $('input[name=filterChk]:checked');
+        var dataList = [];
+        var beforKind = '';
+        var queryData = {};
+
+        for(var i=0; i < chked.length; i++) {
+            var splitVal = chked[i].value.split('-');
+            var kind = splitVal[0];
+            var code = splitVal[1];
+            var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
+
+            if(beforKind != kind && beforKind != '') {
+                queryData[beforKind] = dataList;
+                dataList = [];
+            }
+
+            dataList.push(codeData);
+
+            beforKind = kind;
+
+            if(i === (chked.length -1)) queryData[beforKind] = dataList;
+        }
+
+        tmpl.data.filterQuery.set(queryData);
+        
+
+        setQuery();
+    },
     
 });
 
@@ -110,13 +141,22 @@ Template.searchFilter.helpers({
     renderFlag() {
         return renderFlag.get();
     },
-    style() {
+    priceOgPrt() {
+        return Meteor.codes.ARTWORK_PRICE_OGPRT();
+    },
+    medium() {
+        return Meteor.codes.MEDIUM();
+    },
+    mkyy() {
+        return Meteor.codes.MK_YEAR();
+    },
+    style1() {
         return Meteor.codes.STYLE_1();
     },
-    price() {
-        return price.get();
+    style2() {
+        return Meteor.codes.STYLE_2();
     },
     materials() {
         return Meteor.codes.MATERIAL();
-    }
+    },
 });

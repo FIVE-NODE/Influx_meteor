@@ -1,8 +1,10 @@
 <template name="atwrkDetail">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
     <section class="container">
         <div class="content">
             {{#with atwrkDetail}}
-            <!-- <script type="text/javascript" src="/libs/common.js"></script> -->
+            <script type="text/javascript" src="/libs/common.js"></script>
             <div class="content__inner">
                 <div class="sub-content border-0">
                     <div class="sub-content__product">
@@ -73,18 +75,18 @@
                                                                     <a href="" name="shBasket" class="btn btn--blue btn--round">장 바 구 니</a>
                                                                 </div>
                                                                 <div class="btn-wrap purchace__btns mt-10">
-                                                                    <a href="" name="ogPrtBuy" class="btn btn--blue btn--round">구 매 하 기</a>
+                                                                    <a href="/approval" name="ogPrtBuy" class="btn btn--blue btn--round">구 매 하 기</a>
                                                                 </div>
-                                                                {{else if priceChk}}
+                                                            {{else if priceChk}}
                                                                 <div class="btn-wrap purchace__btns mt-50">
                                                                     <a href="" name="priceInquiry" class="btn btn--blue btn--round">작 품 가 격 문 의</a>
                                                                 </div>
-                                                                {{else}}
+                                                            {{else}}
                                                                 <div class="btn-wrap purchace__btns mt-50">
-                                                                    <a href="" name="ogPrtBuy" class="btn btn--blue btn--round {{sellTpChk}}">구 매 하 기</a>
+                                                                    <a href="/approval" name="ogPrtBuy" class="btn btn--blue btn--round {{sellTpChk}}">구 매 하 기</a>
                                                                     <a href="" name="shBasket" class="btn btn--blue btn--round {{sellTpChk}}">장 바 구 니</a>
                                                                 </div>
-                                                                {{/if}}
+                                                            {{/if}}
                                                         </div>
                                                         {{#if bidChk}}
                                                             <div class="purchace-mid">
@@ -148,9 +150,9 @@
                                                             <p class="purchace__subtit mt-30">{{atwrkDetail.dtPrt.atwrkNm}}, {{atwrkDetail.dtPrt.mkYY}}</p>
                                                             <span class="purchace__info mt-20">
                                                                 디지털 에디션 판화<br/>
-                                                                M 사이즈, 460 x 200 cm (옵션 선택가능)                                                      
+                                                                <!-- M 사이즈, 460 x 200 cm (옵션 선택가능)                                                       -->
                                                             </span>
-                                                            <p class="purchace__price mt-30">{{atwrkDetail.dtPrt.sPric}} 원</p>
+                                                            <p class="purchace__price mt-30">{{commaPric normalPric}} 원</p>
                                                         </div>
                                                         <div class="purchace-mid border-bottom--1">
                                                             <div class="d-flex purchace-comp">
@@ -168,26 +170,25 @@
                                                                     <div class="form-block form-row">
                                                                         <p class="width--90 font-12 fontW-500 color--txt">사이즈 선택</p>
                                                                         <div class="form-select form-select-custom flex-1">
-                                                                            <button type="button" class="custom-select__tit pl-10">사이즈</button>
-                                                                            <ul class="custom-select__options" style="display: none;top:3.1rem;">
-                                                                                <li class="is-active"><button type="button">S</button></li>
-                                                                                <li><button type="button">   M  {{commaPric atwrkDetail.dtPrt.mPric}}</button></li>
-                                                                                <li><button type="button">   L  {{commaPric atwrkDetail.dtPrt.lPric}}</button></li>
+                                                                            <button type="button" name="seltBtn" class="custom-select__tit pl-10">S {{commaPric atwrkDetail.dtPrt.sPric}}</button>
+                                                                            <ul id="size" class="custom-select__options" style="display: none;top:3.1rem;">
+                                                                                <li name="seltSize" class="is-active"><button name="sizeBtn" value="S" type="button">S {{commaPric atwrkDetail.dtPrt.sPric}}</button></li>
+                                                                                <li name="seltSize"><button name="sizeBtn" value="M" type="button">M {{commaPric atwrkDetail.dtPrt.mPric}}</button></li>
+                                                                                <li name="seltSize"><button name="sizeBtn" value="L" type="button">L {{commaPric atwrkDetail.dtPrt.lPric}}</button></li>
                                                                             </ul>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-block form-row">
                                                                         <p class="width--90 font-12 fontW-500 color--txt">액 자 선 택</p>
                                                                         <div class="form-select form-select-custom flex-1">
-                                                                            <button type="button" class="custom-select__tit pl-10">   1</button>
-                                                                            <ul class="custom-select__options" style="display: none;top:3.1rem;">
-                                                                                <li class="is-active"><button type="button">   1</button></li>
-                                                                                <li><button type="button">   2 </button></li>
-                                                                                <li><button type="button">   3 </button></li>
-                                                                                <li><button type="button">   4 </button></li>
+                                                                            <button type="button" name="seltFrame" class="custom-select__tit pl-10">  알루미늄</button>
+                                                                            <ul id="frame" class="custom-select__options" style="display: none;top:3.1rem;">
+                                                                                <li class="is-active"><button name="frameBtn" id="frame-001" type="button">알루미늄</button></li>
+                                                                                <li class=""><button name="frameBtn" id="frame-002" type="button">나무액자</button></li>
                                                                             </ul>
                                                                         </div>
                                                                     </div>
+                                                                    {{#if edation}}
                                                                     <div class="form-block form-row">
                                                                         <p class="width--90 font-12 fontW-500 color--txt">에디션 선택</p>
                                                                         <div class="form-select form-select-custom flex-1">
@@ -200,25 +201,30 @@
                                                                             </ul>
                                                                         </div>
                                                                     </div>
+                                                                    {{/if}}
                                                                 </div>
                                                                 <p class="my-10 font-12 color--sea ta-r">남은 작품 {{atwrkDetail.dtPrt.selCnt}} 점</p>
                                                             </div>
-                                                            <div class="purchace-control__num">
-                                                                <p class="w-100 mb-20 font-12 fontW-500 color--txt">1. 백남준, 색의 변주곡 #980816, 1998/ M 사이즈/ 나무액자</p>
-                                                                <div class="product-count">
-                                                                    <button name="msCnt" class="button-count">-</button>
-                                                                    <input type="text" readonly="" class="number-product" value="{{digitalCnt}}">
-                                                                    <button name="psCnt" class="button-count">+</button>                                                            
+                                                            
+                                                            {{#each midleList}}
+                                                                <div class="purchace-control__num">
+                                                                    <p class="w-100 mb-20 font-12 fontW-500 color--txt">{{numbering @index}}. {{this}}</p>
+                                                                    <div class="product-count">
+                                                                        <button name="msCnt" value="{{@index}}" class="button-count">-</button>
+                                                                        <input type="text" readonly="" id="cnt{{@index}}" class="number-product" value="{{proCnt @index}}">
+                                                                        <button name="psCnt" value="{{@index}}" class="button-count">+</button>                                                            
+                                                                    </div>
+                                                                    <p name="{{@index}}" class="ml-auto font-14 fontW-b color--txt">{{selDtPric @index}} 원 <a href="" id="{{this}}" name="cancelPr">X</a></p>
                                                                 </div>
-                                                                <p class="ml-auto font-14 fontW-b color--txt">{{atwrkDetail.dtPrt.mPric}} 원  X</p>
-                                                            </div>
+                                                            {{/each}}
+
                                                             <p class="purchace-control__count">
                                                                 <span>총 상품 금액</span>
                                                                 <em>총 수량 {{digitalCnt}}개</em>
-                                                                <strong> 원</strong>
+                                                                <strong> {{commaPric totalPric}}원</strong>
                                                             </p>
                                                             <div class="btn-wrap mt-30 purchace__btns">
-                                                                <a href="" name="ogDtpBuy" class="btn btn--blue btn--round">구 매 하 기</a>
+                                                                <a href="/approval" name="dtPrtBuy" class="btn btn--blue btn--round">구 매 하 기</a>
                                                                 <a href="" name="shBasket" class="btn btn--blue btn--round">장 바 구 니</a>
                                                             </div>
                                                         </div>

@@ -1,0 +1,146 @@
+<template name="changeMberInfo">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        {{#with uInfo}}
+        <script type="text/javascript" src="/libs/common.js"></script>
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content">
+                    <div class="sub-content__mypage">
+                        <div class="mypage-wrap width--725 mx-auto">
+                            <div class="mypage-memberInfo mypage-memberInfo--view">
+                                <h3 class="mypage-memberInfo__tit">
+                                    기본 회원정보
+                                    <span class="">(필수)</span>
+                                </h3>
+                                <dl class="mypage-memberInfo__dl">
+                                    <dt>프로필 사진</dt>
+                                    <dd>
+                                        <p class="mypage-memberInfo__profile">
+                                            <span class="mypage-memberInfo__profile__img">
+                                                <img src="/image/sub/img-memberInfo__profile__img.png" alt="">
+                                            </span>
+                                            <span class="mypage-memberInfo__profile__txt">
+                                                회원님을 알릴 수 있는 사진을 등록해 주세요.<br/>
+                                                등록된 사진은 회원님의 게시물이나 댇글에 사용됩니다. 
+                                            </span>
+                                        </p>
+                                        <button type="button">사진변경</button>
+                                    </dd>
+                                    <dt>아이디</dt>
+                                    <dd>
+                                        <p>
+                                            {{ID}}
+                                        </p>
+                                    </dd>
+                                    <dt>비밀번호</dt>
+                                    <dd>
+                                        <p>********</p>
+                                        <button type="button">비밀번호변경</button>
+                                    </dd>
+                                    <dt>이름(실명)</dt>
+                                    <dd>
+                                        <p>
+                                            {{nm}}
+                                            {{#if nmChk}} <span>인증완료</span> {{/if}}
+                                        </p>
+                                    </dd>
+                                    <dt>닉네임</dt>
+                                    <dd>
+                                        <p>{{nicNm}}</p>
+                                        <button type="button">닉네임변경</button>
+                                    </dd>
+                                    <dt>이메일</dt>
+                                    <dd>
+                                        <p>
+                                            {{maskingEmail email}}
+                                            {{#if emailChk}} <span>인증완료</span> {{/if}}
+                                        </p>
+                                        <button type="button">이메일 변경</button>
+                                    </dd>
+                                    <dt>휴대전화</dt>
+                                    <dd>
+                                        <p>{{mobMasking mob}}</p>
+                                        <button type="button">휴대전화 변경</button>
+                                    </dd>
+                                </dl>
+                                <h3 class="mypage-memberInfo__tit mt-50">
+                                    추가 회원정보
+                                    <span class="">(선택)</span>
+                                </h3>
+                                <dl class="mypage-memberInfo__dl">
+                                    <dt>배송지</dt>
+                                    <dd>
+                                        <button class="popup" type="button" data-id="deliveryList_popup">배송지 목록</button>
+                                    </dd>
+                                </dl>
+                                {{#if defDelivYn}}
+                                    <div class="mypage-memberInfo__cont">
+                                        <p class="mypage-memberInfo__addr">
+                                            <span>{{defDelivYn.recptnNm}}</span>
+                                            <span>{{defDelivYn.mob}}</span>
+                                            <span>({{defDelivYn.zipCd}}) {{defDelivYn.addr1}}, {{defDelivYn.addr2}}</span>
+                                        </p>
+                                        <button type="button">정 보 수 정</button>
+                                    </div>
+                                {{/if}}
+                                <h3 class="mypage-memberInfo__tit mt-30">
+                                    소셜 로그인 연동
+                                </h3>
+                                <dl class="mypage-memberInfo__dl">
+                                    <dt>카카오 로그인 연동</dt>
+                                    <dd>
+                                        <div class="sns-connect">
+                                            <button type="button" class="is-active">ON</button>
+                                            <button type="button">OFF</button>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <h3 class="mypage-memberInfo__tit mt-50">
+                                    수신설정
+                                </h3>
+                                <div class="mypage-memberInfo__cont flex-wrap border-0">
+                                    <div class="form-wrap">
+                                        <div class="form-block form-row">
+                                            <div class="form-radio">
+                                                <input type="radio" id="radio-snsConnect--benefit">
+                                                <label for="radio-snsConnect--benefit" class="font-14 fontW-500 color--txt">쇼핑/이벤트 혜택 (선택)</label>
+                                            </div>
+                                            <p class="ml-10 font-12 color--gray">개인정보 수집 및 이용동의</p>
+                                        </div>
+                                        <div class="form-block mt-10">
+                                            <div class="form-row">
+                                                <div class="form-radio ml-20">
+                                                    <input type="radio" name="radio-snsConnect--choose" id="radio-snsConnect--sns">
+                                                    <label for="radio-snsConnect--sns" class="font-14 fontW-500 color--gray">SNS</label>
+                                                </div>
+                                                <div class="form-radio ml-20">
+                                                    <input type="radio" name="radio-snsConnect--choose" id="radio-snsConnect--email">
+                                                    <label for="radio-snsConnect--email" class="font-14 fontW-500 color--gray">이메일</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mt-10 font-12 color--txt">*구매정보 및 알림은 수신설정에 상관없이 발송됩니다. </p>
+                                </div>
+                            </div>
+                            <div class="mypage-memberOut">
+                                <p>탈퇴를 원하시면 회원탈퇴 버튼을 눌러주세요</p>
+                                <button class="popup" data-id="withDrawalUser_popup" type="button">회원탈퇴</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/with}}
+    </section>
+    {{> deliveryList}}
+    {{> deliveryEdit}}
+    {{> deliveryReg}}
+    {{> withDrawalUser}}
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+</template>

@@ -17,5 +17,5 @@ Meteor.publish('Atwrk', function() {
 });
 
 Meteor.publish('User', function(_id) {
-    return Mber.find({});
+    return Mber.findOne({_id : _id});
 });

@@ -87,6 +87,16 @@ Meteor.clientCommonUtils = {
         var format = /(\d{4})(\d{2})(\d{2})/g;
         return date.replace(format, '$1.$2.$3');
     },
+    // 휴대폰 하이픈 포맷
+    mobHyphen : function(data) {
+        var format = /(\d{2,3})(\d{3,4})(\d{3,4})/gi;
+        return data.replace(format, '$1-$2-$3');
+    },
+    // 마스킹 처리 (대쉬)
+    mobMasking : function(data) {
+        maskingStr = data.toString().replace(/-[0-9]{4}-/g, "-****-");
+        return maskingStr;
+    },
     // 장바구니 버튼 이벤트
     basketBtnEvnt: function(userInfo, atwrkId) {
         Meteor.call('decrypt', userInfo, function(err, res) {
@@ -111,9 +121,9 @@ Meteor.clientCommonUtils = {
         Meteor.call('decrypt', userInfo, function(err, res) {
             var userData = JSON.parse(res);
             var userTp = Object.keys(res).includes('snsTp') === false ? 'MBER' : 'SNSMBER';
-
+            
             Meteor.call('likeChkMber', userTp, userData._id, atwrkId, atwrkFlag, bothFlag, function(err, res) {
-                if(res != undefined && res != null) {
+                if(res != undefined && res != null) {                    
                     Meteor.call('removeGood', userTp, userData._id, atwrkId, atwrkFlag, bothFlag);
                     Meteor.call('atwrkCancelGood', atwrkFlag, atwrkId, bothFlag);
                 } else {

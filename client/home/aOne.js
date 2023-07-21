@@ -6,7 +6,7 @@ import { clientAtwrk, clientDtpHome, clientOgHome, clientEvntHome, clientBsnsMbe
 
 import './aOne.html';
 
-// 뉴임점작품 원화만
+// 뉴입점작품 원화만
 function selectAtwrk() {
     Meteor.call('selectNewAtwrk', function(e, data) {
         if(data != undefined && clientAtwrk._collection._docs._map.size == 0) {

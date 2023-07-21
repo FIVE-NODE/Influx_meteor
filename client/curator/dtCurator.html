@@ -1,0 +1,173 @@
+<template name="dtCurator">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content">
+                    <div class="sub-content__curator">
+                        <div class="curator-wrap">
+                            <div class="curator-lists curator-lists--digital product-kind--digital">
+
+                                <div class="curator__inner">
+                                    <div class="curator-kind curator-kind--digital">
+                                        <div class="curator-kind__info">
+                                            {{#with dtCurData}}
+                                                <a href="">
+                                                    <span class="curator-kind__info--img">
+                                                        <img src="{{image}}" alt="">
+                                                        <strong>
+                                                            Curator Pick!!
+                                                            <em>Digital Edition printmaking </em>
+                                                        </strong>
+                                                    </span>
+                                                </a>
+                                                <p class="curator-kind__info--txt">
+                                                    <strong>{{thmNm}}</strong>
+                                                    <em>
+                                                        {{thmDesc}}
+                                                    </em>
+                                                </p>
+                                            {{/with}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bradCrumb-wrap bradCrumb-curator">
+                                    <div class="curator__inner d-flex">
+                                        <ul class="bradCrumb bradCrumb-sub w-100">
+                                            <li>큐레이터 픽!!</li>
+                                            <li>디지털 판화</li>
+                                        </ul>
+                                        <div class="form-wrap" id="move">
+                                            <div class="form-select form-select-custom custom-select--order width--149">
+                                                <button type="button" class="custom-select__tit">정렬</button>
+                                                <ul class="custom-select__options" style="display: none;">
+                                                    <li class="is-active"><button type="button">정렬</button></li>
+                                                    <li><button name="sortList" value="date" type="button">최신 입점작 순</button></li>
+                                                    <li><button name="sortList" value="lowPric" type="button">낮은 가격 순</button></li>
+                                                    <li><button name="sortList" value="highPric" type="button">높은 가격 순</button></li>
+                                                    <li><button name="sortList" value="good" type="button">좋아요 순</button></li>
+                                                    <li><button name="sortList" value="view" type="button">많이 본 순</button></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-group">
+                                    <div class="lnb-wrap">
+                                        <button type="button" class="lnb-tit is-close">
+                                            가격(단위, 만원)
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--price">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap" id="artwork-price">
+                                                    {{#each pricedtPrt}}
+                                                        <div class="form-radio form-row">
+                                                            <input value="ARTWORK_PRICE_DTPRT-{{code}}" name="filterChk" type="radio" class="form-radio__input" id="radio-lnb--price{{code}}">
+                                                            <label for="radio-lnb--price{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="priceCancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            베이스(Base)
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--style">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap" id="artwork-base">
+                                                    {{#each base}}
+                                                        <div class="form-check form-row">
+                                                            <input value="BASE-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--base{{code}}">
+                                                            <label for="check-lnb--base{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="baseCancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            스타일1
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--style">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap" id="artwork-style1">
+                                                    {{#each style1}}
+                                                        <div class="form-check form-row">
+                                                            <input value="STYLE_1-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-01-{{code}}">
+                                                            <label for="check-lnb--style-01-{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="style1CancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            스타일2
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--style">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap" id="artwork-style2">
+                                                    {{#each style2}}
+                                                        <div class="form-check form-row">
+                                                            <input value="STYLE_2-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-02-{{code}}">
+                                                            <label for="check-lnb--style-02-{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="style2CancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-list">
+                                        {{#each atwrkList}}
+                                            <div class="product-item">
+                                                <a href="/atwrkDetail/{{_id}}">
+                                                    <span class="product-item__img">
+                                                        <img class="dtpListSize" src="{{imgInfo.imgID}}" alt="">
+                                                    </span>
+                                                    <span class="product-item__tit">{{atwrkNm}}</span>
+                                                    <span class="product-item__auth">{{atstNm}}</span>
+                                                    <span class="product-item__price">{{commaPric pric}}원</span>
+                                                    <span class="product-item__comp">{{glryNm}}</span>
+                                                </a>
+                                            </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                                <!-- 페이징 영역 -->
+                                <div class="pagination-wrap mt-40 mb-40">
+                                    <div class="pagination">
+                                        <a href="" name="prev" class="link-prev"></a>
+                                        {{#each page}}
+                                            <a href="" id="pageNum{{num}}" name="pageNum" class="{{active}}">{{num}}</a>
+                                        {{/each}}
+                                        <a href="" name="next" class="link-next"></a>
+                                    </div>
+                                </div>
+                                <!-- 페이징 영역 끝 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>

@@ -1,4 +1,7 @@
+
+
 import { Template } from 'meteor/templating';
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import './header.html';
 import './headerMenu/artMenu.js';
@@ -22,37 +25,40 @@ Template.header.onCreated(function() {
 
     logedInChk = new ReactiveVar(true);
 
+    uInfo = new ReactiveVar();
+
     var logedIn = JSON.parse(sessionStorage.getItem('art_session_index'));
     if(logedIn != null) logedInChk.set(logedIn.index === 0 ? true : false);
+
+    Meteor.commonUtils.uInfo(uInfo);
 
     selectQuickMu();
 });
 
 Template.header.onRendered(function() {
+    var logedIn = JSON.parse(sessionStorage.getItem('art_session_index'));
+    if(logedIn != null) logedInChk.set(logedIn.index === 0 ? true : false);
 });
 
 Template.header.events({
     'click button[name=artMenu]'(evt, tmpl) {
-        menuFun('artMenu');
+        
     },
     'click button[name=galleryMenu]'(evt, tmpl) {
-        menuFun('galleryMenu');
+        
     },
     'click button[name=artistMenu]'(evt, tmpl) {
-        menuFun('artistMenu');
+        
     },
     'click button[name=myPage]'(evt, tmpl) {
     },
     'click a'(evt, tmpl) {
-        setTimeout(function(){
-            location.reload();
-        }, 50);
+        // setTimeout(function(){
+        //     location.reload();
+        // }, 50);
         
     }
 });
-
-function menuFun(menu) {
-}
 
 Template.header.helpers({
     logedInChk() {
@@ -60,6 +66,22 @@ Template.header.helpers({
     },
     quickMu() {
         return quickMenu.get();
+    },
+    midHeader() {
+        var res = false;
+        var currentPageName = FlowRouter.getRouteName();;
+        if(currentPageName == 'interestAtwrk' || currentPageName == 'userCart' 
+        || currentPageName == 'purchaseList' || currentPageName == 'msgManage') res = true;
+        return res;
+    },
+    userInfo() {
+        if(uInfo.get() != undefined) {
+            console.log(uInfo.get());
+            return uInfo.get();
+        }
+    },
+    nmChk(nm) {
+        return nm == '' ? uInfo.get().nicNm : nm;
     }
 });
 

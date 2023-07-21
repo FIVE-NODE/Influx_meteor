@@ -30,19 +30,19 @@
                         </span>
                         <span class="nav-btn__txt">알 림</span>
                     </button>
-                    <button type="button" class="nav-btn nav-btn--favor">
+                    <button onclick="location.href='/interestAtwrk'" type="button" class="nav-btn nav-btn--favor">
                         <span class="nav-btn__img">
                             <img src="/image/common/icon/icon-heart.png" alt="">
                         </span>
                         <span class="nav-btn__txt">관 심</span>
                     </button>
-                    <button type="button" class="nav-btn nav-btn--basket">
+                    <button onclick="location.href='/userCart'" type="button" class="nav-btn nav-btn--basket">
                         <span class="nav-btn__img">
                             <img src="/image/common/icon/icon-shopping-cart.png" alt="">
                         </span>
                         <span class="nav-btn__txt">장바구니</span>
                     </button>
-                    <button data-id="myPageSimple_popup" type="button" name="myPage" class="nav-btn nav-btn--mypage popup">
+                    <button data-id="myPageSimple_popup" type="button" name="myPage" class="nav-btn nav-btn--mypage popup-mypage">
                         <span class="nav-btn__img">
                             <img src="/image/common/icon/icon-user.png" alt="">
                         </span>
@@ -51,6 +51,55 @@
                 </nav>
             </div>
         </div> <!-- /header__top -->
+        {{#if midHeader}}
+        <div class="header__mid">
+            <div class="header__mid__inner">
+                <div class="header__mid-info">
+                    <h3 class="header__mid-info__tit">MY 페이지</h3>
+                    <span class="header__mid-info__img">
+                        <img src="/image/common/img-header__imd__img.png" alt="">
+                    </span>
+                    {{#with userInfo}}
+                        <p class="header__mid-info__name">{{nmChk nm}} 님</p>
+                        <p class="header__mid-info__capt">(회원정보변경)</p>
+                    {{/with}}
+                </div>
+                <div class="header__mid-menu">
+                    <a href="/interestAtwrk" class="is-active">
+                        <span class="img-wrap">
+                            <img src="/image/common/icon/icon-header__mid--heart.png" alt="">
+                        </span>
+                        <span class="txt-wrap">관심 리스트</span>
+                    </a>
+                    <a href="/userCart">
+                        <span class="img-wrap">
+                            <img src="/image/common/icon/icon-header__mid--cart.png" alt="">
+                        </span>
+                        <span class="txt-wrap">장바구니</span>
+                    </a>
+                    <a href="/msgManage">
+                        <span class="img-wrap">
+                            <img src="/image/common/icon/icon-header__mid--mail.png" alt="">
+                        </span>
+                        <span class="txt-wrap">메세지 관리</span>
+                    </a>
+                    <a href="/purchaseList">
+                        <span class="img-wrap">
+                            <img src="/image/common/icon/icon-header__mid--delivery.png" alt="">
+                        </span>
+                        <span class="txt-wrap">주문배송내역</span>
+                    </a>
+                    <a href="">
+                        <span class="img-wrap">
+                            <img src="/image/common/icon/icon-header__mid--pic.png" alt="">
+                        </span>
+                        <span class="txt-wrap">MY 컬렉션</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+        <!-- /header__mid -->
         <div class="header__bottom">
             <div class="header__bottom__inner">
                 <div class="gnb">
@@ -72,6 +121,5 @@
             </div>
         </div> <!-- /header__bottom -->
     </section>
-
     {{> myPageSimple}}
 </template>

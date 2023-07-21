@@ -42,6 +42,20 @@ Meteor.methods({
         );
       }
     },
+    // mBer _id 로 회원 조회
+    selectMberForId: function(_id) {
+      try {
+        let res = Mber.findOne({_id});
+
+        return res;
+      } catch(e) {
+        console.log('Error : ', e);
+        throw new Meteor.Error(
+          500,
+          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
     // 갤러리 조회    
     clientBsnsMber: function() {
         try {
@@ -127,12 +141,55 @@ Meteor.methods({
       }
     },
     // 사업자 ID 로 작품조회
-    selectAtwrkForBsns: function(_id, options) {
+    selectAtwrkForBsns: function(_id, data ,options) {
       try{
         let res = {};
-        
-        res.list = Atwrk.find({'glry.bsnsID' : _id}, options).fetch();
-        res.total = Atwrk.find({'glry.bsnsID' : _id}).count();
+        var normal = {'glry.bsnsID' : _id};
+
+        if(Object.keys(data).length > 0) {
+
+          var atstNm = data.ATSTNM != undefined ?
+          { 'atstInfo.atstNm' : { $in : data.ATSTNM }} : {};
+
+          // 금액 범위에 맞게 설정
+          var price = data.ARTWORK_PRICE_OGPRT != undefined ? 
+          { "ogPrt.pric" : { 
+              $gte : Number(data.ARTWORK_PRICE_OGPRT[0].min),
+              $lte : Number(data.ARTWORK_PRICE_OGPRT[0].max)
+          }} : {};
+          
+          // 선택한 미디움 설정
+          var medium = data.MEDIUM != undefined ? 
+          { 'ogPrt.medium' : { $in : data.MEDIUM } } : {};
+
+          // 선택한 연도 설정
+          var mkYearList = [];
+          if(data.MK_YEAR != undefined) {
+          data.MK_YEAR.forEach(ele => {
+              mkYearList.push({
+              "ogPrt.mkYY" : { $gte : ele.min, $lte : ele.max},
+              });
+          });
+          }
+          var mkYear = mkYearList.length > 0 ? { $or : mkYearList } : {};
+
+          var style1 = data.STYLE_1 != undefined ?
+          { 'ogPrt.style1' : { $in : data.STYLE_1 } } : {};
+
+          var style2 = data.STYLE_2 != undefined ?
+          { 'ogPrt.style2' : { $in : data.STYLE_2 } } : {};
+
+          var metRias = data.MATERIAL != undefined ?
+          { 'ogPrt.metRias' : { $in : data.MATERIAL} } : {};
+
+          var queryData = { $and : [ normal, atstNm ,price, medium, mkYear, style1, style2, metRias ] }
+
+          res.list = Atwrk.find(queryData, options).fetch();
+          res.total = Atwrk.find(queryData).count();
+        } else {
+          res.list = Atwrk.find(normal, options).fetch();
+          res.total = Atwrk.find(normal).count();
+        }
 
         return res;
       } catch(e) {
@@ -358,6 +415,77 @@ Meteor.methods({
           '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
         );
       }
+    },
+    // 신규 배송지 등록
+    deliveryIns: function(userId, data) {
+      try {
+        let res = {};
+        let userChk = Mber.findOne({_id : userId});
+        
+        if(userChk != undefined) {
+          if(data.defDelivYn == 'Y') {
+            Mber.update({ _id : userId, 'deliv.defDelivYn' : 'Y'}, { $set : { 'deliv.$.defDelivYn' : 'N'}});
+            res = Mber.update({_id : userId}, { $addToSet : { deliv : data }});
+          } else {
+            res = Mber.update({_id : userId}, { $addToSet : { deliv : data }});
+          }
+        } else {
+          res = SnsMber.update({_id : userId}, { $addToSet : { deliv : data }});
+        }
 
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 배송지 삭제
+    deliveryDel: function(_id, data) {
+      try {
+
+        let res = Mber.update({
+          _id
+        }, {
+          $pull : { 'deliv' : {
+            addr1 : data.addr1,
+            addr2 : data.addr2,
+            zipCd : data.zipCd,
+            defDelivYn : data.defDelivYn,
+            mob : data.mob,
+            recptnNm : data.recptnNm,
+            delivNm : data.delivNm
+          }}
+        });
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 회원탈퇴
+    delWithDrawalUser: function(uInfo, data) {
+      try {
+        let res = {};
+
+        var date = new Date();
+        date = moment(date).format('YYYYMMDDHHmmss');
+
+        res = Mber.update({_id : uInfo}, { $set : { secsnRsn : data.secsnRsn, secsnTp : data.secsnTp, secsnDt : date } });
+
+        return res;
+      }  catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
     }
 }); 

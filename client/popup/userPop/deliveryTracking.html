@@ -1,0 +1,75 @@
+<template name="deliveryTracking">
+    <div class="popup-layout" id="delivery_popup">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:463px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit">배송조회</p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont popup-cont--deliveryInfo">
+                    {{#with popUpData}}
+                    <p class="font-20 fontW-b color-blue ta-c line-15">
+                        2월 22일 (수) 15:00<br/>
+                        배송 완료 되었어요                            
+                    </p>
+                    <p class="mt-30 font-14 fontW-500 color--gray ta-c">아직 상품을 받지 못하셨다면 택배사로 문의해 주세요.</p>
+                    <div class="deliveryInfo-wrap">
+                        <div class="deliveryInfo-block">
+                            <span class="deliveryInfo-block__img">
+                                <img src="/image/sub/img-popup--deliveryInfo01.png" alt="">
+                            </span>
+                            <p class="deliveryInfo-block__txt">
+                                <span>안경쓴여인 POP!!, 120X70cm 원목 프액자</span>
+                                <em>2023.2.20(월) 구매</em>
+                            </p>
+                        </div>
+                        <div class="deliveryInfo-block">
+                            <dl>
+                                <dt>송장번호</dt>
+                                <dd>654501418832</dd>
+                                <dt></dt>
+                                <dd></dd>
+                                <dt>배송업체</dt>
+                                <dd>
+                                    CJ 대한통운 <span class="img-wrap"><img src="/image/sub/icon/icon-deliveryInfo__phone.png" alt=""></span><br/>
+                                    02-4238-0803  
+                                </dd>
+                                <dt>배송기사</dt>
+                                <dd>
+                                    진영규 <span class="img-wrap"><img src="/image/sub/icon/icon-deliveryInfo__phone.png" alt=""></span><br/>
+                                    070-4238-0803  
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="deliveryInfo-block border-bottom--1">
+                            <span class="img-wrap mr-20">
+                                <img src="/image/sub/img-popup--deliveryInfo02.png" alt="">
+                            </span>
+                            <div class="d-flex flex-wrap w-100">
+                                <div class="flex-1 w-50">
+                                    <p class="mb-10 font-14 fontW-500 color--gray">판매자 문의</p>
+                                    <strong class="font-14 fontW-600 color--txt">갤러리 K</strong>
+                                </div>
+                                <div class="flex-1 w-50">
+                                    <p class="mb-10 font-14 fontW-500 color--gray">
+                                        <span class="img-wrap">
+                                            <img src="/image/sub/icon/icon-phone.png" alt="">
+                                        </span>
+                                        전화번호 보기
+                                    </p>
+                                    <strong class="font-14 fontW-600 color--txt">070-4238-0803  </strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/with}}
+                    <div class="btn-wrap d-flex justify-center mt-30">
+                        <button type="button" class="btn btn--blue btn--round width--170 height-40 font-pre popup-chk">확    인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -6533,6 +6533,8 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
+
+
 /* 신규추가 CSS */
 .back {
   width: 100%;
@@ -6576,6 +6578,18 @@ input[type="number"]::-webkit-inner-spin-button {
   min-height: 130px;
 }
 
+.orderListImg {
+  min-width: 116px;
+  max-width: 116px;
+  max-height: 105px;
+  min-height: 105px;
+}
+
+.msgPricImg {
+  max-height: 90px;
+  min-height: 90px;
+}
+
 /* 디지털 hot 10 */
 .hot-item-sample {
   display: flex;
@@ -6593,6 +6607,13 @@ input[type="number"]::-webkit-inner-spin-button {
   margin-top: 5rem;
   margin-bottom: -2rem;
   height: 50.9rem;
+}
+
+.interestAtwrk-img {
+  max-width: 304px;
+  min-width: 304px;
+  max-height: 228px;
+  min-height: 228px;
 }
 
 /* .hot-item::before {

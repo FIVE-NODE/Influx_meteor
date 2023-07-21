@@ -1,0 +1,32 @@
+<template name="phoneAuth">
+    <div class="popup-layout" id="">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:432px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit">휴대폰 본인인증</p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont popup-cont--inquire__cellphone">
+                    <div class="inquire-wrap">
+                        <p>본인인증을 통해 핸드폰 번호를 수정하실 수 있습니다. </p>
+                        <strong>수집항목</strong>
+                        <p>이름, 성별 생년원일 휴대폰 번호, CI/DI(개인식별정보), 내/외국인정보, 휴대폰인증결과, 회원본인인증</p>
+                        <strong>목적</strong>
+                        <p>본인확인기관 한국모바일인증(주)로 부터 정보를 제공받아 인증된 회원정보를 업데이트하고 수집하는데 동의합니다. </p>
+                        <div class="form-wrap mt-10">
+                            <div class="form-check form-row">
+                                <input type="checkbox" id="check-inquire__cellphone">
+                                <label for="check-inquire__cellphone" class="ml-10 font-14 fontW-b color--txt">동의합니다.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-wrap d-flex justify-center mt-50 mb-20">
+                        <button type="button" name="phoneAuthBtn" class="btn btn--blue btn--round width--300 height-40 font-pre">본인인증 하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -21,7 +21,7 @@ Template.bargainingRate.events({
             // 저장 데이터 셋팅
             var bargainInfo = {
                 "_id" : Meteor.commonUtils.generateUUID(),
-                "cmmncID": userInfo.userId,
+                "cmmncID": userInfo._id,
                 "nm": userInfo.nm === '' ? userInfo.nicNm : userInfo.nm,
                 "atwrkID": this._id,
                 "cmmncTp": '001',
@@ -40,6 +40,13 @@ Template.bargainingRate.events({
         } else {
             messagePopup({message : '흥정 금액을 선택해주세요'});    
         }
+    },
+    'change input[name=radio-deal]'(evt, tmpl) {
+        var rate = $(evt.currentTarget).val();
+        var pric = this.ogPrt.pric;
+
+        selectRate.set((rate * 100));
+        bargainingPrice.set(pric - (pric * rate));
     }
 });
 
@@ -54,5 +61,14 @@ Template.bargainingRate.helpers({
         var pric = this.ogPrt.pric;
         var salePric = pric - (pric * rate);
         return salePric;
+    },
+    seltPrice() {
+        if(selectRate.get() != undefined && bargainingPrice.get() != undefined) {
+            let res = {};
+            res.chk = true;
+            res.rate = selectRate.get();
+            res.pric = bargainingPrice.get();
+            return res;
+        }
     }
 });

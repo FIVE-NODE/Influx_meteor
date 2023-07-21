@@ -1,0 +1,89 @@
+<template name="userCart">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__mypage">
+                        <div class="basket-wrap basket-view">
+                            <div class="basket-list">
+                                <div class="form-wrap ml-10">
+                                    <div class="form-block form-row">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="" id="check-basket--all">
+                                            <label for="check-basket--all">모두선택</label>
+                                        </div>
+                                        <button type="button">선택삭제</button>
+                                    </div>
+                                </div>
+
+                                {{#each glryList}}
+                                    <div class="basket-item">
+                                        <p class="basket-item__tit">{{name}}</p>
+                                        {{#each atwrkList}}
+                                            {{#if glryNmChk ../name glry.glryNm}}
+                                                <div class="basket-item__cont">
+                                                    <div class="form-wrap">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" name="" id="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="basket-item-detail">
+                                                        <span class="basket-item-detail__img">
+                                                            <img src="/image/sub/img-basket__item01.png" alt="">
+                                                        </span>
+                                                        <span class="basket-item-detail__txt">
+                                                            <strong>[갤러리이름] 안경쓴여인 POP!! / 120X70cm 원목 액자</strong>
+                                                            <em>일반택배</em>
+                                                        </span>
+                                                    </div>
+                                                    <button type="button" class="basket-item__close">
+                                                        <img src="/image/sub/icon/icon-close--gray.svg" alt="">
+                                                    </button>
+                                                    <div class="basket-item__priceCount">
+                                                        <div class="form-wrap">
+                                                            <div class="form-select form-select-custom">
+                                                                <button type="button" class="custom-select__tit">1</button>
+                                                                <ul class="custom-select__options" style="display: none;">
+                                                                    <li class="is-active"><button type="button">1</button></li>
+                                                                    <li><button type="button">2</button></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <p class="basket-item__priceCount__txt">
+                                                            150,000 원
+                                                        </p>
+                                                    </div>
+                                                    <button type="button" class="basket-item__instant">바로 구매하기</button>
+                                                </div>
+                                            {{/if}}
+                                        {{/each}}
+                                        <p class="basket-item__deliveryPrice">
+                                            배송지 6,000원
+                                        </p>
+                                    </div>
+                                {{/each}}
+                            </div>
+                            <div class="basket-price">
+                                <div class="basket-price__box">
+                                    <dl class="basket-price__box__dl">
+                                        <dt>총 상품금액</dt>
+                                        <dd>200,0000원</dd>
+                                        <dt>총 배송비 </dt>
+                                        <dd>+20,000원</dd>
+                                        <dt>총 활인금액</dt>
+                                        <dd>-10,000원</dd>
+                                        <dt>결재금액</dt>
+                                        <dd>210,000원</dd>
+                                    </dl>
+                                </div>
+                                <button onclick="location.href='/approval'" type="button" class="btn btn--blue">2개 상품 구매하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>

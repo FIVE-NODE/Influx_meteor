@@ -1,5 +1,7 @@
 <template name="atwrkList">
     {{#if renderFlag}}
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
     <section class="container" id="move">
         <div class="content">
             <div class="content__inner">
@@ -28,14 +30,159 @@
                                         </div>
                                             <p class="product-capt__info">
                                                 {{codeToName glryEvtInfo.evntTp "EVENT_TYPE"}}
-                                                <span>{{glryEvtInfo.title}} {{dateFormat glryEvtInfo.strDt}} ~ {{dateFormat glryEvtInfo.endDt}},  Presented by {{glryEvtInfo.glry.glryNm}}</span>
+                                                <span>{{glryEvtInfo.title}} {{dateFormatChg glryEvtInfo.strDt "."}} ~ {{dateFormatChg glryEvtInfo.endDt "."}},  Presented by {{glryEvtInfo.glry.glryNm}}</span>
                                             </p>
                                             <a href="/glyDipEvt/{{glryEvtInfo._id}}" class="product-capt__btn">상 세 보 기</a>
                                     </div>
                                 {{/if}}
                             {{/if}}
                             <div class="product-group">
-                                {{> searchFilter}}
+                                <div class="lnb-wrap">
+                                    <!-- 필터 영역 -->
+                                    <button type="button" class="lnb-tit is-close">
+                                        아티스트
+                                        <span></span>
+                                    </button>
+                                    <div class="lnb-cont lnb-cont--artist">
+                                        <div class="lnb-cont__list">
+                                            {{#if rprsnAtst}}
+                                                {{#each rprsnAtst}}
+                                                    <button value="{{this}}" name="rprsnAtst" type="button" class="">{{this}}</button>
+                                                {{/each}}
+                                            {{/if}}
+                                        </div>
+                                        <div class="lnb-cont__link">
+                                            <a href="">더보기</a>
+                                            <button  name="atstAllDeSelect" type="button">선택해제</button>
+                                        </div>
+                                    </div>
+                                    <div class="lnb-wrap">
+                                        <button type="button" class="lnb-tit is-close">
+                                            가격(단위, 만원)
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--price">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap" id="artwork-price">
+                                                    {{#each priceOgPrt}}
+                                                        <div class="form-radio form-row">
+                                                            <input value="ARTWORK_PRICE_OGPRT-{{code}}" type="radio" name="filterChk" class="form-radio__input" id="radio-lnb--price{{code}}">
+                                                            <label for="radio-lnb--price{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="priceCancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            미디엄
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--medium">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap" id="artwork-medium">
+                                                    {{#each medium}}
+                                                        <div class="form-check form-row">
+                                                            <input value="MEDIUM-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--medium{{code}}">
+                                                            <label for="check-lnb--medium{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="mediumCancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            제작연도
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--mkyy">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap" id="artwork-mkyy">
+                                                    {{#each mkyy}}
+                                                        <div class="form-check form-row">
+                                                            <input value="MK_YEAR-{{code}}" type="checkbox" name="filterChk" class="form-check__input" id="check-lnb--mkyy{{code}}">
+                                                            <label for="check-lnb--mkyy{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="mkyyCancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            스타일1
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--style1">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap" id="artwork-style1">
+                                                    {{#each style1}}
+                                                        <div class="form-check form-row">
+                                                            <input value="STYLE_1-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-01-{{code}}">
+                                                            <label for="check-lnb--style-01-{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="style1CancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            스타일2
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--style2">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap" id="artwork-style2">
+                                                    {{#each style2}}
+                                                        <div class="form-check form-row">
+                                                            <input value="STYLE_2-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-02-{{code}}">
+                                                            <label for="check-lnb--style-02-{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="style2CancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            재료
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--material">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap" id="artwork-material">
+                                                    {{#each materials}}
+                                                        <div class="form-check form-row">
+                                                            <input value="MATERIAL-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--material{{code}}">
+                                                            <label for="check-lnb--material{{code}}">{{name}}</label>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button name="materialCancelBtn" type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 필터 영역 끝 -->
+                                    <div class="btn-wrap border-top pt-30 ta-r">
+                                        <button type="button" name="allCancel" class="uncheck-all">전체 선택 해제</button>
+                                    </div>
+                                </div>
                                 <div class="product-list">
                                     {{#if atwrk}}
                                         {{#each atwrk}}                                    

@@ -69,6 +69,20 @@ Meteor.methods({
       )
     }
   },
+  // 큐레이터 픽 전부 조회
+  selectAllPick: function() {
+    try {
+      var res = Pick.find().fetch();
+
+      return res;
+    } catch(e) {
+      console.log('Error : ', e);
+      throw new Meteor.Error(
+        500,
+        '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+      )
+    }  
+  },
   // 작품 전부 조회
   selectAtwrk: function(req) {
     try {
@@ -122,19 +136,12 @@ Meteor.methods({
     try {
       var toDate = new Date();
       var agoDate = new Date(toDate);
-      agoDate.setMonth((toDate.getMonth() - 3));
+      agoDate.setMonth((toDate.getMonth() - 1));
 
       toDate = moment(toDate).format('YYYYMMDD');
       agoDate = moment(agoDate).format('YYYYMMDD');
 
-      let res = Atwrk.find(
-        {
-          'ogPrt.atwrkNm' : { $exists : true },
-          insDt : {
-            $gte : agoDate,
-            $lte : toDate
-          }
-        },
+      let res = Atwrk.find({'ogPrt.atwrkNm' : { $exists : true }, insDt : {$gte : agoDate, $lte : toDate}},
         { 
           $sample : { size : 12 },
           sort : { insDt : -1 }

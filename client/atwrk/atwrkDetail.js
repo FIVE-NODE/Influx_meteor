@@ -24,7 +24,19 @@ Template.atwrkDetail.onCreated(function() {
     images = new ReactiveVar();
     latestList = new ReactiveVar();
 
-    // 디지털 판화 일 경우 갯수
+    // 중간 사이즈 액자 선택시 추가 되는 상품 리스트
+    midleProList = new ReactiveVar();
+
+    // 금액선택 변경시 바로 변경 되고 첫번째 보여지는 금액
+    normalPric = new ReactiveVar();
+
+    // 금액 설정
+    setDtPric = new ReactiveVar();
+
+    // 디지털 판화 상품당 갯수
+    proCntList = new ReactiveVar([]);
+
+    // 디지털 판화 일 경우 총 갯수
     digitalCnt = new ReactiveVar(1);
 
     // 디지털 판화 제한 수량
@@ -56,10 +68,14 @@ Template.atwrkDetail.onCreated(function() {
     // 사용자 정보
     userInfos = new ReactiveVar({});
 
+    // 디지털 판화용 구매하기 리스트 넘기기
+    listProduct =  new ReactiveVar({});
+
     if(sessionStorage.getItem('art_dex') != undefined) {
         Meteor.call('decrypt', sessionStorage.getItem('art_dex'), function(err, res) {
             var userData = JSON.parse(res);
             userInfos.set(userData);
+            console.log('userInfos : ', userInfos.get());
         });
     }
 
@@ -68,9 +84,25 @@ Template.atwrkDetail.onCreated(function() {
     function selectAtwrkDetail () {
         Meteor.call('selectAtwrkDetail', FlowRouter.getParam('_id'), function(err, res) {
             // 원화가 없는경우 dtPrt 디지털 판화로 셋팅
-
             if(res.ogPrt.atwrkNm === undefined) tabFlag.set('dtPrt');
             else if(res.dtPrt.atwrkNm != undefined) bothFlag.set(true);
+
+            if(res.dtPrt.sPric != undefined) {
+                var setMidleList = new Set();
+                var setData = `${res.atstInfo.atstNm}, ${res.dtPrt.atwrkNm}, ${res.dtPrt.mkYY}/S 사이즈/알루미늄`;
+                setMidleList.add(setData);
+                midleProList.set(setMidleList);
+
+                var pric = [];
+                pric.push(res.dtPrt.sPric);
+                setDtPric.set(pric);
+
+                var proCnt = [];
+                proCnt.push(1);
+                proCntList.set(proCnt);
+
+                normalPric.set(res.dtPrt.sPric);
+            }
 
             var userInfo = sessionStorage.getItem('art_dex');
             if(userInfo != undefined) {
@@ -129,10 +161,44 @@ Template.atwrkDetail.onRendered(function() {
 
     let img = new Image();
     img.src = $('#target').attr('src');
-
-    console.log(img.width);
-    console.log(img.height);
 });
+
+function msPsSetData(flag ,size, frame) {
+    var details = detail.get();
+
+    var lower = lower = size.toLowerCase();
+    var setData = setData = `${details.atstInfo.atstNm}, ${details.dtPrt.atwrkNm}, ${details.dtPrt.mkYY}/${size} 사이즈/${frame}`;
+    
+    var midleDatas = midleProList.get();
+    var midleSize =  midleDatas.size;
+    midleDatas.add(setData);
+
+    if(midleSize != midleDatas.size) {
+        var pric = setDtPric.get();
+        pric.push(details.dtPrt[`${lower}Pric`]);
+
+        var cntList = proCntList.get();
+        cntList.push(1);
+
+        normalPric.set(details.dtPrt[`${lower}Pric`]);
+        proCntList.set(cntList);
+        midleProList.set(midleDatas);
+        setDtPric.set(pric);
+        
+        var totalCnt = 0;
+        for(idx in proCntList.get()) {
+            totalCnt += proCntList.get()[idx];
+        }
+        digitalCnt.set(totalCnt);
+        var setPrdut = {
+            setData,
+            count : 1,
+            
+        };
+        var prdut = listProduct.get();
+
+    }
+}
 
 Template.atwrkDetail.events({
     'click button[name=itemGood]'() {
@@ -157,15 +223,29 @@ Template.atwrkDetail.events({
         $('img[name=mainImg]').attr('src', imgSrc);
     },
     'click button[name=msCnt]'(evt, tmpl) {
-        if(digitalCnt.get() === 1) ;
+        var index = $(evt.currentTarget).val();
+        var inputVal = parseInt($(`#cnt${index}`).val());
+        if(inputVal === 1) ;
         else {
+            $(`#cnt${index}`).val(inputVal - 1);
+            var cntList = proCntList.get();
+            cntList[index] = cntList[index] - 1;
+            proCntList.set(cntList);
             digitalCnt.set(digitalCnt.get() - 1);
         }
     },
     'click button[name=psCnt]'(evt, tmpl) {
+        var index = $(evt.currentTarget).val();
+        var inputVal = parseInt($(`#cnt${index}`).val());
         if(digitalCnt.get() >= limitCnt.get()) {
             alert(`최대 구매 가능한 갯수는 ${limitCnt.get()}개 입니다.`);
-        } else digitalCnt.set(digitalCnt.get() + 1);
+        } else {
+            $(`#cnt${index}`).val(inputVal + 1);
+            var cntList = proCntList.get();
+            cntList[index] = cntList[index] + 1;
+            proCntList.set(cntList);
+            digitalCnt.set(digitalCnt.get() + 1);
+        }
     },
     // 장바구니
     'click a[name=shBasket]'(evt, tmpl) {
@@ -190,7 +270,9 @@ Template.atwrkDetail.events({
     },
     // 구매하기 디지털 판화
     'click button[name=dtPrtBuy]'(evt, tmpl) {
-        console.log('dtPrt buy ======= ');
+        Meteor.call('encrypt', JSON.stringify(detail.get()), function(err, res) {
+            localStorage.setItem('art_od', res);
+        });
     },
     // 드래그 투 무브 이벤트
     'click button[name=imgInterior]'(evt, tmpl) {
@@ -283,6 +365,38 @@ Template.atwrkDetail.events({
             // 비 로그인 사용자는 팝업창
             messagePopup({message : '로그인 후 이용해주세요'});
         }
+    },
+    // 사이즈 선택 이벤트
+    'click button[name=sizeBtn]'(evt, tmpl) {
+        var size = $(evt.currentTarget).val();
+        var frame = $('button[name=seltFrame]').text().trim();
+        msPsSetData('size', size, frame);
+    },
+    // 액자 선택 이벤트
+    'click button[name=frameBtn]'(evt, tmpl) {
+        var frame = $(evt.currentTarget).text();
+        var size = $('button[name=seltBtn]').text().split(' ')[0];
+        msPsSetData('frame', size, frame);
+    },
+    // 추가한 상품 취소
+    'click a[name=cancelPr]'(evt, tmpl) {
+        var index = $(evt.currentTarget).parent().attr('name');
+
+        var midlePro = midleProList.get();
+        midlePro.delete($(evt.currentTarget).attr('id'));
+        midleProList.set(midlePro);
+
+        var pric = setDtPric.get();
+        pric.splice(index, 1);
+        setDtPric.set(pric);
+
+        var cntList = proCntList.get();
+        var cntCur = cntList[index];
+        var digtCnt = digitalCnt.get();
+        digitalCnt.set(digtCnt - cntCur);
+        cntList.splice(index, 1);
+        proCntList.set(cntList);
+
     }
 });
 
@@ -337,9 +451,9 @@ Template.atwrkDetail.helpers({
             
             if(res.dtPrt.sPric != undefined) {
                 limitCnt.set(res.dtPrt.selCnt);
-                res.dtPrt.sPric = Meteor.commonUtils.priceComma(res.dtPrt.sPric);
-                res.dtPrt.mPric = Meteor.commonUtils.priceComma(res.dtPrt.mPric);
-                res.dtPrt.lPric = Meteor.commonUtils.priceComma(res.dtPrt.lPric);
+                // res.dtPrt.sPric = Meteor.commonUtils.priceComma(res.dtPrt.sPric);
+                // res.dtPrt.mPric = Meteor.commonUtils.priceComma(res.dtPrt.mPric);
+                // res.dtPrt.lPric = Meteor.commonUtils.priceComma(res.dtPrt.lPric);
                 if(res.ogPrt.pric === undefined) {
                     res.dtPrtActive = 'is-active';
                     res.dtPrtOpen = 'is-open';
@@ -418,13 +532,27 @@ Template.atwrkDetail.helpers({
         return digitalCnt.get();
     },
     // 총 구매 금액
-    totalPric(pric) {
-        return digitalCnt.get() * pric;
+    totalPric() {
+        var totalPric = 0;
+        if(proCntList.get().length > 0) {
+            var cntList = proCntList.get();
+            var dtPric = setDtPric.get();
+
+            if(dtPric.length != 0) {
+                for(idx in cntList) {
+                    totalPric += cntList[idx] * dtPric[idx];
+                }
+            }
+
+            return totalPric;
+        } else {
+            return totalPric;
+        }
     },
-    // 금액에 콤마 붙이기
-    // commaPric(pric) {
-    //     return Meteor.commonUtils.priceComma(pric);
-    // },
+    // 선택 금액 리턴
+    selDtPric(index) {
+        return Meteor.commonUtils.priceComma(setDtPric.get()[index]);
+    },
     sampleInterior() {
         return sampleInterior.get();
     },
@@ -448,4 +576,26 @@ Template.atwrkDetail.helpers({
     priceChk() {
         return this.ogPrt.sellTp === '004';
     },
+    // 액자 선택용 헬퍼
+    frame() {
+        return Meteor.codes.FRAME();
+    },
+    // 에디션 선택 
+    edation() {
+        return false;
+    },
+    // midle 리스트
+    midleList() {
+        return midleProList.get();
+    },
+    // 각 상품별 갯수
+    proCnt(index) {
+        return proCntList.get()[index];
+    },
+    numbering(num) {
+        return num + 1;
+    },
+    normalPric() {
+        return normalPric.get();
+    }
 });

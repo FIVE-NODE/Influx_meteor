@@ -1,0 +1,66 @@
+<template name="interestAtwrk">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__mypage">
+                        <div class="favor-wrap">
+                            <div class="favor-list">
+                                {{#each atwrkList}}
+                                    <div class="favor-item">
+                                        <a href="/atwrkDetail/{{_id}}">
+                                            <span class="favor-item__img">
+                                                <img class="interestAtwrk-img" src="{{selectMainImage this}}" alt="">
+                                            </span>
+                                        </a>
+                                        <div class="favor-item__cont">
+                                            <p class="favor-item__txt">
+                                                {{atstInfo.atstNm}}<br/>
+                                                {{#if dtPrtChk}}
+                                                    {{ogPrt.atwrkNm}}, {{ogPrt.wSize}} x {{ogPrt.hSize}}, {{codeToName ogPrt.metRias "MATERIAL"}}<br/>
+                                                    {{ogPrt.glryNm}}<br/>
+                                                    {{commaPric ogPrt.pric}} 원                                                
+                                                {{else}}
+                                                    {{dtPrt.atwrkNm}}, {{codeToName dtPrt.base "BASE"}}<br/>
+                                                    {{dtPrt.glryNm}}<br/>
+                                                    {{commaPric dtPrt.sPric}} 원                                                
+                                                {{/if}}
+                                            </p>
+                                            <button type="button" data-id="confirm" id="{{@index}}" name="heartBtn" value="{{_id}}" class="favor-item__btn">
+                                                <img src="/image/sub/icon/img-favor-heart.png" alt="">
+                                            </button>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="popup-layout" id="confirm">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:347px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit"></p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont">
+                    <p class=" mt-30 font-14 fontW-b color--txt ta-c">정말 삭제 하시겠습니까?</p>
+                    <div class="btn-wrap d-flex justify-center mt-40">
+                        <button type="button" class="btn btn--white btn--round width--170 height-40 font-pre popup-close">취   소</button>
+                        <button type="button" name="delete" class="btn btn--blue btn--round width--170 height-40 ml-20 font-pre">삭  제</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+</template>

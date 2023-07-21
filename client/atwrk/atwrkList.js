@@ -1,20 +1,14 @@
+import { filter } from 'domutils';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import './atwrkList.html';
 
 Template.atwrkList.onCreated(function() {
-
     // page 정보
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
     limit = new ReactiveVar(4);
     total = new ReactiveVar(0);
-    
-    // 왼쪽 조건문 query 및 페이징 쿼리
-    query = {
-        skip : skip.get(),
-        limit: limit.get()
-    };
 
     // 화면 렌더 조건
     renderFlag = new ReactiveVar(false);
@@ -28,46 +22,25 @@ Template.atwrkList.onCreated(function() {
     // 작품 정보
     atwrkInfo   = new ReactiveVar();
 
-    // 왼쪽 필터링 정보 저장용
-    this.data.filterQuery = new ReactiveVar({});
-
-    // 검색으로 들어왔는지 여부 확인
-    flagChk = new ReactiveVar(FlowRouter.getParam('_id'));
-
-    // 검색한 정보
-    if(flagChk.get() === 'sch') {
-        this.data.schData =  new ReactiveVar(JSON.parse(this.data.schQueryData()));
-    }
-
     // 아티스트 정보 리스트
-    this.data.atstInfoList = ReactiveVar();
+    atstInfoList = new ReactiveVar();
 
-    // 검색전용 작품리스트 
-    this.selectSchForAtwrk = function(schQueryData, atstInfoList) {
-        Meteor.call('selectSchForAtwrk', schQueryData, query, function(err, res) {
-            var resList = res.list;
-            var atstList = [];
-            resList.forEach(function(map) {
-                // map['ogPrt']['pric'] = Meteor.commonUtils.priceComma(map['ogPrt']['pric']);
-                // clientSchAtwrk.insert(map);
-                atstList.push(map.atstInfo.atstNm);
-            });
+    // 검색용 query
+    filterQuery = new ReactiveVar();
 
-             // 아티스트 정보
-            if(atstInfoList != undefined) atstInfoList.set([... new Set(atstList)]);
+    query = {};
 
-            atwrkInfo.set(res.list);    // 작품 정보
-
-            total.set(res.total);       // 검색한 총 갯수
-            return res;
-        });
+    // 왼쪽 조건문 query 및 페이징 쿼리
+    options = {
+        skip : skip.get(),
+        limit: limit.get()
     };
 
      // 갤러리 정보 (특정 갤러리 작품 보기 전용)
-     this.selectGlryDetail = function(atstInfoList) {
+     this.selectGlryDetail = function() {
         Meteor.call('selectGlryDetail', FlowRouter.getParam("_id"), function(err, res) {
             glryDetail.set(res);
-            atstInfoList.set(res);
+            atstInfoList.set(res.rprsnAtst);
             return res;
         });
     };
@@ -82,34 +55,33 @@ Template.atwrkList.onCreated(function() {
 
     // 비즈니스에 등록되어 있는 작품 정보 (특정 갤러리 작품 보기 전용)  
     this.selectAtwrkForBsns = function() {
-        Meteor.call('selectAtwrkForBsns', FlowRouter.getParam("_id"), query , function(err, res) {
+        console.log(query);
+        Meteor.call('selectAtwrkForBsns', FlowRouter.getParam("_id"), query, options , function(err, res) {
             atwrkInfo.set(res.list);
             total.set(res.total);
             return res;
         });
     }
 
-    if(flagChk.get() != 'sch') {
-        // 갤러리 리스트를 통해 들어왔을때
-        this.data.atstInfoList = new ReactiveVar();
-        this.selectGlryDetail(this.data.atstInfoList);
-        this.selectEvntHome();
-        this.selectAtwrkForBsns();
-    } else {
-        // 검색으로 들어 왔을때.
-        // schQueryData 검색용 데이터
-        this.selectSchForAtwrk(this.data.schData.get(), this.data.atstInfoList);
-    }
+    this.selectGlryDetail();
+    this.selectEvntHome();
+    this.selectAtwrkForBsns();
+    
 });
+
+// 선택해제 버튼 이벤트용 Func
+function cancelCheckBox(name) {
+    var input = $(`#artwork-${name} input`);
+    input.prop('checked', false);
+}
 
 // DB 검색조건 수정 및 옵션 설정
 function setQuery() {
-    query = {
+    query = filterQuery.get();
+    options = {
         skip : skip.get(),
         limit: limit.get()
     };
-
-    return query;
 }
 
 // 스크롤 이동
@@ -132,15 +104,99 @@ Template.atwrkList.events({
     'click a[name=atwrkDetail]'() {
         FlowRouter.go(`/atwrkDetail/${this._id}`);
     },
-    'click span[name=appEntryInq]'() {
-        
+    'click button[name=rprsnAtst]'(evt, tmpl) {
+        var tar = $(evt.target);
+        if(tar.hasClass('is-active')) {
+            tar.removeClass('is-active');
+        } else {
+            tar.addClass('is-active');
+        }
+
+        var atsts = $('button[name=rprsnAtst]');
+            
+        var atstList = [];
+        $.each(atsts, function(idx, val) {
+            if($(val).hasClass('is-active')) {
+                atstList.push(val.value);
+            }
+        });
+
+        var filterList = filterQuery.get() != undefined ? filterQuery.get() : {};
+        if(atstList.length > 0) {
+            filterList.ATSTNM = atstList;
+            filterQuery.set(filterList);
+        } else {
+            delete filterList.ATSTNM;
+            filterQuery.set(filterList);
+        }
+
+        setQuery();
+
+        tmpl.selectAtwrkForBsns();
+    },
+    'click button[name=atstAllDeSelect]'(evt, tmpl) {
+        cancelCheckAtst();
+    },
+    'click button[name=allCancel]'() {
+        $('input[name=filterChk]').prop('checked', false);
+        cancelCheckAtst();
+    },
+    'click button[name=priceCancelBtn]'() {
+        cancelCheckBox('price');
+    },
+    'click button[name=mediumCancelBtn]'() {
+        cancelCheckBox('medium');
+    },
+    'click button[name=mkyyCancelBtn]'() {
+        cancelCheckBox('mkyy');
+    },
+    'click button[name=style1CancelBtn]'() {
+        cancelCheckBox('style1');
+    },
+    'click button[name=style2CancelBtn]'() {
+        cancelCheckBox('style2');
+    },
+    'click button[name=materialCancelBtn]'() {
+        cancelCheckBox('material');
+    },
+    // 필터 이벤트
+    'change input[name=filterChk]'(evt, tmpl) {
+        var chked = $('input[name=filterChk]:checked');
+        var dataList = [];
+        var beforKind = '';
+        var queryData = {};
+
+        for(var i=0; i < chked.length; i++) {
+            var splitVal = chked[i].value.split('-');
+            var kind = splitVal[0];
+            var code = splitVal[1];
+            var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
+
+            if(beforKind != kind && beforKind != '') {
+                queryData[beforKind] = dataList;
+                dataList = [];
+            }
+
+            dataList.push(codeData);
+
+            beforKind = kind;
+
+            if(i === (chked.length -1)) queryData[beforKind] = dataList;
+        }
+
+        filterQuery.set(queryData);
+
+        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
+
+        setQuery();
+
+        tmpl.selectAtwrkForBsns();
     },
     'click a[name=prev]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip));
         else {
             setQuery();
-            if(flagChk === 'sch') tmpl.selectSchForAtwrk(tmpl.data.schData.get());
-            else tmpl.selectAtwrkForBsns();
+            tmpl.selectAtwrkForBsns();
             scrollMove();
         }
     },
@@ -148,8 +204,7 @@ Template.atwrkList.events({
         if(Meteor.clientCommonUtils.nextPage(curPage, total.get(), limit, skip)) ;
         else {
             setQuery();
-            if(flagChk === 'sch') tmpl.selectSchForAtwrk(tmpl.data.schData.get());
-            else tmpl.selectAtwrkForBsns();
+            tmpl.selectAtwrkForBsns();
             scrollMove();
         }
     },
@@ -157,8 +212,7 @@ Template.atwrkList.events({
         if(Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num));
         else {
             setQuery();
-            if(flagChk === 'sch') tmpl.selectSchForAtwrk(tmpl.data.schData.get());
-            else tmpl.selectAtwrkForBsns();
+            tmpl.selectAtwrkForBsns();
             scrollMove();
         }
     }
@@ -202,6 +256,13 @@ Template.atwrkList.helpers({
 
         return res.length === 0 ? false : res;
     },
+    rprsnAtst() {
+        var res = false;
+
+        if(atstInfoList.get() != undefined) res = atstInfoList.get().length != 0 ? atstInfoList.get() : false;
+
+        return res;
+    },
     details() {
         var res = false;
 
@@ -219,11 +280,26 @@ Template.atwrkList.helpers({
     renderFlag() {
         return renderFlag.get(); 
     },
+    priceOgPrt() {
+        return Meteor.codes.ARTWORK_PRICE_OGPRT();
+    },
+    medium() {
+        return Meteor.codes.MEDIUM();
+    },
+    mkyy() {
+        return Meteor.codes.MK_YEAR();
+    },
+    style1() {
+        return Meteor.codes.STYLE_1();
+    },
+    style2() {
+        return Meteor.codes.STYLE_2();
+    },
+    materials() {
+        return Meteor.codes.MATERIAL();
+    },
     page() {
         let res = Meteor.clientCommonUtils.setPage(limit.get(), total.get());
         return res;
-    },
-    dateFormat(date) {
-        return Meteor.clientCommonUtils.dateFormatChg(date);
     }
 });

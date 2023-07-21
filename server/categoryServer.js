@@ -8,7 +8,7 @@ Meteor.methods({
     selectOrgAtwrk: function(data, option) {
         try {
             let res = {};
-
+            
             // 원화 작품 있는 것만 셋팅
             var normal = {
               'ogPrt.atwrkNm' : { $exists: true }
@@ -48,7 +48,29 @@ Meteor.methods({
               var metRias = data.MATERIAL != undefined ?
               { 'ogPrt.metRias' : { $in : data.MATERIAL} } : {};
 
-              var queryData = { $and : [ normal, price, medium, mkYear, style1, style2, metRias ] }
+              var ogCurator = data.atwrkIds != undefined ?
+              { _id : { $in : data.atwrkIds } } : {};
+
+              var atstSch = data.atstGlrySch != undefined ?
+              { 'atstInfo.atstNm' : { $regex : new RegExp(data.atstGlrySch, 'i') }} : {};
+
+              var glryNmSch = data.atstGlrySch != undefined ?
+              { 'glry.glryNm' : { $regex : new RegExp(data.atstGlrySch, 'i') }} : {};
+
+              var newEntry = data.newEntry;
+              if(newEntry != undefined) {
+                var toDate = new Date();
+                var agoDate = new Date(toDate);
+                agoDate.setMonth((toDate.getMonth() - 1));
+
+                toDate = moment(toDate).format('YYYYMMDD');
+                agoDate = moment(agoDate).format('YYYYMMDD');
+
+                newEntry = { insDt : { $gte : agoDate, $lte : toDate }}
+                
+              } else newEntry = {};
+
+              var queryData = { $and : [ newEntry, normal, ogCurator, price, medium, mkYear, style1, style2, metRias ], $or : [atstSch, glryNmSch]};
 
               res.total = Atwrk.find(queryData).count();
               res.list = Atwrk.find(queryData, option).fetch();
@@ -115,7 +137,10 @@ Meteor.methods({
           var style2 = data.STYLE_2 != undefined ?
           { 'dtPrt.style2' : { $in : data.STYLE_2 } } : {};
 
-          var queryData = { $and : [ normal, sPrice, mPrice, lPrice, base, style1, style2 ] }
+          var dtCurator = data.atwrkIds != undefined ?
+          { _id : { $in : data.atwrkIds } } : {};
+
+          var queryData = { $and : [ normal, dtCurator,sPrice, mPrice, lPrice, base, style1, style2 ] }
 
           res.total = Atwrk.find(queryData).count();
           res.list = Atwrk.find(queryData, option).fetch();
@@ -224,6 +249,33 @@ Meteor.methods({
 
         return res;
       } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 관심작품 조회 List
+    sltInterestAtwrk: function(data, option) {
+      try {
+        let res = Atwrk.find({ _id : { $in : data } }).fetch();
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    sltUserCart: function(data, option) {
+      try {
+        let res = Atwrk.find({ _id : { $in : data } }).fetch();
+
+        return res;
+      }  catch(e) {
         console.log(e);
         throw new Meteor.Error(
           500, 

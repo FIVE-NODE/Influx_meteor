@@ -60,7 +60,9 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mt-20 font-14 fontW-b color--txt ta-c">이 작품을 판매가격 -10%인  900,000원에 구매 의사가 있습니다. </p>
+                        {{#if seltPrice}}
+                            <p class="mt-20 font-14 fontW-b color--txt ta-c">이 작품을 판매가격 -{{seltPrice.rate}}%인  {{commaPric seltPrice.pric}}원에 구매 의사가 있습니다. </p>
+                        {{/if}}
                         <div class="btn-wrap d-flex justify-center mt-30">
                             <button type="button" class="btn btn--white btn--round width--170 height-45 font-pre popup-close">취         소</button>
                             <button type="button" name="sendInquiry" class="btn btn--blue btn--round width--170 height-45 ml-40">가격 제안 보내기</button>

@@ -16,7 +16,7 @@ Template.originalAtwrk.onCreated(function() {
 
     // sort 정보
     sortInfo = new ReactiveVar();
-
+    
     if(this.data.schQueryData() != undefined)  {
         filters.set(JSON.parse(this.data.schQueryData()));
     }
@@ -99,6 +99,9 @@ Template.originalAtwrk.events({
         }
 
         filters.set(queryData);
+
+        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
+
         setQuery();
 
         tmpl.selectOrgAtwrk();        

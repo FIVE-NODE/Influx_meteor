@@ -1,0 +1,104 @@
+<template name="purchaseList">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__mypage">
+                        <div class="mypage-sch">
+                            <div class="sch-wrap">
+                                <div class="sch-block">
+                                    <p class="sch-label">주문내역 조회</p>
+                                    <div class="btn-wrap btn-schTime">
+                                        <button name="seltDateBtn" id="1w" type="button" class="is-active">1주일</button>
+                                        <button name="seltDateBtn" id="1m" type="button">1개월</button>
+                                        <button name="seltDateBtn" id="3m" type="button">3개월</button>
+                                        <button name="seltDateBtn" id="all" type="button">전체시기</button>
+                                    </div>
+                                </div>
+                                <div class="sch-block">
+                                    <div class="form-wrap form-row">
+                                        <div class="form-input width--125">
+                                            <input type="text" name="strDate" class="js-datepicker" value="">
+                                        </div>
+                                        <span class="ml-5 mr-5">-</span>
+                                        <div class="form-input width--125">
+                                            <input type="text" name="endDate" class="js-datepicker" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sch-block">
+                                    <div class="form-wrap">
+                                        <div class="form-input">
+                                            <input type="text" name="odTp" id="" placeholder="전체상태">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sch-block">
+                                    <button type="button" name="dateSchBtn" class="btn btn--blue btn--inquire">조 회</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pay-wrap width--1160 mx-auto">
+                            <div class="pay-list">
+                                {{#each orderList}}
+                                <div class="pay-block">
+                                    <div class="pay-item">
+                                        <div class="pay-item__tit">{{codeToName sttus "ORDER_STATUS"}}</div>
+                                            {{#each odAtwrk}}
+                                            <div class="pay-item__detail">
+                                                <span class="pay-item__detail__img">
+                                                        <img class="orderListImg" src="{{selectMainImage atwrkData}}" alt="">
+                                                </span>
+                                                <p>
+                                                    <em>{{dateFormatChg ../odNo "."}}. 결재</em>
+                                                    <span>{{atwrkData.atwrkNm}}, {{atwrkData.ogPrt.wSize}}X{{atwrkData.ogPrt.hSize}}cm, {{atwrkData.glry.glryNm}}</span>
+                                                    <strong>{{commaPric amt}}원</strong>
+                                                    <button type="button">주문상세 &gt;</button>
+                                                </p>
+                                            </div>
+                                            {{/each}}
+                                        <button type="button" class="pay-item__close">
+                                            <img src="/image/sub/icon/icon-close--gray.svg" alt="">
+                                        </button>
+                                    </div>
+                                    <button type="button" data-id="delivery_popup" name="deliveryBtn" id="{{_id}}" class="delivery-inquire popup">배송조회</button>
+                                </div>
+                                {{/each}}
+                            </div>
+
+                            <div class="pay-info">
+                                <p class="pay-info__tit">주 문</p>
+                                <dl class="pay-info__dl">
+                                    <dt>주문접수</dt>
+                                    <dd>가상 계좌 주문이 완료되었습니다. 안내된 가상 계좌 번호로 입금이 가능합니다. </dd>
+                                    <dt>입금확인</dt>
+                                    <dd>주문하신 상품의 결제가 완료되었습니다. 판매자가 주문을 확인하기 전 상태로, 옵션 교환 또는 주문 취소가 가능합니다.</dd>
+                                    <dt>출고 처리중</dt>
+                                    <dd>주문하신 상품을 택배 업체로 전달할 수 있게 준비(포장) 중 입니다. 옵션 변경 또는 주문 취소가 불가능합니다.</dd>
+                                    <dt>출고완료</dt>
+                                    <dd>상품을 배송하기 위한 준비(포장)가 완료되어 출고지에서 택배업체로 전달되었습니다.</dd>
+                                    <dt>배송시작</dt>
+                                    <dd>택배 업체가 출고지로부터 전달받은 상품을 고객님의 배송지 주소로 안전하게 배송 중 입니다.</dd>
+                                    <dt>배송완료</dt>
+                                    <dd>주문하신 상품이 배송지 주소에 잘 도착했습니다.</dd>
+                                    <dt>구매확정</dt>
+                                    <dd>상품을 정상적으로 수령하여 구매를 확정했습니다. 구매 확정을 하지 않으시더라도 배송 완료 후 7일이 지내면 자동으로 확정됩니다. 구매 확정 시 교환 또는 환불 요청이 불가능합니다.</dd>
+                                    <dt>주문취소</dt>
+                                    <dd>가상 계좌 주문이 입금 전 취소 되었습니다. 주문 접수 후 2일 내에 입금하지 않으시면 자동으로 취소됩니다.</dd>
+                                </dl>
+                                <p class="pay-info__txt">카드 한도초과, 할부 개월 수 오류 등으로 결제되지 않은 상태입니다. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+    {{> deliveryTracking}}
+</template>

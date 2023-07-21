@@ -22,6 +22,15 @@ import './common/glyAppInq.js';           // 파트너센터 문의하기
 import './atwrk/originalAtwrk.js';        // 원화
 import './atwrk/digitalAtwrk.js';         // 디지털 에디션 판화
 import './atwrk/exhibitionEvnt.js';       // 전시/행사 화면
+import './atwrk/newEntryAtwrk.js';        // NEW 입점작품
+
+// 큐레이터 화면
+import './curator/curatorPick.js';        // 큐레이터 픽 화면
+import './curator/atstCurator.js';        // 큐레이터 작가
+import './curator/dtCurator.js';          // 큐레이터 디지털 판화
+import './curator/ogCurator.js';          // 큐레이터 원화
+import './curator/pickCreate.js';         // 큐레이터픽 등록 (원화, 디지털 판화, 작가)
+
 
 // 화면
 import './home/aOne.js';                  // 메인화면
@@ -30,10 +39,23 @@ import './gallery/glyDipEvt.js';          // 갤러리 이벤트
 import './gallery/glyHistoryDipEvt.js';   // 갤러리 지난 이벤트
 import './atwrk/atwrkDetail.js';          // 작품 디테일
 import './atwrk/atwrkList.js';            // 작품리스트
+import './users/interestAtwrk.js'         // 유저 관심작품 리스트
+import './users/userCart.js';             // 유저 장바구니
+import './users/approval.js';             // 결재하기
+import './users/purchaseList.js';         // 주문내역
+import './users/msgManage.js';            // 메시지 관리
+
+// 관리자 운영자 페이지
 
 // 로그인, 회원가입
 import './users/login.js';                // 로그인
 import './users/signUp.js';               // 회원가입
+
+// 배송조회
+import './popup/userPop/deliveryTracking.js';
+
+// 회원정보 수정
+import './users/changeMberInfo.js';       // 회원정보 수정
 
 // 스토어 관리센터
 import './common/uploadRepWork.js';
@@ -57,6 +79,8 @@ import '../lib/router.js';
 
 // 공통 도우미
 import './lib/helpers.js';
+
+
 
 Template.body.onCreated(function() {
 
@@ -106,3 +130,4 @@ Template.body.helpers({
     return chk === 'aOne' ? true : false;
   },
 });
+

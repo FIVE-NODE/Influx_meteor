@@ -18,7 +18,7 @@ Template.priceInquiryIns.events({
             // 저장 데이터 셋팅
             var inquiryInsInfo = {
                 "_id" : Meteor.commonUtils.generateUUID(),
-                "cmmncID": userInfo.userId,
+                "cmmncID": userInfo._id,
                 "nm": userInfo.nm === '' ? userInfo.nicNm : userInfo.nm,
                 "atwrkID": this._id,
                 "cmmncTp": '002',
@@ -29,11 +29,12 @@ Template.priceInquiryIns.events({
                 "sttus": "001"
             };
 
-            // 서버 콜
+            //서버 콜
             Meteor.call('insertCommnc', inquiryInsInfo, function(err, res) {
                 $('#priceInquiryIns').removeClass('is-open');
                 messagePopup({message : '가격문의가 전송 되었습니다.'});
             });
+            
         } else {
             messagePopup({message : '메세지를 입력하세요'});    
         }

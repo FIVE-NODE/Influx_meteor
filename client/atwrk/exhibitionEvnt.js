@@ -80,7 +80,7 @@ Template.exhibitionEvnt.events({
         limit.set(parseInt($(evt.currentTarget).text()));
         setQuery();
         tmpl.selectExhigitionEvntList();
-        $('#pageNum1').click();
+        setTimeout(function() { $('#pageNum1').click(); }, 50);
     },
     'click button[name=kind]'(evt, tmpl) {
         kind.set($(evt.currentTarget).val());
