@@ -1,0 +1,268 @@
+<template name="glryAtwrks">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__mypage">
+                        <div class="mypage-subtit mypage-subtit--gallery bg--gray height-66">
+                            <div class="mypage-subtit__inner">
+                                <button type="button" name="inventory" class="btn btn--round btn--white-blue">INVENTORY 모드</button>
+                                {{#with pageHeaderCount}}
+                                    <p>총 작품수 {{total}} 점  = 판매중 {{selling}} 점 + 판매대기 {{notSelling}} 점</p>
+                                {{/with}}
+                                <div class="btn-wrap ml-auto">
+                                    <button type="button" name="crAtwrk" value="ogPrt" class="btn btn--round btn--sea-white">원화 작품 등록</button>
+                                    <button type="button" name="crAtwrk" value="dtPrt" class="btn btn--round btn--sea-white">디지털  판화 작품 등록</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="myGallery-wrap">
+                            <div class="myGallery-block d-flex" style="padding-left:8rem;">
+                                <div class="myGallery-checkTable col-11">
+                                    <div class="table-wrap">
+                                        <table class="table-basic table--row table-basic--mygallery__checks">
+                                            <caption></caption>
+                                            <colgroup>
+                                                <col style="width:14rem">
+                                                <col style="width:auto">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">
+                                                        <span class="font-pre">작 품 구 분</span>
+                                                    </th>
+                                                    <td>
+                                                        <div class="form-wrap">
+                                                            <div class="form-row">
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" name="menuSchChk" value="KIND-ogPrt" id="check-mygallery--checksStyle01">
+                                                                    <label for="check-mygallery--checksStyle01">원 화</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" name="menuSchChk" value="KIND-dtPrt" id="check-mygallery--checksStyle02">
+                                                                    <label for="check-mygallery--checksStyle02">디지털 판화</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" name="menuSchChk" value="KIND-both" id="check-mygallery--checksStyle03">
+                                                                    <label for="check-mygallery--checksStyle03">원화 + 디지털판화</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        <div class="d-flex justify-between">
+                                                            <span class="font-pre">아 티 스 트</span>
+                                                            <button type="button">
+                                                                <img src="/image/sub/icon/icon-plus.svg" alt="">
+                                                            </button>
+                                                        </div>
+                                                    </th>
+                                                    <td>
+                                                        <div class="form-wrap">
+                                                            <div class="form-row">
+                                                                {{#each glryAtstList}}
+                                                                    <div class="form-check">
+                                                                        <input type="checkbox" name="menuSchChk" value="ATST-{{this}}" id="check-mygallery--checksAuthor{{@index}}">
+                                                                        <label for="check-mygallery--checksAuthor{{@index}}">{{this}}</label>
+                                                                    </div>
+                                                                {{/each}}                                                            
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        <span class="font-pre">재            료</span>
+                                                    </th>
+                                                    <td>
+                                                        <div class="form-wrap">
+                                                            <div class="form-row">
+                                                                {{#each materials}}
+                                                                    <div class="form-check">
+                                                                        <input type="checkbox" name="menuSchChk" value="MATERIAL-{{code}}" id="check-mygallery--checksMaterial{{code}}">
+                                                                        <label for="check-mygallery--checksMaterial{{code}}">{{name}}</label>
+                                                                    </div>
+                                                                {{/each}}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button type="button" name="menuAllCancel" class="btn-reset ml-150 mt-10">
+                                        <img src="/image/sub/icon/icon-reset.svg" alt="">
+                                        전체 선택해제
+                                    </button>
+                                </div>
+                                <button type="button" name="menuSchBtn" class="btn btn--round btn--white col-1 ml-10">검색</button>
+                            </div>
+                            <div class="myGallery-block mt-30 border-top">
+                                <div class="myGallery-listTable__capt">
+                                    <div class="d-flex h-100">
+                                        <p>등록 작품 리스트</p>
+                                        <div class="d-flex align-center ml-auto">
+                                            <span class="mr-20 font-14 fontW-500 color--txt">정 렬</span>
+                                            <div class="form-wrap">
+                                                <div class="form-select form-select-custom">
+                                                    <button type="button" name="mainAtwrkSort" class="custom-select__tit">작 가  이름 순 (ㄱ > ㅎ)</button>
+                                                    <ul class="custom-select__options" style="display: none;">
+                                                        <li class="is-active"><button name="arwrkSort" type="button">작 가  이름 순 (ㄱ > ㅎ)</button></li>
+                                                        <li><button name="arwrkSort" type="button">작품가 (높은가격순) </button></li>
+                                                        <li><button name="arwrkSort" type="button">작품가 (낮은가격순)</button></li>
+                                                        <li><button name="arwrkSort" type="button">작품연도 (최신순)</button></li>
+                                                        <li><button name="arwrkSort" type="button">작품연도 (오래된순)</button></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myGallery-listTable">
+                                    <div class="table-wrap">
+                                        <table class="table-basic table--col table--list table-basic--mygallery__list">
+                                            <caption></caption>
+                                            <colgroup>
+                                                <col style="width:5%">
+                                                <col style="width:8%">
+                                                <col style="width:10%">
+                                                <col style="width:auto">
+                                                <col style="width:8%">
+                                                <col style="width:8%">
+                                                <col style="width:8%">
+                                                <col style="width:10%">
+                                                <col style="width:8%">
+                                                <col style="width:10%">
+                                                <col style="width:5%">
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">
+                                                        <div class="form-wrap">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" name="allChkBox" id="" class="form-check__input form-check--all">
+                                                            </div>
+                                                        </div>
+                                                    </th>
+                                                    <th scope="col">작품 사진 </th>
+                                                    <th scope="col">아티스트</th>
+                                                    <th scope="col">작품명</th>
+                                                    <th scope="col">사이즈</th>
+                                                    <th scope="col">재료</th>
+                                                    <th scope="col">작품년도</th>
+                                                    <th scope="col">가격</th>
+                                                    <th scope="col">작품구분</th>
+                                                    <th scope="col">판매조건 등록</th>
+                                                    <th scope="col">삭 제</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{#each tableInfo}}
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-wrap">
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" name="atwrkChkBox" id="" value="{{_id}}" class="form-check__input">
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <span class="img-wrap">
+                                                                <img class="glryAtwrksImg" src="{{selectMainImage this}}" alt="">
+                                                            </span>
+                                                        </td>
+                                                        <td>{{atstInfo.atstNm}}</td>
+                                                        <td>
+                                                            <a href="" class="fontW-b underline">
+                                                                {{dtpChkAtwrkNm}}
+                                                            </a>
+                                                        </td>
+                                                        <td>{{dtpChkAtwrkSize}}</td>
+                                                        <td>{{dtpChkAtwrkMaterials}}</td>
+                                                        <td>{{dtpChkMkYY}}</td>
+                                                        <td>{{dtpChkPric}} 원</td>
+                                                        <td>{{dtpFlag}}</td>
+                                                        <td>
+                                                            <a href="" class="btn btn--round btn--white-blue">판매등록</a>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" name="delBtn" value="{{_id}}" >
+                                                                <img src="/image/sub/icon/icon-delete.png" alt="">
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-flex mt-20">
+                                        <div class="btn-wrap d-flex">
+                                            <button type="button" name="atwrkAllCancel" class="btn-reset ml-20">
+                                                <img src="/image/sub/icon/icon-reset.svg" alt="">
+                                                전체 선택해제
+                                            </button>
+                                            <button type="button" name="seltDelAtwrk" class="btn-deleteAll ml-40">
+                                                <img src="/image/sub/icon/icon-mygallery--delete.svg" alt="">
+                                                선택항목 일괄삭제
+                                            </button>
+                                        </div>
+                                        <div class="form-wrap ml-auto">
+                                            <div class="form-select form-select-custom">
+                                                <button id="seltPage" type="button" class="custom-select__tit width--149">페이지당 15</button>
+                                                <ul class="custom-select__options" style="display: none;">
+                                                    <li class="is-active"><button name="setPageNum" value=15 type="button">페이지당 15</button></li>
+                                                    <li><button name="setPageNum" value=20 type="button">페이지당 20</button></li>
+                                                    <li><button name="setPageNum" value=30 type="button">페이지당 30</button></li>
+                                                    <li><button name="setPageNum" value=40 type="button">페이지당 40</button></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- 페이징 영역 -->
+                                <div class="pagination-wrap mt-40 mb-40">
+                                    <div class="pagination">
+                                        <a href="" name="prev" class="link-prev"></a>
+                                        {{#each page}}
+                                            <a href="" id="pageNum{{num}}" name="pageNum" class="{{active}}">{{num}}</a>
+                                        {{/each}}
+                                        <a href="" name="next" class="link-next"></a>
+                                    </div>
+                                </div>
+                                <!-- 페이징 영역 끝 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- popup -->
+    <div class="popup-layout" id="del_confirm_popup">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:347px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit"></p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont">
+                    <p class=" mt-30 font-14 fontW-b color--txt ta-c">정말 삭제 하시겠습니까?</p>
+                    <div class="btn-wrap d-flex justify-center mt-40">
+                        <button type="button" class="btn btn--white btn--round width--170 height-40 font-pre popup-chk">취   소</button>
+                        <button type="button" name="delConfirmBtn" class="btn btn--blue btn--round width--170 height-40 ml-20 font-pre">삭  제</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+</template>

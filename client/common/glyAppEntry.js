@@ -69,6 +69,9 @@ Template.glyAppEntry.events({
         var homeUrl     = $('input[name=homeUrl]').val();
         smaPhone = smaPhone[0].value + smaPhone[1].value + smaPhone[2].value;
 
+        console.log(!regExpEmail.test(smaEmail));
+        console.log(regExpEmail.test(smaEmail));
+
         if(companyNm === '') {
             messagePopup({message : '회사이름을 입력해주세요'}); Meteor.clientCommonUtils.scrollToName('companyNm');
         } else if(!bnsNumberVal.get()) {
@@ -83,7 +86,7 @@ Template.glyAppEntry.events({
         } else if(smaEmail === '') {
             messagePopup({message : '담당자 이메일을 입력해주세요'});
             Meteor.clientCommonUtils.scrollToName('smaEmail');
-        } else if(!regExpEmail.test(smaEmail)) {
+        } else if(regExpEmail.test(smaEmail)) {
             messagePopup({message : '이메일을 정확하게 입력해주세요'});
             Meteor.clientCommonUtils.scrollToName('smaEmail');
         } else if(glyNm === '') {
@@ -96,6 +99,8 @@ Template.glyAppEntry.events({
             messagePopup({message : '주소를 입력해주세요'});
             Meteor.clientCommonUtils.scrollToName('address');
         } else {
+            var _id = Meteor.commonUtils.generateUUID();
+
             var bsnsData = {
                 bsnsTP  : '001',
                 bsnsID  : bsnsID.get(),
@@ -112,8 +117,15 @@ Template.glyAppEntry.events({
                 bsnsChagMob : smaPhone,
                 bsnsChagEmail : smaEmail
             };
-            Meteor.call('createBsnsMber', bsnsData, function(err, res) {
-                if(res != undefined && res != '') {
+            
+            Accounts.createUser({
+                _id : _id,
+                email : smaEmail,
+                password : 'qawsedrf1!',
+                profile : bsnsData
+            }, function(error) {
+                if(error) console.log(error);
+                else {
                     messagePopup({
                         message : '신청이 완료되었습니다.\n관리자 검토 후 임시비밀번호가 전달됩니다.',
                         route : 'aOne',
@@ -121,6 +133,7 @@ Template.glyAppEntry.events({
                     });
                 }
             });
+            
         }
     }
 });

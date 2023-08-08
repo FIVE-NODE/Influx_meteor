@@ -7,7 +7,7 @@
                 <div class="sub-content border-0">
                     <div class="sub-content__mypage">
                         <div class="mypage-subtit">
-                            <div class="mypage-subtit__inner">
+                            <div class="mypage-subtit__inner" id="move">
                                 <p>주문 / 결제</p>
                             </div>
                         </div>
@@ -17,12 +17,14 @@
                                     <p class="basket-item__tit">주문자</p>
                                     <div class="basket-item__cont">
                                         <dl class="basket-item__cont__dl">
-                                            <dt>이름</dt>
-                                            <dd>홍길동</dd>
-                                            <dt>이메일</dt>
-                                            <dd>hongildong@gmail.com</dd>
-                                            <dt>휴대전화</dt>
-                                            <dd>010-12**-45**</dd>
+                                            {{#with usersData}}
+                                                <dt>이름</dt>
+                                                <dd>{{nmChk}}</dd>
+                                                <dt>이메일</dt>
+                                                <dd>{{emailGet}}</dd>
+                                                <dt>휴대전화</dt>
+                                                <dd>{{phoneMasking profile.uInfos.mob}}</dd>
+                                            {{/with}}
                                         </dl>
                                     </div>
                                 </div>
@@ -48,7 +50,7 @@
                                                 <dd>
                                                     <div class="form-wrap">
                                                         <div class="form-input">
-                                                            <input type="text" class="width--196">
+                                                            <input name="recptnNm" type="text" class="width--196">
                                                         </div>
                                                     </div>
                                                 </dd>
@@ -56,7 +58,7 @@
                                                 <dd>
                                                     <div class="form-wrap">
                                                         <div class="form-input">
-                                                            <input type="text" class="width--196">
+                                                            <input name="delivNm" type="text" class="width--196">
                                                         </div>
                                                     </div>
                                                 </dd>
@@ -65,15 +67,15 @@
                                                     <div class="form-wrap">
                                                         <div class="form-row width--196">
                                                             <div class="form-input flex-1">
-                                                                <input type="text" class="w-100">
+                                                                <input maxlength="3" name="mob1" type="number" class="w-100">
                                                             </div>
                                                             <span class="mx-3">-</span>
                                                             <div class="form-input flex-1">
-                                                                <input type="text" class="w-100">
+                                                                <input maxlength="4" name="mob2" type="number" class="w-100">
                                                             </div>
                                                             <span class="mx-3">-</span>
                                                             <div class="form-input flex-1">
-                                                                <input type="text" class="w-100">
+                                                                <input maxlength="4" name="mob3" type="number" class="w-100">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -83,15 +85,15 @@
                                                     <div class="form-wrap form-row">
                                                         <div class="form-row width--196">
                                                             <div class="form-input flex-1">
-                                                                <input type="text" class="w-100">
+                                                                <input maxlength="3" type="number" name="homePhone1" class="w-100 homephones">
                                                             </div>
                                                             <span class="mx-3">-</span>
                                                             <div class="form-input flex-1">
-                                                                <input type="text" class="w-100">
+                                                                <input maxlength="4" type="number" name="homePhone2" class="w-100 homephones">
                                                             </div>
                                                             <span class="mx-3">-</span>
                                                             <div class="form-input flex-1">
-                                                                <input type="text" class="w-100">
+                                                                <input maxlength="4" type="number" name="homePhone3" class="w-100 homephones">
                                                             </div>
                                                         </div>
                                                         <div class="form-check form-row align-center ml-10">
@@ -103,14 +105,14 @@
                                                 <dt>배송지 주소</dt>
                                                 <dd>
                                                     <div class="form-wrap">
-                                                        <div class="form-input form-row flex-wrap">
-                                                            <input type="text" class="width--196" disabled="">
-                                                            <button type="button" class="btn btn--blue addrWrite-schBtn ml-10">검색</button>
-                                                            <input type="text" class="w-100 width--332 mt-5" disabled="">
-                                                            <input type="text" class="w-100 width--332 mt-5">
+                                                        <div class="form-input form-row-deliv-pop flex-wrap">
+                                                            <input name="zipCode" type="text" class="width--196" disabled="">
+                                                            <button type="button" name="addrsBtn" class="btn btn--blue addrWrite-schBtn ml-10 popup" data-id="addrs-Popup">검색</button>
+                                                            <input name="address" type="text" class="w-100 width--332 mt-5" disabled="">
+                                                            <input name="addr2" type="text" class="w-100 width--332 mt-5">
                                                         </div>
                                                         <div class="form-radio mt-5 ml-10">
-                                                            <input type="checkbox" id="check-addrWrite--default">
+                                                            <input name="delivReq" type="checkbox" id="check-addrWrite--default">
                                                             <label for="check-addrWrite--default" class="font-12">기본 배송지 설정</label>
                                                         </div>
                                                     </div>
@@ -121,14 +123,15 @@
                                                         <div class="form-select form-select-custom width--332">
                                                             <button type="button" class="custom-select__tit">배송시 요청사항을 선택해주세요.</button>
                                                             <ul class="custom-select__options" style="display: none;">
-                                                                <li class="is-active"><button type="button">배송시 요청사항을 선택해주세요.</button></li>
-                                                                <li><button type="button">부재 시 경비실에 맡겨주세요</button></li>
-                                                                <li><button type="button">부재 시 택배함에 넣어주세요</button></li>
-                                                                <li><button type="button">부재 시 집 앞에 놔주세요</button></li>
-                                                                <li><button type="button">배송 전 연락 바랍니다. </button></li>
-                                                                <li><button type="button">파손의 위험이 있는 상품입니다. 배송 시 주의해 주세요.</button></li>
-                                                                <li><button type="button">직접입력</button></li>
+                                                                <li class="is-active"><button name="selectDeliv" type="button">배송시 요청사항을 선택해주세요.</button></li>
+                                                                <li><button name="selectDeliv" type="button">부재 시 경비실에 맡겨주세요</button></li>
+                                                                <li><button name="selectDeliv" type="button">부재 시 택배함에 넣어주세요</button></li>
+                                                                <li><button name="selectDeliv" type="button">부재 시 집 앞에 놔주세요</button></li>
+                                                                <li><button name="selectDeliv" type="button">배송 전 연락 바랍니다. </button></li>
+                                                                <li><button name="selectDeliv" type="button">파손의 위험이 있는 상품입니다. 배송 시 주의해 주세요.</button></li>
+                                                                <li><button name="selectDeliv" type="button">직접입력</button></li>
                                                             </ul>
+                                                            <input name="delivReqEtc" placeholder="배송시 요청 사항을 입력해주세요" style="display: none;" type="text" class="w-100 mt-5">
                                                         </div>
                                                     </div>
                                                 </dd>
@@ -136,41 +139,42 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="basket-item basket-item--company">
-                                    <p class="basket-item__tit">
-                                        갤러리 SUN
-                                        <span>배송비 6,000원</span>
-                                    </p>
-                                    <div class="basket-item__cont">
-                                        <div class="basket-item-detail">
-                                            <span class="basket-item-detail__img">
-                                                <img src="./image/sub/img-basket__item01.png" alt="">
-                                            </span>
-                                            <span class="basket-item-detail__txt">
-                                                <strong>[갤러리 SUN] 안경쓴여인 POP!! / 120X70cm 원목 액자</strong>
-                                                <em>일반택배</em>
-                                                <em class="mt-10">수량 1개</em>
-                                            </span>
+                                {{#each approAtList}}
+                                    <div class="basket-item basket-item--company">
+                                        <p class="basket-item__tit">
+                                            {{atwrkInfo.glry.glryNm}}
+
+                                            <span>{{deliDtpChk}}</span>
+                                        </p>
+                                        <div class="basket-item__cont">
+                                            <div class="basket-item-detail">
+                                                <span class="basket-item-detail__img">
+                                                    <img class="msgPricImg" src="{{selectMainImage atwrkInfo}}" alt="">
+                                                </span>
+                                                <span class="basket-item-detail__txt">
+                                                    <strong>[{{atwrkInfo.glry.glryNm}}] {{nmDtpChk}} / {{sizeDtpChk}} {{option.frame}}</strong>
+                                                    {{#if dtpChk}}
+                                                        <em>일반택배</em>
+                                                        <em class="mt-10">수량 {{cnt}}개</em>
+                                                    {{else}}
+                                                        <em>원화 작품 배송비는 상담사에게 문의해주세요</em>
+                                                    {{/if}}
+                                                </span>
+                                            </div>
+                                            
                                         </div>
-                                        
                                     </div>
-                                </div>
+                                {{/each}}
                                 <div class="basket-item basket-item--method">
                                     <p class="basket-item__tit">결제수단</p>
                                     <div class="basket-item__cont">
                                         <div class="form-wrap">
-                                            <div class="form-raido">
-                                                <input type="radio" name="radio-basket--method" id="radio-basket--method01">
-                                                <label for="radio-basket--method01">카드</label>
-                                            </div>
-                                            <div class="form-raido">
-                                                <input type="radio" name="radio-basket--method" id="radio-basket--method02">
-                                                <label for="radio-basket--method02">무통장입금</label>
-                                            </div>
-                                            <div class="form-raido">
-                                                <input type="radio" name="radio-basket--method" id="radio-basket--method03">
-                                                <label for="radio-basket--method03">카카오페이</label>
-                                            </div>
+                                            {{#each payType}}
+                                                <div class="form-raido">
+                                                    <input type="radio" name="radio-basket--method" value="{{code}}" id="radio-basket--method-{{code}}">
+                                                    <label for="radio-basket--method-{{code}}">{{name}}</label>
+                                                </div>
+                                            {{/each}}
                                         </div>
                                     </div>
                                 </div>
@@ -179,16 +183,18 @@
                                 <div class="basket-price__box">
                                     <p class="basket-price__tit">결제금액</p>
                                     <dl class="basket-price__box__dl">
-                                        <dt>총 상품금액</dt>
-                                        <dd>200,0000원</dd>
-                                        <dt>총 배송비 </dt>
-                                        <dd>+20,000원</dd>
-                                        <dt>총 활인금액</dt>
-                                        <dd>-10,000원</dd>
-                                        <dt>최종 결재 금액</dt>
-                                        <dd>
-                                            <strong>210,000</strong> 원
-                                        </dd>
+                                        {{#with priceData}}
+                                            <dt>총 상품금액</dt>
+                                            <dd>{{commaPric totalProPric}} 원</dd>
+                                            <dt>총 배송비 </dt>
+                                            <dd>+{{commaPric delivPric}}원</dd>
+                                            <dt>총 활인금액</dt>
+                                            <dd>-{{commaPric salePric}}원</dd>
+                                            <dt>최종 결재 금액</dt>
+                                            <dd>
+                                                <strong>{{commaPric totalPric}}</strong> 원
+                                            </dd>
+                                        {{/with}}
                                     </dl>
                                     <div class="form-wrap">
                                         <div class="form-check">
@@ -196,11 +202,11 @@
                                             <label for="check-basket-all">아래 내용에 모두 동의합니다. </label>
                                         </div>
                                         <div class="form-check mt-15">
-                                            <input type="checkbox" id="check-basket-price01">
+                                            <input type="checkbox" name="terms" id="check-basket-price01">
                                             <label for="check-basket-price01">개인정보 수집 이용 및 제 3자 제공 동의 (필수)</label>
                                         </div>
                                         <div class="form-check mt-15">
-                                            <input type="checkbox" id="check-basket-price02">
+                                            <input type="checkbox" name="terms" id="check-basket-price02">
                                             <label for="check-basket-price02">결제대행 서비스 이용야관 동의 (필수)</label>
                                         </div>
                                     </div>
@@ -209,7 +215,9 @@
                                         (주) 인플럭스는 통신판매중개자로 거래 당사자가 아니므로, 판매자가 등록한 상품정보 및 거래 등에 대한 책음을 지지 않습니다. (단, (주)인플럭스가 판매자로 등록 판매한 상품은 판매자로서 책임을 부담합니다.                                         
                                     </p>
                                 </div>
-                                <button type="button" class="btn btn--blue">210,000원 결제하기</button>
+                                {{#with priceData}}
+                                    <button type="button" name="approvalBtn" class="btn btn--blue">{{commaPric totalPric}} 원 결제하기</button>
+                                {{/with}}
                             </div>
                         </div>
                     </div>
@@ -218,4 +226,8 @@
         </div>
     </section>
     <!-- /container -->
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+    {{> zipCode addr}}
 </template>

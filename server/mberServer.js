@@ -3,7 +3,45 @@ import { BsnsMber, SnsMber, Mber, Atwrk } from '../lib/collections.js';
 
 // 회원관련 조회 및 서버 로직
 
+// 리턴 용 함수
+function setRetData(list) { 
+  var retList = [];
+  for(idx in list) {
+    list[idx].profile.uInfos._id = list[idx]._id;
+    retList.push(list[idx].profile.uInfos);
+  }
+  return retList;
+}
+
 Meteor.methods({
+    // 이메일 인증전 등록된 이메일 인지 확인
+    seltEmailChk: function(email) {
+      try {
+        let res = Meteor.users.findOne({ 'emails.address' : email });
+
+        return res;
+      } catch(e) {
+        console.log('Error : ', e);
+        throw new Meteor.Error(
+          500,
+          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 닉네임 중복체크
+    nicNmChk: function(nicNm) {
+      try {
+        let res = Meteor.users.findOne({ 'profile.uInfos.nicNm' : nicNm});
+
+        return res;
+      } catch(e) {
+        console.log('Error : ', e);
+        throw new Meteor.Error(
+          500,
+          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
     // mBer 회원생성
     createMBer: function(userData) {
       try {
@@ -26,12 +64,21 @@ Meteor.methods({
         );
       }
     },
-    // mBer 회원조회
+    // mBer 회원조회(로그인)
     selectMBer: function(data) {
       try {
         data.pwd = Meteor.call('encrypt', data.pwd);
       
         let res = Mber.findOne(data);
+        
+        if(res == undefined) {
+          var bSnsData = {
+            bsnsChagEmail : data.email,
+            pwd : data.pwd
+          };
+
+          res = BsnsMber.findOne(bSnsData);
+        }
 
         return res;
       } catch(e) {
@@ -42,25 +89,12 @@ Meteor.methods({
         );
       }
     },
-    // mBer _id 로 회원 조회
-    selectMberForId: function(_id) {
-      try {
-        let res = Mber.findOne({_id});
-
-        return res;
-      } catch(e) {
-        console.log('Error : ', e);
-        throw new Meteor.Error(
-          500,
-          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
-        );
-      }
-    },
-    // 갤러리 조회    
+    // 갤러리 조회 수정필요
     clientBsnsMber: function() {
         try {
-            let res = BsnsMber.aggregate([
-                {$sample : {size : 12}}
+            let res = Meteor.users.aggregate([
+                { $match :  { 'profile.uInfos.bsnsNm' : { $exists: true }} },
+                { $sample : { size : 12 }}
             ]);
 
             return res;
@@ -75,8 +109,11 @@ Meteor.methods({
     // 신규 갤러리 조회
     selectNewGallery: function() {
       try {
+        let res   = {};
+
         var queryData = {
-          bsnsTp : '001'
+          'profile.uInfos.bsnsTp' : '001',
+          'profile.uInfos.bsnsNm' : { $exists : true }
         };
 
         var options = {
@@ -84,9 +121,10 @@ Meteor.methods({
           sort : { insDt : -1 }
         };
 
-        let res   = {};
-        res.total = BsnsMber.find(queryData, options).count();
-        res.list  = BsnsMber.find(queryData, options).fetch();
+        res.total = Meteor.users.find(queryData, options).count();
+        res.list  = Meteor.users.find(queryData, options).fetch();
+
+        res.list = setRetData(res.list);
 
         return res;
       } catch(e) {
@@ -101,10 +139,12 @@ Meteor.methods({
     selectGallery: function(query) {
       try{
         var queryData = {
-          bsnsTp  : '001',
-          dong    : { $regex : query.dong },
-          area    : { $regex : query.area },
-          glryNm  : { $regex : query.glryNm }
+          'profile.uInfos.bsnsTp'  : '001',
+          'profile.uInfos.glryNm'  : { $regex : query.glryNm },
+          $or : [
+            { 'profile.uInfos.dong' : { $regex : query.dong } },
+            { 'profile.uInfos.area' : { $regex : query.area } },
+          ]
         };
 
         var options = {
@@ -114,8 +154,10 @@ Meteor.methods({
         };
 
         let res   = {};
-        res.total = BsnsMber.find(queryData).count();
-        res.list  = BsnsMber.find(queryData, options).fetch();
+        res.total = Meteor.users.find(queryData).count();
+        res.list  = Meteor.users.find(queryData, options).fetch();
+
+        res.list = setRetData(res.list);
 
         return res
       } catch(e) {
@@ -129,9 +171,9 @@ Meteor.methods({
     // 갤러리 정보 조회 (단건)
     selectGlryDetail: function(_id) {
       try{
-        let res = BsnsMber.findOne({_id : _id});
+        let res = Meteor.users.findOne({_id : _id});
 
-        return res;
+        return res.profile.uInfos;
       } catch(e) {
         console.log(e);
         throw new Meteor.Error(
@@ -296,20 +338,6 @@ Meteor.methods({
         );
       }
     },
-    // 닉네임 중복 체크
-    nickNameDuplicationChk: function(nickName) {
-      try {
-        let res = Mber.findOne({nicNm : nickName});
-
-        return res;
-      } catch(e) {
-        console.log(e);
-        throw new Meteor.Error(
-          500, 
-          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
-        );
-      }
-    },
     // 사업자 등록번호 조회
     companyRegNumChk: function(number) {
       try {
@@ -417,20 +445,16 @@ Meteor.methods({
       }
     },
     // 신규 배송지 등록
-    deliveryIns: function(userId, data) {
+    deliveryIns: function(data) {
       try {
         let res = {};
-        let userChk = Mber.findOne({_id : userId});
-        
-        if(userChk != undefined) {
-          if(data.defDelivYn == 'Y') {
-            Mber.update({ _id : userId, 'deliv.defDelivYn' : 'Y'}, { $set : { 'deliv.$.defDelivYn' : 'N'}});
-            res = Mber.update({_id : userId}, { $addToSet : { deliv : data }});
-          } else {
-            res = Mber.update({_id : userId}, { $addToSet : { deliv : data }});
-          }
+        let userId = Meteor.userId();
+
+        if(data.defDelivYn == 'Y') {
+          Meteor.users.update({ _id : userId, 'profile.uInfos.deliv.defDelivYn' : 'Y'}, { $set : { 'profile.uInfos.deliv.$.defDelivYn' : 'N'}});
+          res = Meteor.users.update({_id : userId}, { $addToSet : { 'profile.uInfos.deliv' : data }});
         } else {
-          res = SnsMber.update({_id : userId}, { $addToSet : { deliv : data }});
+          res = Meteor.users.update({_id : userId}, { $addToSet : { 'profile.uInfos.deliv' : data }});
         }
 
         return res;
@@ -446,10 +470,10 @@ Meteor.methods({
     deliveryDel: function(_id, data) {
       try {
 
-        let res = Mber.update({
+        let res = Meteor.users.update({
           _id
         }, {
-          $pull : { 'deliv' : {
+          $pull : { 'profile.uInfos.deliv' : {
             addr1 : data.addr1,
             addr2 : data.addr2,
             zipCd : data.zipCd,
@@ -469,15 +493,63 @@ Meteor.methods({
         );
       }
     },
-    // 회원탈퇴
-    delWithDrawalUser: function(uInfo, data) {
+    // 기본 배송지 변경
+    defaultDelivChg: function(data) {
       try {
         let res = {};
+        let userId = Meteor.userId();
+
+        // 기존 기본 배송지 변경 Y -> N
+        Meteor.users.update(
+          { _id : userId, 'profile.uInfos.deliv.defDelivYn' : 'Y' },
+          { $set : { 'profile.uInfos.deliv.$.defDelivYn' : 'N' } }
+        );
+
+        // 신규 기본배송지 설정 N -> Y
+        res = Meteor.users.update(
+            {  _id : userId,  'profile.uInfos.deliv' : data },
+            { $set : { 'profile.uInfos.deliv.$.defDelivYn' : 'Y' } }
+        );
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 배송지 수정
+    editDeliv: function(pastData, newData) {
+      try {
+        let res = {};
+        let userId = Meteor.userId();
+
+        res = Meteor.users.update(
+          { _id : userId, 'profile.uInfos.deliv' : pastData },
+          { $set : { 'profile.uInfos.deliv.$' : newData} }
+        );
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 회원탈퇴
+    delWithDrawalUser: function(data) {
+      try {
+        let res = {};
+        let userId = Meteor.userId();
 
         var date = new Date();
         date = moment(date).format('YYYYMMDDHHmmss');
 
-        res = Mber.update({_id : uInfo}, { $set : { secsnRsn : data.secsnRsn, secsnTp : data.secsnTp, secsnDt : date } });
+        res = Mber.update({_id : userId}, { $set : { secsnRsn : data.secsnRsn, secsnTp : data.secsnTp, secsnDt : date } });
 
         return res;
       }  catch(e) {

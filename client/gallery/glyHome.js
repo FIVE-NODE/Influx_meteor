@@ -17,10 +17,25 @@ function findDBs(methodNm, query, datas, total) {
 
 // query 셋팅
 function setQuery() {
-    var addr = $('input[name=addr]').val().split(',');
-    var area = addr[0] != undefined ? addr[0] : '';
-    var dong = addr[1] != undefined ? addr[1] : '';
-    var glryNm =  $('input[name=glryNm]').val();
+    var addr = $('input[name=addr]').val();
+    var area = '';
+    var dong = '';
+
+    if(addr != '' && addr != undefined) {
+        addr = addr.trim();
+        if(addr != '') {
+            if(addr.indexOf('동') > 0) {
+                dong = addr;
+            } else {
+                area = addr;
+                dong = addr;
+            }
+        } 
+    }    
+    
+    var glryNm = $('#for-input__label').val();
+
+    console.log(glryNm);
     
     query = {
         area : area,
@@ -29,7 +44,7 @@ function setQuery() {
         skip : skip.get(),
         limit : limit.get()
     };
-
+    console.log(query);
     return query;
 }
 
@@ -63,6 +78,7 @@ Template.glyHome.onRendered(function() {
 
 Template.glyHome.events({
     'click button[name=searchBtn]'() {
+        Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip);
         findDBs('selectGallery', setQuery(), datas, total);
     },
     'click a[name=detail]'() {

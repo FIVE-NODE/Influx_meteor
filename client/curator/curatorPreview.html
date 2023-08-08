@@ -1,0 +1,236 @@
+<template name="curatorPreview">
+    <div class="popup-layout" id="curator_preview_popup">
+        <div class="popup-wrap popup--preview">
+            <div class="popup-inner" style="width:1680px;height:calc(100% - 5rem)">
+                <div class="popup-head">
+                    <p class="popup-head__tit">미리보기_큐레이터픽!!  </p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont">
+                    
+                    <div class="ov-auto el-scroll border-1">
+                        <div class="curator-wrap" style="height:50rem">
+                            <div class="curator-lists curator-lists--original">
+                                <div class="curator__inner">
+                                    <div class="curator-kind curator-kind--author">
+                                        {{#with preViewData}}
+                                        <div class="curator-kind__info">
+                                            <a href="">
+                                                <span class="curator-kind__info--img">
+                                                    <img src="{{image}}" alt="">
+                                                    <strong>
+                                                        {{thmNm}}
+                                                        <em></em>
+                                                    </strong>
+                                                </span>
+                                            </a>
+                                            <p class="curator-kind__info--txt">
+                                                <strong>{{thmDesc}}</strong>
+                                                <em>
+                                                    작가 사임당은 2023년 떠오르는 신예작가로 한국 NEW 팝아트의 새 장을 개척하고 있는 작가입니다. <br>
+                                                    2022년 국제 아트 트랜날레에서 신인 작가상(Emerging Artist AWARD)을 수상한 경력이 있습니다.
+                                                </em>
+                                            </p>
+                                        </div>
+                                        {{/with}}
+                                    </div>
+                                </div>
+                                <!-- 정렬 시작 -->
+                                <div class="bradCrumb-wrap bradCrumb-curator">
+                                    <div class="curator__inner d-flex">
+                                        <ul class="bradCrumb bradCrumb-sub w-100">
+                                            <li>큐레이터 픽!!</li>
+                                            <li>원화</li>
+                                        </ul>
+                                        <div class="form-wrap">
+                                            <div class="form-select form-select-custom custom-select--order width--149">
+                                                <button type="button" class="custom-select__tit">정렬</button>
+                                                <ul class="custom-select__options" style="display: none;">
+                                                    <li class="is-active"><button type="button">정렬</button></li>
+                                                    <li><button type="button">최신 입점작 순</button></li>
+                                                    <li><button type="button">낮은 가격 순</button></li>
+                                                    <li><button type="button">높은 가격 순</button></li>
+                                                    <li><button type="button">좋아요 순</button></li>
+                                                    <li><button type="button">많이 본 순</button></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 정렬 끝 -->
+                                <div class="product-group">
+                                    <div class="lnb-wrap">
+                                        <button type="button" class="lnb-tit is-close">
+                                            스타일
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--style">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap">
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--style01">
+                                                        <label for="check-lnb--style01">컨템포러리 (현대미술)</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--style02">
+                                                        <label for="check-lnb--style02">팝아트</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--style03">
+                                                        <label for="check-lnb--style03">사실주의</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--style04">
+                                                        <label for="check-lnb--style04">추상표현</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--style05">
+                                                        <label for="check-lnb--style05">인상주의</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--style06">
+                                                        <label for="check-lnb--style06">단색화</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            가격(단위, 만원)
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--price">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap">
+                                                    <div class="form-radio form-row">
+                                                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price01">
+                                                        <label for="radio-lnb--price01">50만원 미만</label>
+                                                    </div>
+                                                    <div class="form-radio form-row">
+                                                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price02">
+                                                        <label for="radio-lnb--price02">50~100만원</label>
+                                                    </div>
+                                                    <div class="form-radio form-row">
+                                                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price03">
+                                                        <label for="radio-lnb--price03">100~200만원</label>
+                                                    </div>
+                                                    <div class="form-radio form-row">
+                                                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price04">
+                                                        <label for="radio-lnb--price04">200~500만원</label>
+                                                    </div>
+                                                    <div class="form-radio form-row">
+                                                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price05">
+                                                        <label for="radio-lnb--price05">500~1000만원</label>
+                                                    </div>
+                                                    <div class="form-radio form-row">
+                                                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price06">
+                                                        <label for="radio-lnb--price06">1000~5000만원</label>
+                                                    </div>
+                                                    <div class="form-radio form-row">
+                                                        <input type="radio" name="product-price" class="form-radio__input" id="radio-lnb--price07">
+                                                        <label for="radio-lnb--price07">5000만원 이상</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="lnb-tit is-close">
+                                            재료
+                                            <span></span>
+                                        </button>
+                                        <div class="lnb-cont lnb-cont--material">
+                                            <div class="lnb-cont__list">
+                                                <div class="form-wrap">
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--material01">
+                                                        <label for="check-lnb--material01">아크리릭 (Acrylic)</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--material02">
+                                                        <label for="check-lnb--material02">오 일 (Oil)</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--material03">
+                                                        <label for="check-lnb--material03">수 채 (Watercolor)</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--material04">
+                                                        <label for="check-lnb--material04">혼합재료 (Mixed)</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--material05">
+                                                        <label for="check-lnb--material05">파스텔, 색연필</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--material06">
+                                                        <label for="check-lnb--material06">잉크, 연필, 목탄</label>
+                                                    </div>
+                                                    <div class="form-check form-row">
+                                                        <input type="checkbox" class="form-check__input" id="check-lnb--material07">
+                                                        <label for="check-lnb--material07">그외 기타재료</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="lnb-cont__link">
+                                                <a href="">더보기</a>
+                                                <button type="button">선택해제</button>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap border-top pt-30 ta-r">
+                                            <button type="button" class="uncheck-all">전체 선택 해제</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="product-list">
+                                        {{#with preViewData}}
+                                        {{#each atstAtwrk}}
+                                            <div class="product-item">
+                                                <a href="">
+                                                    <span class="product-item__img">
+                                                        <img src="{{testImage}}" alt="">
+                                                    </span>
+                                                    <span class="product-item__tit">{{atstNm}}</span>
+                                                    <span class="product-item__cont">
+                                                        {{atwrkNm}}, {{wSize}}x {{hSize}}, {{codeToName metRias "MATERIAL"}}<br>
+                                                        {{glryNm}}<br>
+                                                        {{commaPric pric}}원                                                    
+                                                    </span>
+                                                </a>
+                                            </div> 
+                                        {{/each}}
+                                        {{/with}}
+                                    </div>
+                                </div>
+                                <div class="pagination-wrap mt-40 mb-40">
+                                    <div class="pagination">
+                                        <a href="" class="link-prev"></a>
+                                        <a href="" class="is-active">1</a>
+                                        <a href="">2</a>
+                                        <a href="">3</a>
+                                        <a href="">4</a>
+                                        <a href="">5</a>
+                                        <a href="" class="link-next"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-wrap d-flex justify-center mt-50">
+                        <button type="button" name="edit" class="btn btn--white btn--round width--170 height-45 font-pre">수 정 하 기</button>
+                        <button type="button" name="subMit" class="btn btn--blue btn--round width--170 height-45 ml-40">게시물 올리기</button>
+                        <button type="button" class="popup-chk btn btn--darkgray btn--round width--170 height-45 ml-40">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

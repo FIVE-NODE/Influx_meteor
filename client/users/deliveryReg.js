@@ -1,6 +1,8 @@
 import './deliveryReg.html';
 
 import '../popup/utilsPopUp.js';
+import { useInsertionEffect } from 'react';
+import { val } from 'cheerio/lib/api/attributes';
 
 Template.deliveryReg.onCreated(function() {
     // 배송 요청사항 내용
@@ -41,6 +43,9 @@ Template.deliveryReg.events({
     'change #check-addrWrite--no'(evt, tmpl) {
         if($('#check-addrWrite--no').is(':checked')) {
             $('.homephones').attr('disabled', true);
+            $('input[name=homePhone1]').val('');
+            $('input[name=homePhone2]').val('');
+            $('input[name=homePhone3]').val('');
             homePhChk.set(true);
         } else {
             $('.homephones').attr('disabled', false);
@@ -121,7 +126,7 @@ Template.deliveryReg.events({
                 "delivReqEtc" : delivReqEtc
             };
 
-            Meteor.call('deliveryIns', uInfo.get()._id, dataSet, function(err, res) {
+            Meteor.call('deliveryIns', dataSet, function(err, res) {
                 $('input[name=recptnNm]').val('');
                 $('input[name=delivNm]').val('');
                 $('input[name=mob1]').val('');
@@ -133,20 +138,17 @@ Template.deliveryReg.events({
                 $('input[name=zipCode]').val('');
                 $('input[name=address]').val('');
                 $('input[name=addr2]').val('');
+                $('input[name=delivReqEtc]').val('');
+                
+                $('#check-addrWrite--default').prop('checked', false);
+                $('#check-addrWrite--no').prop('checked', false);
 
-                $('#check-addrWrite--default').attr('checked', false);
                 defDelivYn.set(false);
 
-                $('#check-addrWrite--no').attr('checked', false);
                 homePhChk.set(false);
 
-                Meteor.call('selectMberForId', uInfo.get()._id, function(err, res) {
-                    $('#deliveryReg_popup').removeClass('is-open');
-
-                    uInfo.set(res);
-
-                    messagePopup({message : '배송지 등록이 완료되었습니다.'});
-                });
+                uInfo.set(Meteor.user().profile.uInfos);
+                messagePopup({message : '배송지 등록이 완료되었습니다.'});
             });
         }
     }

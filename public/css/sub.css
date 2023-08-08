@@ -1138,6 +1138,12 @@ A seriese
   border-radius: 0.3rem;
   font-size: 1.2rem;
 }
+/* 신규추가 */
+.addrWrite-wrap input[type=number], .addrWrite-wrap .custom-select__tit {
+  height: 3rem;
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+}
 .addrWrite-wrap .custom-select__tit {
   font-size: 1.2rem;
   font-weight: 400;
@@ -1591,6 +1597,7 @@ B seriese
   height: 5.2rem;
   border: 1px solid #b9b9b9;
   border-radius: 1.5rem;
+  margin-left: 20px;
 }
 .gallery-sch .form-input input {
   width: 47rem;
@@ -1946,9 +1953,10 @@ B seriese
   font-weight: 700;
   color: #000;
 }
-.product-others .swiper {
+/* 주석처리 */
+/* .product-others .swiper {
   overflow: visible;
-}
+} */
 .product-others .swiper-slide {
   width: 30rem;
 }
@@ -3388,23 +3396,30 @@ C seriese
           align-items: center;
   width: 100%;
 }
+/* 추가 수정 디지털 판화 hot 10 */
 .hot-item__tit {
   margin-left: 3rem;
   font-size: 1.4rem;
   font-weight: 500;
   color: #585858;
+  width: 36%;
+  text-align: start;
 }
 .hot-item__price {
   margin-left: auto;
   font-size: 1.4rem;
   font-weight: 500;
   color: #585858;
+  width: 15%;
+  text-align: center;
 }
 .hot-item__comp {
   margin-left: 5rem;
   font-size: 1.4rem;
   font-weight: 500;
   color: #585858;
+  width: 30%;
+  text-align: center;
 }
 
 .gallery-event .gallery-swiper__txt strong {
@@ -4011,7 +4026,8 @@ C seriese
   width: 310rem;
 }
 .additional-setting__kind--style {
-  width: 487rem;
+  /* width: 487rem; */
+  width: 300rem;
 }
 .additional-setting__btn {
   position: absolute;
@@ -4487,7 +4503,7 @@ D seriese
   color: #585858;
 }
 .basket-price__box dl dd:last-of-type {
-  font-size: 2.4rem;
+  font-size: 1.8rem;
 }
 .basket-price__tit {
   font-size: 1.6rem;
@@ -6544,7 +6560,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .detailBack {
   width: 650px;
-  height: 100%;
+  max-height: 590px;
   text-align-last: center;
   background-repeat: no-repeat;
   background-image: url(../image/sample/intera/sampleInterior.jpg);
@@ -6590,6 +6606,18 @@ input[type="number"]::-webkit-inner-spin-button {
   min-height: 90px;
 }
 
+.glryAtwrksImg {
+  max-height: 90px;
+  min-height: 90px;
+  max-width: 90px;
+  min-width: 90px;
+}
+
+.addPricUserCart {
+  color: #1868B7;
+  font-weight: bold;
+}
+
 /* 디지털 hot 10 */
 .hot-item-sample {
   display: flex;
@@ -6615,6 +6643,32 @@ input[type="number"]::-webkit-inner-spin-button {
   max-height: 228px;
   min-height: 228px;
 }
+
+.pickCreate-img {
+  max-width: 150px;
+}
+
+.createAtwrkSch-img {
+  max-width: 150px;
+}
+
+.selling-img {
+  max-height: 100px;
+  min-height: 100px;
+  max-width: 100px;
+  min-width: 100px;
+}
+
+.glry-myPage-glryImg {
+  max-width: 55px;
+}
+
+.curator-img {
+  max-width: 802px;
+  max-height: 265px;
+  min-width: 802px;
+}
+
 
 /* .hot-item::before {
   width: 4rem;

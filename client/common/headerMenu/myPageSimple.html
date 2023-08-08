@@ -1,45 +1,100 @@
 <template name="myPageSimple">
-    <!-- <script type="text/javascript" src="/public/libs/sub.js"></script>
-    <link rel="stylesheet" href="../../resource/css/sub.css"> -->
-    <!-- id="myPageSimple_popup"  layer-popup -->
     <div class="popup-layout-mypage" id="myPageSimple_popup">
         <div class="popup-wrap">
             <div class="popup-inner" style="width:211px;">
                 <div class="popup-head">
-                    <p class="popup-head__tit">User 님</p>
+                    {{#if userChk}}
+                        {{#if userInfo}}
+                            <p class="popup-head__tit">{{nmChk userInfo.nm}} 님</p>
+                        {{else}}
+                            <p class="popup-head__tit">고객 님</p>
+                        {{/if}}
+                    {{else}}
+                        {{#if userInfo}}
+                            <p class="popup-head__tit">{{userInfo.glryNm}} 님</p>
+                        {{else}}
+                            <p class="popup-head__tit">고객 님</p>
+                        {{/if}}
+                    {{/if}}
                 </div>
                 <div class="popup-cont popup-cont--simpleMenu">
-                    <a href="/interestAtwrk" class="simpleMenu__link">
-                        <span class="simpleMenu__img">
-                            <img src="/image/common/icon/icon-simpleMenu-favor.png" alt="">
-                        </span>
-                        <span class="simpleMenu__tit">관 심 작 품</span>
-                    </a>
-                    <a href="/userCart" class="simpleMenu__link">
-                        <span class="simpleMenu__img">
-                            <img src="/image/common/icon/icon-simpleMenu-basket.png" alt="">
-                        </span>
-                        <span class="simpleMenu__tit">장 바 구 니</span>
-                    </a>
-                    <a href="/msgManage" class="simpleMenu__link">
-                        <span class="simpleMenu__img">
-                            <img src="/image/common/icon/icon-simpleMenu-message.png" alt="">
-                        </span>
-                        <span class="simpleMenu__tit">메   세   지</span>
-                    </a>
-                    <a href="/purchaseList" class="simpleMenu__link">
-                        <span class="simpleMenu__img">
-                            <img src="/image/common/icon/icon-simpleMenu-delievery.png" alt="">
-                        </span>
-                        <span class="simpleMenu__tit">배          송</span>
-                    </a>
-                    <a href="" class="simpleMenu__link">
-                        <span class="simpleMenu__img">
-                            <img src="/image/common/icon/icon-simpleMenu-collection.png" alt="">
-                        </span>
-                        <span class="simpleMenu__tit">MY컬렉션</span>
-                    </a>
-                    <a href="/changeMberInfo" class="simpleMenu__link deperate-line--top">
+                    {{#if userChk}}
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="/interestAtwrk">
+                            <span class="simpleMenu__img">
+                                <img src="/image/common/icon/icon-simpleMenu-favor.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">관 심 작 품</span>
+                        </a>
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="/userCart">
+                            <span class="simpleMenu__img">
+                                <img src="/image/common/icon/icon-simpleMenu-basket.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">장 바 구 니</span>
+                        </a>
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="/msgManage">
+                            <span class="simpleMenu__img">
+                                <img src="/image/common/icon/icon-simpleMenu-message.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">메   세   지</span>
+                        </a>
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="/purchaseList">
+                            <span class="simpleMenu__img">
+                                <img src="/image/common/icon/icon-simpleMenu-delievery.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">배          송</span>
+                        </a>
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="">
+                            <span class="simpleMenu__img">
+                                <img src="/image/common/icon/icon-simpleMenu-collection.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">MY컬렉션</span>
+                        </a>
+                    {{else}}
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="/glryAtwrks">
+                            <span class="simpleMenu__img">
+                                <img src="/image/sub/icon/icon-header__mid--admit.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">작 품 등 록</span>
+                        </a>
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="/myPageSelling">
+                            <span class="simpleMenu__img">
+                                <img src="/image/sub/icon/icon-header__mid--sailing.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">판매중 작품</span>
+                        </a>
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="/eventsCrList">
+                            <span class="simpleMenu__img">
+                                <img src="/image/sub/icon/icon-header__mid--event.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">전시 및 행사 등록</span>
+                        </a>
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="">
+                            <span class="simpleMenu__img">
+                                <img src="/image/sub/icon/icon-header__mid--bidding.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">비딩관리</span>
+                        </a>
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="/bMsgManage">
+                            <span class="simpleMenu__img">
+                                <img src="/image/common/icon/icon-header__mid--mail.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">메세지 관리</span>
+                        </a>
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="">
+                            <span class="simpleMenu__img">
+                                <img src="/image/common/icon/icon-header__mid--delivery.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">주문배송내역</span>
+                        </a>
+                        <a href="" name="linkMenu" class="simpleMenu__link" id="">
+                            <span class="simpleMenu__img">
+                                <img src="/image/sub/icon/icon-header__mid--pencil.png" alt="">
+                            </span>
+                            <span class="simpleMenu__tit">정산내역</span>
+                        </a>
+                    {{/if}}
+                    {{#if currentUser}}
+                    <a href="" name="linkMenu" class="simpleMenu__link deperate-line--top" id="/changeMberInfo">
                         <span class="simpleMenu__img">
                             <img src="/image/common/icon/icon-simpleMenu-info.png" alt="">
                         </span>
@@ -51,6 +106,7 @@
                         </span>
                         <span class="simpleMenu__tit">로 그 아 웃 </span>
                     </a>
+                    {{/if}}
                 </div>
             </div>
         </div>

@@ -18,10 +18,6 @@ Template.curatorPick.onRendered(function() {
 });
 
 Template.curatorPick.events({
-    'click a[name=detailBtn]'(evt, tmpl) {
-        var code = $(evt.currentTarget).attr('id');
-        Session.set('code', code);
-    }
 });
 
 Template.curatorPick.helpers({

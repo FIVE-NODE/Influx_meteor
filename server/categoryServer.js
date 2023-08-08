@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import { Atwrk, Evnt } from '../lib/collections.js';
+import fs from 'fs';
+import { Atwrk, Evnt, Pick } from '../lib/collections.js';
 
 // 원화 는 원화만, 디지털 판화는 판화만 특정 카테고리만 조회 하는 서버로직
 
@@ -16,6 +17,14 @@ Meteor.methods({
             
             if(!(Object.keys(data).length === 0)) {
               // 필터 조건이 있을경우 해당하는 조건 만 AND 로 조회한다.
+
+              // 이벤트 전시 조회에서 들어온 경우 Atwrk._id 를 가지고 해당하는 것만 조회하는 로직 추가
+              var evntAtwrk = data.EVNT_ATWRK_ID != undefined ?
+              { _id : { $in : data.EVNT_ATWRK_ID} } : {};
+
+              // 이벤트용 작가 이름 조회
+              var atstNm = data.ATSTNM != undefined ?
+              { 'atstInfo.atstNm' : { $in : data.ATSTNM }} : {};
 
               // 금액 범위에 맞게 설정
               var price = data.ARTWORK_PRICE_OGPRT != undefined ? 
@@ -70,7 +79,11 @@ Meteor.methods({
                 
               } else newEntry = {};
 
-              var queryData = { $and : [ newEntry, normal, ogCurator, price, medium, mkYear, style1, style2, metRias ], $or : [atstSch, glryNmSch]};
+              var inAtwrkList = data.inAtwrkList;
+              if(inAtwrkList != undefined) inAtwrkList = { _id : { $nin : inAtwrkList}};
+              else inAtwrkList = {};
+
+              var queryData = { $and : [ atstNm, evntAtwrk, inAtwrkList, newEntry, normal, ogCurator, price, medium, mkYear, style1, style2, metRias ], $or : [atstSch, glryNmSch]};
 
               res.total = Atwrk.find(queryData).count();
               res.list = Atwrk.find(queryData, option).fetch();
@@ -140,7 +153,17 @@ Meteor.methods({
           var dtCurator = data.atwrkIds != undefined ?
           { _id : { $in : data.atwrkIds } } : {};
 
-          var queryData = { $and : [ normal, dtCurator,sPrice, mPrice, lPrice, base, style1, style2 ] }
+          var inAtwrkList = data.inAtwrkList;
+          if(inAtwrkList != undefined) inAtwrkList = { _id : { $nin : inAtwrkList}};
+          else inAtwrkList = {};
+
+          var atstSch = data.atstGlrySch != undefined ?
+          { 'atstInfo.atstNm' : { $regex : new RegExp(data.atstGlrySch, 'i') }} : {};
+
+          var glryNmSch = data.atstGlrySch != undefined ?
+          { 'glry.glryNm' : { $regex : new RegExp(data.atstGlrySch, 'i') }} : {};
+
+          var queryData = { $and : [ inAtwrkList, normal, dtCurator,sPrice, mPrice, lPrice, base, style1, style2 ], $or : [ atstSch, glryNmSch ]};
 
           res.total = Atwrk.find(queryData).count();
           res.list = Atwrk.find(queryData, option).fetch();
@@ -205,6 +228,7 @@ Meteor.methods({
 
           var areas = data.area
           var area = {};
+
           if(Array.isArray(areas)) {
             // 검색으로 리스트로 넘어 왔을때
             for(idx in areas) {
@@ -221,7 +245,7 @@ Meteor.methods({
                 areasSch.push({ 'glry.area' : { $regex : areas[idx]} });
               }
             }
-          } else {
+          } else if(areas != undefined){
             // 퀵메뉴 통해 들어와서 검색을 이용했을때
             areas = areas.trim();
             if(areas != '') {
@@ -270,7 +294,7 @@ Meteor.methods({
         );
       }
     },
-    sltUserCart: function(data, option) {
+    sltUserCart: function(data) {
       try {
         let res = Atwrk.find({ _id : { $in : data } }).fetch();
 
@@ -282,5 +306,189 @@ Meteor.methods({
           '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
         );
       }
+    },
+    // 큐레이터 픽 작품 삭제하기
+    deletePickAtwrk: function(atwrkId, tabFlag) {
+      try {
+        let res = Pick.update({ 'atstAtwrk.atwrkID': { $in : atwrkId }, thmTp : tabFlag }, { $pull : { atstAtwrk : { atwrkID : { $in : atwrkId }}}});
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 특정 큐레이터 픽 작품 추가
+    updateCuratorPick: function(query, update) {
+      try {
+        let res = Pick.update( { _id : query._id, thmTp : query.thmTp }, { $set :  { atstAtwrk : update }} );
+
+        return res;
+      }  catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      } 
+    },
+    // 갤러리 마이페이지 Tab 변경시 조회
+    seltTabAtwrk: function(query, option) {
+      try {
+        let res = {};
+
+        query._id = this.userId;
+        
+        var sellTp = query.sellTp != undefined ? {'ogPrt.sellTp' : query.sellTp} : {};
+        var bsnsid = { 'glry.bsnsID' : query._id };
+
+        var atst = query.ATST != undefined ?
+        { 'atstInfo.atstNm' : { $in : query.ATST } } : {};
+
+        var kind = query.KIND != undefined ? query.KIND : {};
+        var og = [];
+        var dt = [];
+        if(query.KIND != undefined) {
+          for(i=0; i<kind.length; i++) {
+            if(kind[i] == 'ogPrt') og.push('ogPrt');
+            else if(kind[i] == 'dtPrt') dt.push('dtPrt');
+          }
+        }
+        
+        if(og.length > 0 && dt.length == 0) kind = {'ogPrt.atwrkNm' : { $exists: true }};
+        else if(dt.length > 0 && og.length == 0) kind = {'dtPrt.atwrkNm' : { $exists: true }}
+        else kind = {};
+
+        var metRias = query.MATERIAL != undefined ?
+        { 'ogPrt.metRias' : { $in : query.MATERIAL} } : {};
+        
+        var queryData = { $and : [ sellTp, bsnsid, kind, atst, metRias ]};
+
+        res.total = Atwrk.find(queryData).count();
+        res.list = Atwrk.find(queryData, option).fetch();
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      } 
+    },
+    // Bsns 갤러리 사용자 작품 삭제
+    deleteAtwrkForGlry: function(query) {
+      try{
+        let res = Atwrk.remove(query);
+        let userId = this.userId;
+        
+        Meteor.users.update({_id : userId}, { $pull : { 'profile.uInfos.rprsnAtwrk' : { atwrkID : query._id }} });
+        
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      } 
+    },
+    // Bsns 갤러리 사용자 작품 삭제
+    updateAtwrkSellYn: function(query, data) {
+      try{
+        let res = Atwrk.update(query, { $set : { sellYn : data }});
+        
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      } 
+    },
+    // 큐레이터 픽 저장
+    savePick: function(thmTp, data) {
+      try {
+        let res = '';
+        if(!data) {
+          throw new Meteor.Error('입력 값이 없습니다.');
+        }
+        
+        var findPick = Pick.findOne({ thmTp });
+        
+
+        if(findPick != undefined) {
+          var update = { $set : { } };
+
+          if(data.image != undefined && data.image != '') {
+            var tempDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/";
+            var imageDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/";
+  
+            var blob = Meteor.wrapAsync(fs.readFile)(tempDir + data.image);
+  
+            Meteor.wrapAsync(fs.writeFile)(imageDir + data.image, blob);
+  
+            data.url = "/images/" + data.image;
+  
+            update.$set.image = data.url;
+          }
+
+          if(data.desc.trim() != '') update.$set.thmDesc = data.desc;
+          
+          if(data.title.trim() != '') update.$set.thmNm = data.title;
+
+          Pick.update({ thmTp }, update );
+
+        } else {
+          var templePick = JSON.parse(Assets.getText('json/pick.json'));
+
+          templePick._id = Meteor.commonUtils.generateUUID();
+          templePick.thmDesc = data.desc;
+          templePick.thmNm = data.title;
+          templePick.image = data.url;
+
+          Pick.insert(templePick);
+        }
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      } 
+    },
+    // 갤러리 별 이벤트 조회
+    seltEvntsForGlry: function(bsnsId) {
+      try {
+        let res = Evnt.find({'glry.bsnsID' : bsnsId}).fetch();
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      } 
+    },
+    // 전시 및 작품 조회 업데이트용 단건 조회
+    seltEvntDetail: function(evntId) {
+      try {
+        let res = Evnt.findOne({ _id : evntId });
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      } 
     }
 });

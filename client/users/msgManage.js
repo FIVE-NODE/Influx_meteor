@@ -8,20 +8,17 @@ Template.msgManage.onCreated(function() {
 
     msgList = new ReactiveVar();
 
-    if(sessionStorage.getItem('art_dex') != undefined) {
-        Meteor.call('decrypt', sessionStorage.getItem('art_dex'), function(err, res) {
-            var userData = JSON.parse(res);
-            Meteor.call('selectMberForId', userData._id, function(err, res) {
-                uInfo.set(res);
-                seltMsgList();
-            });
-
-        });
-    }
+    this.autorun(() => {
+        const userData = Meteor.user();
+        if(userData != undefined && uInfo.get() == undefined) {
+            uInfo.set(userData.profile.uInfos);
+            seltMsgList();
+        }
+    });
 });
 
 function seltMsgList() {
-    Meteor.call('seltMsgListForMber', uInfo.get()._id, function(err, res) {
+    Meteor.call('seltMsgListForMber', {}, function(err, res) {
         msgList.set(res);
     });
 }
@@ -41,7 +38,7 @@ Template.msgManage.events({
             // 저장 데이터 셋팅
             var inquiryInsInfo = {
                 "_id" : Meteor.commonUtils.generateUUID(),
-                "cmmncID": userInfo._id,
+                "cmmncID": Meteor.userId(),
                 "nm": userInfo.nm === '' ? userInfo.nicNm : userInfo.nm,
                 "atwrkID": this.atwrkData._id,
                 "cmmncTp": '002',

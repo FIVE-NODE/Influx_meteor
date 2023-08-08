@@ -12,6 +12,8 @@ import '../popup/buyPop/priceInquiryIns.js';
 import '../popup/buyPop/priceInquiryAns.js';
 import '../popup/buyPop/priceInquiryPay.js';
 
+let userId = Meteor.userId();
+
 // 팝업 메시지 띄우기
 function messagePopup(message) {
     popUpMessage.set(message);
@@ -66,23 +68,26 @@ Template.atwrkDetail.onCreated(function() {
     bargainingPrice = new ReactiveVar();
 
     // 사용자 정보
-    userInfos = new ReactiveVar({});
+    userInfos = new ReactiveVar();
 
     // 디지털 판화용 구매하기 리스트 넘기기
-    listProduct =  new ReactiveVar({});
+    listProduct =  new ReactiveVar([]);
 
-    if(sessionStorage.getItem('art_dex') != undefined) {
-        Meteor.call('decrypt', sessionStorage.getItem('art_dex'), function(err, res) {
-            var userData = JSON.parse(res);
-            userInfos.set(userData);
-            console.log('userInfos : ', userInfos.get());
-        });
-    }
+
+    renderFlag = new ReactiveVar(false);
+
+    this.autorun(() => {
+        const userData = Meteor.user();
+        if(userData != undefined && userInfos.get() == undefined) {
+            userInfos.set(userData.profile.uInfos);
+        }
+    });
 
     selectAtwrkDetail();
 
     function selectAtwrkDetail () {
         Meteor.call('selectAtwrkDetail', FlowRouter.getParam('_id'), function(err, res) {
+
             // 원화가 없는경우 dtPrt 디지털 판화로 셋팅
             if(res.ogPrt.atwrkNm === undefined) tabFlag.set('dtPrt');
             else if(res.dtPrt.atwrkNm != undefined) bothFlag.set(true);
@@ -102,22 +107,30 @@ Template.atwrkDetail.onCreated(function() {
                 proCntList.set(proCnt);
 
                 normalPric.set(res.dtPrt.sPric);
+
+                // 구매정보 셋팅
+                listProduct.set([
+                    {
+                        atwrkFlag: 'dtPrt',
+                        atwrkId : res._id,
+                        cnt : 1,
+                        option: {
+                            size : 'S',
+                            frame : '알루미늄'
+                        }
+                    }
+                ])
             }
 
-            var userInfo = sessionStorage.getItem('art_dex');
-            if(userInfo != undefined) {
+            if(userInfos.get() != undefined) {
                 // 유저 정보가 있는 경우 조회수 기록 체크후 조회수 증가
-                Meteor.clientCommonUtils.viewCntEvnt(userInfo, res._id, tabFlag.get());
+                Meteor.clientCommonUtils.viewCntEvnt(res._id, tabFlag.get());
 
                 // 좋아요 눌럿던 사람인지 확인
-                Meteor.call('decrypt', userInfo, function(err, userRes) {
-                    var userData = JSON.parse(userRes);
-                    var userTp = Object.keys(userRes).includes('snsTp') === false ? 'MBER' : 'SNSMBER';
-                    Meteor.call('likeChkMber', userTp, userData._id, res._id, tabFlag.get(), function(err, res) {
-                        atwrkGoodChk.set(res != undefined ? true : false);
-                    });
+                Meteor.call('likeChkMber', res._id, tabFlag.get(), function(err, res) {
+                    atwrkGoodChk.set(res != undefined ? true : false);
                 });
-                
+
             } else {
                 // 유저 정보가 없는경우 비 로그인 사용자
                 if(localStorage.getItem(res._id) === undefined || localStorage.getItem(res._id) === null) {
@@ -132,7 +145,7 @@ Template.atwrkDetail.onCreated(function() {
 
             var bsnsID = res.glry.bsnsID;
 
-            // 같은 갤럴리의 작품들
+            // 같은 갤러리의 작품들
             selectLatestGlryList(bsnsID);
 
         });
@@ -151,11 +164,16 @@ Template.atwrkDetail.onCreated(function() {
 });
 
 Template.atwrkDetail.onRendered(function() {
-    interact('#target')
-    .draggable({
+    interact('#target').draggable({
+        modifiers: [
+            interact.modifiers.restrictRect({
+                restriction: 'parent',
+                endOnly: false,
+            })
+        ],
         listeners: {
-            max: {width: 650, height: 730},
-            move: dragMoveListener
+            move: dragMoveListener,
+
         }
     });
 
@@ -190,13 +208,20 @@ function msPsSetData(flag ,size, frame) {
             totalCnt += proCntList.get()[idx];
         }
         digitalCnt.set(totalCnt);
-        var setPrdut = {
-            setData,
-            count : 1,
-            
-        };
-        var prdut = listProduct.get();
 
+        // 구매하기 데이터 넘기기 위한 리스트업
+        var dtpListPro = listProduct.get();
+        var setObject = {
+            atwrkId : details._id,
+            atwrkFlag : tabFlag.get(),
+            cnt : 1,
+            option : {
+                size,
+                frame
+            }
+        };
+        dtpListPro.push(setObject);
+        listProduct.set(dtpListPro);
     }
 }
 
@@ -232,6 +257,11 @@ Template.atwrkDetail.events({
             cntList[index] = cntList[index] - 1;
             proCntList.set(cntList);
             digitalCnt.set(digitalCnt.get() - 1);
+            
+            // 구매리스트 수정
+            var editSetData = listProduct.get();
+            editSetData[index].cnt = editSetData[index].cnt -1;
+            listProduct.set(editSetData);
         }
     },
     'click button[name=psCnt]'(evt, tmpl) {
@@ -245,21 +275,32 @@ Template.atwrkDetail.events({
             cntList[index] = cntList[index] + 1;
             proCntList.set(cntList);
             digitalCnt.set(digitalCnt.get() + 1);
+
+            // 구매리스트 수정
+            var editSetData = listProduct.get();
+            editSetData[index].cnt = editSetData[index].cnt + 1;
+            listProduct.set(editSetData);
         }
     },
     // 장바구니
     'click a[name=shBasket]'(evt, tmpl) {
-        var userInfo = sessionStorage.getItem('art_dex');
-
-        if(userInfo != undefined) {
+        if(userInfos.get() != undefined) {
             var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
-
-            Meteor.clientCommonUtils.basketBtnEvnt(userInfo, atwrkId);
-
-            messagePopup({
-                message : '장바구니 등록이 완료되었습니다.<br>장바구니로 이동 하시겠습니까?',
-                btn : [{ name : "예", route : "/basket"}, { name : "아니요", route : "" }]
+            var atwrkFlag = tabFlag.get();
+            var setData = atwrkFlag == 'ogPrt' ?
+                {
+                    atwrkId,
+                    atwrkFlag : atwrkFlag
+                } : listProduct.get();
+            
+            Meteor.call('insertBasket', setData, function(err, res) {
+                messagePopup({
+                    message : '장바구니 등록이 완료되었습니다.<br>장바구니로 이동 하시겠습니까?',
+                    btn : [{ name : "예", route : "/userCart"}, { name : "아니요", route : "" }]
+                });
             });
+            
+
         } else {
             messagePopup({message : '로그인 후 이용해주세요'});
         }
@@ -279,14 +320,13 @@ Template.atwrkDetail.events({
         sampleInterior.set(true);
     },
     // 좋아요 버튼 이벤트
-    'click button[name=goodBtn]'(evt, tmpl) {
-        var target = $(evt.currentTarget);
-
-        // 상세화면 좋아요 값 변경
-        
+    'click .goodBtnEvt'(evt, tmpl) {
         var ogGoodCnt = $('span[name=ogPrtGoodCnt]');
         var dtGoodCnt = $('span[name=dtPrtGoodCnt]');
-        if(target.hasClass('is-click') === false) {
+
+        var goodBtn = $('button[name=goodBtn]');
+        
+        if(goodBtn.hasClass('is-click') === false) {
             if(bothFlag) {
                 ogGoodCnt.text(ogGoodCnt.text() - 1);
                 dtGoodCnt.text(dtGoodCnt.text() - 1);
@@ -303,35 +343,25 @@ Template.atwrkDetail.events({
                 else dtGoodCnt.text(parseInt(dtGoodCnt.text()) + 1);
             }
         }
-        
-        // 좋아요 버튼 이미지 색깔 입히기
-        // target.toggleClass('is-click');
-
-        // 사용자 정보
-        var userInfo = sessionStorage.getItem('art_dex');
 
         // 좋아요 로직
-        if(userInfo != undefined) {
+        if(userInfos.get() != undefined) {
             var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
             var atwrkFlag = tabFlag.get();
 
-            Meteor.clientCommonUtils.goodBtnEvnt(userInfo, atwrkId, atwrkFlag, bothFlag.get());
-        } else {
-            // 비 로그인 사용자는 팝업창
-            messagePopup({message : '로그인 후 이용해주세요'});
-        }
+            Meteor.clientCommonUtils.goodBtnEvnt(atwrkId, atwrkFlag, bothFlag.get());
+        } else messagePopup({message : '로그인 후 이용해주세요'});
+        
     },
     // 소식받기 이벤트
     'click button[name=getNews]'(evt, tmpl) {
-        var userInfo = sessionStorage.getItem('art_dex');
-        if(userInfo != undefined) {
+        if(userInfos.get() != undefined) {
             var bsnsID = this.glry.bsnsID;
-            Meteor.call('decrypt', userInfo, function(err, res) {
-                userInfo = JSON.parse(res);
-                Meteor.call('insertNotice', userInfo._id, bsnsID, function(err, res) {
-                    messagePopup({message : '소식받기 적용이 완료되었습니다.'});
-                });
+            
+            Meteor.call('insertNotice', userId, bsnsID, function(err, res) {
+                messagePopup({message : '소식받기 적용이 완료되었습니다.'});
             });
+
         } else {
             // 비 로그인 사용자는 팝업창
             messagePopup({message : '로그인 후 이용해주세요'});
@@ -339,8 +369,7 @@ Template.atwrkDetail.events({
     },
     // 비딩하기 버튼 이벤트
     'click a[name=bidBtn]'(evt, tmpl) {
-        var userInfo = sessionStorage.getItem('art_dex');
-        if(userInfo != undefined) {
+        if(userInfos.get() != undefined) {
             $('#bidAmount').addClass('is-open');
         } else {
             // 비 로그인 사용자는 팝업창
@@ -349,8 +378,7 @@ Template.atwrkDetail.events({
     },
     // 흥정하기 버튼 이벤트
     'click a[name=bargainingBtn]'(evt, tmpl) {
-        var userInfo = sessionStorage.getItem('art_dex');
-        if(userInfo != undefined) {
+        if(userInfos.get() != undefined) {
             $('#bargainingRate').addClass('is-open');
         } else {
             // 비 로그인 사용자는 팝업창
@@ -397,6 +425,15 @@ Template.atwrkDetail.events({
         cntList.splice(index, 1);
         proCntList.set(cntList);
 
+        // 구매리스트 데이터 전달에도 삭제
+        var seltList = listProduct.get();
+        seltList.splice(index, 1);
+        listProduct.set(seltList);
+    },
+    'click a[name=otherAtwrk]'(evt, tmpl) {
+        var atwrkId = $(evt.currentTarget).attr('id');
+        FlowRouter.go(`/atwrkDetail/${atwrkId}`);
+        location.reload();
     }
 });
 
@@ -441,7 +478,6 @@ Template.atwrkDetail.helpers({
             res.dtPrtActive = '';
             res.ogPrtOpen = '';
             res.dtPrtOpen = '';
-            
 
             if(res.ogPrt.pric != undefined) {
                 // res.ogPrt.pric = Meteor.commonUtils.priceComma(res.ogPrt.pric);
@@ -463,7 +499,9 @@ Template.atwrkDetail.helpers({
 
             // 메인이미지
             // res.mainImage = images.get().find(isRprsn);
-        
+            
+            renderFlag.set(true);
+
             return res;
         }
     },
@@ -510,6 +548,7 @@ Template.atwrkDetail.helpers({
                 resInfo.hSize = info[idx][prtFlag].hSize;
                 resInfo.atstNm = info[idx].atstInfo.atstNm;
                 resInfo.glryNm = info[idx].glry.glryNm;
+                resInfo.flag = prtFlag;
                 
                 res.push(resInfo);
             }
@@ -518,9 +557,12 @@ Template.atwrkDetail.helpers({
             return res;
         };
     },
+    dtpChk(flag) {
+        return flag == 'dtPrt';
+    },
     loginChk() {
-        var logChk = JSON.parse(sessionStorage.getItem('art_session_index'));
-        return logChk.index == 0 ? true : false;
+        if(Meteor.userId() != undefined) return true;
+        return false;
     },
     dataChk(data, kind) {
         if(data != undefined) {
@@ -597,5 +639,8 @@ Template.atwrkDetail.helpers({
     },
     normalPric() {
         return normalPric.get();
+    },
+    utilsJsRenderAfter() {
+        return renderFlag.get();
     }
 });

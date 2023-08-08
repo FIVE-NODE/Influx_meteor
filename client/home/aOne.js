@@ -1,10 +1,17 @@
 import { Template } from 'meteor/templating';
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
-import { Pick, Banr } from '../../lib/collections.js';
+import { Pick } from '../../lib/collections.js';
 import { clientAtwrk, clientDtpHome, clientOgHome, clientEvntHome, clientBsnsMber, clientBanr } from '../lib/clientCollections.js';
 
 import './aOne.html';
+
+import '../popup/utilsPopUp.js';
+
+// 팝업 메시지 띄우기
+function messagePopup(message) {
+    popUpMessage.set(message);
+    $('#utilsPopUp').addClass('is-open');
+}
 
 // 뉴입점작품 원화만
 function selectAtwrk() {
@@ -65,7 +72,7 @@ function selectGlry() {
     Meteor.call('clientBsnsMber', function(e, data) {
         if(data != undefined && clientBsnsMber._collection._docs._map.size == 0) {
             data.forEach(function(map){
-                clientBsnsMber.insert(map);
+                clientBsnsMber.insert(map.profile.uInfos);
             });
         }
     });
@@ -85,6 +92,8 @@ function selectBanr() {
 Template.aOne.onCreated(async function() {
     const instance = this;
     instance.connectoin = new ReactiveVar();
+
+    popUpMessage = new ReactiveVar();
 
     pickCategory = new ReactiveVar('001');
     dataComplet = new ReactiveVar(false);
@@ -138,18 +147,39 @@ Template.aOne.events({
     },
     // 장바구니 버튼 이벤트 설정
     'click button[name=shBasket]'(evt, tmpl) {
-        var userInfo = sessionStorage.getItem('art_dex');
         var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
+        var atwrkFlag = $(evt.currentTarget).val();
 
-        Meteor.clientCommonUtils.basketBtnEvnt(userInfo, atwrkId);
+        if(atwrkFlag == '') atwrkFlag = pickCategory.get() == '002' ? 'dtPrt' : 'ogPrt';
+        
+        // 로그인 체크
+        if(Meteor.userId() == null) messagePopup({message : '로그인 후 이용해주세요'});
+        else { 
+            // 작품 원화 or 디지털 판화 체크
+            if(atwrkFlag == 'dtPrt') messagePopup({message : '디지털 판화는 작품상세보기에서 옵션 선택후 추가해주세요'});
+            else {
+                var setData = { atwrkId, atwrkFlag };
+                Meteor.call('insertBasket', setData, function(err, res) {
+                    if(err) console.log(err);
+                    else {
+                        messagePopup({message : '장바구니 등록이 완료되었습니다.'});
+                    }
+                });    
+            }
+        }
     },
     // 좋아요 버튼 이벤트 설정
     'click button[name=goodBtn]' (evt, tmpl) {
         var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
         var atwrkFlag = $(evt.currentTarget).val();
-        var userInfo = sessionStorage.getItem('art_dex');
 
-        Meteor.clientCommonUtils.goodBtnEvnt(userInfo, atwrkId, atwrkFlag);
+        // 로그인 체크
+        if(Meteor.userId() == null) messagePopup({message : '로그인 후 이용해주세요'});
+        else {
+            // 좋아요 등록
+            Meteor.clientCommonUtils.goodBtnEvnt(atwrkId, atwrkFlag, false);
+            messagePopup({message : '좋아요 등록이 완료되었습니다.'});   
+        }
     },
     'click a[name=atDetail]'(evt, tmpl) {
         // FlowRouter.go(`/atwrkDetail/${this.atwrkID}`);
@@ -211,6 +241,8 @@ Template.aOne.helpers({
     },
     chkDtp() {        
         return !(pickCategory.get() === '002');
-    }
-
+    },
+    popup() {
+        return popUpMessage.get();
+    },
 });

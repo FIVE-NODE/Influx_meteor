@@ -9,7 +9,13 @@ import '../popup/userPop/withDrawalUser.js';
 
 Template.changeMberInfo.onCreated(function() {
     uInfo = new ReactiveVar();
-    Meteor.commonUtils.uInfo(uInfo);
+
+    userId = new ReactiveVar(Meteor.userId());
+    
+    this.autorun(() => {
+        const userData = Meteor.user();
+        if(userData != undefined) uInfo.set(userData.profile.uInfos);
+    });
 });
 
 Template.changeMberInfo.onRendered(function() {
@@ -51,5 +57,5 @@ Template.changeMberInfo.helpers({
     },
     mobMasking(data) {
         return  Meteor.clientCommonUtils.mobMasking(Meteor.clientCommonUtils.mobHyphen(data));
-    }
+    },
 });

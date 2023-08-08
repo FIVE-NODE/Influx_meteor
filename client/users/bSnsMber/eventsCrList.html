@@ -1,0 +1,41 @@
+<template name="eventsCrList">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__event mt-30 ">
+                        <div class="event-wrap mb-100">
+                            <div class="event-list">
+                                <div class="event-item">
+                                    <a href="/eventsCrDetail" class="pos-rel">
+                                        <span class="event-item__img pos-rel">
+                                            <img src="/image/sub/icon/icon-plus--big.svg" alt="" class="pos-abs pos-center">
+                                        </span>
+                                        <span class="pos-abs pos-bottom w-100 mb-40 font-11 fontW-600 color--sea ta-c">클릭하면 전시회/ 행사 등록 및 수정 하실 수 있습니다. </span>
+                                    </a>
+                                </div>
+                                {{#each eventsList}}
+                                    <div class="event-item">
+                                        <a href="/eventsUpDetail/{{_id}}" id="{{_id}}">
+                                            <span class="event-item__img">
+                                                <img src="{{image}}" alt="">
+                                            </span>
+                                            <span class="event-item__cate">{{codeToName evntTp "EVENT_TYPE"}}</span>
+                                            <p class="event-item__tit">{{title}}</p>
+                                            <em class="event-item__date">{{dateFormatChg strDt "."}} ~ {{dateFormatChg endDt "."}}</em>
+                                        </a>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+</template>

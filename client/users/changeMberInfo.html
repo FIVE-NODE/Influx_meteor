@@ -1,9 +1,8 @@
 <template name="changeMberInfo">
-    <script type="text/javascript" src="/libs/common.js"></script>
-    <script type="text/javascript" src="/libs/sub.js"></script>
     <section class="container">
         {{#with uInfo}}
         <script type="text/javascript" src="/libs/common.js"></script>
+        <script type="text/javascript" src="/libs/sub.js"></script>
         <div class="content">
             <div class="content__inner">
                 <div class="sub-content">
@@ -16,7 +15,7 @@
                                 </h3>
                                 <dl class="mypage-memberInfo__dl">
                                     <dt>프로필 사진</dt>
-                                    <dd>
+                                    <dd class="flex-wrap">
                                         <p class="mypage-memberInfo__profile">
                                             <span class="mypage-memberInfo__profile__img">
                                                 <img src="/image/sub/img-memberInfo__profile__img.png" alt="">
@@ -27,6 +26,10 @@
                                             </span>
                                         </p>
                                         <button type="button">사진변경</button>
+                                        <div class="btn-wrap mt-10 width-inherit pl-30 ta-l">
+                                            <button type="button">사진선택</button>
+                                            <button type="button" class="font-pre">취   소</button>
+                                        </div>
                                     </dd>
                                     <dt>아이디</dt>
                                     <dd>
@@ -34,11 +37,41 @@
                                             {{ID}}
                                         </p>
                                     </dd>
+
                                     <dt>비밀번호</dt>
                                     <dd>
                                         <p>********</p>
                                         <button type="button">비밀번호변경</button>
                                     </dd>
+                                    <dd class="flex-wrap mt-40">
+                                        <div class="form-wrap mypage-memberInfo--modi__form-write">
+                                            <div class="form-write">
+                                                <div class="form-row">
+                                                    <p>현재 비밀번호</p>
+                                                    <div class="form-input">
+                                                        <input type="text" class="height-25">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row mt-10">
+                                                    <p>신규 비밀번호</p>
+                                                    <div class="form-input">
+                                                        <input type="text" class="height-25">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row mt-10">
+                                                    <p>신규 비밀번호 재입력</p>
+                                                    <div class="form-input">
+                                                        <input type="text" class="height-25">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap mt-10 w-100 ta-l">
+                                            <button type="button" class="font-pre">취   소</button>
+                                            <button type="button" class="font-pre bg--gray">완   료</button>
+                                        </div>
+                                    </dd>
+
                                     <dt>이름(실명)</dt>
                                     <dd>
                                         <p>
@@ -46,11 +79,29 @@
                                             {{#if nmChk}} <span>인증완료</span> {{/if}}
                                         </p>
                                     </dd>
+
                                     <dt>닉네임</dt>
                                     <dd>
                                         <p>{{nicNm}}</p>
                                         <button type="button">닉네임변경</button>
                                     </dd>
+                                    <dd class="d-block mt-10 ta-l">
+                                        <ul class="lists lists-cir--s ta-l">
+                                            <li>길이는 최대 15자 이내로 작성해주세요.</li>
+                                            <li>중복닉네임 불가합니다. </li>
+                                            <li>이모티콘 및 일부 특수문자 사용이 불가합니다. </li>
+                                        </ul>
+                                        <div class="form-wrap">
+                                            <div class="form-input">
+                                                <input type="text" class="width--200 height-25 mt-10 placeholder-fs--12 placeholder-fw--300" placeholder="닉네임 입력 ( 최대 15자 )">
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap mt-10 w-100 ta-l">
+                                            <button type="button" class="font-pre">취   소</button>
+                                            <button type="button" class="font-pre bg--gray">완   료</button>
+                                        </div>
+                                    </dd>
+
                                     <dt>이메일</dt>
                                     <dd>
                                         <p>
@@ -59,6 +110,30 @@
                                         </p>
                                         <button type="button">이메일 변경</button>
                                     </dd>
+                                    <dd class="d-block section-seperate--join">
+                                        <ul class="lists lists-cir--s ta-l mt-10">
+                                            <li>메일주소 입력 후 인증하기 버튼을 누르시면, 회원님의 이메일로 이메일 인증번호가 적힌메일이 발송됩니다. </li>
+                                            <li>아래에 인증 번호를 입력하시면 인증이 완료됩니다. </li>
+                                        </ul>
+                                        <div class="form-row code-inquire width--250">
+                                            <div class="form-input form-row">
+                                                <input type="text" class="code-inquire__input" placeholder="이메일 주소 입력">
+                                            </div>
+                                            <button type="button" class="btn code-inquire__btn col-2 bg--silver">확 인</button>
+                                        </div>
+                                        <div class="form-row code-inquire width--250">
+                                            <div class="form-input form-row">
+                                                <input type="text" class="code-inquire__input col-10" placeholder="인증코드 6자리 입력">
+                                                <span>02:25</span>
+                                            </div>
+                                            <button type="button" class="btn code-inquire__btn col-2">확 인</button>
+                                        </div>
+                                        <span class="d-flex align-center mt-10 ta-l">
+                                            <img src="../../resource/image/sub/icon/icon-exclamation.png" alt="" class="mr-5">
+                                            이메일을 받지 못하셨나요?  이메일 <a href="" class="ml-5 fontW-700 underline">재전송하기</a>
+                                        </span>
+                                    </dd>
+
                                     <dt>휴대전화</dt>
                                     <dd>
                                         <p>{{mobMasking mob}}</p>
@@ -92,7 +167,7 @@
                                     <dt>카카오 로그인 연동</dt>
                                     <dd>
                                         <div class="sns-connect">
-                                            <button type="button" class="is-active">ON</button>
+                                            <button type="button" nams="kakaoLogin">ON</button>
                                             <button type="button">OFF</button>
                                         </div>
                                     </dd>

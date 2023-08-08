@@ -31,7 +31,6 @@ import './curator/dtCurator.js';          // 큐레이터 디지털 판화
 import './curator/ogCurator.js';          // 큐레이터 원화
 import './curator/pickCreate.js';         // 큐레이터픽 등록 (원화, 디지털 판화, 작가)
 
-
 // 화면
 import './home/aOne.js';                  // 메인화면
 import './gallery/glyHome.js';            // 갤러리 홈
@@ -44,8 +43,17 @@ import './users/userCart.js';             // 유저 장바구니
 import './users/approval.js';             // 결재하기
 import './users/purchaseList.js';         // 주문내역
 import './users/msgManage.js';            // 메시지 관리
+import './users/myCollection.js';         // 마이 컬랙션 페이지
 
 // 관리자 운영자 페이지
+import './users/bSnsMber/myPageSelling.js';// 마이페이지 판매중인 상품
+import './users/bSnsMber/inventoryMode.js';// 인벤토리 모드 화면
+import './users/bSnsMber/eventsCrList.js'; // 전시 및 행사 등록
+import './users/bSnsMber/eventsCrDetail.js';// 전시 및 행사 상세 등록화면
+import './users/bSnsMber/eventsUpDetail.js';// 전시 및 행사 상세 업데이트화면
+import './users/bSnsMber/ogAtwrkCr.js';    // 원화 작품 등록 화면
+import './users/bSnsMber/bMsgManage.js';   // 갤러리 메시지 관리
+import './users/bSnsMber/glryAtwrks.js';   // 갤러리 Atwrk 화면
 
 // 로그인, 회원가입
 import './users/login.js';                // 로그인
@@ -63,9 +71,6 @@ import './common/uploadRepWork.js';
 // 우편번호 찾기
 import './common/zipCode.js';
 
-// 검색 필터
-import './common/searchFilter.js';
-
 // 공통 코드
 import '../lib/code.js';
 
@@ -80,16 +85,17 @@ import '../lib/router.js';
 // 공통 도우미
 import './lib/helpers.js';
 
-
-
 Template.body.onCreated(function() {
 
   // chPage = new ReactiveVar('aOne');
 
+  Meteor.subscribe('userData');
   Meteor.subscribe('Pick');
   Meteor.subscribe('Atwrk');
 
   // this.changePage = chPage;
+
+  this.userPop = this.subscribe('userData');
   this.pickPub = this.subscribe('Pick');
   this.atwrkPub = this.subscribe('Atwrk');
 

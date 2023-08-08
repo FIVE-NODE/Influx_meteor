@@ -28,7 +28,7 @@ Template.withDrawalUser.events({
             dataSet.secsnTp = someList;
             dataSet.secsnRsn = areaText;
             
-            Meteor.call('delWithDrawalUser', uInfo.get()._id, dataSet, function(err, res) {
+            Meteor.call('delWithDrawalUser', dataSet, function(err, res) {
                 $('#withDrawalUser_popup').removeClass('is-open');
                 messagePopup({message : '탈퇴 처리가 완료되었습니다.'});
             });

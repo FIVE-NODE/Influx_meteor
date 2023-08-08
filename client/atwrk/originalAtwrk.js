@@ -2,6 +2,38 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import './originalAtwrk.html';
 
+
+function seltAtwrkSetList() {
+    var chked = $('input[name=filterChk]:checked');
+    var dataList = [];
+    var beforKind = '';
+    var queryData = {};
+
+    for(var i=0; i < chked.length; i++) {
+        var splitVal = chked[i].value.split('-');
+        var kind = splitVal[0];
+        var code = splitVal[1];
+        var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
+
+        if(beforKind != kind && beforKind != '') {
+            queryData[beforKind] = dataList;
+            dataList = [];
+        }
+
+        dataList.push(codeData);
+
+        beforKind = kind;
+
+        if(i === (chked.length -1)) queryData[beforKind] = dataList;
+    }
+
+    filters.set(queryData);
+
+    Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
+
+    setQuery();
+}
+
 Template.originalAtwrk.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);
@@ -16,7 +48,7 @@ Template.originalAtwrk.onCreated(function() {
 
     // sort 정보
     sortInfo = new ReactiveVar();
-    
+
     if(this.data.schQueryData() != undefined)  {
         filters.set(JSON.parse(this.data.schQueryData()));
     }
@@ -30,7 +62,6 @@ Template.originalAtwrk.onCreated(function() {
 
     this.selectOrgAtwrk = function() {
         if(filters.get() != undefined) setQuery();
-
         Meteor.call('selectOrgAtwrk', query, options, function(err, res) {
             total.set(res.total);
             atwrkInfo.set(res.list);
@@ -46,24 +77,38 @@ Template.originalAtwrk.onRendered(function() {
 Template.originalAtwrk.events({
     'click button[name=allCancel]'() {
         $('input[name=filterChk]').prop('checked', false);
+        seltAtwrkSetList();
+        tmpl.selectOrgAtwrk();
     },
-    'click button[name=priceCancelBtn]'() {
+    'click button[name=priceCancelBtn]'(evt, tmpl) {
         cancelCheckBox('price');
+        seltAtwrkSetList();
+        tmpl.selectOrgAtwrk();
     },
-    'click button[name=mediumCancelBtn]'() {
+    'click button[name=mediumCancelBtn]'(evt, tmpl) {
         cancelCheckBox('medium');
+        seltAtwrkSetList();
+        tmpl.selectOrgAtwrk();
     },
-    'click button[name=mkyyCancelBtn]'() {
+    'click button[name=mkyyCancelBtn]'(evt, tmpl) {
         cancelCheckBox('mkyy');
+        seltAtwrkSetList();
+        tmpl.selectOrgAtwrk();
     },
-    'click button[name=style1CancelBtn]'() {
+    'click button[name=style1CancelBtn]'(evt, tmpl) {
         cancelCheckBox('style1');
+        seltAtwrkSetList();
+        tmpl.selectOrgAtwrk();
     },
-    'click button[name=style2CancelBtn]'() {
+    'click button[name=style2CancelBtn]'(evt, tmpl) {
         cancelCheckBox('style2');
+        seltAtwrkSetList();
+        tmpl.selectOrgAtwrk();
     },
-    'click button[name=materialCancelBtn]'() {
+    'click button[name=materialCancelBtn]'(evt, tmpl) {
         cancelCheckBox('material');
+        seltAtwrkSetList();
+        tmpl.selectOrgAtwrk();
     },
     // 정렬 이벤트
     'click button[name=sortList]'(evt, tmpl) {
@@ -75,36 +120,8 @@ Template.originalAtwrk.events({
     },
     // 필터 이벤트
     'change input[name=filterChk]'(evt, tmpl) {
-        var chked = $('input[name=filterChk]:checked');
-        var dataList = [];
-        var beforKind = '';
-        var queryData = {};
-
-        for(var i=0; i < chked.length; i++) {
-            var splitVal = chked[i].value.split('-');
-            var kind = splitVal[0];
-            var code = splitVal[1];
-            var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
-
-            if(beforKind != kind && beforKind != '') {
-                queryData[beforKind] = dataList;
-                dataList = [];
-            }
-
-            dataList.push(codeData);
-
-            beforKind = kind;
-
-            if(i === (chked.length -1)) queryData[beforKind] = dataList;
-        }
-
-        filters.set(queryData);
-
-        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
-
-        setQuery();
-
-        tmpl.selectOrgAtwrk();        
+        seltAtwrkSetList();
+        tmpl.selectOrgAtwrk();
     },
     // 페이지
     'click a[name=prev]'(evt, tmpl) {

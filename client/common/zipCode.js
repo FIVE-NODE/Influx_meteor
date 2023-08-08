@@ -52,9 +52,6 @@ function address(instance) {
             $('input[name=zipCode]').val(data.zonecode);
             $('input[name=address]').val(addr + ' ' + extraAddr);
 
-            console.log(data);
-            console.log(addr + ' ' + extraAddr);
-
             instance.data.addrs = data;
 
             // 커서를 상세주소 필드로 이동한다.

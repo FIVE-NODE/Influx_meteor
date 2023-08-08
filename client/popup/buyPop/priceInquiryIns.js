@@ -18,7 +18,7 @@ Template.priceInquiryIns.events({
             // 저장 데이터 셋팅
             var inquiryInsInfo = {
                 "_id" : Meteor.commonUtils.generateUUID(),
-                "cmmncID": userInfo._id,
+                "cmmncID": Meteor.userId(),
                 "nm": userInfo.nm === '' ? userInfo.nicNm : userInfo.nm,
                 "atwrkID": this._id,
                 "cmmncTp": '002',

@@ -1,6 +1,8 @@
 import './interestAtwrk.html';
 
 Template.interestAtwrk.onCreated(function() {
+    Meteor.subscribe('userData');
+
     uInfo = new ReactiveVar();
        
     atwrkList = new ReactiveVar();
@@ -9,18 +11,13 @@ Template.interestAtwrk.onCreated(function() {
 
     interList = new ReactiveVar([]);
 
-    
-    if(sessionStorage.getItem('art_dex') != undefined) {
-        Meteor.call('decrypt', sessionStorage.getItem('art_dex'), function(err, res) {
-            var userData = JSON.parse(res);
-            Meteor.call('selectMberForId', userData._id, function(err, res) {
-                uInfo.set(res);
-
-                sltInterestAtrk();
-            });
-
-        });
-    }
+    this.autorun(() => {
+        const userData = Meteor.user();
+        if(userData != undefined && uInfo.get() == undefined) {
+            uInfo.set(userData.profile.uInfos);
+            sltInterestAtrk();
+        }
+    });
 });
 
 function sltInterestAtrk()  {
@@ -58,8 +55,8 @@ Template.interestAtwrk.events({
                 
                 if(atwrkFlag == 'dtPrt') bothFlag = Object.keys(list[idx].ogPrt).length == 0 ? false : true;
                 else bothFlag = Object.keys(list[idx].dtPrt).length == 0 ? false : true;
-
-                Meteor.clientCommonUtils.goodBtnEvnt(sessionStorage.getItem('art_dex'), heartVal.get(), atwrkFlag, bothFlag);
+                
+                Meteor.clientCommonUtils.goodBtnEvnt(heartVal.get(), atwrkFlag, bothFlag);
             } else continue;
         }
 

@@ -1,4 +1,4 @@
-$(function(){
+$(document).ready(function(){
     gallerySlide();
     lnbFn();
     imgSwitch();
@@ -7,6 +7,7 @@ $(function(){
     dropDown();
     dealBox();
     datepickerFn();
+    tableSwiper();
 });
 
 var $win = $(window);
@@ -42,6 +43,9 @@ function imgSwitch(){
     $('.imgGroup-detail__favor').click(function() {
         $(this).toggleClass('is-click');
     });
+    $('a[name=aTagoodBtn]').click(function() {
+        $('.imgGroup-detail__favor').toggleClass('is-click');
+    });
 }
 
 function subTab(){
@@ -64,6 +68,16 @@ function productOthers(){
             nextEl: '.product-others .swiper-button-next',
             prevEl: '.product-others .swiper-button-prev',
         }
+    });
+}
+
+function tableSwiper(){
+    var tableSlide = new Swiper('.table-swiper', {
+        slidesPerGroup : 1,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
     });
 }
 

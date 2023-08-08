@@ -1,6 +1,4 @@
 <template name="userCart">
-    <script type="text/javascript" src="/libs/common.js"></script>
-    <script type="text/javascript" src="/libs/sub.js"></script>
     <section class="container">
         <div class="content">
             <div class="content__inner">
@@ -11,56 +9,66 @@
                                 <div class="form-wrap ml-10">
                                     <div class="form-block form-row">
                                         <div class="form-check">
-                                            <input type="checkbox" name="" id="check-basket--all">
+                                            <input type="checkbox" checked="true" name="seltAll" id="check-basket--all">
                                             <label for="check-basket--all">모두선택</label>
                                         </div>
-                                        <button type="button">선택삭제</button>
+                                        <button type="button" name="seltCancel" >선택삭제</button>
                                     </div>
                                 </div>
-
                                 {{#each glryList}}
                                     <div class="basket-item">
                                         <p class="basket-item__tit">{{name}}</p>
                                         {{#each atwrkList}}
-                                            {{#if glryNmChk ../name glry.glryNm}}
-                                                <div class="basket-item__cont">
+                                            {{#if glryIdChk ../bsnsID atwrkInfo.glry.bsnsID}}
+                                                <div class="basket-item__cont" >
                                                     <div class="form-wrap">
                                                         <div class="form-check">
-                                                            <input type="checkbox" name="" id="">
+                                                            <input type="checkbox" checked="true" name="seltPro" id="CART-{{@index}}">
                                                         </div>
                                                     </div>
                                                     <div class="basket-item-detail">
                                                         <span class="basket-item-detail__img">
-                                                            <img src="/image/sub/img-basket__item01.png" alt="">
+                                                            <img class="selling-img" src="{{selectMainImage atwrkInfo}}" alt="">
                                                         </span>
                                                         <span class="basket-item-detail__txt">
-                                                            <strong>[갤러리이름] 안경쓴여인 POP!! / 120X70cm 원목 액자</strong>
-                                                            <em>일반택배</em>
+                                                            {{#if flagChk}}
+                                                                <strong>[{{../name}}] {{atwrkInfo.ogPrt.atwrkNm}} / {{atwrkInfo.ogPrt.wSize}}x{{atwrkInfo.ogPrt.hSize}}</strong>
+                                                                <em>원화택배는 상담사에게 문의 주세요</em>
+                                                            {{else}}    
+                                                                <strong>[{{../name}}] {{atwrkInfo.dtPrt.atwrkNm}} / {{option.size}} {{option.frame}}</strong>
+                                                                <em>일반택배</em>
+                                                            {{/if}}
                                                         </span>
                                                     </div>
-                                                    <button type="button" class="basket-item__close">
+                                                    <button type="button" name="delProduct" id="DEL-{{@index}}" class="basket-item__close">
                                                         <img src="/image/sub/icon/icon-close--gray.svg" alt="">
                                                     </button>
                                                     <div class="basket-item__priceCount">
-                                                        <div class="form-wrap">
-                                                            <div class="form-select form-select-custom">
-                                                                <button type="button" class="custom-select__tit">1</button>
-                                                                <ul class="custom-select__options" style="display: none;">
-                                                                    <li class="is-active"><button type="button">1</button></li>
-                                                                    <li><button type="button">2</button></li>
-                                                                </ul>
+                                                        {{#if flagChk}}
+                                                        {{else}}
+                                                            <div class="form-wrap">
+                                                                <div class="form-select form-select-custom" name="{{atwrkFlag}}_{{atwrkInfo._id}}">
+                                                                    <button type="button" name="MAINCNT_{{@index}}_{{atwrkInfo._id}}" class="custom-select__tit">{{cnt}}</button>
+                                                                    <ul class="custom-select__options" name="UL_{{@index}}_{{atwrkInfo._id}}" style="display: none;">
+                                                                        {{#each maxDtpCnt}}
+                                                                            <li class="{{active}}"><button type="button" name="chgCnt">{{number}}</button></li>
+                                                                        {{/each}}
+                                                                    </ul>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <p class="basket-item__priceCount__txt">
-                                                            150,000 원
-                                                        </p>
+                                                        {{/if}}
+                                                        {{#if flagChk}}
+                                                            <p class="basket-item__priceCount__txt">{{commaPric atwrkInfo.ogPrt.pric}} 원</p>
+                                                        {{else}}
+                                                            <p class="basket-item__priceCount__txt">{{dtpPrice}} 원</p>
+                                                        {{/if}}
                                                     </div>
-                                                    <button type="button" class="basket-item__instant">바로 구매하기</button>
+                                                    <button type="button" name="dirBuy" id="DIR_{{@index}}_{{atwrkInfo._id}}" class="basket-item__instant">바로 구매하기</button>
                                                 </div>
                                             {{/if}}
                                         {{/each}}
                                         <p class="basket-item__deliveryPrice">
-                                            배송지 6,000원
+                                            배송비 {{commaPric delivFee}}원 <span class="addPricUserCart">{{ogPlus}}</span>
                                         </p>
                                     </div>
                                 {{/each}}
@@ -68,17 +76,19 @@
                             <div class="basket-price">
                                 <div class="basket-price__box">
                                     <dl class="basket-price__box__dl">
+                                        {{#with approVal}}
                                         <dt>총 상품금액</dt>
-                                        <dd>200,0000원</dd>
+                                        <dd>{{commaPric proDuctPric}} 원</dd>
                                         <dt>총 배송비 </dt>
-                                        <dd>+20,000원</dd>
+                                        <dd>+ {{deliv}} 원</dd>
                                         <dt>총 활인금액</dt>
-                                        <dd>-10,000원</dd>
+                                        <dd>- {{sale}} 원</dd>
                                         <dt>결재금액</dt>
-                                        <dd>210,000원</dd>
+                                        <dd>{{commaPric aprValPric}}원</dd>
+                                        {{/with}}
                                     </dl>
                                 </div>
-                                <button onclick="location.href='/approval'" type="button" class="btn btn--blue">2개 상품 구매하기</button>
+                                <button name="seltBuyBtn" type="button" class="btn btn--blue">{{proCnt}}개 상품 구매하기</button>
                             </div>
                         </div>
                     </div>
@@ -86,4 +96,28 @@
             </div>
         </div>
     </section>
+    <div class="popup-layout" id="confirm">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:347px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit"></p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont">
+                    <p class=" mt-30 font-14 fontW-b color--txt ta-c">정말 삭제 하시겠습니까?</p>
+                    <div class="btn-wrap d-flex justify-center mt-40">
+                        <button type="button" class="btn btn--white btn--round width--170 height-40 font-pre popup-close">취   소</button>
+                        <button type="button" name="delete" class="btn btn--blue btn--round width--170 height-40 ml-20 font-pre">삭  제</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{> utilsPopUp popMsg}}
+    {{#if renderFlag}}
+        <script type="text/javascript" src="/libs/common.js"></script>
+        <script type="text/javascript" src="/libs/sub.js"></script>
+    {{/if}}
 </template>

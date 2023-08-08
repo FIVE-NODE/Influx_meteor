@@ -16,36 +16,82 @@ function selectQuickMu() {
 }
 
 Template.header.onCreated(function() {
-    this.subscribe("header");
-
     menuFlag = new ReactiveVar(false);
     menuKind = new ReactiveVar('');
 
     quickMenu = new ReactiveVar();
 
-    logedInChk = new ReactiveVar(true);
-
-    uInfo = new ReactiveVar();
-
-    var logedIn = JSON.parse(sessionStorage.getItem('art_session_index'));
-    if(logedIn != null) logedInChk.set(logedIn.index === 0 ? true : false);
-
-    Meteor.commonUtils.uInfo(uInfo);
-
     selectQuickMu();
 });
 
 Template.header.onRendered(function() {
-    var logedIn = JSON.parse(sessionStorage.getItem('art_session_index'));
-    if(logedIn != null) logedInChk.set(logedIn.index === 0 ? true : false);
 });
 
+// 팝업 메시지 띄우기
+function messagePopup(message) {
+    popUpMessage.set(message);
+    $('#utilsPopUp').addClass('is-open');
+}
+
 Template.header.events({
-    'click button[name=artMenu]'(evt, tmpl) {
+    'click button[name=headerBtnMenu]'(evt, tmpl) {
+        var link = $(evt.currentTarget).val();
+
+        var logedIn = Meteor.user();
+
+        if(logedIn != null && logedIn != undefined) {
+            if(link != '') FlowRouter.go(link);
+            else messagePopup({message : '화면 준비중 입니다.'});
+        }
+        else messagePopup({message : '로그인 후 이용해주세요'});
+    },
+    'click a[name=quickMu]'(evt, tmpl) {
+        var kind = $(evt.currentTarget).children('h2').text();
+        var queryData = {};
+        if(kind == '유화') {
+            queryData.MATERIAL = ['001'];
+            FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+        } else if(kind =='카툰/일러스트') {
+            queryData.BASE = ['003'];
+            FlowRouter.go('/digitalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+        } else if(kind == '20만원 미만(디지털)') {
+            queryData.ARTWORK_PRICE_DTPRT = [{
+                code    : '004',
+                min     : 100000,
+                max     : 300000,
+                name    : '10~30 만원'
+            }];
+            FlowRouter.go('/digitalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+        } else {
+            queryData.ARTWORK_PRICE_OGPRT = [{
+                code    : '004',
+                min     : 5000000,
+                max     : 10000000,
+                name    : "500~1,000 만원"
+            }];
+            FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+        }
         
     },
-    'click button[name=galleryMenu]'(evt, tmpl) {
+    'click a[name=glryMenu]'(evt, tmpl) {
+        var link = $(evt.currentTarget).attr('id');
+
+        var logedIn = Meteor.userId();
         
+        if(logedIn != undefined) {
+            if(link != '') FlowRouter.go(link);
+            else messagePopup({message : '화면 준비중 입니다.'});
+        } else messagePopup({message : '로그인 후 이용해주세요'});
+    },
+    'click a[name=userMenu]'(evt, tmpl) {
+        var link = $(evt.currentTarget).attr('id');
+
+        var logedIn = Meteor.userId();
+        
+        if(logedIn != undefined) {
+            if(link != '') FlowRouter.go(link);
+            else messagePopup({message : '화면 준비중 입니다.'});
+        } else messagePopup({message : '로그인 후 이용해주세요'});
     },
     'click button[name=artistMenu]'(evt, tmpl) {
         
@@ -55,33 +101,72 @@ Template.header.events({
     'click a'(evt, tmpl) {
         // setTimeout(function(){
         //     location.reload();
-        // }, 50);
-        
+        // }, 100);
     }
 });
 
 Template.header.helpers({
-    logedInChk() {
-        return logedInChk.get();
-    },
     quickMu() {
         return quickMenu.get();
     },
     midHeader() {
         var res = false;
-        var currentPageName = FlowRouter.getRouteName();;
+        var currentPageName = FlowRouter.getRouteName();
         if(currentPageName == 'interestAtwrk' || currentPageName == 'userCart' 
-        || currentPageName == 'purchaseList' || currentPageName == 'msgManage') res = true;
+        || currentPageName == 'purchaseList' || currentPageName == 'msgManage'
+        || currentPageName == 'myPageSelling' || currentPageName == 'ogAtwrkCr'
+        || currentPageName == 'eventsCrList' || currentPageName == 'bMsgManage'
+        || currentPageName == 'inventoryMode'|| currentPageName == 'glryAtwrks'
+        || currentPageName == 'myCollection') res = true;
         return res;
     },
-    userInfo() {
-        if(uInfo.get() != undefined) {
-            console.log(uInfo.get());
-            return uInfo.get();
+    glryMidHeaderChk() {
+        // 갤러리 용 헤더 메뉴
+        var res = false;
+        var currentPageName = FlowRouter.getRouteName();
+        if(currentPageName == 'myPageSelling' || currentPageName == 'ogAtwrkCr'
+        || currentPageName == 'eventsCrList' || currentPageName == 'bMsgManage'
+        || currentPageName == 'inventoryMode' || currentPageName == 'glryAtwrks') res = true;
+
+        return res;
+    },
+    nmChk() {
+        if(Meteor.user() != undefined) {
+            var uInfos = Meteor.user().profile.uInfos;
+            return uInfos.nm == '' ? uInfos.nicNm : nm;
         }
     },
-    nmChk(nm) {
-        return nm == '' ? uInfo.get().nicNm : nm;
+    quickChk() {
+        // 최상단 헤더 
+        var res = true;
+        var currentPageName = FlowRouter.getRouteName();
+        if(currentPageName == 'pickCreate') res = false;
+        return res;
+    },
+    quickMenuChk() {
+        // 퀵메뉴 체크
+        var res = true;
+        var currentPageName = FlowRouter.getRouteName();
+        if(currentPageName == 'myPageSelling' || currentPageName == 'ogAtwrkCr'
+            || currentPageName == 'eventsCrList' || currentPageName == 'bMsgManage'
+            || currentPageName == 'inventoryMode'|| currentPageName == 'glryAtwrks') res = false;
+        return res;
+    },
+    glryInfo() {
+        if(Meteor.user() != undefined) {
+            return Meteor.user().profile.uInfos;
+        }
+    },
+    userChk() {
+        if(Meteor.user() != undefined) {
+            var bsnsNm = Meteor.user().profile.uInfos.bsnsNm;
+            return bsnsNm == undefined;
+        }
+    },
+    pageChk(page) {
+        var currentPageName = FlowRouter.getRouteName();
+        if(page === currentPageName) return 'is-active';
+        else return '';
     }
 });
 

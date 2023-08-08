@@ -1,0 +1,252 @@
+<template name="ogAtwrkCr">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <h3 class="subTit border-top--0">
+                    <span class="subTit__inner">
+                        원화 작품 등록
+                    </span>
+                </h3>
+                <div class="sub-content">
+                    <div class="sub-content__write">
+                        <div class="writeInfo-wrap">
+                            <dl class="writeInfo__dl mt-40">
+                                <dt>작품등록</dt>
+                                <dd>
+                                    <div class="form-wrap d-flex align-center">
+                                        <div class="form-radio">
+                                            <input type="radio" name="check-writeInfo--productAdmit" id="check-writeInfo--productAdmit--01" />
+                                            <label for="check-writeInfo--productAdmit--01">원화</label>
+                                        </div>
+                                        <div class="form-radio">
+                                            <input type="radio" name="check-writeInfo--productAdmit" id="check-writeInfo--productAdmit--02" />
+                                            <label for="check-writeInfo--productAdmit--02">디지털 판화</label>
+                                        </div>
+                                        <div class="form-radio">
+                                            <input type="radio" name="check-writeInfo--productAdmit" id="check-writeInfo--productAdmit--03" />
+                                            <label for="check-writeInfo--productAdmit--03">원화+디지털판화</label>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>작품사진 올리기</dt>
+                                <dd>
+                                    <div class="writeInfo__uploadProduct">
+                                        <p class="font-11 fontW-b color--gray">최대 이미지 사이즈: 30MB (JPG, PNG)</p>
+                                        <button type="button" class="mt-30">작품 올리기</button>
+                                    </div>
+                                </dd>
+                                <dt>디테일사진 올리기</dt>
+                                <dd>
+                                    <div class="writeInfo__uploadPic">
+                                        <div class="writeInfo-list">
+                                            <div class="writeInfo-item">
+                                                <button type="button">사진 올리기</button>
+                                            </div>
+                                            <div class="writeInfo-item">
+                                                <button type="button">사진 올리기</button>
+                                            </div>
+                                            <div class="writeInfo-item">
+                                                <button type="button">사진 올리기</button>
+                                            </div>
+                                            <div class="writeInfo-item">
+                                                <button type="button">사진 올리기</button>
+                                            </div>
+                                            <div class="writeInfo-item">
+                                                <button type="button">사진 올리기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>작가 사진(선택)</dt>
+                                <dd>
+                                    <div class="writeInfo__uploadAu">
+                                        <div class="writeInfo-list">
+                                            <div class="writeInfo-item">
+                                                <p class="txt">이미지를 드래그하여<br/>업로드 할수 있습니다</p>
+                                                <button type="button">사진 올리기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>작가 이름</dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-input width--420">
+                                            <input type="text" />
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>작가  소개</dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-textarea width--420">
+                                            <textarea name="" id="" cols="30" rows="10" style="height:10rem"></textarea>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>작가 추가 정보</dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-textarea width--420">
+                                            <textarea name="" id="" cols="30" rows="10" style="height:10rem"></textarea>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>작품제목</dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-input width--420">
+                                            <input type="text" />
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>제작년도 </dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-input width--420">
+                                            <input type="text" />
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>작품크기</dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-row">
+                                            <div class="form-input width--120">
+                                                <input type="text" placeholder="높이(height)" />
+                                            </div>
+                                            <span class="ml-5 mr-5 font-12 fontW-b color--gray">X</span>
+                                            <div class="form-input width--120">
+                                                <input type="text" placeholder="너비(width) " />
+                                            </div>
+                                            <span class="ml-5 mr-5 font-12 fontW-b color--gray">X</span>
+                                            <div class="form-input width--120">
+                                                <input type="text" placeholder="깊이(depth)(선택)" />
+                                            </div>
+                                            <span class="ml-5 mr-5 font-12 fontW-b color--txt">cm</span>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>미디엄</dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-select form-select-custom  width--315">
+                                            <button type="button" class="custom-select__tit">미디엄</button>
+                                            <ul class="custom-select__options" style="display: none;">
+                                                <li class="is-active"><button type="button">미디엄</button></li>
+                                                <li><button type="button">미디엄1 </button></li>
+                                                <li><button type="button">미디엄2 </button></li>
+                                            </ul>
+                                        </div>
+                                    </div>                                        
+                                </dd>
+                                <dt>재   료 </dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-select form-select-custom  width--315">
+                                            <button type="button" class="custom-select__tit">재료</button>
+                                            <ul class="custom-select__options" style="display: none;">
+                                                <li class="is-active"><button type="button">재료</button></li>
+                                                <li><button type="button">재료1 </button></li>
+                                                <li><button type="button">재료2 </button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>스타일</dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-select form-select-custom  width--315">
+                                            <button type="button" class="custom-select__tit">스타일</button>
+                                            <ul class="custom-select__options" style="display: none;">
+                                                <li class="is-active"><button type="button">스타일</button></li>
+                                                <li><button type="button">스타일1 </button></li>
+                                                <li><button type="button">스타일2 </button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>가격(원화)</dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-input input-writeInfo--price width--196">
+                                            <input type="text" />
+                                            <label for="">원</label>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt class="disable">
+                                    가격(디지털판화)
+                                </dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-input input-writeInfo--price width--196 disable">
+                                            <input type="text" disabled />
+                                            <label for="">원</label>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt style="align-items:flex-start">보증서 / 출처 </dt>
+                                <dd>
+                                    <div class="form-wrap form-writeInfo--insurance">
+                                        <div class="form-block form-row flex-wrap">
+                                            <p class="w-100 font-12 fontW-500">보증서 여부 </p>
+                                            <div class="form-radio">
+                                                <label for="check-writeInfo--hasInsuranceY" class="mr-10">예</label>
+                                                <input type="radio" name="check-writeInfo--hasInsurance" id="check-writeInfo--hasInsuranceY">
+                                            </div>
+                                            <div class="form-radio">
+                                                <label for="check-writeInfo--hasInsuranceN" class="mr-10">아니오</label>
+                                                <input type="radio" name="check-writeInfo--hasInsurance" id="check-writeInfo--hasInsuranceN">
+                                            </div>
+                                        </div>
+                                        <div class="form-block form-row flex-wrap">
+                                            <p class="w-100 font-12 fontW-500">보증서 발급 가능여부 (보증서 없을시)</p>
+                                            <div class="form-radio">
+                                                <label for="check-writeInfo--admitInsuranceY" class="mr-10">예</label>
+                                                <input type="radio" name="check-writeInfo--admitInsurance" id="check-writeInfo--admitInsuranceY">
+                                            </div>
+                                            <div class="form-radio">
+                                                <label for="check-writeInfo--admitInsuranceN" class="mr-10">아니오</label>
+                                                <input type="radio" name="check-writeInfo--admitInsurance" id="check-writeInfo--admitInsuranceN">
+                                            </div>
+                                        </div>
+                                        <div class="form-block form-row flex-wrap">
+                                            <p class="w-100 font-12 fontW-500">작품이 실린  전시  카다로그 여부 </p>
+                                            <div class="form-radio">
+                                                <label for="check-writeInfo--catalogY" class="mr-10">예</label>
+                                                <input type="radio" name="check-writeInfo--catalog" id="check-writeInfo--catalogY">
+                                            </div>
+                                            <div class="form-radio">
+                                                <label for="check-writeInfo--catalogN" class="mr-10">아니오</label>
+                                                <input type="radio" name="check-writeInfo--catalog" id="check-writeInfo--catalogN">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt style="text-align:center;line-height:1.5">컨디션 및 특이점<br/>(선택)</dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-textarea width--420">
+                                            <textarea name="" id="" cols="30" rows="10" style="height:10rem"></textarea>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <div class="btn-wrap d-flex justify-center mt-30 mb-100">
+                                <button type="button" class="btn btn--white btn--round width--170 height-40 font-pre">취     소</button>
+                                <button type="button" class="btn btn--blue btn--round width--170 height-40 ml-20 font-pre">판     매</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /container -->
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+</template>

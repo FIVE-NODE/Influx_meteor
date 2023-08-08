@@ -1,0 +1,214 @@
+<template name="eventsCrDetail">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content">
+                    <div class="sub-content__mypage">
+                        <div class="event-wrap">
+                            <div class="mypage-subtit border-0">
+                                <div class="mypage-subtit__inner">
+                                    <ul class="bradCrumb bradCrumb-sub" style="margin-top:0;">
+                                        <li>MY페이지</li>
+                                        <li>전시 및 행사 등록</li>
+                                        <li>전시 및 작품등록</li>
+                                    </ul>
+                                    <p>전시 및 작품  등록</p>
+                                    <div class="btn-wrap ml-auto">
+                                        <button type="button" name="cancel" class="btn btn--round btn--white width--90 color-blue">취   소</button>
+                                        <button type="button" name="saveInfo" class="btn btn--round btn--white width--90 color-blue">저   장</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-info tab-info--write width--1315 mx-auto border-0">
+                                <div class="d-flex">
+                                    <dl class="tab-info__dl col-11">
+                                        <dt>대표 사진 올리기</dt>
+                                        <dd>
+                                            <div class="upload-box" style="background-size: contain; background-image: url(); background-repeat: no-repeat;
+                                                    background-position: center center;">
+                                                <p class="upload-box__txt">
+                                                    이미지를 드래그하여<br>업로드 할수 있습니다
+                                                </p>
+                                                <input id="upload-input" name="img-upload" type="file" style="display:none" />
+                                                <button name="upload-btn" type="button" class="upload-box__btn">사진 올리기</button>
+                                            </div>
+                                        </dd>
+                                        <dt>전시유형</dt>
+                                        <dd>
+                                            <div class="form-wrap form-kind">
+                                                <div class="form-row">
+                                                    {{#each kinds}}
+                                                        {{#if etcChk code}}
+                                                            <div class="form-radio form-row">
+                                                                <input type="radio" name="check-eventKind" value="{{code}}" id="check-eventKind--{{code}}" />
+                                                                <label for="check-eventKind--{{code}}">{{name}}</label>
+                                                                <div class="form-input">
+                                                                    <input type="text" name="etcInput" class="ml-10 width--107"  disabled style="height:2.3rem;" />
+                                                                </div>
+                                                            </div>
+                                                        {{else}}
+                                                            <div class="form-radio">
+                                                                <input type="radio" value="{{code}}" name="check-eventKind" id="check-eventKind--{{code}}" />
+                                                                <label for="check-eventKind--{{code}}">{{name}}</label>
+                                                            </div>
+                                                        {{/if}}
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                        </dd>
+                                        <dt class="font-pre">기        간</dt>
+                                        <dd>달력</dd>
+                                        <dt class="font-pre">제        목</dt>
+                                        <dd>
+                                            <div class="form-wrap">
+                                                <div class="form-input">
+                                                    <input type="text" name="title" class="width--650">
+                                                </div>
+                                            </div>
+                                        </dd>
+                                        <dt class="font-pre">설        명</dt>
+                                        <dd>
+                                            <div class="form-wrap">
+                                                <div class="form-textarea">
+                                                    <textarea name="desc" id="" class="width--650 p-15"></textarea>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                        <dt class="font-pre">세부정보</dt>
+                                        <dd>
+                                            <div class="form-wrap">
+                                                <div class="form-input">
+                                                    <input type="text" name="areas" class="width--650" placeholder="전시 장소 및 오프닝 일시" />
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="table-wrap width--1680 mx-auto mt-25">
+                                <div class="table-cpat d-flex align-center">
+                                    <div class="btn-wrap ml-auto">
+                                        <button type="button" class="btn btn--round btn--sea-white height-36 font-14 ">전시 작품등록</button>
+                                    </div>
+                                </div>
+                                <table class="table-basic table--col table--list table-basic--curator__list mt-20">
+                                    <caption></caption>
+                                    <colgroup>
+                                        <col style="width:5%">
+                                        <col style="width:10%">
+                                        <col style="width:10%">
+                                        <col style="width:auto">
+                                        <col style="width:8%">
+                                        <col style="width:10%">
+                                        <col style="width:8%">
+                                        <col style="width:8%">
+                                        <col style="width:8%">
+                                        <col style="width:5%">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">
+                                                <div class="form-wrap">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="" id="" class="form-check__input form-check--all">
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col">작품 사진 </th>
+                                            <th scope="col">아티스트</th>
+                                            <th scope="col">설  명 </th>
+                                            <th scope="col">작품년도</th>
+                                            <th scope="col">작품가격 (원)</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col">삭 제</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="form-wrap">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="" id="" class="form-check__input">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="img-wrap">
+                                                    <img src="/image/sub/img-curator-list01.png" alt="">
+                                                </span>
+                                            </td>
+                                            <td>백 남 준</td>
+                                            <td>색의 변주곡, 900 x 350,  캔버스위에 유화</td>
+                                            <td>1998</td>
+                                            <td>32,000,000</td>
+                                            <td>
+                                                <span class="font-14 fontW-b color--sea">판 매 중 </span>
+                                            </td>
+                                            <td>
+                                                <div class="form-wrap">
+                                                    <div class="form-check">
+                                                        <label class="switch">
+                                                            <input type="checkbox" name="" id="">
+                                                            <span class="check-slide check-slide--round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn--round btn--white-blue">판매등록/수정</button>
+                                            </td>
+                                            <td>
+                                                <button type="button">
+                                                    <img src="/image/sub/icon/icon-delete.png" alt="">
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="d-flex mt-20">
+                                    <div class="form-wrap width--180 ml-auto">
+                                        <div class="form-select form-select-custom">
+                                            <button type="button" class="custom-select__tit height-30 pl-10">   아티스트 이름  (ㄱ   ㅎ)</button>
+                                            <ul class="custom-select__options" style="display: none;top:3.1rem;">
+                                                <li class="is-active"><button type="button">   아티스트 이름  (ㄱ   ㅎ)</button></li>
+                                                <li><button type="button">   아티스트 이름  (ㄱ   ㅎ) </button></li>
+                                                <li><button type="button">   1 </button></li>
+                                                <li><button type="button">   2 </button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pagination-wrap mb-40 d-flex pos-rel">
+                                    <div class="btn-wrap d-flex">
+                                        <button type="button" class="btn btn-cancel btn--round border-1 ml-20">
+                                            일괄 선택 취소
+                                        </button>
+                                    </div>
+                                    <!-- <div class="pagination pos-abs pos-center">
+                                        <a href="" class="link-prev"></a>
+                                        <a href="" class="is-active">1</a>
+                                        <a href="">2</a>
+                                        <a href="">3</a>
+                                        <a href="">4</a>
+                                        <a href="">5</a>
+                                        <a href="" class="link-next"></a>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /container -->
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+    <!-- 팝업 템플릿 -->
+    {{> utilsPopUp popup}}
+</template>

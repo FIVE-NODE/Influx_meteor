@@ -88,7 +88,7 @@
                                 {{#each atwrk}}
                                     <div class="swiper-slide">
                                         <div class="btn-wrap btn-slide--check">
-                                            <button name="shBasket" type="button" title="장바구니 넣기">
+                                            <button name="shBasket" type="button" value="ogPrt" title="장바구니 넣기">
                                                 <img src="/image/main/icon/icon-basket.png" alt="">
                                             </button>
                                             <button name="goodBtn" type="button" title="찜하기">
@@ -126,7 +126,7 @@
                                 {{#each dtpHome}}
                                     <div class="swiper-slide">
                                         <div class="btn-wrap btn-slide--check">
-                                            <button name="shBasket" type="button" title="장바구니 넣기">
+                                            <button name="shBasket" type="button" value="dtPrt" title="장바구니 넣기">
                                                 <img src="/image/main/icon/icon-basket.png" alt="">
                                             </button>
                                             <button value="dtPrt" name="goodBtn"  type="button" title="찜하기">
@@ -163,7 +163,7 @@
                                 {{#each ogHome}}
                                     <div class="swiper-slide">
                                         <div class="btn-wrap btn-slide--check">
-                                            <button name="shBasket" type="button" title="장바구니 넣기">
+                                            <button name="shBasket" type="button" value="ogPrt" title="장바구니 넣기">
                                                 <img src="/image/main/icon/icon-basket.png" alt="">
                                             </button>
                                             <button name="goodBtn" type="button" title="찜하기">
@@ -249,4 +249,5 @@
     <footer class="footer">
         {{> footer}}
     </footer>
+    {{> utilsPopUp popup}}
 </template>

@@ -1,23 +1,17 @@
 import { Meteor } from 'meteor/meteor';
-import { SnsMber, Mber, Atwrk, Quick } from '../lib/collections.js';
+import { Atwrk, Quick, Inventory } from '../lib/collections.js';
 
 // 좋아요, 구매하기, 장바구니, 소식받기, 조회수 등 공통으로 사용가능한 로직
 
 Meteor.methods({
     // 좋아요 눌럿던 사용자 인지 체크
-    likeChkMber: function(userFlag, userId, atwrkId, atwrkFlag, bothFlag) {
+    likeChkMber: function(atwrkId, atwrkFlag) {
         try{
             let res = {};
+            let userId = Meteor.userId();
 
-            // 유저 확인 MBER : 일반회원, SNSMBER : SNS회원
-            if(userFlag === 'MBER') {
-                // 원화, 디지털 판화 둘다 존재하는지 확인
-                if(atwrkFlag === 'dtPrt') res = Mber.findOne({ _id : userId, dtPrtGood : atwrkId})
-                else res =  Mber.findOne({ _id : userId,  ogPrtGood : atwrkId });
-            } else {
-                if(atwrkFlag === 'dtPrt') res = SnsMber.findOne({ _id : userId, dtPrtGood : atwrkId});
-                else res =  SnsMber.findOne({ _id : userId,  ogPrtGood : atwrkId });
-            }
+            if(atwrkFlag === 'dtPrt') res = Meteor.users.findOne({_id : userId, 'profile.uInfos.dtPrtGood' : atwrkId});
+            else res = Meteor.users.findOne({_id : userId, 'profile.uInfos.ogPrtGood' : atwrkId});
 
             return res;
         } catch(e) {
@@ -29,26 +23,17 @@ Meteor.methods({
         }
     },
     // 좋아요 추가
-    insertGood: function(userFlag, userId, atwrkId, atwrkFlag, bothFlag) {
+    insertGood: function(atwrkId, atwrkFlag, bothFlag) {
         try {
             let res = {};
+            let userId = Meteor.userId();
 
-            if(userFlag === 'MBER') {
-                if(bothFlag) {
-                    Mber.update({ _id : userId }, { $addToSet : { dtPrtGood : atwrkId }});
-                    Mber.update({ _id : userId }, { $addToSet : { ogPrtGood : atwrkId }});
-                } else {
-                    if(atwrkFlag === 'dtPrt') res = Mber.update({ _id : userId }, { $addToSet : { dtPrtGood : atwrkId }});
-                    else res = Mber.update({ _id : userId }, { $addToSet : { ogPrtGood : atwrkId }});
-                }
+            if(bothFlag) {
+                Meteor.users.update({ _id : userId }, { $addToSet : { 'profile.uInfos.dtPrtGood' : atwrkId }});
+                Meteor.users.update({ _id : userId }, { $addToSet : { 'profile.uInfos.ogPrtGood' : atwrkId }});
             } else {
-                if(bothFlag) {
-                    SnsMber.update({ _id : userId }, { $addToSet : { dtPrtGood : atwrkId }});
-                    SnsMber.update({ _id : userId }, { $addToSet : { ogPrtGood : atwrkId }});
-                } else {
-                    if(atwrkFlag === 'dtPrt') res = SnsMber.update({ _id : userId }, { $addToSet : { dtPrtGood : atwrkId }});
-                    else res = SnsMber.update({ _id : userId }, { $addToSet : { ogPrtGood : atwrkId }});
-                }
+                if(atwrkFlag === 'dtPrt') res = Meteor.users.update({ _id : userId }, { $addToSet : { 'profile.uInfos.dtPrtGood' : atwrkId }});
+                else res = Meteor.users.update({ _id : userId }, { $addToSet : { 'profile.uInfos.ogPrtGood' : atwrkId }});
             }
 
             return res;
@@ -61,26 +46,17 @@ Meteor.methods({
         }
     },
     // 사용자가 좋아요 취소할경우 지우기
-    removeGood: function(userFlag, userId, atwrkId, atwrkFlag, bothFlag) {
+    removeGood: function(atwrkId, atwrkFlag, bothFlag) {
         try {
             let res = {};
+            let userId = Meteor.userId();
 
-            if(userFlag === 'MBER') {
-                if(bothFlag) {
-                    Mber.update({ _id : userId }, { $pull : { dtPrtGood : atwrkId }});
-                    Mber.update({ _id : userId }, { $pull : { ogPrtGood : atwrkId }});
-                } else {
-                    if(atwrkFlag === 'dtPrt') res = Mber.update({ _id : userId }, { $pull : { dtPrtGood : atwrkId }});
-                    else res = Mber.update({ _id : userId }, { $pull : { ogPrtGood : atwrkId }});
-                }
+            if(bothFlag) {
+                Meteor.users.update({ _id : userId }, { $pull : { 'profile.uInfos.dtPrtGood' : atwrkId }});
+                Meteor.users.update({ _id : userId }, { $pull : { 'profile.uInfos.ogPrtGood' : atwrkId }});
             } else {
-                if(bothFlag) {
-                    SnsMber.update({ _id : userId }, { $pull : { dtPrtGood : atwrkId }});
-                    SnsMber.update({ _id : userId }, { $pull : { ogPrtGood : atwrkId }});
-                } else {
-                    if(atwrkFlag === 'dtPrt') res = SnsMber.update({ _id : userId }, { $pull : { dtPrtGood : atwrkId }});
-                    else res = SnsMber.update({ _id : userId }, { $pull : { ogPrtGood : atwrkId }});
-                }
+                if(atwrkFlag === 'dtPrt') res = Meteor.users.update({ _id : userId }, { $pull : { 'profile.uInfos.dtPrtGood' : atwrkId }});
+                else res = Meteor.users.update({ _id : userId }, { $pull : { 'profile.uInfos.ogPrtGood' : atwrkId }});
             }
 
             return res;
@@ -138,7 +114,7 @@ Meteor.methods({
     },
     selectQuickMu: function() {
         try {
-            var res = Quick.find({}, {sort : { sortNo : 1 }}).fetch();
+            let res = Quick.find({}, {sort : { sortNo : 1 }}).fetch();
             
             return res;
         } catch(e) {
@@ -150,16 +126,23 @@ Meteor.methods({
         }
     },
     // 장바구니 추가
-    insertBasket: function(userFlag, userId, atwrkId) {
+    insertBasket: function(setData) {
         try {
-            var res = {};
-
-            if(userFlag === 'MBER') {
-                res =  Mber.update({ _id : userId }, { $addToSet : { cart : atwrkId }});
+            let res = {};
+            let userId = this.userId;
+            
+            if(Array.isArray(setData)) {
+                for(idx in setData) res =  Meteor.users.update(
+                    { _id : userId },
+                    { $addToSet : { 'profile.uInfos.cart' : setData[idx] }}
+                );
             } else {
-                res = SnsMber.update({ _id : userId }, { $addToSet : { cart : atwrkId }});
+                res =  Meteor.users.update(
+                    { _id : userId },
+                    { $addToSet : { 'profile.uInfos.cart' : setData }})
+                ;
             }
-
+        
             return res;
         } catch(e) {
             console.log('Error : ', e);
@@ -170,16 +153,13 @@ Meteor.methods({
         }
     },
     // 장바구니 삭제
-    removeBasket: function(userFlag, userId, atwrkId) {
+    removeBasket: function(query) {
         try {
-            var res = {};
-
-            if(userFlag === 'MBER') {
-                res =  Mber.update({ _id : userId }, { $pull : { atwrkId }});
-            } else {
-                res = SnsMber.update({ _id : userId }, { $pull : { atwrkId }});
-            }
-
+            let res = {};
+            let userId = this.userId;
+            
+            res =  Meteor.users.update({ _id : userId }, { $pull : { 'profile.uInfos.cart' : { $in : query }}});
+            
             return res
         } catch(e) {
             console.log('Error : ', e);
@@ -208,18 +188,14 @@ Meteor.methods({
         }
     },
     // 로그인 유저 - 조회수 올린 기록 확인
-    viewHeistory: function(userFlag, userId, atwrkId, atwrkFlag) {
+    viewHeistory: function(atwrkId, atwrkFlag) {
         try {
-            var res = {};
+            let res = {};
+            let userId = Meteor.userId();
 
-            if(userFlag === 'MBER') {
-                if(atwrkFlag === 'ogPrt') res = Mber.findOne({_id : userId, ogPrtView : atwrkId});
-                else  res =  Mber.findOne({_id : userId, dtPrtView : atwrkId});
-            } else {
-                if(atwrkFlag === 'ogPrt') res = SnsMber.findOne({_id : userId, ogPrtView : atwrkId});
-                else res = SnsMber.findOne({_id : userId, dtPrtView : atwrkId});
-            }
-
+            if(atwrkFlag === 'ogPrt') res = Meteor.users.findOne({_id : userId, 'profile.uInfos.ogPrtView' : atwrkId});
+            else  res =  Meteor.users.findOne({_id : userId, 'profile.uInfos.dtPrtView' : atwrkId});
+            
             return res;
         }  catch(e) {
             console.log('Error : ', e);
@@ -230,17 +206,69 @@ Meteor.methods({
         }
     },
     // 사용자 정보 조회 카운트에 작품ID 추가
-    insertViewCnt: function(userFlag, userId, atwrkId, atwrkFlag) {
+    insertViewCnt: function(atwrkId, atwrkFlag) {
         try {
-            var res = {};
+            let res = {};
+            let userId = Meteor.userId();
 
-            if(userFlag === 'MBER') {
-                if(atwrkFlag === 'ogPrt') res = Mber.update({ _id : userId }, { $addToSet : { ogPrtView : atwrkId } });
-                else  res =  Mber.update({ _id : userId }, { $addToSet : { dtPrtView : atwrkId } });
-            } else {
-                if(atwrkFlag === 'ogPrt') res = SnsMber.update({_id : userId }, { $addToSet : { ogPrtView : atwrkId } });
-                else res = SnsMber.update({ _id : userId }, { $addToSet : { dtPrtView : atwrkId } });
+            if(atwrkFlag === 'ogPrt') res =  Meteor.users.update({ _id : userId }, { $addToSet : { 'profile.uInfos.ogPrtView' : atwrkId } });
+            else  res =  Meteor.users.update({ _id : userId }, { $addToSet : { 'profile.uInfos.dtPrtView' : atwrkId } });
+
+            return res;
+        } catch(e) {
+            console.log('Error : ', e);
+            throw new Meteor.Error(
+            500,
+            '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+            );
+        }
+    },
+    // 인벤토리 모드 조회
+    seltInventoryMode: function(query, options) {
+        try {
+            let res = {};
+            
+            var bsnsid = { bsnsID : this.userId };
+
+            var kind = query.KIND != undefined ? query.KIND : {};
+            var og = [];
+            var dt = [];
+            if(query.KIND != undefined) {
+                for(i=0; i<kind.length; i++) {
+                    if(kind[i] == 'ogPrt') og.push('ogPrt');
+                    else if(kind[i] == 'dtPrt') dt.push('dtPrt');
+                }
             }
+            
+            if(og.length > 0 && dt.length == 0) kind = {'atstAtwrk.ogPric' : { $exists: true }};
+            else if(dt.length > 0 && og.length == 0) kind = {'atstAtwrk.dtPric' : { $exists: true }}
+            else kind = {};
+
+            var atst = query.ATST != undefined ?
+            { atstNm : { $in : query.ATST } } : {};
+
+            var metRias = query.MATERIAL != undefined ?
+            { 'atstAtwrk.metRias' : { $in : query.MATERIAL} } : {};
+            
+            var queryData = { $and : [ bsnsid, kind, atst, metRias ]};
+
+            res = Inventory.find(queryData).fetch();
+            
+            return res;
+        } catch(e) {
+            console.log('Error : ', e);
+            throw new Meteor.Error(
+            500,
+            '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+            );
+        }
+    },
+    // 인벤토리 모드 작품 삭제
+    delInventoryAtwrk: function(query) {
+        try {
+            let res = {};
+
+            res = Inventory.update({'glry.bsnsID' : this.userId}, { $pull : { 'atstInfo.atstAtwrk.atwrkID' : query.atwrkId } } );
 
             return res;
         } catch(e) {

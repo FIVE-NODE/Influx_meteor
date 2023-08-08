@@ -24,25 +24,17 @@ Template.bidAmtProcess.events({
         var atwrkId = this._id;
         var terms = $('input[name=term]:not(:checked)').length;
         if(terms === 0) {
-            Meteor.call('decrypt', sessionStorage.getItem('art_dex'), function(err, res) {
-                var userInfo = JSON.parse(res);
-                Meteor.call('insertAtwrkBid', userInfo._id, atwrkId, '', totalPric.get(), selectBidPrice.get(), function(err, res) {
-                    $('#bidAmtProcess').removeClass('is-open');
-                    messagePopup({message : '비딩 등록이 완료 되었습니다.'});
-                });
+            Meteor.call('insertAtwrkBid', Meteor.userId(), atwrkId, '', totalPric.get(), selectBidPrice.get(), function(err, res) {
+                $('#bidAmtProcess').removeClass('is-open');
+                messagePopup({message : '비딩 등록이 완료 되었습니다.'});
             });
-        } else {
-            messagePopup({message : '약관 동의는 필수 입니다.'});
-        }        
+        } else messagePopup({message : '약관 동의는 필수 입니다.'});
     },
     'click input[name=allChkTerm]'(evt, tmpl) {
         var chkList = $('input[name=term]');
 
-        if($('input[name=allChkTerm]').is(':checked')) {
-            chkList.prop('checked', true);
-        } else {
-            chkList.prop('checked', false);
-        }
+        if($('input[name=allChkTerm]').is(':checked')) chkList.prop('checked', true);
+        else chkList.prop('checked', false);
     }
 });
 

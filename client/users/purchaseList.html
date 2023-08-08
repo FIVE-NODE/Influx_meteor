@@ -1,6 +1,9 @@
 <template name="purchaseList">
+    <link rel="stylesheet" href="/css/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/lib/bootstrap-datetimepicker.min.css">
     <script type="text/javascript" src="/libs/common.js"></script>
     <script type="text/javascript" src="/libs/sub.js"></script>
+    
     <section class="container">
         <div class="content">
             <div class="content__inner">
@@ -36,7 +39,7 @@
                                     </div>
                                 </div>
                                 <div class="sch-block">
-                                    <button type="button" name="dateSchBtn" class="btn btn--blue btn--inquire">조 회</button>
+                                    <button type="button" name="dateSchBtn" class="btn btn--blue btn--inquire" style="background-color: #1868B7;">조 회</button>
                                 </div>
                             </div>
                         </div>
@@ -54,13 +57,13 @@
                                                 </span>
                                                 <p>
                                                     <em>{{dateFormatChg ../odNo "."}}. 결재</em>
-                                                    <span>{{atwrkData.atwrkNm}}, {{atwrkData.ogPrt.wSize}}X{{atwrkData.ogPrt.hSize}}cm, {{atwrkData.glry.glryNm}}</span>
+                                                    <span>{{atwrkData.ogPrt.atwrkNm}}, {{atwrkData.ogPrt.wSize}}X{{atwrkData.ogPrt.hSize}}cm, {{atwrkData.glry.glryNm}}</span>
                                                     <strong>{{commaPric amt}}원</strong>
                                                     <button type="button">주문상세 &gt;</button>
                                                 </p>
                                             </div>
                                             {{/each}}
-                                        <button type="button" class="pay-item__close">
+                                        <button type="button" name="delBtn" class="pay-item__close">
                                             <img src="/image/sub/icon/icon-close--gray.svg" alt="">
                                         </button>
                                     </div>

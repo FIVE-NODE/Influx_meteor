@@ -1,5 +1,7 @@
 <template name="header">
+    <!-- <link rel="stylesheet" href="/css/sub.css"> -->
     <section class="header__inner" id="headerPs">
+        {{#if quickChk}}
         <div class="header__top">
             <div class="header__top__inner">
                 <h1 class="header-logo">
@@ -24,24 +26,30 @@
                 </div>
            
                 <nav>
-                    <button type="button" class="nav-btn nav-btn--alarm">
+                    <button type="button" name="headerBtnMenu" class="nav-btn nav-btn--alarm">
                         <span class="nav-btn__img">
                             <img src="/image/common/icon/icon-bell.png" alt="">
                         </span>
                         <span class="nav-btn__txt">알 림</span>
                     </button>
-                    <button onclick="location.href='/interestAtwrk'" type="button" class="nav-btn nav-btn--favor">
-                        <span class="nav-btn__img">
-                            <img src="/image/common/icon/icon-heart.png" alt="">
-                        </span>
-                        <span class="nav-btn__txt">관 심</span>
-                    </button>
-                    <button onclick="location.href='/userCart'" type="button" class="nav-btn nav-btn--basket">
-                        <span class="nav-btn__img">
-                            <img src="/image/common/icon/icon-shopping-cart.png" alt="">
-                        </span>
-                        <span class="nav-btn__txt">장바구니</span>
-                    </button>
+
+                    {{#if userChk}}
+                        <button value="/interestAtwrk" name="headerBtnMenu"  type="button" class="nav-btn nav-btn--favor">
+                            <span class="nav-btn__img">
+                                <img src="/image/common/icon/icon-heart.png" alt="">
+                            </span>
+                            <span class="nav-btn__txt">관 심</span>
+                        </button>
+                        <button value="/userCart" name="headerBtnMenu" type="button" class="nav-btn nav-btn--basket">
+                            <span class="nav-btn__img">
+                                <img src="/image/common/icon/icon-shopping-cart.png" alt="">
+                            </span>
+                            <span class="nav-btn__txt">장바구니</span>
+                        </button>
+                    {{else}}
+                        
+                    {{/if}}
+
                     <button data-id="myPageSimple_popup" type="button" name="myPage" class="nav-btn nav-btn--mypage popup-mypage">
                         <span class="nav-btn__img">
                             <img src="/image/common/icon/icon-user.png" alt="">
@@ -51,75 +59,140 @@
                 </nav>
             </div>
         </div> <!-- /header__top -->
+        {{/if}}
+        <!-- /header__mid -->
+        {{#if quickChk}}
+        <div class="header__bottom">
+            <div class="header__bottom__inner">
+                <div class="gnb">
+                    {{#if quickMenuChk}}
+                        {{#each quickMu}}
+                            <a href="{{lnkUrl}}" name="quickMu">
+                                <span class="gnb__img">
+                                    <img src="{{image}}" alt="">
+                                </span>
+                                <h2>{{qMenuNm}}</h2>
+                            </a>
+                        {{/each}}
+                    {{/if}}
+                </div>
+                {{#unless currentUser}}
+                    <div class="bradCrumb">
+                        <a href="/login">로 그 인 </a>
+                        <a href="/signUp">회원가입</a>
+                    </div>
+                {{/unless}}
+            </div>
+        </div> <!-- /header__bottom -->
+        {{/if}}
+
         {{#if midHeader}}
         <div class="header__mid">
             <div class="header__mid__inner">
+                {{#if glryMidHeaderChk}}
+
                 <div class="header__mid-info">
                     <h3 class="header__mid-info__tit">MY 페이지</h3>
-                    <span class="header__mid-info__img">
-                        <img src="/image/common/img-header__imd__img.png" alt="">
-                    </span>
-                    {{#with userInfo}}
-                        <p class="header__mid-info__name">{{nmChk nm}} 님</p>
+                    {{#with glryInfo}}
+                        <span class="header__mid-info__img">
+                            <img class="glry-myPage-glryImg" src="{{glryImage}}" alt="">
+                        </span>
+                        <p class="header__mid-info__name">{{glryNm}}</p>
                         <p class="header__mid-info__capt">(회원정보변경)</p>
                     {{/with}}
                 </div>
+
                 <div class="header__mid-menu">
-                    <a href="/interestAtwrk" class="is-active">
+                    <a href="" name="glryMenu" id="/glryAtwrks" class="{{pageChk 'glryAtwrks'}}">
                         <span class="img-wrap">
-                            <img src="/image/common/icon/icon-header__mid--heart.png" alt="">
+                            <img src="/image/sub/icon/icon-header__mid--admit.png" alt="">
                         </span>
-                        <span class="txt-wrap">관심 리스트</span>
+                        <span class="txt-wrap">작품등록</span>
                     </a>
-                    <a href="/userCart">
+                    <a href="" id="/myPageSelling" name="glryMenu" class="{{pageChk 'myPageSelling'}}">
                         <span class="img-wrap">
-                            <img src="/image/common/icon/icon-header__mid--cart.png" alt="">
+                            <img src="/image/sub/icon/icon-header__mid--sailing.png" alt="">
                         </span>
-                        <span class="txt-wrap">장바구니</span>
+                        <span class="txt-wrap">판매중 작품</span>
                     </a>
-                    <a href="/msgManage">
+                    <a href="" id="/eventsCrList" name="glryMenu" class="{{pageChk 'eventsCrList'}}">
+                        <span class="img-wrap">
+                            <img src="/image/sub/icon/icon-header__mid--event.png" alt="">
+                        </span>
+                        <span class="txt-wrap">전시 및 행사 등록</span>
+                    </a>
+                    <a href="" name="glryMenu" id="" class="{{pageChk ''}}">
+                        <span class="img-wrap">
+                            <img src="/image/sub/icon/icon-header__mid--bidding.png" alt="">
+                        </span>
+                        <span class="txt-wrap">비딩관리</span>
+                    </a>
+                    <a href="" id="/bMsgManage" name="glryMenu" class="{{pageChk 'bMsgManage'}}">
                         <span class="img-wrap">
                             <img src="/image/common/icon/icon-header__mid--mail.png" alt="">
                         </span>
                         <span class="txt-wrap">메세지 관리</span>
                     </a>
-                    <a href="/purchaseList">
+                    <a href="" id="" name="glryMenu" class="{{pageChk ''}}">
                         <span class="img-wrap">
                             <img src="/image/common/icon/icon-header__mid--delivery.png" alt="">
                         </span>
                         <span class="txt-wrap">주문배송내역</span>
                     </a>
-                    <a href="">
+                    <a href="" id="" name="glryMenu" class="{{pageChk ''}}">
+                        <span class="img-wrap">
+                            <img src="/image/sub/icon/icon-header__mid--pencil.png" alt="">
+                        </span>
+                        <span class="txt-wrap">정산내역</span>
+                    </a>
+                </div>
+
+                {{else}}
+                
+                <div class="header__mid-info">
+                    <h3 class="header__mid-info__tit">MY 페이지</h3>
+                    <span class="header__mid-info__img">
+                        <img src="/image/common/img-header__imd__img.png" alt="">
+                    </span>
+                    <p class="header__mid-info__name">{{nmChk}} 님</p>
+                    <p class="header__mid-info__capt">(회원정보변경)</p>
+                </div>
+                <div class="header__mid-menu">
+                    <a href="/interestAtwrk" class="{{pageChk 'interestAtwrk'}}">
+                        <span class="img-wrap">
+                            <img src="/image/common/icon/icon-header__mid--heart.png" alt="">
+                        </span>
+                        <span class="txt-wrap">관심 리스트</span>
+                    </a>
+                    <a href="/userCart" class="{{pageChk 'userCart'}}">
+                        <span class="img-wrap">
+                            <img src="/image/common/icon/icon-header__mid--cart.png" alt="">
+                        </span>
+                        <span class="txt-wrap">장바구니</span>
+                    </a>
+                    <a href="/msgManage" class="{{pageChk 'msgManage'}}">
+                        <span class="img-wrap">
+                            <img src="/image/common/icon/icon-header__mid--mail.png" alt="">
+                        </span>
+                        <span class="txt-wrap">메세지 관리</span>
+                    </a>
+                    <a href="/purchaseList" class="{{pageChk 'purchaseList'}}">
+                        <span class="img-wrap">
+                            <img src="/image/common/icon/icon-header__mid--delivery.png" alt="">
+                        </span>
+                        <span class="txt-wrap">주문배송내역</span>
+                    </a>
+                    <a href="/myCollection" id="" class="{{pageChk 'myCollection'}}">
                         <span class="img-wrap">
                             <img src="/image/common/icon/icon-header__mid--pic.png" alt="">
                         </span>
                         <span class="txt-wrap">MY 컬렉션</span>
                     </a>
                 </div>
+                {{/if}}
             </div>
         </div>
         {{/if}}
-        <!-- /header__mid -->
-        <div class="header__bottom">
-            <div class="header__bottom__inner">
-                <div class="gnb">
-                    {{#each quickMu}}
-                        <a href="{{lnkUrl}}">
-                            <span class="gnb__img">
-                                <img src="{{image}}" alt="">
-                            </span>
-                            <h2>{{qMenuNm}}</h2>
-                        </a>
-                    {{/each}}
-                </div>
-                {{#if logedInChk}}
-                    <div class="bradCrumb">
-                        <a href="/login">로 그 인 </a>
-                        <a href="/signUp">회원가입</a>
-                    </div>
-                {{/if}}
-            </div>
-        </div> <!-- /header__bottom -->
     </section>
     {{> myPageSimple}}
 </template>

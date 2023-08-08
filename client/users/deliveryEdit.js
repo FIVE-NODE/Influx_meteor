@@ -16,7 +16,6 @@ Template.deliveryEdit.onCreated(function() {
 });
 
 Template.deliveryEdit.onRendered(function() {
-    console.log(this);
 });
 
 function maxLengthCheck(object){
@@ -80,26 +79,26 @@ Template.deliveryEdit.events({
         maxLengthCheck(evt.currentTarget);
     },
     'click button[name=addrsBtn]'(evt, tmpl) {
-        address(tmpl);
+        editAddress(tmpl);
     },
-    'click button[name=delivIns]'(evt, tmpl) {
-        var recptnNm = $('input[name=recptnNm]').val().trim();
+    'click button[name=editDelivIns]'(evt, tmpl) {
+        var recptnNm = $('input[name=editRecptnNm]').val().trim();
 
-        var delivNm = $('input[name=delivNm]').val();
+        var delivNm = $('input[name=editDelivNm]').val();
         
-        var mob1 = $('input[name=mob1]').val();
-        var mob2 = $('input[name=mob2]').val();
-        var mob3 = $('input[name=mob3]').val();
+        var mob1 = $('input[name=editMob1]').val();
+        var mob2 = $('input[name=editMob2]').val();
+        var mob3 = $('input[name=editMob3]').val();
 
-        var homePhone1 = $('input[name=homePhone1]').val();
-        var homePhone2 = $('input[name=homePhone2]').val();
-        var homePhone3 = $('input[name=homePhone3]').val();
+        var homePhone1 = $('input[name=editHomePhone1]').val();
+        var homePhone2 = $('input[name=editHomePhone2]').val();
+        var homePhone3 = $('input[name=editHomePhone3]').val();
 
-        var zipCode = $('input[name=zipCode]').val();
-        var addr1 = $('input[name=address]').val();
-        var addr2 = $('input[name=addr2]').val();
+        var zipCode = $('input[name=editZipCode]').val();
+        var addr1 = $('input[name=editAddress]').val();
+        var addr2 = $('input[name=editAddr2]').val();
 
-        var delivReqEtc = $('input[name=delivReqEtc]').val();
+        var delivReqEtc = $('input[name=editDelivReqEtc]').val();
 
         if(recptnNm == '')                              messagePopup({message : '수령인을 입랙해주세요'});
         else if(mob1 == '' || mob2 == '' || mob3 == '') messagePopup({message : '휴대전화를 정확하게 입력해주세요'});
@@ -122,7 +121,7 @@ Template.deliveryEdit.events({
                 "delivReqEtc" : delivReqEtc
             };
 
-            Meteor.call('deliveryIns', uInfo.get()._id, dataSet, function(err, res) {
+            Meteor.call('editDeliv', editDelivData.get(), dataSet, function(err, res) {
                 $('input[name=recptnNm]').val('');
                 $('input[name=delivNm]').val('');
                 $('input[name=mob1]').val('');
@@ -141,27 +140,17 @@ Template.deliveryEdit.events({
                 $('#check-addrWrite--no').attr('checked', false);
                 homePhChk.set(false);
 
-                Meteor.call('selectMberForId', uInfo.get()._id, function(err, res) {
-                    $('#deliveryReg_popup').removeClass('is-open');
+                $('#deliveryEdit_popup').removeClass('is-open');
 
-                    uInfo.set(res);
+                uInfo.set(Meteor.user().profile.uInfos);
 
-                    messagePopup({message : '배송지 등록이 완료되었습니다.'});
-                });
+                messagePopup({message : '배송지 수정이 완료되었습니다.'});
             });
         }
     }
 });
 
 Template.deliveryEdit.helpers({
-    edit: function() {
-        console.log('1 ====== 1');
-        console.log(editDelivData.get());
-        if(editDelivData.get() != undefined) {
-            console.log(editDelivData.get());
-            return editDelivData.get();
-        }
-    },
     addr: function() {
         return Template.instance().data;
     },
@@ -173,7 +162,7 @@ function messagePopup(message) {
     $('#utilsPopUp').addClass('is-open');
 }
 
-function address(instance) {
+function editAddress(instance) {
     var searchAddr = document.getElementById('searchAddr');
 
     // 현재 scroll 위치를 저장해놓는다.
@@ -221,8 +210,8 @@ function address(instance) {
             // document.getElementById("sample3_address").value = addr;
             // this.data.addrs.curValue.zonecode = data.zonecode;
             // this.data.addrs.curValue.addr = addr;
-            $('input[name=zipCode]').val(data.zonecode);
-            $('input[name=address]').val(addr + ' ' + extraAddr);
+            $('input[name=editZipCode]').val(data.zonecode);
+            $('input[name=editAddress]').val(addr + ' ' + extraAddr);
 
             instance.data.addrs = data;
 

@@ -18,7 +18,7 @@ Template.registerHelper('subsFlag', function() {
 
 Template.registerHelper('commaPric', function(pric) {
     if(pric != undefined && pric != '') {
-        return Meteor.commonUtils.priceComma(pric);    
+        return pric == 0 ? 0 : Meteor.commonUtils.priceComma(pric);    
     } else {
         return '';
     }
@@ -41,7 +41,6 @@ Template.registerHelper('codeToName', function(code, named) {
 
 // 메인 이미지만 가져온다
 Template.registerHelper('selectMainImage', function(data) {
-    console.log(data);
     var mainImage = '';
     var images = data.image;
     for(idx in images) {
@@ -54,6 +53,7 @@ Template.registerHelper('selectMainImage', function(data) {
 
 // 날짜를 포멧 형식에 맞게 리턴 한다.
 Template.registerHelper('dateFormatChg', function(date, form) {
+    if(date == undefined || date == null || date == '') return '';
     var format = /(\d{4})(\d{2})(\d{2})/g;
     return date.replace(format, `$1${form}$2${form}$3`);
 });

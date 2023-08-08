@@ -57,8 +57,6 @@ Template.artMenu.events({
             }
             // Session.set('data', queryData);
 
-            console.log('queryData', queryData);
-
             if(artKindFlag.get() === 'ogPrt') {
                 FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
             } else {

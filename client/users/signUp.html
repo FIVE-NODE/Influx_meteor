@@ -1,7 +1,7 @@
 <template name="signUp">
     <script type="text/javascript" src="/libs/common.js"></script>
     <script type="text/javascript" src="/libs/sub.js"></script>
-    <script type="text/javascript" src="/libs/common.js"></script>
+    
     <section class="section-seperate section-seperate--join bg--gray h-auto">
         <div class="section-seperate__inner width--650 mx-auto bg--white">
             <h1 class="section-seperate__logo">
@@ -27,36 +27,43 @@
                             <input type="text" name="email" placeholder="이메일" class="placeholder-center" />
                             <span class="mx-5 font-14 fontW-b">@</span>
                             <div class="form-select form-select--default w-100">
-                                <select name="emailSelect" id="" class="w-100">
+                                {{#if emailSelfChk}}
+                                <input type="text" name="emailSelect" id="selfEmAdrs" placeholder="이메일 주소" class="placeholder-center" />
+                                {{else}}
+                                <select name="emailSelect" id=""  class="w-100">
                                     <option value="">선택해주세요</option>
                                     <option value="naver.com">naver.com</option>
                                     <option value="gmail.com">gmail.com</option>
                                     <option value="daum.net">daum.net</option>
+                                    <option >직접입력</option>
                                 </select>
+                                {{/if}}
                             </div>
                         </div>
                     </div>
                     <!-- email-inquire -->
-                    <button type="button" name="emailSend" class="btn btn--gray mt-10 email-inquire" disabled={{emailSendFlag}}>이메일 인증하기</button>
+                    <button type="button" name="emailSend" class="btn btn--gray mt-10 email-inquire" disabled="{{emailSendFlag}}">이메일 인증하기</button>
                     <!-- {{#if emailSendFlag}} -->
                     <div class="form-row code-inquire">
                         <div class="form-input form-row">
-                            <input type="text" name="userEmailCode" class="code-inquire__input col-10" placeholder="인증코드 6자리 입력" />
+                            <input type="text" name="userEmailCode" class="code-inquire__input" placeholder="인증코드 6자리 입력" />
                             {{#unless emailChk}}
                                 <span name="emailAuthTime">{{emailTimer}}</span>
                             {{/unless}}
                         </div>
-                        <button type="button" name="emailAuthChk" class="btn code-inquire__btn col-2">확 인</button>
+                        <button type="button" name="emailAuthChk" disabled="{{emailCodeChk}}" class="btn code-inquire__btn col-2">확 인</button>
                     </div>
                     <!-- {{/if}} -->
                 </div>
                 <!-- {{#if emailSendFlag}} -->
                 <p class="d-flex align-center mt-15 font-11 color--black">
-                    <img src="/image/common/icon/icon-exclamation.png" alt="" class="mr-5">
-                    {{#if emailChk}}
-                        이메일 인증이 완료 되었습니다.
-                    {{else}}
-                        이메일을 받지 못하셨나요?  이메일<a href="" name="emailReSend" class="ml-5 fontW-b underline">재전송하기</a>
+                    {{#if sendDoneEmail}}
+                        <img src="/image/common/icon/icon-exclamation.png" alt="" class="mr-5">
+                        {{#if emailChk}}
+                            이메일 인증이 완료 되었습니다.
+                        {{else}}
+                            이메일을 받지 못하셨나요?  이메일<a href="" name="emailReSend" class="ml-5 fontW-b underline">재전송하기</a>
+                        {{/if}}
                     {{/if}}
                 </p>
                 <!-- {{/if}}  -->
@@ -88,20 +95,20 @@
                                 </label>
                             </div>
                             <div class="form-check form-row mt-15">
-                                <input type="checkbox" name="essChk" class="form-check__input"/>
-                                <label  class="form-check__label popup" for="" data-id="popup_askBy_termUse">
+                                <input type="checkbox" name="essChk" class="form-check__input" id="check-join-termUsee"/>
+                                <label  class="form-check__label popup" for="check-join-termUsee" data-id="popup_askBy_termUse">
                                     <a href="">이용약관 <span class="color-blue">(필수)</span></a>
                                 </label>
                             </div>
                             <div class="form-check form-row mt-15">
-                                <input type="checkbox" name="essChk" class="form-check__input"/>
-                                <label  class="form-check__label popup" for="" data-id="popup_askBy_termPersonal">
+                                <input type="checkbox" name="essChk" class="form-check__input" id="check-askby-termPersonal"/>
+                                <label  class="form-check__label popup" for="check-askby-termPersonal" data-id="popup_askBy_termPersonal">
                                     <a href="">개인정보수집 및 이용동의 <span class="color-blue">(필수)</span></a>
                                 </label>
                             </div>
                             <div class="form-check form-row mt-15">
-                                <input type="checkbox" name="chk" class="form-check__input"/>
-                                <label  class="form-check__label popup" for="" data-id="popup_askBy_termMarketing">
+                                <input type="checkbox" name="chk" class="form-check__input" id="check_askBy_termMarketing"/>
+                                <label  class="form-check__label popup" for="popup_askBy_termMarketing" data-id="popup_askBy_termMarketing">
                                     <a href="">개인정보마케팅 활용 동의 <span class="color-blue">(선택)</span></a>
                                 </label>
                             </div>

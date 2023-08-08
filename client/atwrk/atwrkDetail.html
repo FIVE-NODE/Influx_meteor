@@ -1,10 +1,7 @@
 <template name="atwrkDetail">
-    <script type="text/javascript" src="/libs/common.js"></script>
-    <script type="text/javascript" src="/libs/sub.js"></script>
     <section class="container">
         <div class="content">
             {{#with atwrkDetail}}
-            <script type="text/javascript" src="/libs/common.js"></script>
             <div class="content__inner">
                 <div class="sub-content border-0">
                     <div class="sub-content__product">
@@ -35,10 +32,10 @@
                                             </div>
                                         {{else}}
                                             <div class="imgGroup-detail__img">
-                                                <img name="mainImg" src="{{mainImage.imgID}}" style="max-width: 650px;" alt="">
+                                                <img name="mainImg" src="{{mainImage.imgID}}" style="max-width: 550px;" alt="">
                                             </div>
                                         {{/if}}
-                                        <button type="button" name="goodBtn" class="imgGroup-detail__favor {{goodChk}}">
+                                        <button type="button" class="imgGroup-detail__favor {{goodChk}} goodBtnEvt" name="goodBtn">
                                             <img src="/image/sub/icon/icon-favor.png" alt="">
                                         </button>
                                     </div>
@@ -96,7 +93,7 @@
                                                                         <span class="purchace__info mt-10">시작가 {{commaPric atwrkDetail.ogPrt.bid.strAmt}} 원</span>
                                                                         <div class="btn-wrap purchace__btns mt-20">
                                                                             <a href="" name="bidBtn" class="popup btn btn--blue btn--round">비 딩 하 기</a>
-                                                                            <a href="" name="interestBtn" class="btn btn--blue btn--round">관 심 항 목 에 넣 기</a>
+                                                                            <a href="" name="aTagoodBtn" class="btn btn--blue btn--round goodBtnEvt">관 심 항 목 에 넣 기</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -270,7 +267,7 @@
                                             <div class="product-view__info--history">
                                                 <div class="author-history">
                                                     {{atstInfo.atstAddDesc}}
-                                                    <a href="" class="underline">더보기</a>
+                                                    <!-- <a href="" class="underline">더보기</a> -->
                                                 </div>
                                             </div>
                                         {{/if}}
@@ -294,13 +291,17 @@
                                                             <img src="/image/main/icon/icon-favor.png" alt="">
                                                         </button>
                                                     </div>
-                                                    <a href="" value={{_id}}>
+                                                    <a href="" name="otherAtwrk" id="{{_id}}">
                                                         <!-- 임시로 max-width 280px 넣음 -->
-                                                        <img style="max-width: 280px;" src={{imgInfo.imgID}} alt="">
+                                                        <img style="max-width: 280px;" src="{{imgInfo.imgID}}" alt="">
                                                     </a>
                                                     <p class="swiper-slide__tit">{{atstNm}}</p>
                                                     <p class="swiper-slide__txt">
-                                                        <em>{{atwrkNm}}, {{wSize}} x {{hSize}}, {{ogPrt}}</em>
+                                                        {{#if dtpChk flag}}
+                                                            <em>{{atwrkNm}}</em>
+                                                        {{else}}
+                                                            <em>{{atwrkNm}}, {{wSize}} x {{hSize}}, {{codeToName ogPrt "MATERIAL"}}</em>
+                                                        {{/if}}
                                                         <em>{{glryNm}}</em>
                                                         <em>{{pric}} 원</em>
                                                     </p>
@@ -319,6 +320,7 @@
 
             <!-- 구매 / 비딩 / 가격문의 팝업 -->
             {{> bidAmount this}}
+            {{> bidAmtProcess this}}
             {{> bargainingAccept this}}
             {{> bargainingRate this}}
             {{> bargainingRefuse this}}
@@ -334,4 +336,9 @@
     </footer>
     <!-- 팝업 템플릿 -->
     {{> utilsPopUp popup}}
+
+    {{#if utilsJsRenderAfter}}
+        <script type="text/javascript" src="/libs/common.js"></script>
+        <script type="text/javascript" src="/libs/sub.js"></script>
+    {{/if}}
 </template>

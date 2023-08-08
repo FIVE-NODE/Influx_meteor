@@ -38,7 +38,7 @@ Meteor.clientCommonUtils = {
         return res
     },
     pageNum : function(curPage, skip, limit, num) {
-        $('.is-active').removeClass('is-active');
+        $('a[name=pageNum].is-active').removeClass('is-active');
         $(`#pageNum${num}`).addClass('is-active');
         curPage.set(num);
         skip.set((num - 1) * limit.get());
@@ -97,55 +97,26 @@ Meteor.clientCommonUtils = {
         maskingStr = data.toString().replace(/-[0-9]{4}-/g, "-****-");
         return maskingStr;
     },
-    // 장바구니 버튼 이벤트
-    basketBtnEvnt: function(userInfo, atwrkId) {
-        Meteor.call('decrypt', userInfo, function(err, res) {
-            res = JSON.parse(res);
-            var userTp = Object.keys(res).includes('snsTp') === false ? 'MBER' : 'SNSMBER';
-            Meteor.call('insertBasket', userTp, res._id, atwrkId);
-        });
-    },
-    // 좋아요 클릭한 사용자인지 확인
-    userGoodChk: function(userInfo, atwrkId, atwrkFlag) {
-        Meteor.call('decrypt', userInfo, function(err, res) {
-            var userData = JSON.parse(res);
-            var userTp = Object.keys(res).includes('snsTp') === false ? 'MBER' : 'SNSMBER';
-
-            Meteor.call('likeChkMber', userTp, userData._id, atwrkId, atwrkFlag, function(err, res) {
-                return res;
-            });
-        });
-    },
     // 좋아요 버튼 이벤트
-    goodBtnEvnt: function(userInfo, atwrkId, atwrkFlag, bothFlag) {
-        Meteor.call('decrypt', userInfo, function(err, res) {
-            var userData = JSON.parse(res);
-            var userTp = Object.keys(res).includes('snsTp') === false ? 'MBER' : 'SNSMBER';
-            
-            Meteor.call('likeChkMber', userTp, userData._id, atwrkId, atwrkFlag, bothFlag, function(err, res) {
-                if(res != undefined && res != null) {                    
-                    Meteor.call('removeGood', userTp, userData._id, atwrkId, atwrkFlag, bothFlag);
-                    Meteor.call('atwrkCancelGood', atwrkFlag, atwrkId, bothFlag);
-                } else {
-                    Meteor.call('insertGood', userTp, userData._id, atwrkId, atwrkFlag, bothFlag);
-                    Meteor.call('atwrkAddGood', atwrkFlag, atwrkId, bothFlag)
-                }
-            });
+    goodBtnEvnt: function(atwrkId, atwrkFlag, bothFlag) {
+        Meteor.call('likeChkMber', atwrkId, atwrkFlag, function(err, res) {
+            if(res != undefined && res != null) {                    
+                Meteor.call('removeGood', atwrkId, atwrkFlag, bothFlag);
+                Meteor.call('atwrkCancelGood', atwrkFlag, atwrkId, bothFlag);
+            } else {
+                Meteor.call('insertGood', atwrkId, atwrkFlag, bothFlag);
+                Meteor.call('atwrkAddGood', atwrkFlag, atwrkId, bothFlag)
+            }
         });
     },
     // 조회수 이벤트
-    viewCntEvnt: function(userInfo, atwrkId, atwrkFlag) {
-        Meteor.call('decrypt', userInfo, function(err, res) {
-            var userData = JSON.parse(res);
-            var userTp = Object.keys(res).includes('snsTp') === false ? 'MBER' : 'SNSMBER';
-
-            Meteor.call('viewHeistory', userTp, userData._id, atwrkId, atwrkFlag, function(err, res) {
-                if(res != undefined && res != null) {
-                } else {
-                    Meteor.call('insertViewCnt', userTp, userData._id, atwrkId, atwrkFlag);
-                    Meteor.call('viewsUp', atwrkId, atwrkFlag);
-                }
-            });
+    viewCntEvnt: function(atwrkId, atwrkFlag) {
+        Meteor.call('viewHeistory', atwrkId, atwrkFlag, function(err, res) {
+            if(res != undefined && res != null) {
+            } else {
+                Meteor.call('insertViewCnt', atwrkId, atwrkFlag);
+                Meteor.call('viewsUp', atwrkId, atwrkFlag);
+            }
         });
     },
     // 필터 또는 검색 데이터 셋팅

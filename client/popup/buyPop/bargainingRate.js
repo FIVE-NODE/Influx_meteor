@@ -21,7 +21,7 @@ Template.bargainingRate.events({
             // 저장 데이터 셋팅
             var bargainInfo = {
                 "_id" : Meteor.commonUtils.generateUUID(),
-                "cmmncID": userInfo._id,
+                "cmmncID": Meteor.userId(),
                 "nm": userInfo.nm === '' ? userInfo.nicNm : userInfo.nm,
                 "atwrkID": this._id,
                 "cmmncTp": '001',

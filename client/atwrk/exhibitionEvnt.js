@@ -4,7 +4,7 @@ Template.exhibitionEvnt.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
-    limit = new ReactiveVar(2);
+    limit = new ReactiveVar(10);
     total = new ReactiveVar(0);
 
     // 검색조건 변수
@@ -45,6 +45,7 @@ Template.exhibitionEvnt.onCreated(function() {
                 glryNm : headerSch.get().glryNm,
             }
         }
+        
         Meteor.call('selectExhigitionEvntList', query, options, function(err, res) {
             total.set(res.total);
             evntList.set(res.list);
@@ -77,6 +78,7 @@ function scrollMove() {
 Template.exhibitionEvnt.events({
     // page당 갯수 이벤트
     'click button[name=pageVal]'(evt, tmpl) {
+        console.log(parseInt($(evt.currentTarget).text()));
         limit.set(parseInt($(evt.currentTarget).text()));
         setQuery();
         tmpl.selectExhigitionEvntList();
@@ -84,12 +86,13 @@ Template.exhibitionEvnt.events({
     },
     'click button[name=kind]'(evt, tmpl) {
         kind.set($(evt.currentTarget).val());
+        console.log(kind.get());
     },
     // 검색 이벤트
     'click button[name=schBtn]'(evt, tmpl) {
         var kindCode = kind.get();
         var area = $('input[name=area]').val();
-        var glryNm = $('input[name=glryNm').val();
+        var glryNm = $('#glryNm').val();
         var queryData = { kindCode, area, glryNm };
 
         query = queryData;

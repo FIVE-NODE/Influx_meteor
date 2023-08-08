@@ -1,4 +1,5 @@
-import { Random } from 'meteor/random';
+import { Random } from 'meteor/random'; 
+import { Accounts } from 'meteor/accounts-base';
 
 // 메인 회원가입 화면
 import './signUp.html';
@@ -11,9 +12,13 @@ import '../popup/utilsPopUp.js';
 
 var passChk = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/; // 비밀번호 정규표현식 8자리 영문, 숫자 포함
 var nikChk = /([^가-힣a-z\x20])/i;                  // 한글 모음, 자음만 있을때 체크
+var emailChkVal = new RegExp('[a-z0-9]+@[a-z0-9]+\.[a-z]{2,3}');
 
 Template.signUp.onCreated(function() {
-    sendToEmail     = new ReactiveVar(false);   // 이메일 보낸는지 확인 여부
+    sendToEmail     = new ReactiveVar(true);    // 이메일 버튼 
+    sendDoneEmail   = new ReactiveVar(false);   // 이메일 보냈다면 true
+    sendToEmail     = new ReactiveVar(true);    // 이메일 보낸는지 확인 여부
+    emailCodeChk    = new ReactiveVar(true);    // 이메일 확인 버튼 활성/비활성 용
     emailAuthCode   = new ReactiveVar();        // 확인용 코드 저장
     timeValue       = new ReactiveVar();        // 리밋 시간초
 
@@ -27,6 +32,8 @@ Template.signUp.onCreated(function() {
     passwordChk     = new ReactiveVar(false);   // 비밀번호 벨리데이션 및 재확인 결과 체크
     nikNameChk      = new ReactiveVar(false);   // 닉네임 최종 결과 체크
     termChk         = new ReactiveVar(false);   // 약관(필수) 동의 체크
+
+    emailSelf       = new ReactiveVar(false);   // 이메일 직접 입력 선택
 });
 
 Template.signUp.onRendered(function() {
@@ -36,17 +43,53 @@ Template.signUp.events({
     // 회원가입 버튼 누를경우 유효성 검사 및 가입시키기
     'click button[name=sginUp]'() {
         var terms = $('input[name=essChk]:checked').length;
+
         if(!emailChk.get())         messagePopup({message : '이메일을 확인하세요.'});
         else if(!passwordChk.get()) messagePopup({message : '비밀번호를 확인하세요'});
         else if(!nikNameChk.get())  messagePopup({message : '닉네임을 확인하세요'});
         else if(terms < 3)          messagePopup({message : '약관(필수) 항목을 전부 동의해주세요'});
         else {
-            Meteor.call('createMBer', {
-                email   : emailValue.get(), 
-                pwd     : passwordValue.get(),
-                nicNm   : nicNmValue.get(),
-            }, function(err, res) {
-                if(res != undefined) {
+            Accounts.createUser({
+                _id : Meteor.commonUtils.generateUUID(),
+                email : emailValue.get(),
+                password : passwordValue.get(),
+                profile : {
+                    uInfos : {
+                        "nicNmChgMM": "",
+                        "pwChgDt": "",
+                        "mob": "",
+                        "ntcn": [
+                        ],
+                        "addr2": "",
+                        "recptnYn": "",
+                        "addr1": "",
+                        "memYn": "",
+                        "secsnTp": "",
+                        "deliv": [
+                        ],
+                        "zipCd": "",
+                        "dtPrtGood": [
+                        ],
+                        "ogPrtGood": [
+                        ],
+                        "dtPrtView" : [
+                        ],
+                        "ogPrtView" : [
+                        ],
+                        "cart": [
+                        ],
+                        "nicNmChgCnt": 0,
+                        "secsnDt": "",
+                        "pfImg": "",
+                        "secsnRsn": "",
+                        "nicNm": nicNmValue.get(),
+                        "nm": "",
+                        "cid": ""
+                    }
+                }
+            }, function(error) {
+                if(error) console.log(error);
+                else {
                     messagePopup({
                         message : '회원가입이 완료 되었습니다.',
                         route : 'login',
@@ -57,7 +100,7 @@ Template.signUp.events({
         }
     },
     //  이메일
-    'click button[name=emailSend]'() {
+    'click button[name=emailSend]'(evt, tmpl) {
         // 이메일 전송
         emailSendToUser();
     },
@@ -71,6 +114,14 @@ Template.signUp.events({
 
             emailChk.set(true);
             emailValue.set(email + '@' + address);
+
+            $('select[name=emailSelect]').attr('disabled', true);
+            $('#selfEmAdrs').attr('disabled', true);
+            $('input[name=email]').attr('disabled', true);
+            $('button[name=emailAuthChk]').attr('disabled', true);
+            $('input[name=userEmailCode]').attr('disabled', true);
+            $('input[name=emailAuthChk]').css({'background-color' : 'rgba(24, 104, 183, 0.5)'});
+
             messagePopup({message : '인증되었습니다.'});
         } else {
             messagePopup({
@@ -89,6 +140,17 @@ Template.signUp.events({
         if(!passChk.test(pass)) {
             messagePopup({message : '비밀번호는 영문, 숫자 8자리 입니다.'});
         } else {
+            var passReChk = $('input[name=passwordChk]').val();
+            if(passReChk != '') {
+                if(passReChk === pass) {
+                    passwordChk.set(true);
+                    messagePopup({message : '비밀번호가 일치 합니다.'});
+                }
+                else {
+                    passwordChk.set(false);
+                    messagePopup({message : '비밀번호가 일치 하지 않습니다.'});
+                }
+            }   
             passwordValue.set(pass);
         }
     },
@@ -100,6 +162,7 @@ Template.signUp.events({
             passwordChk.set(true);
         } else {
             messagePopup({message : '비밀번호가 일치 하지 않습니다.'});
+            passwordChk.set(false);
         }
     },
     // 닉네임
@@ -109,7 +172,7 @@ Template.signUp.events({
         if(nikChk.test(nickName) || (nickName.length < 2 || nickName.length > 15)) {
             messagePopup({message : '닉네임 형식이 올바르지 않습니다.'});
         } else {
-            Meteor.call('nickNameDuplicationChk', nickName, function(err, res) {
+            Meteor.call('nicNmChk', nickName, function(err, res) {
                 if(res != undefined) {
                     messagePopup({message : '중복된 닉네임이 있습니다.'});
                 } else {
@@ -119,31 +182,104 @@ Template.signUp.events({
             });
         }
     },
+    'change select[name=emailSelect]'(evt, tmpl) {
+        // 이메일 주소 직접입력 이벤트
+        var address = $(evt.currentTarget).val();
+        var uEmail = $('input[name=email]').val();
+        
+        if(address == '직접입력') {
+            emailSelf.set(true);
+            emailBtnChg(false);
+            setTimeout(function() { $("#selfEmAdrs").focus(); }, 100);
+        } else {
+            let emlChk = emailChkVal.test(uEmail + '@' + address);
+            emailBtnChg(emlChk);
+            emailSelf.set(false);
+        }
+    },
+    'keyup input[name=email]'(evt, tmpl) {
+        if (!(evt.keyCode >=37 && evt.keyCode<=40)) {     
+            var inputVal = $(evt.currentTarget).val();
+            $(evt.currentTarget).val(inputVal.replace(/[^a-z0-9-_.]/gi,''));
+
+            var address = $('select[name=emailSelect]').val() != undefined ? 
+            $('select[name=emailSelect]').val() : $('input[name=emailSelect]').val();
+            var uEmail = $(evt.currentTarget).val();
+            let emlChk = emailChkVal.test(uEmail + '@' + address);
+            emailBtnChg(emlChk);
+        }
+    },
+    'keyup input[name=emailSelect]'(evt, tmpl) {
+        if (!(evt.keyCode >=37 && evt.keyCode<=40)) {     
+            var inputVal = $(evt.currentTarget).val();
+            $(evt.currentTarget).val(inputVal.replace(/[^a-z0-9-_.]/gi,''));
+
+            var address = $(evt.currentTarget).val(); 
+            var uEmail = $('input[name=email]').val();
+            let emlChk = emailChkVal.test(uEmail + '@' + address);
+            emailBtnChg(emlChk);
+        }
+    },
     // 약관
     'click input[name=allCheck]'() {
         // 전체동의
         $('input[name=chk]').prop("checked", $('input[name=allCheck]').prop("checked"));
         $('input[name=essChk]').prop("checked", $('input[name=allCheck]').prop("checked"));
     }
-
 });
 
+// 이메일 인증 버튼 활성/비활성
+function emailBtnChg(emlChk) {
+    var eamilBtn = $('button[name=emailSend]');
+    if(emlChk) {
+        eamilBtn.removeClass('btn--gray');
+        eamilBtn.addClass('btn--blue');
+        $('button[name=emailSend]').css({'color' : '#fff'});
+        sendToEmail.set(false);
+    } else {
+        eamilBtn.removeClass('btn--blue');
+        eamilBtn.addClass('btn--gray');
+        $('button[name=emailSend]').css({'color' : '#b9b9b9'});
+        sendToEmail.set(true);
+    }
+}
+
 function emailSendToUser() {
-    var email =  $('input[name=email]').val();
-    var address = $('select[name=emailSelect]').val();
+    var email =  $('input[name=email]').val();   
+    var address = $('select[name=emailSelect]').val() == undefined ?
+    $('input[name=emailSelect]').val() : $('select[name=emailSelect]').val();
+
     if(email != '' && address != '') {
-        var code = Random.hexString(6);
-        Meteor.call('sendEmail', {
-            to: email + '@' + address,
-            from: 'patrick@5node.co.kr',
-            subject: '[Influx] 회원가입 이메일 인증 코드 입니다.',
-            text: '이메일 인증 코드 : ' + code
-        }, function() {
-            messagePopup({message : '이메일이 전송되었습니다.'});
-            emailAuthCode.set(code);
-            sendToEmail.set(true);
-            emailTimeChk();
-        });    
+        // 등록된 이메일인지 확인
+        Meteor.call('seltEmailChk', email + '@' + address, function(err, res) {
+            if(res == undefined) {
+                var code = Random.hexString(6);
+                sendToEmail.set(true);
+
+                var eamilBtn = $('button[name=emailSend]');
+                eamilBtn.removeClass('btn--blue');
+                eamilBtn.addClass('btn--gray');
+                $('button[name=emailSend]').css({'color' : '#b9b9b9'});
+
+                emailTimeChk();
+                $('button[name=emailAuthChk]').css({'background-color' : '#1868B7'});
+                emailCodeChk.set(false);
+
+                Meteor.call('sendEmail', {
+                    to: email + '@' + address,
+                    from: 'patrick@5node.co.kr',
+                    subject: '[Influx] 회원가입 이메일 인증 코드 입니다.',
+                    text: '이메일 인증 코드 : ' + code
+                }, function() {
+                    sendDoneEmail.set(true);
+                    emailAuthCode.set(code);
+                });
+                messagePopup({message : '이메일이 전송되었습니다.'});
+            } else {
+                messagePopup({message : '이미 등록된 이메일 입니다.'});
+                // setTimeout(function() { $('input[name=email]').focus(); }, 200);
+            }
+        });
     } else {
         messagePopup({message : '이메일을 정확하게 입력해주세요.'});
     }
@@ -157,7 +293,7 @@ function emailTimeChk(reSendFlag) {
 
     var time = 180;
     var min = '';
-    var sec = '';
+    var sec = ''; 
     var result = '';
 
     var x = Meteor.setInterval(function() {
@@ -195,5 +331,14 @@ Template.signUp.helpers({
     },
     popup() {
         return popUpMessage.get();
+    },
+    emailSelfChk() {
+        return emailSelf.get();
+    },
+    emailCodeChk() {
+        return emailCodeChk.get();
+    },
+    sendDoneEmail() {
+        return sendDoneEmail.get();
     }
 });

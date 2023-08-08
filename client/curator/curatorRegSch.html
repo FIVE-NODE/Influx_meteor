@@ -1,0 +1,238 @@
+<template name="curatorRegSch">
+    <div class="popup-layout" id="atwrkSch">
+        <div class="popup-wrap popup--additional">
+            <div class="popup-inner" style="width:1680px;height:calc(100% - 5rem)">
+                <div class="popup-head">
+                    <div class="subTit subTit-tit--center">
+                        <div class="subTit__inner d-flex align-center">
+                            <img src="/image/common/img-logo-default.png" alt="">
+                            <p class="subTit-tit--center__p color-blue">등록 작품 검색</p>
+                            <button type="button" class="popup-close">
+                                <img src="/image/sub/icon/icon-close-gray.png" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-cont">
+                    
+                    <div class="ov-auto el-scroll">
+                        <div class="additional-wrap">
+                            <div class="additional-sch">
+                                <p class="additional-sch__tit">검색 조건 설정</p>
+                                <p class="additional-sch__kind">{{codeToName tabFlag "THM_TP"}}</p>
+                                <div class="form-wrap">
+                                    <div class="form-row">
+                                        <div class="form-input">
+                                            <input type="text" class="" name="atstGlrySch" placeholder="갤러리, 작가이름">
+                                        </div>
+                                        <button type="button" name="atwrksSchBtn">
+                                            <img src="/image/sub/icon/icon-search--white.png" alt="">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="additional-setting" id="mov">
+
+                                <div class="form-wrap">
+                                    {{#if dtChk}}
+                                    <div class="form-block additional-setting__kind--price">
+                                        {{#each priceOgPrt}}
+                                        <div class="form-input form-radio  form-row">
+                                            <input type="radio" class="form-radio__input" name="filterPop" value="ARTWORK_PRICE_OGPRT-{{code}}" id="radio-additional-price{{code}}">
+                                            <span class="form-radio__span"></span>
+                                            <label for="radio-additional-price{{code}}" class="form-radio__label">{{name}}</label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    <div class="form-block additional-setting__kind--medium">
+                                        {{#each medium}}
+                                        <div class="form-input form-check  form-row">
+                                            <input type="checkbox" class="form-check__input" name="filterPop" value="MEDIUM-{{code}}" id="check-additional-medium{{code}}">
+                                            <span class="form-check__span"></span>
+                                            <label for="check-additional-medium{{code}}" class="form-check__label">{{name}}</label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    <div class="form-block additional-setting__kind--history">
+                                        {{#each mkyy}}
+                                        <div class="form-input form-check  form-row">
+                                            <input type="checkbox" class="form-check__input" name="filterPop" value="MK_YEAR-{{code}}" id="check-additional-history{{code}}">
+                                            <span class="form-check__span"></span>
+                                            <label for="check-additional-history{{code}}" class="form-check__label">{{name}}</label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    <div class="form-block additional-setting__kind--style">
+                                        {{#each style1}}
+                                        <div class="form-input form-check  form-row">
+                                            <input type="checkbox" class="form-check__input" name="filterPop" value="STYLE_1-{{code}}" id="check-additional-style{{code}}">
+                                            <span class="form-check__span"></span>
+                                            <label for="check-additional-style{{code}}" class="form-check__label">{{name}}</label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    <div class="form-block additional-setting__kind--style">
+                                        {{#each style2}}
+                                        <div class="form-input form-check  form-row">
+                                            <input type="checkbox" class="form-check__input" name="filterPop" value="STYLE_2-{{code}}" id="check-additional-style02-{{code}}">
+                                            <span class="form-check__span"></span>
+                                            <label for="check-additional-style02-{{code}}" class="form-check__label">{{name}}</label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    <div class="form-block additional-setting__kind--material">
+                                        {{#each materials}}
+                                        <div class="form-input form-check  form-row">
+                                            <input type="checkbox" class="form-check__input" name="filterPop" value="MATERIAL-{{code}}" id="check-additional-material{{code}}">
+                                            <span class="form-check__span"></span>
+                                            <label for="check-additional-material{{code}}" class="form-check__label">{{name}}</label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    {{else}}
+                                    <div class="form-block additional-setting__kind--price">
+                                        {{#each pricedtPrt}}
+                                        <div class="form-input form-radio  form-row">
+                                            <input type="radio" class="form-radio__input" name="filterPop" value="ARTWORK_PRICE_DTPRT-{{code}}" id="radio-additional-price{{code}}">
+                                            <span class="form-radio__span"></span>
+                                            <label for="radio-additional-price{{code}}" class="form-radio__label">{{name}}</label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    <div class="form-block additional-setting__kind--history">
+                                        {{#each base}}
+                                        <div class="form-input form-check  form-row">
+                                            <input type="checkbox" class="form-check__input" name="filterPop" value="BASE-{{code}}" id="check-additional-base{{code}}">
+                                            <span class="form-check__span"></span>
+                                            <label for="check-additional-base{{code}}" class="form-check__label">{{name}}</label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    <div class="form-block additional-setting__kind--style">
+                                        {{#each style1}}
+                                        <div class="form-input form-check  form-row">
+                                            <input type="checkbox" class="form-check__input" name="filterPop" value="STYLE_1-{{code}}" id="check-additional-style01-{{code}}">
+                                            <span class="form-check__span"></span>
+                                            <label for="check-additional-style01-{{code}}" class="form-check__label">{{name}}</label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    <div class="form-block additional-setting__kind--style">
+                                        {{#each style2}}
+                                        <div class="form-input form-check  form-row">
+                                            <input type="checkbox" class="form-check__input" name="filterPop" value="STYLE_2-{{code}}" id="check-additional-style02-{{code}}">
+                                            <span class="form-check__span"></span>
+                                            <label for="check-additional-style02-{{code}}" class="form-check__label">{{name}}</label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    
+                                    {{/if}}
+                                </div>
+
+                                <button type="button" name="seltAllCancel" class="additional-setting__btn">전체 조건 해제</button>
+                            </div>
+                            <div class="additional-order mt-30">
+                                <div class="d-flex align-center">
+                                    <p class="ml-auto font-14 fontW-b color--txt">정 렬</p>
+                                    <div class="form-wrap ml-20">
+                                        <div class="form-select form-select-custom custom-select--order">
+                                            <button type="button" class="custom-select__tit">아티스트 이름  (ㄱ   ㅎ)</button>
+                                            <ul class="custom-select__options" style="display: none;">
+                                                <li class="is-active"><button type="button">아티스트 이름  (ㄱ   ㅎ)</button></li>
+                                                <li><button type="button">1</button></li>
+                                                <li><button type="button">2</button></li>
+                                                <li><button type="button">3</button></li>
+                                                <li><button type="button">4</button></li>
+                                                <li><button type="button">5</button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="additional-list mt-30">
+                                <div class="table-wrap">
+                                    <table class="table-basic table--col table--list table-basic--additional__list">
+                                        <caption></caption>
+                                        <colgroup>
+                                            <col style="width:7%">
+                                            <col style="width:auto">
+                                            <col style="width:10%">
+                                            <col style="width:8%">
+                                            <col style="width:10%">
+                                            <col style="width:15%">
+                                            <col style="width:8%">
+                                            <col style="width:10%">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">
+                                                    <p>전체선택</p>
+                                                    <div class="form-wrap mt-5">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" name="allSeltAtwrk" id="" class="form-check__input form-check--all">
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th scope="col">작품 </th>
+                                                <th scope="col">작가명</th>
+                                                <th scope="col">제작연도 </th>
+                                                <th scope="col">판매(시작)가격</th>
+                                                <th scope="col">판매기간</th>
+                                                <th scope="col">구분</th>
+                                                <th scope="col">갤러리</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each atwrkInfo}}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-wrap">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" name="atwrkList" id="{{_id}}" class="form-check__input">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-center">
+                                                        <span class="img-wrap mr-15">
+                                                            <img class="createAtwrkSch-img" src="{{selectMainImage this}}" alt="">
+                                                        </span>
+                                                        <p class="font-14 fontW-b color--txt">{{atwrkNm}} </p>
+                                                    </div>
+                                                </td>
+                                                <td>{{atstNm}}</td>
+                                                <td>{{dateFormatChg mkDt "."}}</td>
+                                                <td>{{commaPric pric}} 원</td>
+                                                <td>{{dateFormatChg stDt "."}} ~ {{dateFormatChg edDt "."}}</td>
+                                                <td>{{sellTp.name}}</td>
+                                                <td>{{glryNm}}</td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                <!-- 페이징 영역 -->
+                                <div class="pagination-wrap mt-40 mb-40">
+                                    <div class="pagination">
+                                        <a href="" name="prev" class="link-prev"></a>
+                                        {{#each page}}
+                                            <a href="" id="pageNum{{num}}" name="pageNum" class="{{active}}">{{num}}</a>
+                                        {{/each}}
+                                        <a href="" name="next" class="link-next"></a>
+                                    </div>
+                                </div>
+                                <!-- 페이징 영역 끝 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-wrap d-flex justify-center my-50">
+                        <button type="button" class="popup-chk btn btn--white btn--round width--170 height-45 font-pre">취             소</button>
+                        <button type="button" name="atwrkUp" class="btn btn--blue btn--round width--170 height-45 ml-40">선택작품올리기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

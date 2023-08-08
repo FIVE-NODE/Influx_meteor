@@ -38,6 +38,14 @@
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
 }
+.pos-right {
+  top: 0;
+  right: 0;
+}
+.pos-left {
+  top: 0;
+  left: 0;
+}
 
 .d-block {
   display: block;
@@ -317,6 +325,9 @@
 
 .height-30 {
   height: 3rem;
+}
+.height-35 {
+  height: 3.5rem;
 }
 .height-40 {
   height: 4rem;
@@ -1057,6 +1068,10 @@ body {
   top: 0;
   right: 0;
   margin-top: 1.6rem;
+  margin-right: 2rem;
+}
+.bradCrumb.mt-0 {
+  margin-top: 0;
 }
 .bradCrumb a {
   font-size: 1.3rem;
@@ -1519,6 +1534,9 @@ address {
           justify-content: center;
   width: 100%;
 }
+.tab-wrap.width--300 {
+  width: 30rem;
+}
 .tab-wrap > a {
   padding: 1.2rem;
   font-size: 1.6rem;
@@ -1705,6 +1723,29 @@ address {
   text-align: center;
 }
 
+.acc-tit {
+  display: block;
+}
+.acc__item {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #585858;
+  text-align: left;
+}
+.acc__item:nth-of-type(1) {
+  border-top: 1px solid #ccc;
+}
+.acc__cont {
+  display: none;
+  padding: 1rem 3rem;
+  border-bottom: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
 /** element */
 .btn {
   height: 3.8rem;
@@ -1712,6 +1753,9 @@ address {
   font-size: 1.6rem;
   font-weight: 500;
   border-radius: 0.5rem;
+}
+.btn.p-0 {
+  padding: 0;
 }
 .btn.height-20 {
   height: 2rem;
@@ -1721,6 +1765,9 @@ address {
 }
 .btn.height-30 {
   height: 3rem;
+}
+.btn.height-35 {
+  height: 3.5rem;
 }
 .btn.height-36 {
   height: 3.6rem;
@@ -1847,7 +1894,7 @@ address {
   border-right: none;
 }
 
-input[type=text]:disabled, input[type=password]:disabled {
+input[type=text]:disabled, input[type=password]:disabled, input[type=number]:disabled {
   background-color: #E2E2E2;
   border: 1px solid #b9b9b9;
 }
@@ -1856,9 +1903,12 @@ input[type=text]:disabled, input[type=password]:disabled {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin: 0;
 }
 .form-row.align-start {
   -webkit-box-align: start;
@@ -1896,8 +1946,20 @@ input[type=text]:disabled, input[type=password]:disabled {
   font-weight: 700;
   color: #B9B9B9;
 }
+.form-input input[type=text].height-30, .form-input input[type=password].height-30 {
+  height: 3rem;
+}
+.form-input input[type=text].height-35, .form-input input[type=password].height-35 {
+  height: 3.5rem;
+}
+.form-input input[type=text].height-40, .form-input input[type=password].height-40 {
+  height: 4rem;
+}
 .form-input input[type=text].height-45, .form-input input[type=password].height-45 {
   height: 4.5rem;
+}
+.form-input input[type=text].h-100, .form-input input[type=password].h-100 {
+  height: 100%;
 }
 .form-input__capt {
   margin-bottom: 0.7rem;
@@ -1914,6 +1976,9 @@ input[type=text]:disabled, input[type=password]:disabled {
 .form-select select {
   height: 4.8rem;
   border-radius: 0.5rem;
+}
+.form-select select.height-40 {
+  height: 4rem;
 }
 .form-select-custom {
   position: relative;
@@ -2349,7 +2414,7 @@ input[class*=js-datepicker] {
 
 .bootstrap-datetimepicker-widget .datepicker {
   position: relative;
-  z-index: 0;
+  z-index: 100;
 }
 
 .bootstrap-datetimepicker-widget table {
@@ -2823,8 +2888,6 @@ input[class*=js-datepicker] {
   background-position: center center;
 }
 
-/* 신규추가 */
-
 /* 헤더 마이페이지 용 */
 .popup-layout-mypage {
   position: absolute;
@@ -2842,3 +2905,20 @@ input[class*=js-datepicker] {
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
 } 
+
+/* 신규추가 */
+.form-row-deliv-pop {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0;
+}
+.form-row-deliv-pop.align-start {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}

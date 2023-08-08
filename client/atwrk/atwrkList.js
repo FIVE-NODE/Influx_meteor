@@ -1,4 +1,3 @@
-import { filter } from 'domutils';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import './atwrkList.html';
@@ -55,7 +54,6 @@ Template.atwrkList.onCreated(function() {
 
     // 비즈니스에 등록되어 있는 작품 정보 (특정 갤러리 작품 보기 전용)  
     this.selectAtwrkForBsns = function() {
-        console.log(query);
         Meteor.call('selectAtwrkForBsns', FlowRouter.getParam("_id"), query, options , function(err, res) {
             atwrkInfo.set(res.list);
             total.set(res.total);
@@ -135,29 +133,53 @@ Template.atwrkList.events({
         tmpl.selectAtwrkForBsns();
     },
     'click button[name=atstAllDeSelect]'(evt, tmpl) {
-        cancelCheckAtst();
+        $('button[name=rprsnAtst]').removeClass('is-active');
+
+        setQuery();
+        tmpl.selectAtwrkForBsns();
     },
     'click button[name=allCancel]'() {
         $('input[name=filterChk]').prop('checked', false);
-        cancelCheckAtst();
+        $('button[name=rprsnAtst]').removeClass('is-active');
+
+        setQuery();
+        tmpl.selectAtwrkForBsns();
     },
     'click button[name=priceCancelBtn]'() {
         cancelCheckBox('price');
+
+        setQuery();
+        tmpl.selectAtwrkForBsns();
     },
     'click button[name=mediumCancelBtn]'() {
         cancelCheckBox('medium');
+
+        setQuery();
+        tmpl.selectAtwrkForBsns();
     },
     'click button[name=mkyyCancelBtn]'() {
         cancelCheckBox('mkyy');
+
+        setQuery();
+        tmpl.selectAtwrkForBsns();
     },
     'click button[name=style1CancelBtn]'() {
         cancelCheckBox('style1');
+
+        setQuery();
+        tmpl.selectAtwrkForBsns();
     },
     'click button[name=style2CancelBtn]'() {
         cancelCheckBox('style2');
+
+        setQuery();
+        tmpl.selectAtwrkForBsns();
     },
     'click button[name=materialCancelBtn]'() {
         cancelCheckBox('material');
+
+        setQuery();
+        tmpl.selectAtwrkForBsns();
     },
     // 필터 이벤트
     'change input[name=filterChk]'(evt, tmpl) {

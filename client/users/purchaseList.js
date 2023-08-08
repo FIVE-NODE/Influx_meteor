@@ -12,26 +12,41 @@ Template.purchaseList.onCreated(function() {
 
     atwrkInfo = new ReactiveVar();
 
-    seltOrderBtn = new ReactiveVar();
+    seltOrderBtn = new ReactiveVar('1w');
 
     popUpData = new ReactiveVar();
 
-    if(sessionStorage.getItem('art_dex') != undefined) {
-        Meteor.call('decrypt', sessionStorage.getItem('art_dex'), function(err, res) {
-            var userData = JSON.parse(res);
-            Meteor.call('selectMberForId', userData._id, function(err, res) {
-                uInfo.set(res);
+    strSchDate = new ReactiveVar();
 
-                seltOrderList();
-            });
+    endSchDate = new ReactiveVar();
 
-        });
-    }
+    this.autorun(() => {
+        const userData = Meteor.user();
+        if(userData != undefined) {
+            uInfo.set(userData.profile.uInfos);
+            seltOrderList();
+        } 
+    });
 });
 
 function seltOrderList() {
-    Meteor.call('seltOrderList', uInfo.get()._id, function(err, res) {
-        var lists = [];
+    query = {};
+
+    if(strSchDate.get() != '' && endSchDate.get() != ''){
+        query = {
+            $gte : strSchDate.get(),
+            $lte : endSchDate.get()
+        };
+    } else {
+        var seltDate = seltOrderBtn.get();
+        query = {
+            seltDate
+        };
+    }
+
+    console.log(query);
+
+    Meteor.call('seltOrderList', query, function(err, res) {
         for(idx in res) {
             var resData = res[idx];
             var odList = resData.odAtwrk;
@@ -76,19 +91,24 @@ Template.purchaseList.events({
         seltOrderBtn.set(id);
     },
     'click button[name=dateSchBtn]'(evt, tmpl) {
-        console.log('dateSchBtn');
-        var strDate = $('input[name=strDate]').val();
-        var endDate = $('input[name=endDate]').val();
+        var strDate = moment($('input[name=strDate]').val()).format('YYYYMMDD');
+        var endDate = moment($('input[name=endDate]').val()).format('YYYYMMDD');
+        var toDate = new Date();
+        toDate = moment(toDate).format('YYYYMMDD');
         var odTp = $('input[name=odTp]').val();
 
-        if(parseInt(strDate) > parseInt(endDate)) messagePopup({message: '시작날짜가 더 큽니다.'});
+        if(strDate > endDate) messagePopup({message: '시작날짜가 더 큽니다.'});
+        else if(toDate < endDate) messagePopup({message: '종료날짜가 오늘 날자보다 큽니다.'});
         else {
-            var seltOrder = seltOrderBtn.get();
+            strSchDate.set(strDate);
+            endSchDate.set(endDate);
 
-            Meteor.call('', { strDate, endDate, odTp, seltOrder }, function(err, res) {
-                console.log(res);
-            });
+            seltOrderList();
         }
+    },
+    'click button[name=delBtn]'(evt, tmpl) {
+        console.log(' ===== !!!! del');
+
     }
 });
 
@@ -103,6 +123,5 @@ Template.purchaseList.helpers({
         if(orderList.get() != undefined) {
             return orderList.get();
         }
-        
     }
 });

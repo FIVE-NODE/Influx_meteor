@@ -9,7 +9,6 @@ Template.deliveryList.onCreated(function() {
 });
 
 Template.deliveryList.onRendered(function() {
-    console.log(uInfo.get());
 });
 
 Template.deliveryList.events({
@@ -20,18 +19,37 @@ Template.deliveryList.events({
         evnt.parent('div').addClass('is-active');
         
         selectDelivData.set(delivData.get()[evnt.parent('div').attr('id')]);
+
+        Meteor.call('defaultDelivChg', selectDelivData.get());
     },
     // 배송지 수정
     'click button[name=delivEdit]'(evt, tmpl) {
-        console.log(' ===== !');
         var evntId = $(evt.currentTarget).val();
-        console.log(evntId);
-        console.log(' ===== ', delivData.get()[evntId]);
-        editDelivData.set(delivData.get()[evntId]);
+        var seltPastDelivData = delivData.get()[evntId];
+        var mobList = seltPastDelivData.mob.split(' ');
+        var hPhoneList = seltPastDelivData.mob.split(' ');
+        var delivEtc = seltPastDelivData.delivReqEtc != undefined ? seltPastDelivData.delivReqEtc : '';
+
+        editDelivData.set(seltPastDelivData);
+
+        $('input[name=editRecptnNm]').val(seltPastDelivData.recptnNm);
+        $('input[name=editDelivNm]').val(seltPastDelivData.delivNm);
+        $('input[name=editMob1]').val(mobList[0]);
+        $('input[name=editMob2]').val(mobList[1]);
+        $('input[name=editMob3]').val(mobList[2]);
+        $('input[name=editHomePhone1]').val(hPhoneList[0]);
+        $('input[name=editHomePhone2]').val(hPhoneList[1]);
+        $('input[name=editHomePhone3]').val(hPhoneList[2]);
+        $('input[name=editZipCode]').val(seltPastDelivData.zipCd);
+        $('input[name=editAddress]').val(seltPastDelivData.addr1);
+        $('input[name=editAddr2]').val(seltPastDelivData.addr2);
+        $('input[name=editDelivReqEtc]').val(delivEtc);
+        $('#check-addrWrite--default-edit').prop('checked', seltPastDelivData.defDelivYn == 'Y');
+        $('#check-addrWrite--no-edit').prop('checked', hPhoneList.length != 0);
     },
     // 배송지 삭제
     'click button[name=delivDele]'(evt, tmpl) {
-        var _id = uInfo.get()._id;
+        var _id = userId.get();
         var delDta = delivData.get()[$(evt.currentTarget).val()];
         Meteor.call('deliveryDel', _id, delDta, function(err, res) {
             var info = uInfo.get();
@@ -42,8 +60,6 @@ Template.deliveryList.events({
 
             info.deliv = delivData.get();
             uInfo.set(info);
-
-            console.log(uInfo.get());
         });
     }
 });

@@ -1,0 +1,32 @@
+<template name="inventoryPopup">
+    <div class="popup-layout" id="inventory_popup_preview">
+        <div class="popup-wrap popup--additional">
+            <div class="popup-inner" style="width:1680px;height:calc(100% - 5rem)">
+                <div class="popup-head">
+                    <div class="subTit-tit--center">
+                        <div class="subTit__inner  d-flex align-center">
+                            <img src="/image/common/img-logo-default.png" alt="">
+                            <p class="subTit-tit--center__p color-blue">인벤토리 미리보기 팝업</p>
+                            <button type="button" class="popup-close">
+                                <img src="/image/sub/icon/icon-close-gray.png" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="popup-cont popup-cont--terms">
+                    <div class="sub-content__mypage">
+                        <div class="mypage-subtit--gallery height-66">
+                            <div class="mypage-subtit__inner">
+                                {{#with bsnsInfo}}
+                                    <p style="color:#000;">우) {{zipCd}} , {{addr1}}       Tel: {{bsnsChagMob}},    email: {{bsnsChagEmail}},   {{homeUrl}}</p>
+                                {{/with}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>

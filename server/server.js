@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import {  Atwrk, Pick, Evnt, Files, Chunk, Banr } from '../lib/collections.js';
-import { FilesCollection } from 'meteor/ostrio:files';
+import fs from 'fs';
+import {  Atwrk, Pick, Evnt, Files, Chunk, Banr, BsnsMber, Mber } from '../lib/collections.js';
 
 import '../lib/common.js';
 import '../lib/router.js';
@@ -11,10 +11,14 @@ import './utilsServer.js';
 import './noticeServer.js';
 import './categoryServer.js';
 
+import './rest.js';
+
 const crypto = require('crypto');
 const key = 'tester1234567890tester1234567890';
 const iv  = 'tester1234567890';
 
+Accounts.mber = Mber;
+Accounts.bsnsmber = BsnsMber;
 
 Meteor.startup(() => {
   var smtp = {
@@ -33,6 +37,16 @@ Meteor.startup(() => {
 
 Meteor.onConnection(conn => {
   
+});
+
+Accounts.onCreateUser((options, user) => {
+  console.log('onCreateUser : ', user);
+
+  user._id = Meteor.commonUtils.generateUUID();
+
+  console.log('sertCreateUser : ', user );
+
+  return user;
 });
 
 Meteor.methods({
@@ -295,6 +309,20 @@ Meteor.methods({
     }
     return decipheredPlaintext;
   },
+  // 파일 업로드
+  saveFile(image = {blob: "", name: "", encoding: ""}) {
+    var path = '/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/';
+    
+    var date = new Date();
+    date = moment(date).format('YYYYMMDDHHmmss');
+    var fileName = 'img_' + Meteor.commonUtils.generateUUID() + `_${date}`;
+
+    var fsWriteFile = Meteor.wrapAsync(fs.writeFile);
+
+    fsWriteFile(path + fileName, image.blob, image.encoding);
+
+    return {fileName:fileName, name:image.name};
+  }
   // fileFinds: function(filename) {
   //   try {
   //     let data =  Files.findOne({filename : filename});

@@ -29,16 +29,17 @@
                             <input type="password" name="loginPwd" placeholder="비밀번호" />
                         </div>
                     </div>
+                    <!-- {{> loginButtons}} -->
                     <button type="button" name="loginBtn" class="btn btn--blue mt-20">로 그 인</button>
                     <div class="find-link d-flex justify-end mt-10">
-                        <a href="" class="color--gray font-12">아이디 찾기</a>
-                        <a href="" class="color--gray font-12">비밀번호 찾기</a>
+                        <a href="" name="idFind" class="color--gray font-12">아이디 찾기</a>
+                        <a href="" name="passFind" class="color--gray font-12">비밀번호 찾기</a>
                     </div>
-                    <button type="button" class="btn btn--yellow d-flex mt-30">
+                    <button type="button" name="kakaoLogin" class="btn btn--yellow d-flex mt-30">
                         <img src="/image/sub/icon/icon-kakao.png" alt="">
                         <span>카카오 로그인</span>
                     </button>
-                    <button type="button" class="btn btn--green d-flex mt-10">
+                    <button type="button" name="naverLogin" class="btn btn--green d-flex mt-10">
                         <img src="/image/sub/icon/icon-naver.png" alt="">
                         <span>네이버 로그인</span>
                     </button>
@@ -54,7 +55,7 @@
                             <input type="text" placeholder="" />
                         </div>
                     </div>
-                    <button type="button" class="btn btn--blue mt-20">주문 내역 조회하기</button>
+                    <button type="button" name="seltOrder" class="btn btn--blue mt-20">주문 내역 조회하기</button>
                     <a href="/signUp" class="link-to-join mt-15">회 원 가 입</a>
                 {{/if}}
             </div>
@@ -64,4 +65,5 @@
             </p>
         </div>
     </section>
+    {{> utilsPopUp popup}}
 </template>
