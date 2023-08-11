@@ -4,6 +4,9 @@ import { BsnsMber, SnsMber, Mber, Atwrk } from '../lib/collections.js';
 
 // 회원관련 조회 및 서버 로직
 
+const tempPath = Meteor.settings.tempPath;
+const imagesPath = Meteor.settings.imagesPath;
+
 // 리턴 용 함수
 function setRetData(list) { 
   var retList = [];
@@ -110,8 +113,8 @@ Meteor.methods({
         let userId = this.userId;
         var update = { $set : {}};
         if(image != undefined && image != '') {
-          var tempDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/";
-          var imageDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/";
+          var tempDir = tempPath;
+          var imageDir = imagesPath;
 
           var blob = Meteor.wrapAsync(fs.readFile)(tempDir + image);
 

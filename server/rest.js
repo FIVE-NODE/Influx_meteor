@@ -1,9 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import fs from 'fs';
 
+const tempPath = Meteor.settings.tempPath;
+const imagesPath = Meteor.settings.imagesPath;
+
 WebApp.connectHandlers.use('/temp', (req, res, next) => {
     var filename = req.originalUrl.split("/")[2];
-    filename = '/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/' + filename;
+    filename = tempPath + filename;
     var fsReadFile = Meteor.wrapAsync(fs.readFile);
     var img = fsReadFile(filename);
 
@@ -12,7 +15,7 @@ WebApp.connectHandlers.use('/temp', (req, res, next) => {
 });
 
 WebApp.connectHandlers.use('/images', (req, res, next) => {
-    var filename = '/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/' + req.originalUrl.split("/")[2];
+    var filename = imagesPath + req.originalUrl.split("/")[2];
     
     var img = Meteor.wrapAsync(fs.readFile)(filename);
 

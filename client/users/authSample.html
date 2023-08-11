@@ -1,0 +1,25 @@
+<template name="authSample">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="section-seperate section-seperate--login bg--gray h-100">
+        <div class="section-seperate__inner width--650 mx-auto bg--white ta-c">
+            <h1 class="section-seperate__logo">
+                <a href=""> <img class="login-main-logo-img" src="/image/common/img-logo-default.png" alt=""> </a>
+            </h1>
+            <div class="tab-wrap tab-wrap--join"></div>
+            <div class="" style="width: 100%;text-align: center;">
+                <div class="form-wrap mt-15">
+                    <div class="form-input mt-10">
+                        <input type="password" name="loginPwd" placeholder="접속 비밀번호를 입력해주세요" />
+                    </div>
+                </div>
+                <button type="button" name="loginBtn" class="btn btn--blue mt-20" style="width: 257px;">접 속</button>
+            </div>
+            <p class="copyright--join">
+                <img class="login-footer-logo-img" src="/image/common/img-logo-join.png" alt="">
+                <span>Copyright ⓒSJLab Corp. All Rights Reserved.</span>
+            </p>
+        </div>
+    </section>
+    {{> utilsPopUp popup}}
+</template>

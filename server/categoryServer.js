@@ -4,6 +4,9 @@ import { Atwrk, Evnt, Pick } from '../lib/collections.js';
 
 // 원화 는 원화만, 디지털 판화는 판화만 특정 카테고리만 조회 하는 서버로직
 
+const tempPath = Meteor.settings.tempPath;
+const imagesPath = Meteor.settings.imagesPath;
+
 Meteor.methods({
     // 원화작품만 조회 (필터 조건 or 전부)
     selectOrgAtwrk: function(data, option) {
@@ -421,8 +424,8 @@ Meteor.methods({
         var findPick = Pick.findOne({ thmTp });
 
         if(data.image != undefined && data.image != '') {
-          var tempDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/";
-          var imageDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/";
+          var tempDir = tempPath;
+          var imageDir = imagesPath;
 
           var blob = Meteor.wrapAsync(fs.readFile)(tempDir + data.image);
 
@@ -491,3 +494,4 @@ Meteor.methods({
       } 
     }
 });
+

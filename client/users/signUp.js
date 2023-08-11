@@ -37,6 +37,8 @@ Template.signUp.onCreated(function() {
     emailSelf       = new ReactiveVar(false);   // 이메일 직접 입력 선택
 
     timerId         = new ReactiveVar();        // 인터벌 Id
+
+    Meteor.subscribe('userData');
 });
 
 Template.signUp.onRendered(function() {
@@ -99,9 +101,15 @@ Template.signUp.events({
             }, function(err, res) {
                 if(err) console.log(err);
                 else {
-                    console.log(res);
-                    alert('회원가입이 완료되었습니다.');
-                    FlowRouter.go('/login');
+                    Meteor.logout(function(error) {
+                        if(error) console.log(error);
+                        else {
+                            sessionStorage.removeItem('art_dex');
+                            sessionStorage.removeItem('art_session_index');
+                            FlowRouter.go('/login');
+                            alert('회원가입이 완료되었습니다.');
+                        }
+                    });
                 }
             });
         }
@@ -119,8 +127,12 @@ Template.signUp.events({
             var email =  $('input[name=email]').val();
             var address = $('select[name=emailSelect]').val();
 
+
             emailChk.set(true);
-            emailValue.set(email + '@' + address);
+            if(emailSelf.get()) emailValue.set(email + '@' + $('#selfEmAdrs').val());
+            else emailValue.set(email + '@' + address);
+
+            console.log(emailValue.get());
 
             $('select[name=emailSelect]').attr('disabled', true);
             $('#selfEmAdrs').attr('disabled', true);
@@ -294,7 +306,7 @@ function emailSendToUser() {
 
 function emailTimeChk(reSendFlag) {
     if(reSendFlag) {
-        Meteor.clearInterval(x);
+        Meteor.clearInterval(timerId.get());
         timeValue.set();
     }
 

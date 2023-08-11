@@ -16,9 +16,9 @@ import './rest.js';
 const crypto = require('crypto');
 const key = 'tester1234567890tester1234567890';
 const iv  = 'tester1234567890';
-
-Accounts.mber = Mber;
-Accounts.bsnsmber = BsnsMber;
+const tempPath = Meteor.settings.tempPath;
+const imagesPath = Meteor.settings.imagesPath;
+const deletePath = Meteor.settings.delPath;
 
 Meteor.startup(() => {
   var smtp = {
@@ -39,15 +39,15 @@ Meteor.onConnection(conn => {
   
 });
 
-Accounts.onCreateUser((options, user) => {
-  console.log('onCreateUser : ', user);
+// Accounts.onCreateUser((options, user) => {
+//   console.log('onCreateUser : ', user);
 
-  user._id = Meteor.commonUtils.generateUUID();
+//   user._id = Meteor.commonUtils.generateUUID();
 
-  console.log('sertCreateUser : ', user );
+//   console.log('sertCreateUser : ', user );
 
-  return user;
-});
+//   return user;
+// });
 
 Meteor.methods({
   // Pick 큐레이터 픽
@@ -135,8 +135,8 @@ Meteor.methods({
       var image = [];
       var imgAll = data.imgAll;
       
-      var tempDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/";
-      var imageDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/";
+      var tempDir = tempPath;
+      var imageDir = imagesPath;
       for(val in imgAll) {
         var imgUrl = '';
 
@@ -252,7 +252,7 @@ Meteor.methods({
       let res = Atwrk.update({_id : _id}, { $set : oldData });
 
       var delList = data.deleteList;
-      var delPath = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/";
+      var delPath = deletePath;
       for(idx in delList) {
         fs.unlinkSync(delPath + delList[idx]);
       }
@@ -273,8 +273,8 @@ Meteor.methods({
       // 이미지 처리 Temp -> 메인 폴더로 이동 및 img insert 셋팅
       var image = [];
       var imgAll = data.imgAll;
-      var tempDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/";
-      var imageDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/";
+      var tempDir = tempPath;
+      var imageDir = imagesPath;
       for(val in imgAll) {
         var imgUrl = '';
 
@@ -563,7 +563,7 @@ Meteor.methods({
   },
   // 파일 업로드
   saveFile(image = {blob: "", name: "", encoding: ""}) {
-    var path = '/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/';
+    var path = tempPath;
     
     var date = new Date();
     date = moment(date).format('YYYYMMDDHHmmss');

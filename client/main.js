@@ -86,6 +86,9 @@ import '../lib/router.js';
 // 공통 도우미
 import './lib/helpers.js';
 
+// 임시 화면
+import './users/authSample.js';
+
 Template.body.onCreated(function() {
 
   // chPage = new ReactiveVar('aOne');

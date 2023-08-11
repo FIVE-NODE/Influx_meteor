@@ -36,11 +36,16 @@ Template.bidAmount.helpers({
     directPric() {
     },
     bidLength() {
-        return this.ogPrt.bid.bidInfo.length;
+        if(this.ogPrt.bid.bidInfo != undefined) {
+            return this.ogPrt.bid.bidInfo.length;
+        }
+        
     },
     autoPricBid(perSent) {
-        var nPric = this.ogPrt.bid.nPric;
-        var chPric = Math.floor((nPric * perSent) + nPric);
-        return chPric;
+        if(this.ogPrt.bid.nPric != undefined) {
+            var nPric = this.ogPrt.bid.nPric;
+            var chPric = Math.floor((nPric * perSent) + nPric);
+            return chPric;
+        }
     },
 });

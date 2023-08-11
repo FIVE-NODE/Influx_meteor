@@ -40,12 +40,12 @@ function lnbFn(){
 }
 
 function imgSwitch(){
-    $('.imgGroup-detail__favor').click(function() {
-        $(this).toggleClass('is-click');
-    });
-    $('a[name=aTagoodBtn]').click(function() {
-        $('.imgGroup-detail__favor').toggleClass('is-click');
-    });
+    // $('.imgGroup-detail__favor').click(function() {
+    //     $(this).toggleClass('is-click');
+    // });
+    // $('a[name=aTagoodBtn]').click(function() {
+    //     $('.imgGroup-detail__favor').toggleClass('is-click');
+    // });
 }
 
 function subTab(){

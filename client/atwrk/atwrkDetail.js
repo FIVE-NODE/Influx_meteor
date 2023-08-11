@@ -321,31 +321,34 @@ Template.atwrkDetail.events({
     },
     // 좋아요 버튼 이벤트
     'click .goodBtnEvt'(evt, tmpl) {
-        var ogGoodCnt = $('span[name=ogPrtGoodCnt]');
-        var dtGoodCnt = $('span[name=dtPrtGoodCnt]');
-
-        var goodBtn = $('button[name=goodBtn]');
-        
-        if(goodBtn.hasClass('is-click') === false) {
-            if(bothFlag) {
-                ogGoodCnt.text(ogGoodCnt.text() - 1);
-                dtGoodCnt.text(dtGoodCnt.text() - 1);
-            } else {
-                if(tabFlag.get() === 'ogPrt') ogGoodCnt.text(ogGoodCnt.text() - 1);
-                else dtGoodCnt.text(dtGoodCnt.text() - 1);
-            }
-        } else {
-            if(bothFlag) {
-                ogGoodCnt.text(parseInt(ogGoodCnt.text()) + 1);
-                dtGoodCnt.text(parseInt(dtGoodCnt.text()) + 1);
-            } else {
-                if(tabFlag.get() === 'ogPrt') ogGoodCnt.text(parseInt(ogGoodCnt.text()) + 1);
-                else dtGoodCnt.text(parseInt(dtGoodCnt.text()) + 1);
-            }
-        }
-
         // 좋아요 로직
-        if(userInfos.get() != undefined) {
+        console.log(Meteor.userId());
+        if(Meteor.userId() != undefined) {
+            $('.imgGroup-detail__favor').toggleClass('is-click');
+
+            var ogGoodCnt = $('span[name=ogPrtGoodCnt]');
+            var dtGoodCnt = $('span[name=dtPrtGoodCnt]');
+
+            var goodBtn = $('button[name=goodBtn]');
+            
+            if(goodBtn.hasClass('is-click') === false) {
+                if(bothFlag) {
+                    ogGoodCnt.text(ogGoodCnt.text() - 1);
+                    dtGoodCnt.text(dtGoodCnt.text() - 1);
+                } else {
+                    if(tabFlag.get() === 'ogPrt') ogGoodCnt.text(ogGoodCnt.text() - 1);
+                    else dtGoodCnt.text(dtGoodCnt.text() - 1);
+                }
+            } else {
+                if(bothFlag) {
+                    ogGoodCnt.text(parseInt(ogGoodCnt.text()) + 1);
+                    dtGoodCnt.text(parseInt(dtGoodCnt.text()) + 1);
+                } else {
+                    if(tabFlag.get() === 'ogPrt') ogGoodCnt.text(parseInt(ogGoodCnt.text()) + 1);
+                    else dtGoodCnt.text(parseInt(dtGoodCnt.text()) + 1);
+                }
+            }
+
             var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
             var atwrkFlag = tabFlag.get();
 
