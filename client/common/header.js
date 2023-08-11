@@ -62,7 +62,7 @@ Template.header.events({
                 name    : '10~30 만원'
             }];
             FlowRouter.go('/digitalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
-        } else {
+        } else if(kind == '500만원 이상(원화)'){
             queryData.ARTWORK_PRICE_OGPRT = [{
                 code    : '004',
                 min     : 5000000,

@@ -1,0 +1,276 @@
+<template name="atwrkSalesReg">
+    <link rel="stylesheet" href="/css/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/lib/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__mypage">
+                        <div class="mypage-subtit">
+                            <div class="mypage-subtit__inner">
+                                <p class="font-pre">판     매</p>
+                            </div>
+                        </div>
+                        <div class="saleCondition-wrap mt-40">
+                            <div class="saleCondition__inner width--950 mx-auto">
+                                <div class="saleCondition-checks">
+                                    <h4 class="saleCondition__tit">판매 방식선택</h4>
+                                    <div class="saleCondition-block saleCondition-block--method mt-10">
+                                        <div class="form-wrap">
+                                            <div class="form-input">
+                                                <label for="check-saleCondition--method01">
+                                                    <span>정 찰 가</span>
+                                                    <input type="radio" name="check-saleCondition--method" value="001" id="check-saleCondition--method01">
+                                                </label>
+                                            </div>
+                                            <div class="form-input">
+                                                <label for="check-saleCondition--method02">
+                                                    <span>정 찰 가 ( 가격 흥정 허용)</span>
+                                                    <input type="radio" name="check-saleCondition--method" value="003" id="check-saleCondition--method02">
+                                                </label>
+                                            </div>
+                                            <div class="form-input" name="">
+                                                <label for="check-saleCondition--method03">
+                                                    <span>비      딩  (옥 션)</span>
+                                                    <input type="radio" name="check-saleCondition--method" value="002" id="check-saleCondition--method03">
+                                                </label>
+                                            </div>
+                                            <div class="form-input">
+                                                <label for="check-saleCondition--method04">
+                                                    <span>구    입    문    의</span>
+                                                    <input type="radio" name="check-saleCondition--method" value="004" id="check-saleCondition--method04">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{#if scout}}
+                                        <h4 class="saleCondition__tit mt-30">가격 입력</h4>
+                                        <div class="saleCondition-block saleCondition-block--price mt-10">
+                                            <div class="form-wrap">
+                                                <div class="form-input">
+                                                    <input type="text" name="pric">
+                                                    <label for="">원</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{/if}}
+
+                                    {{#if scoutBargain}}
+                                        <h4 class="saleCondition__tit mt-30">가격 입력</h4>
+                                        <div class="saleCondition-block saleCondition-block--price mt-10">
+                                            <div class="form-wrap">
+                                                <div class="form-input">
+                                                    <input type="text" name="pric">
+                                                    <label for="">원</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{/if}}
+
+                                    {{#if bid}}
+                                        <h4 class="saleCondition__tit mt-30">시작 가격 입력</h4>
+                                        <div class="saleCondition-block saleCondition-block--price mt-10">
+                                            <div class="form-wrap">
+                                                <div class="form-input">
+                                                    <input type="text" name="strPric">
+                                                    <label for="">원</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h4 class="saleCondition__tit mt-30">즉시 구매 가격 입력</h4>
+                                        <div class="saleCondition-block saleCondition-block--price mt-10">
+                                            <div class="form-wrap">
+                                                <div class="form-input">
+                                                    <input type="text" name="endPric">
+                                                    <label for="">원</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{/if}}
+
+                                    <h4 class="saleCondition__tit mt-30">판매기간</h4>
+                                    <div class="saleCondition-block mt-10">
+                                        <div class="form-wrap">
+                                            <div class="guide-item__cont--component">
+                                                <div class="component-item">
+                                                    <div>
+                                                        <div class="sch-block">
+                                                            <div class="form-wrap form-row">
+                                                                <div class="form-input width--125">
+                                                                    <input type="text" class="js-datepicker" name="sellStrDate" value="">
+                                                                </div>
+                                                                <span class="ml-5 mr-5">-</span>
+                                                                <div class="form-input width--125">
+                                                                    <input type="text" class="js-datepicker" name="sellEndDate" value="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="saleCondition__tit mt-30">
+                                        판매수수료
+                                        <span class="ml-100 font-18 fontW-b color--sea">5%</span>
+                                    </h4>
+                                    <div class="txt-wrap d-flex width--465 mt-30 justify-between">
+                                        <p class="font-24 fontW-b">최종 판매 개시 금액</p>
+                                        <span class="font-24 fontW-b font-pre">{{ogTotalPric}}   원</span> 
+                                    </div>
+                                    
+                                    {{#if scoutBargain}}
+                                        <h4 class="saleCondition__tit mt-30">구매자 흥정 (가격제안) 범위 선택 </h4>
+                                        <div class="saleCondition-block saleCondition-block--suggest mt-20">
+                                            <div class="d-flex flex-wrap width--465">
+                                                <div class="w-50 flex-1">
+                                                    <div class="form-wrap">
+                                                        <div class="form-block first-choice">
+                                                            <div class="form-input">
+                                                                <label for="check-saleCondition-suggest--01">선택 1</label>
+                                                                <input type="checkbox" id="check-saleCondition-suggest--01" class=" mr-10">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-block second-choice mt-5">
+                                                            <div class="form-check">
+                                                                <label for="check-saleCondition-suggest--0101">
+                                                                    <input type="radio" name="check-saleCondition-suggest01" id="check-saleCondition-suggest--0101">
+                                                                    <span>
+                                                                        1,000,000 원
+                                                                        <em>현 판매 가격</em>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w-50 flex-1 ml-10">
+                                                    <div class="form-wrap">
+                                                        <div class="form-block first-choice">
+                                                            <div class="form-input">
+                                                                <label for="check-saleCondition-suggest--02">선택 2</label>
+                                                                <input type="checkbox" id="check-saleCondition-suggest--02" class=" mr-10">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-block second-choice mt-5">
+                                                            <div class="form-check">
+                                                                <label for="check-saleCondition-suggest--0201">
+                                                                    <input type="radio" name="check-saleCondition-suggest02" id="check-saleCondition-suggest--0201">
+                                                                    <span>
+                                                                        1,000,000 원
+                                                                        <em>현 판매 가격</em>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="w-100 mt-5 font-11 color--sky">*판매 수수료가 포함된 가격입니다.</p>
+                                            </div>
+                                        </div>
+                                    {{/if}}
+
+                                    <h4 class="saleCondition__tit"></h4>
+                                    <div class="saleCondition-block saleCondition-block--permit mt-30">
+                                        <div class="form-wrap">
+                                            <div class="form-check">
+                                                <label for="check-saleCondition--permit01">
+                                                    <span>디지털 판화 동시판매 허용 </span>
+                                                    <input type="checkbox" id="check-saleCondition--permit01">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div name="digitalSell" style="display: none;">
+                                    <h4 class="saleCondition__tit mt-30">가격 입력</h4>
+                                    <div class="saleCondition-block saleCondition-block--price mt-10">
+                                        <div class="form-wrap">
+                                            <div class="form-input">
+                                                <input type="text">
+                                                <label for="">원</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="saleCondition__tit mt-30">허용작품수</h4>
+                                    <div class="saleCondition-block saleCondition-block--permitNum mt-10">
+                                        <div class="form-wrap">
+                                            <div class="form-row">
+                                                <div class="form-select form-select-custom">
+                                                    <button type="button" class="custom-select__tit height-55 pl-10">100작품</button>
+                                                    <ul class="custom-select__options" style="display: none;">
+                                                        <li class="is-active"><button type="button">200작품</button></li>
+                                                        <li><button type="button">300작품 </button></li>
+                                                        <li><button type="button">   1 </button></li>
+                                                        <li><button type="button">   2 </button></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="calc-box">
+                                                    50,000
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="saleCondition__tit mt-30">판매기간</h4>
+                                    <div class="saleCondition-block mt-10">
+                                        <div class="form-wrap">
+                                            <div class="guide-item__cont--component">
+                                                <div class="component-item">
+                                                    <div>
+                                                        <div class="sch-block">
+                                                            <div class="form-wrap form-row">
+                                                                <div class="form-input width--125">
+                                                                    <input type="text" class="js-datepicker" value="">
+                                                                </div>
+                                                                <span class="ml-5 mr-5">-</span>
+                                                                <div class="form-input width--125">
+                                                                    <input type="text" class="js-datepicker" value="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="saleCondition__tit mt-30">
+                                        판매수수료
+                                        <span class="ml-100 font-18 fontW-b color--sea">5%</span>
+                                    </h4>
+                                    <div class="txt-wrap d-flex width--465 mt-30 justify-between">
+                                        <p class="font-24 fontW-b">최종 판매 개시 금액</p>
+                                        <span class="font-24 fontW-b font-pre">{{dtTotalPric}}   원</span> 
+                                    </div>
+                                    </div>
+
+                                </div>
+                                {{#with atInfo}}
+                                <div class="saleCondition-profile">
+                                    <span class="saleCondition-profile__img">
+                                        <img src="{{selectMainImage this}}" alt="">
+                                    </span>
+                                    <p class="saleCondition-profile__txt">
+                                            <strong>{{atstInfo.atstNm}}</strong>
+                                            <span>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName ogPrt.metRias "MATERIAL"}}</span>
+                                            <em>{{commaPric ogPrt.pric}}원</em>
+                                        </p>
+                                </div>
+                                {{/with}}
+                                <div class="btn-wrap mt-100 mb-100 ta-c">
+                                    <button type="button" class="exbtn-simple btn--round btn--white height-40 width--149 font-pre">취     소</button>
+                                    <button type="button" class="exbtn-simple btn--round btn--blue height-40 width--149 ml-50 font-pre">판     매</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>

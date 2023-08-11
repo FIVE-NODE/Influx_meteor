@@ -38,8 +38,8 @@ function maxLengthCheck(object){
 }
 
 Template.deliveryEdit.events({
-    'change #check-addrWrite--no'(evt, tmpl) {
-        if($('#check-addrWrite--no').is(':checked')) {
+    'change #check-addrWrite--no-edit'(evt, tmpl) {
+        if($('#check-addrWrite--no-edit').is(':checked')) {
             $('.homephones').attr('disabled', true);
             homePhChk.set(true);
         } else {
@@ -47,35 +47,35 @@ Template.deliveryEdit.events({
             homePhChk.set(false);
         }
     },
-    'click button[name=selectDeliv]'(evt, tmpl) {
+    'click button[name=editSelectDeliv]'(evt, tmpl) {
         var selection = $(evt.currentTarget).first().text();
         if(selection === '직접입력') $('input[name=delivReqEtc]').show();
         else $('input[name=delivReqEtc]').hide();
         selectDeliv.set(selection);
     },
-    'change #check-addrWrite--default'(evt, tmpl) {
-        if($('#check-addrWrite--default').is(':checked')) {
+    'change #check-addrWrite--default-edit'(evt, tmpl) {
+        if($('#check-addrWrite--default-edit').is(':checked')) {
             defDelivYn.set(true);
         } else {
             defDelivYn.set(false);
         }
     },
-    'input input[name=mob1]'(evt, tmpl)  {
+    'input input[name=editMob1]'(evt, tmpl)  {
         maxLengthCheck(evt.currentTarget);
     },
-    'input input[name=mob2]'(evt, tmpl)  {
+    'input input[name=editMob2]'(evt, tmpl)  {
         maxLengthCheck(evt.currentTarget);
     },
-    'input input[name=mob3]'(evt, tmpl)  {
+    'input input[name=editMob3]'(evt, tmpl)  {
         maxLengthCheck(evt.currentTarget);
     },
-    'input input[name=homePhone1]'(evt, tmpl)  {
+    'input input[name=editHomePhone1]'(evt, tmpl)  {
         maxLengthCheck(evt.currentTarget);
     },
-    'input input[name=homePhone2]'(evt, tmpl)  {
+    'input input[name=editHomePhone2]'(evt, tmpl)  {
         maxLengthCheck(evt.currentTarget);
     },
-    'input input[name=homePhone3]'(evt, tmpl)  {
+    'input input[name=editHomePhone3]'(evt, tmpl)  {
         maxLengthCheck(evt.currentTarget);
     },
     'click button[name=addrsBtn]'(evt, tmpl) {

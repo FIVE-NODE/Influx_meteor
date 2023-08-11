@@ -8,7 +8,7 @@ Template.glryAtwrks.onCreated(function() {
     skip = new ReactiveVar(0);
     limit = new ReactiveVar(15);
     total = new ReactiveVar(0);
-
+ 
     query = {};
 
     options = {
@@ -69,13 +69,21 @@ Template.glryAtwrks.onRendered(function() {
 });
 
 Template.glryAtwrks.events({
+    'click a[name=salesReg]'(evt, tmpl) {
+        var atwrkId = $(evt.currentTarget).attr('id');
+        FlowRouter.go('/atwrkSalesReg', {}, {atwrkId});
+    },
+    'click a[name=atwrkEditBtn]'(evt, tmpl) {
+        var atwrkId = $(evt.currentTarget).attr('id').split('_')[1];
+        FlowRouter.go('/ogAtwrkCr', {}, {atwrkId});
+    },
     'click button[name=inventory]'(evt, tmpl) {
         console.log('inventory');
         FlowRouter.go('/inventoryMode');
     },
     'click button[name=crAtwrk]'(evt, tmpl) {
-        console.log($(evt.currentTarget).val());
-        // FlowRouter.go('');
+        var flag = $(evt.currentTarget).val();
+        FlowRouter.go('/ogAtwrkCr', {}, { flag });
     },
     'change input[name=allChkBox]'(evt, tmpl) {
         // 작품 전체 선택

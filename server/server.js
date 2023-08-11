@@ -125,14 +125,266 @@ Meteor.methods({
       )
     }
   },
-  insertAtwrk: function(req) {
+  updateAtwrk: function(data) {
     try {
-      const uuid = Meteor.commonUtils.generateUUID();
-      
-      var data = req;
-      data._id = uuid;
+      console.log('data', data);
+      var _id = data._id;
 
-      var res = Atwrk.insert(data);
+      let oldData =  Atwrk.findOne({ _id });
+
+      var image = [];
+      var imgAll = data.imgAll;
+      
+      var tempDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/";
+      var imageDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/";
+      for(val in imgAll) {
+        var imgUrl = '';
+
+        var tempChk = imgAll[val].split('/');
+
+        if(tempChk.length == 1) {
+          var blob = Meteor.wrapAsync(fs.readFile)(tempDir + imgAll[val]);
+
+          Meteor.wrapAsync(fs.writeFile)(imageDir + imgAll[val], blob);
+
+          imgUrl = "/images/" + imgAll[val];
+        } else imgUrl = imgAll[val];
+
+        var imgObj = {
+          atwrkTp   : data.atwrkTp,
+          imgID     : imgUrl,
+          imgSortNo : 0,
+          rprsn     : "",
+        };
+
+        if(val == 'mainUploadImg') {
+          imgObj.rprsn = "Y";
+          imgObj.size = data.mainImgSize;
+          imgObj.imgSortNo = 0;
+        } else {
+          var sortNum = parseInt(val.split('_')[1]);
+          imgObj.rprsn = "N";
+          imgObj.imgSortNo = (sortNum);
+        }
+
+        image.push(imgObj);
+      }
+
+      if(data.atstImage != undefined) {
+        var tempChk = data.atstImage.split('/');
+        if(tempChk.length == 1) {
+          var blob = Meteor.wrapAsync(fs.readFile)(tempDir + data.atstImage);
+
+          Meteor.wrapAsync(fs.writeFile)(imageDir + data.atstImage, blob);
+
+          data.atstImage = "/images/" + data.atstImage;
+        }
+      }
+
+      var glryInfo = Meteor.users.findOne({_id : this.userId});
+
+      var glry = {
+        bsnsID: glryInfo._id,
+        glryNm: glryInfo.profile.uInfos.glryNm,
+        area: glryInfo.profile.uInfos.area,
+        dong: glryInfo.profile.uInfos.dong,
+        sigungu: glryInfo.profile.uInfos.sigungu
+      }
+      var atstInfo = {
+        atstNm      : data.atstNm,
+        atstDesc    : data.atstDesc,
+        atstAddDesc : data.atstAddDesc,
+        atstImage   : data.atstImage,
+        invNm : '',
+      }
+
+      var dtPric = parseInt(data.dtPric.replace(',', ''));
+      var dtPrt = {
+        atwkNm    : data.atwrkNm,
+        mkYY      : data.mkYY,
+        base      : data.base == undefined ? '' : data.base,
+        style1    : data.style1,
+        style2    : data.style2,
+        leCnt     : 0,
+        selCnt    : 0,
+        selStrDt  : "",
+        selEndDt  : "",
+        viewCnt   : 0,
+        goodCnt   : 0,
+        sPric     : dtPric,
+        mPric     : dtPric,
+        lPric     : dtPric
+      };
+
+      var ogPric = parseInt(data.ogPric.replace(',', ''));
+      var ogPrt = {
+        atwrkNm : data.atwrkNm,
+        mkYY    : data.mkYY,
+        medium  : data.medium,
+        metRias : data.metRias,
+        style1  : data.style1,
+        style2  : data.style1,
+        pric    : ogPric,
+        sellTp  : "",
+        wartyYn : data.guarant,
+        catgYn  : data.catlog,
+        viewCnt : 0,
+        goodCnt : 0,
+        bid     : {},
+        wSize   : data.wSize,
+        hSize   : data.hSize,
+        dSize   : data.dSize
+      };
+
+      if(data.atwrkTp == '001') dtPrt = {};
+      else if(data.atwrkTp == '002') ogPrt = {};
+
+      var toDate = moment(new Date()).format('YYYYMMDD');
+
+      oldData.image = image;
+      oldData.atstInfo = atstInfo;
+      oldData.glry = glry;
+      oldData.dtPrt = dtPrt;
+      oldData.ogPrt = ogPrt;
+      oldData.sngl = data.sngl;
+      oldData.updDt = toDate;
+
+      let res = Atwrk.update({_id : _id}, { $set : oldData });
+
+      var delList = data.deleteList;
+      var delPath = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/";
+      for(idx in delList) {
+        fs.unlinkSync(delPath + delList[idx]);
+      }
+
+      return res;
+    } catch(e) {
+      console.log('Error : ', e);
+      throw new Meteor.Error(
+        500,
+        '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+      )
+    }
+  },
+  insertAtwrk: function(data) {
+    try {
+      const _id = Meteor.commonUtils.generateUUID();
+
+      // 이미지 처리 Temp -> 메인 폴더로 이동 및 img insert 셋팅
+      var image = [];
+      var imgAll = data.imgAll;
+      var tempDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/";
+      var imageDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/";
+      for(val in imgAll) {
+        var imgUrl = '';
+
+        var blob = Meteor.wrapAsync(fs.readFile)(tempDir + imgAll[val]);
+
+        Meteor.wrapAsync(fs.writeFile)(imageDir + imgAll[val], blob);
+
+        imgUrl = "/images/" + imgAll[val];
+
+        var imgObj = {
+          atwrkTp   : data.atwrkTp,
+          imgID     : imgUrl,
+          imgSortNo : 0,
+          rprsn     : "",
+        };
+
+        if(val == 'mainUploadImg') {
+          imgObj.rprsn = "Y";
+          imgObj.size = data.mainImgSize;
+          imgObj.imgSortNo = 1;
+        } else {
+          var sortNum = parseFloat(val.split('_')[1]);
+          imgObj.rprsn = "N";
+          imgObj.imgSortNo = (sortNum + 1);
+        }
+        image.push(imgObj);
+      }
+      
+      if(data.atstImage != undefined) {
+        var blob = Meteor.wrapAsync(fs.readFile)(tempDir + data.atstImage);
+
+        Meteor.wrapAsync(fs.writeFile)(imageDir + data.atstImage);
+
+        data.atstImage = "/images/" + data.atstImage;
+      }
+
+      var glryInfo = Meteor.users.findOne({_id : this.userId});
+
+      var glry = {
+        bsnsID: glryInfo._id,
+        glryNm: glryInfo.profile.uInfos.glryNm,
+        area: glryInfo.profile.uInfos.area,
+        dong: glryInfo.profile.uInfos.dong,
+        sigungu: glryInfo.profile.uInfos.sigungu
+      }
+      var atstInfo = {
+        atstNm      : data.atstNm,
+        atstDesc    : data.atstDesc,
+        atstAddDesc : data.atstAddDesc,
+        atstImage   : data.atstImage,
+        invNm : '',
+      }
+
+      var dtPric = parseInt(data.dtPric.replace(',', ''));
+      var dtPrt = {
+        atwkNm    : data.atwrkNm,
+        mkYY      : data.mkYY,
+        base      : data.base == undefined ? '' : data.base,
+        style1    : data.style1,
+        style2    : data.style2,
+        leCnt     : 0,
+        selCnt    : 0,
+        selStrDt  : "",
+        selEndDt  : "",
+        viewCnt   : 0,
+        goodCnt   : 0,
+        sPric     : dtPric,
+        mPric     : dtPric,
+        lPric     : dtPric
+      };
+
+      var ogPric = parseInt(data.ogPric.replace(',', ''));
+      var ogPrt = {
+        atwrkNm : data.atwrkNm,
+        mkYY    : data.mkYY,
+        medium  : data.medium,
+        metRias : data.metRias,
+        style1  : data.style1,
+        style2  : data.style1,
+        pric    : ogPric,
+        sellTp  : "",
+        wartyYn : data.guarant,
+        catgYn  : data.catlog,
+        viewCnt : 0,
+        goodCnt : 0,
+        bid     : {},
+        wSize   : data.wSize,
+        hSize   : data.hSize,
+        dSize   : data.dSize
+      };
+
+      if(data.atwrkTp == '001') dtPrt = {};
+      else if(data.atwrkTp == '002') ogPrt = {};
+
+      var toDate = moment(new Date()).format('YYYYMMDD');
+  
+      var createData = {
+        _id,
+        image,
+        atstInfo,
+        glry,
+        dtPrt,
+        ogPrt,
+        sellYn: "N",
+        sngl: data.sngl,
+        updDt: "",
+        insDt: toDate,
+      };
+
+      var res = Atwrk.insert(createData);
       
       return res;
     } catch(e) {

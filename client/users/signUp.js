@@ -1,5 +1,6 @@
 import { Random } from 'meteor/random'; 
 import { Accounts } from 'meteor/accounts-base';
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 // 메인 회원가입 화면
 import './signUp.html';
@@ -34,12 +35,20 @@ Template.signUp.onCreated(function() {
     termChk         = new ReactiveVar(false);   // 약관(필수) 동의 체크
 
     emailSelf       = new ReactiveVar(false);   // 이메일 직접 입력 선택
+
+    timerId         = new ReactiveVar();        // 인터벌 Id
 });
 
 Template.signUp.onRendered(function() {
 });
 
 Template.signUp.events({
+    'click a[name=naverSig]'(evt, tmpl) {
+        messagePopup({message : '네이버 연동 준비중 입니다.'});
+    },
+    'click a[name=kakaoSig]'(evt, tmpl) {
+        messagePopup({message : '카카오 연동 준비중 입니다.'});
+    },
     // 회원가입 버튼 누를경우 유효성 검사 및 가입시키기
     'click button[name=sginUp]'() {
         var terms = $('input[name=essChk]:checked').length;
@@ -87,14 +96,12 @@ Template.signUp.events({
                         "cid": ""
                     }
                 }
-            }, function(error) {
-                if(error) console.log(error);
+            }, function(err, res) {
+                if(err) console.log(err);
                 else {
-                    messagePopup({
-                        message : '회원가입이 완료 되었습니다.',
-                        route : 'login',
-                        type: ''
-                    });
+                    console.log(res);
+                    alert('회원가입이 완료되었습니다.');
+                    FlowRouter.go('/login');
                 }
             });
         }
@@ -268,7 +275,7 @@ function emailSendToUser() {
                 Meteor.call('sendEmail', {
                     to: email + '@' + address,
                     from: 'patrick@5node.co.kr',
-                    subject: '[Influx] 회원가입 이메일 인증 코드 입니다.',
+                    subject: '[SJLab] 회원가입 이메일 인증 코드 입니다.',
                     text: '이메일 인증 코드 : ' + code
                 }, function() {
                     sendDoneEmail.set(true);
@@ -297,6 +304,8 @@ function emailTimeChk(reSendFlag) {
     var result = '';
 
     var x = Meteor.setInterval(function() {
+        timerId.set(x);
+        
         min = parseInt(time / 60);
         sec = time % 60;
         

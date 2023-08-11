@@ -10,9 +10,17 @@ input[type="text"], input[type="password"]{
 .form{
     &-row{
         display:flex;
+        flex-wrap:nowrap;
         align-items:center;
+        margin:0;
         &.align-start{
             align-items: flex-start;
+        }
+        &.flex-wrap{
+            flex-wrap:wrap;
+        }
+        &.mt-10{
+            margin-top:1rem;
         }
     }
     &-input{
@@ -27,9 +35,21 @@ input[type="text"], input[type="password"]{
                 color:#B9B9B9;
             }
             &.height{
+                &-30{
+                    height:3rem;
+                }
+                &-35{
+                    height:3.5rem;
+                }
+                &-40{
+                    height:4rem;
+                }
                 &-45{
                     height:4.5rem;
                 }
+            }
+            &.h-100{
+                height:100%
             }
         }
         &__capt{
@@ -49,6 +69,11 @@ input[type="text"], input[type="password"]{
         select{
             height:4.8rem;
             border-radius:.5rem;
+            &.height{
+                &-40{
+                    height:4rem;
+                }
+            }
         }
         &-custom{
             position:relative;
@@ -115,6 +140,34 @@ input[type="text"], input[type="password"]{
             font-size:1.4rem;
             font-weight:500;
             color:#585858;
+        }
+        &--default{
+            input[type='radio']{
+                position:relative;
+                width:2rem;
+                height:2rem;
+                border-radius: 100%;
+                border:1px solid #02A4FF;
+                appearance: none;
+                &:checked{
+                    border:2px solid #02A4FF;
+                    &::before{
+                        width:1rem;
+                        height:1rem;
+                        background-color:#02A4FF;
+                        border-radius: 100%;
+                        @include pos(absolute, $t:50%, $l:50%);
+                        transform:translate(-50%, -50%);
+                        content:""
+                    }
+                }
+            }
+            label{
+                margin-right:1rem;
+                font-size:1.4;
+                font-weight:500;
+                color:#585858;
+            }
         }
     }
     &-check{
@@ -190,7 +243,55 @@ input[type="text"], input[type="password"]{
         }
     }
 }
-
+.switch{
+    position: relative;
+    display: inline-block;
+    width: 7rem;
+    height: 3rem;
+    input{
+        opacity: 0;
+        width: 0;
+        height: 0;
+        &:checked{
+            + .check-slide{
+                background-color: #02A4FF;
+                &::before{
+                    -webkit-transform: translateX(4rem);
+                    -ms-transform: translateX(4rem);
+                    transform: translateX(4rem);
+                }
+            }
+        }
+    }
+    .check-slide{
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #585858;
+        -webkit-transition: .4s;
+        transition: .4s;
+        &::before{
+            position: absolute;
+            height: 2.4rem;
+            width: 2.4rem;
+            left: .3rem;
+            bottom: .3rem;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;                    
+            content: "";
+        }
+        &--round{
+            border-radius: 3.4rem;
+            &::before{
+                border-radius: 50%;
+            }
+        }
+    }
+}
 .custom{
     &-select{
         border-radius:.5rem;
@@ -242,6 +343,19 @@ input[type="text"], input[type="password"]{
                     widtH:14.9rem;
                 }
                 
+            }
+            &.height{
+                &-30{
+                    height:3rem;
+                }
+                &-55{
+                    height:5.5rem;
+                }
+            }
+            &.pl{
+                &-10{
+                    padding-left:1rem;
+                }
             }
         }
         &__options{

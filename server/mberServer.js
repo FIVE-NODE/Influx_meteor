@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import fs from 'fs';
 import { BsnsMber, SnsMber, Mber, Atwrk } from '../lib/collections.js';
 
 // 회원관련 조회 및 서버 로직
@@ -32,6 +33,96 @@ Meteor.methods({
     nicNmChk: function(nicNm) {
       try {
         let res = Meteor.users.findOne({ 'profile.uInfos.nicNm' : nicNm});
+
+        return res;
+      } catch(e) {
+        console.log('Error : ', e);
+        throw new Meteor.Error(
+          500,
+          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 닉네임 변경
+    nicNmUpdate: function(nicNm) {
+      try {
+        let res = {};
+        let userId = this.userId;
+        
+        var toDate = moment(new Date()).format('YYYYMM');
+
+        var uData = Meteor.users.findOne({_id : userId});
+
+        var nicNmChgCnt = uData.profile.uInfos.nicNmChgCnt;
+        var nicNmChgMM = uData.profile.uInfos.nicNmChgMM;
+
+        console.log(toDate);
+        console.log(nicNmChgMM);
+        console.log(nicNmChgCnt);
+
+        if(toDate == nicNmChgMM) {
+          if(nicNmChgCnt == 4) {
+            res.message = '이번달 최대 변경횟수입니다.';
+          } else res = Meteor.users.update({_id : userId}, { $inc : { 'profile.uInfos.nicNmChgCnt' : 1 }, $set : { 'profile.uInfos.nicNm' : nicNm } });
+        } else res = Meteor.users.update({_id : userId}, { $set : { 'profile.uInfos.nicNmChgCnt' : 1 }, $set : { 'profile.uInfos.nicNm' : nicNm, 'profile.uInfos.nicNmChgMM' : toDate}});
+
+        return res;
+      } catch(e) {
+        console.log('Error : ', e);
+        throw new Meteor.Error(
+          500,
+          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 회원정보 이메일 인증 확인
+    chgEmailChk: function(email) {
+      try {
+        let res = Meteor.users.findOne({'profile.uInfos.email' : email});
+
+        return res;
+      } catch(e) {
+        console.log('Error : ', e);
+        throw new Meteor.Error(
+          500,
+          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 회원정보 이메일 인증 완료 후 변경 작업
+    uEmailUpd: function(email) {
+      try {
+        let userId = this.userId;
+        let res = Meteor.users.update({_id : userId}, { $set : { 'profile.uInfos.email' : email } });
+
+        return res;
+      } catch(e) {
+        console.log('Error : ', e);
+        throw new Meteor.Error(
+          500,
+          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 회원정보 프로필 사진 변경
+    uProfileImgChg: function(image) {
+      try {
+        let userId = this.userId;
+        var update = { $set : {}};
+        if(image != undefined && image != '') {
+          var tempDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/";
+          var imageDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/";
+
+          var blob = Meteor.wrapAsync(fs.readFile)(tempDir + image);
+
+          Meteor.wrapAsync(fs.writeFile)(imageDir + image, blob);
+
+          var url = "/images/" + image;
+
+          update.$set['profile.uInfos.pfImg'] = url;
+        }
+
+        let res = Meteor.users.update({_id : userId}, update);
 
         return res;
       } catch(e) {
@@ -497,7 +588,7 @@ Meteor.methods({
     defaultDelivChg: function(data) {
       try {
         let res = {};
-        let userId = Meteor.userId();
+        let userId = this.userId;
 
         // 기존 기본 배송지 변경 Y -> N
         Meteor.users.update(

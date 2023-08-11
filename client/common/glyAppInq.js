@@ -81,7 +81,7 @@ function emailSendToAdmin() {
         Meteor.call('sendEmail', {
             to: 'patrick@5node.co.kr',
             from: email,
-            subject: '[Influx] 파트너센터 문의',
+            subject: '[SJLab] 파트너센터 문의',
             text: `${desc}\n\n${partnerStatus.get()}\n${inqType.get()}`,
             attachments : ''
         }, function() {

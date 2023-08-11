@@ -48,7 +48,7 @@ Template.originalAtwrk.onCreated(function() {
 
     // sort 정보
     sortInfo = new ReactiveVar();
-
+    
     if(this.data.schQueryData() != undefined)  {
         filters.set(JSON.parse(this.data.schQueryData()));
     }

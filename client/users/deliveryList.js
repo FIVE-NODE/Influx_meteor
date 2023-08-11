@@ -14,9 +14,7 @@ Template.deliveryList.onRendered(function() {
 Template.deliveryList.events({
     // 기본 배송지 선택 이벤트
     'click button[name=defDelivYn]'(evt, tmpl) {
-        $('.is-active').removeClass('is-active');
         var evnt = $(evt.currentTarget);
-        evnt.parent('div').addClass('is-active');
         
         selectDelivData.set(delivData.get()[evnt.parent('div').attr('id')]);
 
@@ -32,6 +30,8 @@ Template.deliveryList.events({
 
         editDelivData.set(seltPastDelivData);
 
+        console.log(hPhoneList);
+
         $('input[name=editRecptnNm]').val(seltPastDelivData.recptnNm);
         $('input[name=editDelivNm]').val(seltPastDelivData.delivNm);
         $('input[name=editMob1]').val(mobList[0]);
@@ -44,8 +44,20 @@ Template.deliveryList.events({
         $('input[name=editAddress]').val(seltPastDelivData.addr1);
         $('input[name=editAddr2]').val(seltPastDelivData.addr2);
         $('input[name=editDelivReqEtc]').val(delivEtc);
-        $('#check-addrWrite--default-edit').prop('checked', seltPastDelivData.defDelivYn == 'Y');
-        $('#check-addrWrite--no-edit').prop('checked', hPhoneList.length != 0);
+
+        if(defadres.defDelivYn == 'Y') {
+            $('#check-addrWrite--default-edit').prop('checked', defadres.defDelivYn == 'Y');
+            defDelivYn.set(true);
+        } else {
+            $('#check-addrWrite--default-edit').prop('checked', false);
+            defDelivYn.set(false);
+        }
+
+        if(hPhoneList.length == 0) {
+            $('#check-addrWrite--no-edit').prop('checked', hPhoneList.length == 0);
+            $('#check-addrWrite--no-edit').prop('disabled', ture);
+        } else $('#check-addrWrite--no-edit').prop('checked', false);
+        
     },
     // 배송지 삭제
     'click button[name=delivDele]'(evt, tmpl) {

@@ -419,24 +419,23 @@ Meteor.methods({
         }
         
         var findPick = Pick.findOne({ thmTp });
-        
 
+        if(data.image != undefined && data.image != '') {
+          var tempDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/";
+          var imageDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/";
+
+          var blob = Meteor.wrapAsync(fs.readFile)(tempDir + data.image);
+
+          Meteor.wrapAsync(fs.writeFile)(imageDir + data.image, blob);
+
+          data.url = "/images/" + data.image;
+        }
+        
         if(findPick != undefined) {
           var update = { $set : { } };
 
-          if(data.image != undefined && data.image != '') {
-            var tempDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/temp/";
-            var imageDir = "/Users/patrick/Desktop/FiveNode/artWork/art_meteor/uploads/images/";
-  
-            var blob = Meteor.wrapAsync(fs.readFile)(tempDir + data.image);
-  
-            Meteor.wrapAsync(fs.writeFile)(imageDir + data.image, blob);
-  
-            data.url = "/images/" + data.image;
-  
-            update.$set.image = data.url;
-          }
-
+          if(data.image != undefined && data.image != '') update.$set.image = data.url;
+          
           if(data.desc.trim() != '') update.$set.thmDesc = data.desc;
           
           if(data.title.trim() != '') update.$set.thmNm = data.title;

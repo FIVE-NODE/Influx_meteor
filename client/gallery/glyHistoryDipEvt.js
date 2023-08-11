@@ -17,14 +17,12 @@ Template.glyHistoryDipEvt.onCreated(function() {
         Meteor.call('selectGlryHistEvt', FlowRouter.getParam('_id'), function(err, res) {
             historyInfo.set(res);
             // glryName.set(res[0].glry.glryNm);
-            console.log('selectGlryHi  : ', res);
         });
     }
 
     function selectGlryDetail() {
         Meteor.call('selectGlryDetail', FlowRouter.getParam('_id'), function(err, res) {
             glryInfo.set(res);
-            console.log('selectGlryDetail  : ',res);
         });
     }
 

@@ -17,44 +17,50 @@
                                 <dd>
                                     <div class="form-wrap d-flex align-center">
                                         <div class="form-radio">
-                                            <input type="radio" name="check-writeInfo--productAdmit" id="check-writeInfo--productAdmit--01" />
+                                            <input type="radio" name="check-writeInfo--productAdmit" value="001" id="check-writeInfo--productAdmit--01" />
                                             <label for="check-writeInfo--productAdmit--01">원화</label>
                                         </div>
                                         <div class="form-radio">
-                                            <input type="radio" name="check-writeInfo--productAdmit" id="check-writeInfo--productAdmit--02" />
+                                            <input type="radio" name="check-writeInfo--productAdmit" value="002" id="check-writeInfo--productAdmit--02" />
                                             <label for="check-writeInfo--productAdmit--02">디지털 판화</label>
                                         </div>
                                         <div class="form-radio">
-                                            <input type="radio" name="check-writeInfo--productAdmit" id="check-writeInfo--productAdmit--03" />
+                                            <input type="radio" name="check-writeInfo--productAdmit" value="003" id="check-writeInfo--productAdmit--03" />
                                             <label for="check-writeInfo--productAdmit--03">원화+디지털판화</label>
                                         </div>
                                     </div>
                                 </dd>
                                 <dt>작품사진 올리기</dt>
                                 <dd>
-                                    <div class="writeInfo__uploadProduct">
+                                    <div class="writeInfo__uploadProduct" name="mainUploadImg">
                                         <p class="font-11 fontW-b color--gray">최대 이미지 사이즈: 30MB (JPG, PNG)</p>
-                                        <button type="button" class="mt-30">작품 올리기</button>
+                                        <button type="button" name="btnUploadImg" value="mainUploadImg" class="mt-30">작품 올리기</button>
+                                        <input id="mainUploadImg" name="imgUploads" type="file" accept=".png, .jpeg, .jpg"  style="display:none" />
                                     </div>
                                 </dd>
                                 <dt>디테일사진 올리기</dt>
                                 <dd>
                                     <div class="writeInfo__uploadPic">
                                         <div class="writeInfo-list">
-                                            <div class="writeInfo-item">
-                                                <button type="button">사진 올리기</button>
+                                            <div class="writeInfo-item" name="uploadImg_01">
+                                                <button name="btnUploadImg" value="uploadImg_01" type="button">사진 올리기</button>
+                                                <input id="uploadImg_01" name="imgUploads" type="file" accept=".png, .jpeg, .jpg"  style="display:none" />
                                             </div>
-                                            <div class="writeInfo-item">
-                                                <button type="button">사진 올리기</button>
+                                            <div class="writeInfo-item" name="uploadImg_02">
+                                                <button name="btnUploadImg" value="uploadImg_02" type="button">사진 올리기</button>
+                                                <input id="uploadImg_02" name="imgUploads" type="file" accept=".png, .jpeg, .jpg"  style="display:none" />
                                             </div>
-                                            <div class="writeInfo-item">
-                                                <button type="button">사진 올리기</button>
+                                            <div class="writeInfo-item" name="uploadImg_03">
+                                                <button name="btnUploadImg" value="uploadImg_03" type="button">사진 올리기</button>
+                                                <input id="uploadImg_03" name="imgUploads" type="file" accept=".png, .jpeg, .jpg"  style="display:none" />
                                             </div>
-                                            <div class="writeInfo-item">
-                                                <button type="button">사진 올리기</button>
+                                            <div class="writeInfo-item" name="uploadImg_04">
+                                                <button name="btnUploadImg" value="uploadImg_04" type="button">사진 올리기</button>
+                                                <input id="uploadImg_04" name="imgUploads" type="file" accept=".png, .jpeg, .jpg"  style="display:none" />
                                             </div>
-                                            <div class="writeInfo-item">
-                                                <button type="button">사진 올리기</button>
+                                            <div class="writeInfo-item" name="uploadImg_05">
+                                                <button name="btnUploadImg" value="uploadImg_05" type="button">사진 올리기</button>
+                                                <input id="uploadImg_05" name="imgUploads" type="file" accept=".png, .jpeg, .jpg"  style="display:none" />
                                             </div>
                                         </div>
                                     </div>
@@ -63,9 +69,10 @@
                                 <dd>
                                     <div class="writeInfo__uploadAu">
                                         <div class="writeInfo-list">
-                                            <div class="writeInfo-item">
+                                            <div class="writeInfo-item" name="uploadAtstImg">
                                                 <p class="txt">이미지를 드래그하여<br/>업로드 할수 있습니다</p>
-                                                <button type="button">사진 올리기</button>
+                                                <button name="btnUploadImg" value="uploadAtstImg" type="button">사진 올리기</button>
+                                                <input id="uploadAtstImg" name="imgUploads" type="file" accept=".png, .jpeg, .jpg"  style="display:none" />
                                             </div>
                                         </div>
                                     </div>
@@ -74,7 +81,7 @@
                                 <dd>
                                     <div class="form-wrap">
                                         <div class="form-input width--420">
-                                            <input type="text" />
+                                            <input name="atstNm" type="text" />
                                         </div>
                                     </div>
                                 </dd>
@@ -82,7 +89,7 @@
                                 <dd>
                                     <div class="form-wrap">
                                         <div class="form-textarea width--420">
-                                            <textarea name="" id="" cols="30" rows="10" style="height:10rem"></textarea>
+                                            <textarea name="atstDesc" id="" cols="30" rows="10" style="height:10rem"></textarea>
                                         </div>
                                     </div>
                                 </dd>
@@ -90,7 +97,7 @@
                                 <dd>
                                     <div class="form-wrap">
                                         <div class="form-textarea width--420">
-                                            <textarea name="" id="" cols="30" rows="10" style="height:10rem"></textarea>
+                                            <textarea name="atstAddDesc" id="" cols="30" rows="10" style="height:10rem"></textarea>
                                         </div>
                                     </div>
                                 </dd>
@@ -98,7 +105,7 @@
                                 <dd>
                                     <div class="form-wrap">
                                         <div class="form-input width--420">
-                                            <input type="text" />
+                                            <input name="atwrkNm" type="text" />
                                         </div>
                                     </div>
                                 </dd>
@@ -106,7 +113,7 @@
                                 <dd>
                                     <div class="form-wrap">
                                         <div class="form-input width--420">
-                                            <input type="text" />
+                                            <input name="mkYY" type="number" />
                                         </div>
                                     </div>
                                 </dd>
@@ -115,29 +122,43 @@
                                     <div class="form-wrap">
                                         <div class="form-row">
                                             <div class="form-input width--120">
-                                                <input type="text" placeholder="높이(height)" />
+                                                <input name="hSize" type="number" placeholder="높이(height)" />
                                             </div>
                                             <span class="ml-5 mr-5 font-12 fontW-b color--gray">X</span>
                                             <div class="form-input width--120">
-                                                <input type="text" placeholder="너비(width) " />
+                                                <input name="wSize" type="number" placeholder="너비(width) " />
                                             </div>
                                             <span class="ml-5 mr-5 font-12 fontW-b color--gray">X</span>
                                             <div class="form-input width--120">
-                                                <input type="text" placeholder="깊이(depth)(선택)" />
+                                                <input name="dSize" type="number" placeholder="깊이(depth)(선택)" />
                                             </div>
                                             <span class="ml-5 mr-5 font-12 fontW-b color--txt">cm</span>
                                         </div>
                                     </div>
                                 </dd>
+
+                                <dt name="baseDt" style='display : none'>베이스</dt>
+                                <dd name="baseDd" style='display : none'>
+                                    <div class="form-wrap">
+                                        <div class="form-select form-select-custom  width--315">
+                                            <button type="button" name="seltBase" class="custom-select__tit">베이스</button>
+                                            <ul class="custom-select__options" style="display: none;">
+                                                {{#each base}}
+                                                    <li name="BASE_{{code}}"><button name="selectKind" id="BASE_{{code}}" type="button">{{name}}</button></li>
+                                                {{/each}}
+                                            </ul>
+                                        </div>
+                                    </div>                                        
+                                </dd>
                                 <dt>미디엄</dt>
                                 <dd>
                                     <div class="form-wrap">
                                         <div class="form-select form-select-custom  width--315">
-                                            <button type="button" class="custom-select__tit">미디엄</button>
+                                            <button type="button" name="seltMedium" class="custom-select__tit">미디엄</button>
                                             <ul class="custom-select__options" style="display: none;">
-                                                <li class="is-active"><button type="button">미디엄</button></li>
-                                                <li><button type="button">미디엄1 </button></li>
-                                                <li><button type="button">미디엄2 </button></li>
+                                                {{#each medium}}
+                                                    <li name="MEDIUM_{{code}}"><button name="selectKind" id="MEDIUM_{{code}}" type="button">{{name}}</button></li>
+                                                {{/each}}
                                             </ul>
                                         </div>
                                     </div>                                        
@@ -146,48 +167,63 @@
                                 <dd>
                                     <div class="form-wrap">
                                         <div class="form-select form-select-custom  width--315">
-                                            <button type="button" class="custom-select__tit">재료</button>
+                                            <button type="button" name="seltMaterial" class="custom-select__tit">재료</button>
                                             <ul class="custom-select__options" style="display: none;">
-                                                <li class="is-active"><button type="button">재료</button></li>
-                                                <li><button type="button">재료1 </button></li>
-                                                <li><button type="button">재료2 </button></li>
+                                                {{#each materials}}
+                                                    <li name="MATERIAL_{{code}}"><button name="selectKind" id="MATERIAL_{{code}}" type="button">{{name}}</button></li>
+                                                {{/each}}
                                             </ul>
                                         </div>
                                     </div>
                                 </dd>
-                                <dt>스타일</dt>
+
+                                <dt>스타일1</dt>
                                 <dd>
                                     <div class="form-wrap">
                                         <div class="form-select form-select-custom  width--315">
-                                            <button type="button" class="custom-select__tit">스타일</button>
+                                            <button type="button" name="seltStyle1" class="custom-select__tit">스타일1</button>
                                             <ul class="custom-select__options" style="display: none;">
-                                                <li class="is-active"><button type="button">스타일</button></li>
-                                                <li><button type="button">스타일1 </button></li>
-                                                <li><button type="button">스타일2 </button></li>
+                                                {{#each style1}}
+                                                    <li name="STYLE1_{{code}}"><button name="selectKind" id="STYLE1_{{code}}" type="button">{{name}}</button></li>
+                                                {{/each}}
                                             </ul>
                                         </div>
                                     </div>
                                 </dd>
-                                <dt>가격(원화)</dt>
+                                <dt>스타일2</dt>
                                 <dd>
                                     <div class="form-wrap">
-                                        <div class="form-input input-writeInfo--price width--196">
-                                            <input type="text" />
+                                        <div class="form-select form-select-custom  width--315">
+                                            <button type="button" name="seltStyle2" class="custom-select__tit">스타일2</button>
+                                            <ul class="custom-select__options" style="display: none;">
+                                                {{#each style2}}
+                                                    <li name="STYLE2_{{code}}"><button name="selectKind" id="STYLE2_{{code}}" type="button">{{name}}</button></li>
+                                                {{/each}}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </dd>
+
+                                <dt class="disable" name="001Dt">가격(원화)</dt>
+                                <dd>
+                                    <div class="form-wrap">
+                                        <div class="form-input input-writeInfo--price width--196 disable" name="001Div">
+                                            <input name="001Pric" disabled type="text"/>
                                             <label for="">원</label>
                                         </div>
                                     </div>
                                 </dd>
-                                <dt class="disable">
-                                    가격(디지털판화)
-                                </dt>
+
+                                <dt class="disable" name="002Dt">가격(디지털판화)</dt>
                                 <dd>
                                     <div class="form-wrap">
-                                        <div class="form-input input-writeInfo--price width--196 disable">
-                                            <input type="text" disabled />
+                                        <div class="form-input input-writeInfo--price width--196 disable" name="002Div">
+                                            <input name="002Pric" disabled type="text"/>
                                             <label for="">원</label>
                                         </div>
                                     </div>
                                 </dd>
+
                                 <dt style="align-items:flex-start">보증서 / 출처 </dt>
                                 <dd>
                                     <div class="form-wrap form-writeInfo--insurance">
@@ -202,17 +238,19 @@
                                                 <input type="radio" name="check-writeInfo--hasInsurance" id="check-writeInfo--hasInsuranceN">
                                             </div>
                                         </div>
+
                                         <div class="form-block form-row flex-wrap">
                                             <p class="w-100 font-12 fontW-500">보증서 발급 가능여부 (보증서 없을시)</p>
                                             <div class="form-radio">
                                                 <label for="check-writeInfo--admitInsuranceY" class="mr-10">예</label>
-                                                <input type="radio" name="check-writeInfo--admitInsurance" id="check-writeInfo--admitInsuranceY">
+                                                <input class="disabled" type="radio" disabled name="check-writeInfo--admitInsurance" id="check-writeInfo--admitInsuranceY">
                                             </div>
                                             <div class="form-radio">
                                                 <label for="check-writeInfo--admitInsuranceN" class="mr-10">아니오</label>
-                                                <input type="radio" name="check-writeInfo--admitInsurance" id="check-writeInfo--admitInsuranceN">
+                                                <input class="disabled" type="radio" disabled name="check-writeInfo--admitInsurance" id="check-writeInfo--admitInsuranceN">
                                             </div>
                                         </div>
+
                                         <div class="form-block form-row flex-wrap">
                                             <p class="w-100 font-12 fontW-500">작품이 실린  전시  카다로그 여부 </p>
                                             <div class="form-radio">
@@ -230,14 +268,14 @@
                                 <dd>
                                     <div class="form-wrap">
                                         <div class="form-textarea width--420">
-                                            <textarea name="" id="" cols="30" rows="10" style="height:10rem"></textarea>
+                                            <textarea name="sngl" id="" cols="30" rows="10" style="height:10rem"></textarea>
                                         </div>
                                     </div>
                                 </dd>
                             </dl>
                             <div class="btn-wrap d-flex justify-center mt-30 mb-100">
-                                <button type="button" class="btn btn--white btn--round width--170 height-40 font-pre">취     소</button>
-                                <button type="button" class="btn btn--blue btn--round width--170 height-40 ml-20 font-pre">판     매</button>
+                                <button type="button" name="cancel" class="btn btn--white btn--round width--170 height-40 font-pre">취     소</button>
+                                <button type="button" name="allDoneBtn" class="btn btn--blue btn--round width--170 height-40 ml-20 font-pre">판     매</button>
                             </div>
                         </div>
                     </div>

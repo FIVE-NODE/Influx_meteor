@@ -13,8 +13,8 @@
                                     <p>총 작품수 {{total}} 점  = 판매중 {{selling}} 점 + 판매대기 {{notSelling}} 점</p>
                                 {{/with}}
                                 <div class="btn-wrap ml-auto">
-                                    <button type="button" name="crAtwrk" value="ogPrt" class="btn btn--round btn--sea-white">원화 작품 등록</button>
-                                    <button type="button" name="crAtwrk" value="dtPrt" class="btn btn--round btn--sea-white">디지털  판화 작품 등록</button>
+                                    <button type="button" name="crAtwrk" value="001" class="btn btn--round btn--sea-white">원화 작품 등록</button>
+                                    <button type="button" name="crAtwrk" value="002" class="btn btn--round btn--sea-white">디지털  판화 작품 등록</button>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
                                                         </td>
                                                         <td>{{atstInfo.atstNm}}</td>
                                                         <td>
-                                                            <a href="" class="fontW-b underline">
+                                                            <a href="" name="atwrkEditBtn" id="DETAIL_{{_id}}" class="fontW-b underline">
                                                                 {{dtpChkAtwrkNm}}
                                                             </a>
                                                         </td>
@@ -187,7 +187,7 @@
                                                         <td>{{dtpChkPric}} 원</td>
                                                         <td>{{dtpFlag}}</td>
                                                         <td>
-                                                            <a href="" class="btn btn--round btn--white-blue">판매등록</a>
+                                                            <a href="" name="salesReg" id="{{_id}}" class="btn btn--round btn--white-blue">판매등록</a>
                                                         </td>
                                                         <td>
                                                             <button type="button" name="delBtn" value="{{_id}}" >
