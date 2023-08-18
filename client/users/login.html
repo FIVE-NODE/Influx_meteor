@@ -32,8 +32,8 @@
                     <!-- {{> loginButtons}} -->
                     <button type="button" name="loginBtn" class="btn btn--blue mt-20">로 그 인</button>
                     <div class="find-link d-flex justify-end mt-10">
-                        <a href="" name="idFind" class="color--gray font-12">아이디 찾기</a>
-                        <a href="" name="passFind" class="color--gray font-12">비밀번호 찾기</a>
+                        <a href="" name="" class="color--gray font-12 popup" data-id="idSchPop">아이디 찾기</a>
+                        <a href="" name="passFind" class="color--gray font-12 popup" data-id="passSchPop">비밀번호 찾기</a>
                     </div>
                     <button type="button" name="kakaoLogin" class="btn btn--yellow d-flex mt-30">
                         <img src="/image/sub/icon/icon-kakao.png" alt="">
@@ -66,4 +66,62 @@
         </div>
     </section>
     {{> utilsPopUp popup}}
+
+    <!-- 아이디 찾기 -->
+    <div class="popup-layout" id="idSchPop">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:403px;height:500px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit">아이디 찾기</p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont popup-cont--terms">
+                    <div class="ov-auto scrollbar" style="height:350px;" name="emailSchDiv">
+                        <input autocomplete='off' type="text" name="schEmail" placeholder="이메일 주소를 입력해주세요" class="" style="width: 100%" />
+                        {{#if schMsg}}
+                            <p style="color: red; font-size: 14px; margin-top: 10px;">{{schMsg}}</p>
+                        {{/if}}
+                        <button class="login-id-sch" name="authReq">인증 요청 <img name="loading" src="/image/common/loading_img.gif" width="20px" style="display: none;" /> </button>
+                        <input autocomplete='off' type="text" name="authSchId" placeholder="인증번호를 입력해주세요" class="" style="width: 100%; display: none; margin-top: 15px;" />
+                        {{#if subSchMsg}}
+                            <p style="color: red; font-size: 14px; margin-top: 10px;">{{subSchMsg}}</p>
+                        {{/if}}
+                        <div class="btn-wrap d-flex justify-center mt-20">
+                            <button type="button" name="authChk" class="btn btn--blue width--112" style="display: none;">확인
+                                <img name="loadingCur" src="/image/common/loading_img.gif" width="20px" style="display: none;" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 비밀번호 찾기 passSchPop -->
+    <div class="popup-layout" id="passSchPop">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:403px;height:500px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit">비밀번호 찾기</p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont popup-cont--terms">
+                    <div class="ov-auto scrollbar" style="height:350px;" name="emailSchDiv">
+                        <input autocomplete='off' type="text" name="schPassId" placeholder="이메일을 입력해주세요요" class="" style="width: 100%" />
+                        <button class="login-id-sch" name="schPassChk">인증 요청 <img name="loading" src="/image/common/loading_img.gif" width="20px" style="display: none;" /> </button>
+                        <input autocomplete='off' type="text" name="authPassCode" placeholder="인증번호를 입력해주세요" class="" style="width: 100%; display: none; margin-top: 15px;" />
+                        <div class="btn-wrap d-flex justify-center mt-20">
+                            <button type="button" name="authPassCodeChk" class="btn btn--blue width--112" style="display: none;">확인
+                                <img name="loadingCur" src="/image/common/loading_img.gif" width="20px" style="display: none;" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

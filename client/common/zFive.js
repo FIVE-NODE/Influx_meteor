@@ -20,6 +20,7 @@ Template.zFive.onRendered(function() {
 
 Template.zFive.events({
     'click .faq-item'(evt, tmpl) {
+        $('.faq-cont').css({'display' : 'none'});
         $(evt.target).next().slideToggle();
     },
     'click .dropDown-tit button'(evt, tmpl) {

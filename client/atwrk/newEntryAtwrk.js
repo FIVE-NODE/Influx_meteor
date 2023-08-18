@@ -65,26 +65,33 @@ function scrollMove() {
 }
 
 Template.newEntryAtwrk.events({
-    'click button[name=allCancel]'() {
+    'click button[name=allCancel]'(evt, tmpl) {
         $('input[name=filterChk]').prop('checked', false);
+        seltSchFilters();
     },
     'click button[name=priceCancelBtn]'() {
         cancelCheckBox('price');
+        seltSchFilters();
     },
     'click button[name=mediumCancelBtn]'() {
         cancelCheckBox('medium');
+        seltSchFilters();
     },
     'click button[name=mkyyCancelBtn]'() {
         cancelCheckBox('mkyy');
+        seltSchFilters();
     },
     'click button[name=style1CancelBtn]'() {
         cancelCheckBox('style1');
+        seltSchFilters();
     },
     'click button[name=style2CancelBtn]'() {
         cancelCheckBox('style2');
+        seltSchFilters();
     },
     'click button[name=materialCancelBtn]'() {
         cancelCheckBox('material');
+        seltSchFilters();
     },
     // 정렬 이벤트
     'click button[name=sortList]'(evt, tmpl) {
@@ -96,35 +103,7 @@ Template.newEntryAtwrk.events({
     },
     // 필터 이벤트
     'change input[name=filterChk]'(evt, tmpl) {
-        var chked = $('input[name=filterChk]:checked');
-        var dataList = [];
-        var beforKind = '';
-        var queryData = {};
-
-        for(var i=0; i < chked.length; i++) {
-            var splitVal = chked[i].value.split('-');
-            var kind = splitVal[0];
-            var code = splitVal[1];
-            var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
-
-            if(beforKind != kind && beforKind != '') {
-                queryData[beforKind] = dataList;
-                dataList = [];
-            }
-
-            dataList.push(codeData);
-
-            beforKind = kind;
-
-            if(i === (chked.length -1)) queryData[beforKind] = dataList;
-        }
-
-        filters.set(queryData);
-        
-        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
-
-        setQuery();
-        selectOrgAtwrk();
+        seltSchFilters();
     },
     // 페이지
     'click a[name=prev]'(evt, tmpl) {
@@ -152,6 +131,38 @@ Template.newEntryAtwrk.events({
         }
     }
 });
+
+function seltSchFilters() {
+    var chked = $('input[name=filterChk]:checked');
+    var dataList = [];
+    var beforKind = '';
+    var queryData = {};
+
+    for(var i=0; i < chked.length; i++) {
+        var splitVal = chked[i].value.split('-');
+        var kind = splitVal[0];
+        var code = splitVal[1];
+        var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
+
+        if(beforKind != kind && beforKind != '') {
+            queryData[beforKind] = dataList;
+            dataList = [];
+        }
+
+        dataList.push(codeData);
+
+        beforKind = kind;
+
+        if(i === (chked.length -1)) queryData[beforKind] = dataList;
+    }
+
+    filters.set(queryData);
+    
+    Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
+
+    setQuery();
+    selectOrgAtwrk();
+}
 
 Template.newEntryAtwrk.helpers({
     atwrkList() {

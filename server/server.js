@@ -198,25 +198,28 @@ Meteor.methods({
         invNm : '',
       }
 
-      var dtPric = parseInt(data.dtPric.replace(',', ''));
-      var dtPrt = {
-        atwkNm    : data.atwrkNm,
-        mkYY      : data.mkYY,
-        base      : data.base == undefined ? '' : data.base,
-        style1    : data.style1,
-        style2    : data.style2,
-        leCnt     : 0,
-        selCnt    : 0,
-        selStrDt  : "",
-        selEndDt  : "",
-        viewCnt   : 0,
-        goodCnt   : 0,
-        sPric     : dtPric,
-        mPric     : dtPric,
-        lPric     : dtPric
-      };
+      var dtPrt = {};
+      if(data.atwrkTp != '001') {
+        var dtPric = parseInt(data.dtPric.replace(/,/g, ''));
+        dtPrt = {
+          atwkNm    : data.atwrkNm,
+          mkYY      : data.mkYY,
+          base      : data.base == undefined ? '' : data.base,
+          style1    : data.style1,
+          style2    : data.style2,
+          leCnt     : 0,
+          selCnt    : 0,
+          selStrDt  : "",
+          selEndDt  : "",
+          viewCnt   : 0,
+          goodCnt   : 0,
+          sPric     : dtPric,
+          mPric     : dtPric,
+          lPric     : dtPric
+        };
+      }
 
-      var ogPric = parseInt(data.ogPric.replace(',', ''));
+      var ogPric = parseInt(data.ogPric.replace(/,/g, ''));
       var ogPrt = {
         atwrkNm : data.atwrkNm,
         mkYY    : data.mkYY,
@@ -248,6 +251,7 @@ Meteor.methods({
       oldData.ogPrt = ogPrt;
       oldData.sngl = data.sngl;
       oldData.updDt = toDate;
+      oldData.atwrkTp = data.atwrkTp;
 
       let res = Atwrk.update({_id : _id}, { $set : oldData });
 
@@ -275,6 +279,7 @@ Meteor.methods({
       var imgAll = data.imgAll;
       var tempDir = tempPath;
       var imageDir = imagesPath;
+
       for(val in imgAll) {
         var imgUrl = '';
 
@@ -303,10 +308,10 @@ Meteor.methods({
         image.push(imgObj);
       }
       
-      if(data.atstImage != undefined) {
+      if(data.atstImage != undefined && data.atstImage != '') {
         var blob = Meteor.wrapAsync(fs.readFile)(tempDir + data.atstImage);
 
-        Meteor.wrapAsync(fs.writeFile)(imageDir + data.atstImage);
+        Meteor.wrapAsync(fs.writeFile)(imageDir + data.atstImage, blob);
 
         data.atstImage = "/images/" + data.atstImage;
       }
@@ -328,25 +333,28 @@ Meteor.methods({
         invNm : '',
       }
 
-      var dtPric = parseInt(data.dtPric.replace(',', ''));
-      var dtPrt = {
-        atwkNm    : data.atwrkNm,
-        mkYY      : data.mkYY,
-        base      : data.base == undefined ? '' : data.base,
-        style1    : data.style1,
-        style2    : data.style2,
-        leCnt     : 0,
-        selCnt    : 0,
-        selStrDt  : "",
-        selEndDt  : "",
-        viewCnt   : 0,
-        goodCnt   : 0,
-        sPric     : dtPric,
-        mPric     : dtPric,
-        lPric     : dtPric
-      };
+      var dtPrt = {};
+      if(data.atwrkTp != '001') {
+        var dtPric = parseInt(data.dtPric.replace(/,/g, ''));
+        var dtPrt = {
+          atwkNm    : data.atwrkNm,
+          mkYY      : data.mkYY,
+          base      : data.base == undefined ? '' : data.base,
+          style1    : data.style1,
+          style2    : data.style2,
+          leCnt     : 0,
+          selCnt    : 0,
+          selStrDt  : "",
+          selEndDt  : "",
+          viewCnt   : 0,
+          goodCnt   : 0,
+          sPric     : dtPric,
+          mPric     : dtPric,
+          lPric     : dtPric
+        };
+      }
 
-      var ogPric = parseInt(data.ogPric.replace(',', ''));
+      var ogPric = parseInt(data.ogPric.replace(/,/g, ''));
       var ogPrt = {
         atwrkNm : data.atwrkNm,
         mkYY    : data.mkYY,
@@ -373,6 +381,7 @@ Meteor.methods({
   
       var createData = {
         _id,
+        atwrkTp : data.atwrkTp,
         image,
         atstInfo,
         glry,

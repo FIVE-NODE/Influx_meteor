@@ -182,6 +182,65 @@ Meteor.clientCommonUtils = {
 
         return res;
     },
+     // 관리자 페이지 용 sort 정렬
+     adminPageSort: function(kind) {
+        var res = {};
 
+        switch(kind) {
+            case 'name':
+                res = { 'dtPrt.atwrkNm': 1 , 'ogPrt.atwrkNm' : 1 };
+                break;
+            case 'highPric':
+                res = { 'ogPrt.pric' : -1, 'dtPrt.sPric' : -1 };
+                break;
+            case 'lowPric':
+                res = { 'ogPrt.pric' : 1, 'dtPrt.sPric' : 1 };
+                break;
+            case 'newMkyy':
+                res = {'ogPrt.mkDt' : -1, 'dtPrt.mkDt' : -1}
+                break;
+            default:
+                res = {'ogPrt.mkDt' : 1, 'dtPrt.mkDt' : 1}
+                break;
+        }
+
+        return res;
+    },
+    // 관리자 페이지 용 sort 정렬
+    adSellingPageSort: function(kind) {
+        var res = {};
+
+        switch(kind) {
+            case 'lowDate':
+                res = { sortDateNum : -1 };
+                break;
+            case 'highDate':
+                res = { sortDateNum : 1 };
+                break;
+            case 'highPric':
+                res = { 'ogPrt.pric' : -1, 'dtPrt.sPric' : -1 };
+                break;
+            case 'lowPric':
+                res = {'ogPrt.pric' : 1, 'dtPrt.sPric' : 1 }
+                break;
+            case 'name':
+                res = { 'atstInfo.atstNm' : 1 };
+                break;
+            case 'revName':
+                res = { 'atstInfo.atstNm' : -1 };
+                break;
+            case 'newMkdt':
+                // res = {'ogPrt.mkDt' : -1, 'dtPrt.mkDt' : -1 }
+                res = {'dtPrt.mkDt' : -1 , 'ogPrt.mkDt' : -1}
+                break;
+            case 'oldMkdt':
+                res = { 'dtPrt.mkDt' : 1, 'ogPrt.mkDt' : 1 }
+                break;
+            default:
+                break;
+        }
+
+        return res;
+    },
 
 }

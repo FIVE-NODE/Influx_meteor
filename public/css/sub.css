@@ -6842,6 +6842,20 @@ input[type="number"]::-webkit-inner-spin-button {
   max-width: 50px;;
 }
 
+.login-id-sch{
+  width: auto;
+  height: auto;
+  background-color: #1868B7;
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+  padding: 5px;
+  border-radius: 1rem !important;
+}
+
 
 /* .hot-item::before {
   width: 4rem;

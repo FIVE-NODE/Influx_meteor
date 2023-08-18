@@ -18,6 +18,61 @@ function setRetData(list) {
 }
 
 Meteor.methods({
+    // 사용자 비밀번호 초기화 url 전송
+    forgetPassword: function(email) {
+      try {
+        Accounts.forgotPassword(email, function(err, res) {
+          if(err) console.log(err);
+          else {
+            console.log(res);
+          }
+        });
+      } catch(e) {
+        console.log('Error : ', e);
+        throw new Meteor.Error(
+          500,
+          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 이메일 or 사업자등록 번호로 사용자 조회
+    emailOrBnumChk: function(id) {
+      try {
+        let res = Meteor.users.findOne({
+          $or : [
+            { 'emails.address' : id },
+            { 'profile.uInfos.bsnsID' : id}
+          ]
+        });
+
+        return res;
+      } catch(e) {
+        console.log('Error : ', e);
+        throw new Meteor.Error(
+          500,
+          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 아이디 찾기 사용자 정보에 이메일 존재 확인
+    idSchEmailAuth: function(email) {
+      try {
+        let res = Meteor.users.findOne({
+          $or : [
+            { 'profile.uInfos.bsnsChagEmail' : email },
+            { 'profile.uInfos.email' : email }
+          ]
+        });
+
+        return res;
+      } catch(e) {
+        console.log('Error : ', e);
+        throw new Meteor.Error(
+          500,
+          '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
     // 이메일 인증전 등록된 이메일 인지 확인
     seltEmailChk: function(email) {
       try {
@@ -432,20 +487,44 @@ Meteor.methods({
         );
       }
     },
+    // 사업자 회원번호로 사업자 회원 조회
+    seltCompanyNum: function(bsnsID) {
+      try {
+        let res = Meteor.users.findOne({'profile.uInfos.bsnsID' : bsnsID});
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
     // 사업자 등록번호 조회
     companyRegNumChk: function(number) {
       try {
-        var option = {
-          headers: 'application/json',
-          data :{ b_no : [number] }
-        };
 
-        // api ServiceKey
-        var serviceKey = 'EQqsHgP1F345WdlW4iRVeUUvMNvp6WIuajklNiYDjR0zIIWlIcJOu3eNVTNxhsZosdO4PlPs0My8L4yj3gT9LA%3D%3D';
-        // api URL
-        var url = 'https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey='+serviceKey;
+        let seltCompanyUser = Meteor.call('seltCompanyNum', number);
 
-        let res = HTTP.call('POST', url, option).content;
+        let res= {};
+
+        if(seltCompanyUser == undefined) {
+          var option = {
+            headers: 'application/json',
+            data :{ b_no : [number] }
+          };
+  
+          // api ServiceKey
+          var serviceKey = 'EQqsHgP1F345WdlW4iRVeUUvMNvp6WIuajklNiYDjR0zIIWlIcJOu3eNVTNxhsZosdO4PlPs0My8L4yj3gT9LA%3D%3D';
+          // api URL
+          var url = 'https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey='+serviceKey;
+  
+          res = JSON.parse(HTTP.call('POST', url, option).content);
+        } else {
+          res.status_code = 'HAVE';
+        }
+
 
         return res;
       } catch(e) {

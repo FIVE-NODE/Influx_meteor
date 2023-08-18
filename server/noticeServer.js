@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Notice, FAQ, Cmmnc, ORDER, Atwrk, Pick} from '../lib/collections.js';
+import { Notice, FAQ, Cmmnc, ORDER, Atwrk, Pick, StndPntReq} from '../lib/collections.js';
 
 // 좋아요, 구매하기, 장바구니, 소식받기, 조회수 등 공통으로 사용가능한 로직
 
@@ -44,7 +44,37 @@ Meteor.methods({
             // templeCmmnc = JSON.parse(Assets.getText('json/cmmnc.json'));
 
             return res;
-        }  catch(e) {
+        } catch(e) {
+            console.log('Error : ', e);
+            throw new Meteor.Error(
+            500,
+            '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+            );
+        }
+    },
+    // 커뮤니케이션 DB delete
+    deleteCommnc: function(commncId) {
+        try {
+            let res = Cmmnc.remove({_id : commncId});
+
+            return res;
+        } catch(e) {
+            console.log('Error : ', e);
+            throw new Meteor.Error(
+            500,
+            '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+            );
+        }
+    },
+    // 커뮤니케이션 답장(관리자)
+    answerCommnc: function(data) {
+        try {
+            var toDay = moment(new Date()).format('YYYYMMDDhhmmss');
+            console.log(toDay);
+            let res = Cmmnc.update({ _id : data._id }, { $set : { answ : data.answ, sttus : '002', answerDt :  toDay} });
+
+            return res;
+        } catch(e) {
             console.log('Error : ', e);
             throw new Meteor.Error(
             500,
@@ -53,40 +83,12 @@ Meteor.methods({
         }
     },
     // 주문내역조회
-    seltOrderList: function(query) {
+    seltOrderList: function(query, sttus) {
         try {
             var match = { $match : { mBerID : this.userId, insDt : query } };
 
-            if(query.seltDate != undefined) {
-                var toDate = new Date();
-                var agoDate = new Date(toDate);
-                var seltDate = query.seltDate;
-
-                switch(seltDate) {
-                    case '1m' :
-                        console.log('is here');
-                        agoDate.setMonth((toDate.getMonth() - 1));
-                        break;
-                    case '3m' :
-                        agoDate.setMonth((toDate.getMonth() - 3));
-                        break;
-                    default:
-                        agoDate.setDate((toDate.getDate() - 7));
-                        break;
-                }
-        
-                toDate = moment(toDate).format('YYYYMMDD');
-                agoDate = moment(agoDate).format('YYYYMMDD');
-        
-                if(seltDate == 'all') match = { $match : { mBerID : this.userId } };
-                else {
-                    query = {
-                        $gte : agoDate,
-                        $lte : toDate
-                    };
-                    match = { $match : { mBerID : this.userId, insDt : query } };
-                }
-            }
+            if(sttus == '') match = { $match : { mBerID : this.userId, insDt : query} };
+            else match = { $match : { mBerID : this.userId, insDt : query, sttus : sttus} };
 
             let res = ORDER.aggregate([
                 match,
@@ -189,5 +191,60 @@ Meteor.methods({
             '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
             );
         }
-    },    
+    }, 
+    createStndPntReq: function(bsnsData) {
+        try {
+            bsnsData._id = bsnsData.stndPntReqID;
+
+            let res = StndPntReq.insert(bsnsData);
+
+            return res;
+        } catch(e) {
+            console.log('Error : ', e);
+            throw new Meteor.Error(
+            500,
+            '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+            );
+        }
+    },
+    seltStndPntReqForbId: function(bsnsID) {
+        try {
+            let res = StndPntReq.findOne({_id : bsnsID});
+
+            return res;
+        } catch(e) {
+            console.log('Error : ', e);
+            throw new Meteor.Error(
+            500,
+            '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+            );
+        } 
+    },
+    allSeltStndPntReq: function() {
+        try {
+            let res = StndPntReq.find({}).fetch();
+
+            return res;
+        } catch(e) {
+            console.log('Error : ', e);
+            throw new Meteor.Error(
+            500,
+            '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+            );
+        } 
+    },
+    passSendUpdStndPntReq: function(id) {
+        try {
+            var toDayhour = moment(new Date()).format('YYYY.MM.DD. hh:mm:ss');
+            let res = StndPntReq.update({_id : id}, { $set : { 'passSendTime' : toDayhour}});
+            
+            return res;
+        } catch(e) {
+            console.log('Error : ', e);
+            throw new Meteor.Error(
+            500,
+            '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+            );
+        } 
+    }
 });

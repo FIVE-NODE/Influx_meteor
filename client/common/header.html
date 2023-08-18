@@ -60,31 +60,6 @@
             </div>
         </div> <!-- /header__top -->
         {{/if}}
-        <!-- /header__mid -->
-        {{#if quickChk}}
-        <div class="header__bottom">
-            <div class="header__bottom__inner">
-                <div class="gnb">
-                    {{#if quickMenuChk}}
-                        {{#each quickMu}}
-                            <a href="{{lnkUrl}}" name="quickMu">
-                                <span class="gnb__img">
-                                    <img src="{{image}}" alt="">
-                                </span>
-                                <h2>{{qMenuNm}}</h2>
-                            </a>
-                        {{/each}}
-                    {{/if}}
-                </div>
-                {{#unless currentUser}}
-                    <div class="bradCrumb">
-                        <a href="/login">로 그 인 </a>
-                        <a href="/signUp">회원가입</a>
-                    </div>
-                {{/unless}}
-            </div>
-        </div> <!-- /header__bottom -->
-        {{/if}}
 
         {{#if midHeader}}
         <div class="header__mid">
@@ -192,6 +167,32 @@
                 {{/if}}
             </div>
         </div>
+        {{/if}}
+
+        <!-- /header__mid -->
+        {{#if quickChk}}
+        <div class="header__bottom">
+            <div class="header__bottom__inner">
+                <div class="gnb">
+                    {{#if quickMenuChk}}
+                        {{#each quickMu}}
+                            <a href="{{lnkUrl}}" name="quickMu">
+                                <span class="gnb__img">
+                                    <img src="{{image}}" alt="">
+                                </span>
+                                <h2>{{qMenuNm}}</h2>
+                            </a>
+                        {{/each}}
+                    {{/if}}
+                </div>
+                {{#unless currentUser}}
+                    <div class="bradCrumb">
+                        <a href="/login">로 그 인 </a>
+                        <a href="/signUp">회원가입</a>
+                    </div>
+                {{/unless}}
+            </div>
+        </div> <!-- /header__bottom -->
         {{/if}}
     </section>
     {{> myPageSimple}}

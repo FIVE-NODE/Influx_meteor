@@ -104,17 +104,17 @@
                                             <span class="mr-20 font-14 fontW-500 color--txt">정 렬</span>
                                             <div class="form-wrap">
                                                 <div class="form-select form-select-custom">
-                                                    <button type="button" nams="mainAtwrkSort" class="custom-select__tit">판매기간  (적게 남은순)</button>
+                                                    <button type="button" nams="mainAtwrkSort" class="custom-select__tit">정 렬</button>
                                                     <ul class="custom-select__options" style="display: none;">
-                                                        <li class="is-active"><button type="button">판매기간  (적게 남은순)</button></li>
-                                                        <li><button name="atwrkSort" type="button">판매기간  (적게 남은순) </button></li>
-                                                        <li><button name="atwrkSort" type="button">판매기간  (많이 남은순)</button></li>
-                                                        <li><button name="atwrkSort" type="button">가격가격 (높은 가격순)</button></li>
-                                                        <li><button name="atwrkSort" type="button">작품가격 (낮은 가격순)</button></li>
-                                                        <li><button name="atwrkSort" type="button">작 가 이름 순 (ㄱ > ㅎ)</button></li>
-                                                        <li><button name="atwrkSort" type="button">작 가 이름 순 (ㅎ > ㄱ)</button></li>
-                                                        <li><button name="atwrkSort" type="button">작품연도 (최신순)</button></li>
-                                                        <li><button name="atwrkSort" type="button">작품연도 (오래된순)</button></li>
+                                                        <li class="is-active"><button name="atwrkSort" value="all" type="button">정 렬</button></li>
+                                                        <li><button name="atwrkSort" value="lowDate" type="button">판매기간  (적게 남은순)</button></li>
+                                                        <li><button name="atwrkSort" value="highDate" type="button">판매기간  (많이 남은순)</button></li>
+                                                        <li><button name="atwrkSort" value="highPric" type="button">가격가격 (높은 가격순)</button></li>
+                                                        <li><button name="atwrkSort" value="lowPric" type="button">작품가격 (낮은 가격순)</button></li>
+                                                        <li><button name="atwrkSort" value="name"    type="button">작 가 이름 순 (ㄱ > ㅎ)</button></li>
+                                                        <li><button name="atwrkSort" value="revName" type="button">작 가 이름 순 (ㅎ > ㄱ)</button></li>
+                                                        <li><button name="atwrkSort" value="newMkdt" type="button">작품연도 (최신순)</button></li>
+                                                        <li><button name="atwrkSort" value="oldMkdt" type="button">작품연도 (오래된순)</button></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -169,7 +169,11 @@
                                                     </td>
                                                     <td>{{atstInfo.atstNm}}</td>
                                                     <td>
-                                                        {{dateFormatChg ogPrt.mkDt "."}}
+                                                        {{#if atwrkDtpChk}}
+                                                            {{dateFormatChg ogPrt.mkDt "."}}
+                                                        {{else}}
+                                                            {{dateFormatChg dtPrt.mkDt "."}}
+                                                        {{/if}}
                                                     </td>
                                                     {{{tableDesc this}}}
                                                     <td>

@@ -322,7 +322,6 @@ Template.atwrkDetail.events({
     // 좋아요 버튼 이벤트
     'click .goodBtnEvt'(evt, tmpl) {
         // 좋아요 로직
-        console.log(Meteor.userId());
         if(Meteor.userId() != undefined) {
             $('.imgGroup-detail__favor').toggleClass('is-click');
 

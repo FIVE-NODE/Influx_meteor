@@ -49,123 +49,127 @@ Template.ogAtwrkCr.onCreated(function() {
     if(this.data.atwrkId() != undefined) {
         Meteor.call('selectAtwrkDetail', this.data.atwrkId(), function(err, res) {
             atwrkInfo.set(res);
+
+            // 업데이트 수정 로직 (데이터 셋)
+            if(atwrkInfo.get() != undefined) {
+                var atInfo = atwrkInfo.get();
+
+                // 작품 구분 셋팅
+                if(atInfo.atwrkTp == '001') $('#check-writeInfo--productAdmit--01').prop('checked', true);
+                else if(atInfo.atwrkTp == '002') {
+                    $('#check-writeInfo--productAdmit--02').prop('checked', true);
+                    $('div[name=catelogDiv]').css({'display' : 'none'});
+                }
+                else $('#check-writeInfo--productAdmit--03').prop('checked', true);
+                atwrkFlag.set(atInfo.atwrkTp);
+
+                var image = atInfo.image;
+
+                // 이미지 셋팅
+                for(idx in image) {
+                    if(image[idx].rprsn == 'Y') {
+                        $(`div[name=mainUploadImg]`).css({
+                            'background-size' : 'contain',
+                            'background-image' : `url(${image[idx].imgID})`,
+                            'background-repeat': 'no-repeat',
+                            'background-position': 'center center'
+                        });
+                        imgUrl.set('mainUploadImg', image[idx].imgID);
+                    } else {
+                        $(`div[name=uploadImg_0${image[idx].imgSortNo - 1}]`).css({
+                            'background-size' : 'contain',
+                            'background-image' : `url(${image[idx].imgID})`,
+                            'background-repeat': 'no-repeat',
+                            'background-position': 'center center'
+                        });
+                        imgUrl.set(`uploadImg_0${image[idx].imgSortNo}`, image[idx].imgID);
+                    }
+                }
+
+                // 작가 사진 셋팅
+                $('div[name=uploadAtstImg]').css({
+                    'background-size' : 'contain',
+                    'background-image' : `url(${atInfo.atstInfo.atstImage})`,
+                    'background-repeat': 'no-repeat',
+                    'background-position': 'center center'
+                });
+                imgUrl.set('uploadAtstImg', atInfo.atstInfo.atstImage);
+
+                // 작가 이름, 소개, 추가 정보 셋팅
+                $('input[name=atstNm]').val(atInfo.atstInfo.atstNm);
+                $('textarea[name=atstDesc]').val(atInfo.atstInfo.atstDesc);
+                $('textarea[name=atstAddDesc]').val(atInfo.atstInfo.atstAddDesc);
+                
+                pricDisalbledSet(atInfo.atwrkTp);
+
+                // 작품 제목, 제작년도 크기
+                if(atInfo.atwrk == '002') {
+                    $('input[name=atwrkNm]').val(atInfo.dtPrt.atwrkNm);
+                    $('input[name=mkYY]').val(atInfo.dtPrt.mkYY);
+                    $('input[name=002Pric]').val(atInfo.dtPrt.sPric);
+
+                    $(`button[name=seltBase]`).text($(`#BASE_${atInfo.dtPrt.base}`).text());
+                    base.set(atInfo.dtPrt.base);
+                    $(`button[name=seltStyle1]`).text($(`#STYLE1_${atInfo.dtPrt.style1}`).text());
+                    style1.set(atInfo.dtPrt.style1);
+                    $(`button[name=seltStyle2]`).text($(`#STYLE2_${atInfo.dtPrt.style2}`).text());
+                    style2.set(atInfo.dtPrt.style2);
+                } else {
+                    $('input[name=atwrkNm]').val(atInfo.ogPrt.atwrkNm);
+                    $('input[name=mkYY]').val(atInfo.ogPrt.mkYY);
+                    $('input[name=hSize]').val(atInfo.ogPrt.hSize);
+                    $('input[name=wSize]').val(atInfo.ogPrt.wSize);
+                    $('input[name=dSize]').val(atInfo.ogPrt.dSize);
+
+                    $(`button[name=seltMedium]`).text($(`#MEDIUM_${atInfo.ogPrt.medium}`).text());
+                    medium.set(atInfo.ogPrt.medium)
+                    $(`button[name=seltMaterial]`).text($(`#MATERIAL_${atInfo.ogPrt.metRias}`).text());
+                    material.set(atInfo.ogPrt.metRias)
+                    $(`button[name=seltStyle1]`).text($(`#STYLE1_${atInfo.ogPrt.style1}`).text());
+                    style1.set(atInfo.ogPrt.style1);
+                    $(`button[name=seltStyle2]`).text($(`#STYLE2_${atInfo.ogPrt.style2}`).text());
+                    style2.set(atInfo.ogPrt.style2);
+                    
+                    if(atInfo.atwrkTp == '003') {
+                        $(`button[name=seltBase]`).text($(`#BASE_${atInfo.dtPrt.base}`).text());
+                        base.set(atInfo.dtPrt.base);
+                    }
+
+                    $('input[name=001Pric]').val(atInfo.ogPrt.pric.toString().replace(comma,','));
+                    if(atInfo.atwrkTp == '003') $('input[name=002Pric]').val(atInfo.dtPrt.sPric.toString().replace(comma,','));
+                }
+
+                switch(atInfo.ogPrt.wartyYn) {
+                    case '001':
+                        $('#check-writeInfo--hasInsuranceY').prop('checked', true);
+                        guarantee.set('001');
+                        break;
+                    case '002':
+                        $('#check-writeInfo--hasInsuranceN').prop('checked', true);
+                        $('#check-writeInfo--admitInsuranceY').prop('checked', true);
+                        guarantee.set('002');
+                        break;
+                    default:
+                        $('#check-writeInfo--hasInsuranceN').prop('checked', true);
+                        $('#check-writeInfo--admitInsuranceN').prop('checked', true);
+                        guarantee.set('003');
+                        break;
+                }
+
+                if(atInfo.ogPrt.catgYn == 'Y') {
+                    $('#check-writeInfo--catalogY').prop('checked', true);
+                    catalog.set('Y');
+                } else {
+                    $('#check-writeInfo--catalogN').prop('checked', true);
+                    catalog.set('N');
+                }
+
+                updateFlag.set(true);
+            }
         });
     }
 
     this.autorun(() => {
-        // 업데이트 수정 로직 (데이터 셋)
-        if(atwrkInfo.get() != undefined) {
-            var atInfo = atwrkInfo.get();
-
-            // 작품 구분 셋팅
-            if(atInfo.atwrkTp == '001') $('#check-writeInfo--productAdmit--01').prop('checked', true);
-            else if(atInfo.atwrkTp == '002') $('#check-writeInfo--productAdmit--02').prop('checked', true);
-            else $('#check-writeInfo--productAdmit--03').prop('checked', true);
-            atwrkFlag.set(atInfo.atwrkTp);
-
-            var image = atInfo.image;
-
-            // 이미지 셋팅
-            for(idx in image) {
-                if(image[idx].rprsn == 'Y') {
-                    $(`div[name=mainUploadImg]`).css({
-                        'background-size' : 'contain',
-                        'background-image' : `url(${image[idx].imgID})`,
-                        'background-repeat': 'no-repeat',
-                        'background-position': 'center center'
-                    });
-                    imgUrl.set('mainUploadImg', image[idx].imgID);
-                } else {
-                    $(`div[name=uploadImg_0${image[idx].imgSortNo}]`).css({
-                        'background-size' : 'contain',
-                        'background-image' : `url(${image[idx].imgID})`,
-                        'background-repeat': 'no-repeat',
-                        'background-position': 'center center'
-                    });
-                    imgUrl.set(`uploadImg_0${image[idx].imgSortNo}`, image[idx].imgID);
-                }
-            }
-
-            // 작가 사진 셋팅
-            $('div[name=uploadAtstImg]').css({
-                'background-size' : 'contain',
-                'background-image' : `url(${atInfo.atstInfo.atstImage})`,
-                'background-repeat': 'no-repeat',
-                'background-position': 'center center'
-            });
-            imgUrl.set('uploadAtstImg', atInfo.atstInfo.atstImage);
-
-            // 작가 이름, 소개, 추가 정보 셋팅
-            $('input[name=atstNm]').val(atInfo.atstInfo.atstNm);
-            $('textarea[name=atstDesc]').val(atInfo.atstInfo.atstDesc);
-            $('textarea[name=atstAddDesc]').val(atInfo.atstInfo.atstAddDesc);
-            
-            pricDisalbledSet(atInfo.atwrkTp);
-
-            // 작품 제목, 제작년도 크기
-            if(atInfo.atwrk == '002') {
-                $('input[name=atwrkNm]').val(atInfo.dtPrt.atwrkNm);
-                $('input[name=mkYY]').val(atInfo.dtPrt.mkYY);
-                $('input[name=002Pric]').val(atInfo.dtPrt.sPric);
-
-                $(`button[name=seltBase]`).text($(`#BASE_${atInfo.dtPrt.base}`).text());
-                base.set(atInfo.dtPrt.base);
-                $(`button[name=seltStyle1]`).text($(`#STYLE1_${atInfo.dtPrt.style1}`).text());
-                style1.set(atInfo.dtPrt.style1);
-                $(`button[name=seltStyle2]`).text($(`#STYLE2_${atInfo.dtPrt.style2}`).text());
-                style2.set(atInfo.dtPrt.style2);
-            } else {
-                $('input[name=atwrkNm]').val(atInfo.ogPrt.atwrkNm);
-                $('input[name=mkYY]').val(atInfo.ogPrt.mkYY);
-                $('input[name=hSize]').val(atInfo.ogPrt.hSize);
-                $('input[name=wSize]').val(atInfo.ogPrt.wSize);
-                $('input[name=dSize]').val(atInfo.ogPrt.dSize);
-
-                $(`button[name=seltMedium]`).text($(`#MEDIUM_${atInfo.ogPrt.medium}`).text());
-                medium.set(atInfo.ogPrt.medium)
-                $(`button[name=seltMaterial]`).text($(`#MATERIAL_${atInfo.ogPrt.metRias}`).text());
-                material.set(atInfo.ogPrt.metRias)
-                $(`button[name=seltStyle1]`).text($(`#STYLE1_${atInfo.ogPrt.style1}`).text());
-                style1.set(atInfo.ogPrt.style1);
-                $(`button[name=seltStyle2]`).text($(`#STYLE2_${atInfo.ogPrt.style2}`).text());
-                style2.set(atInfo.ogPrt.style2);
-                
-                if(atInfo.atwrkTp == '003') {
-                    $(`button[name=seltBase]`).text($(`#BASE_${atInfo.dtPrt.base}`).text());
-                    base.set(atInfo.dtPrt.base);
-                }
-
-                $('input[name=001Pric]').val(atInfo.ogPrt.pric.toString().replace(comma,','));
-                if(atInfo.atwrkTp == '003') $('input[name=002Pric]').val(atInfo.dtPrt.sPric.toString().replace(comma,','));
-            }
-
-            switch(atInfo.ogPrt.wartyYn) {
-                case '001':
-                    $('#check-writeInfo--hasInsuranceY').prop('checked', true);
-                    guarantee.set('001');
-                    break;
-                case '002':
-                    $('#check-writeInfo--hasInsuranceN').prop('checked', true);
-                    $('#check-writeInfo--admitInsuranceY').prop('checked', true);
-                    guarantee.set('002');
-                    break;
-                default:
-                    $('#check-writeInfo--hasInsuranceN').prop('checked', true);
-                    $('#check-writeInfo--admitInsuranceN').prop('checked', true);
-                    guarantee.set('003');
-                    break;
-            }
-
-            if(atInfo.catgYn == 'Y') {
-                $('#check-writeInfo--catalogY').prop('checked', true);
-                catalog.set('Y');
-            } else {
-                $('#check-writeInfo--catalogN').prop('checked', true);
-                catalog.set('N');
-            }
-
-            updateFlag.set(true);
-        }
     });
 });
 
@@ -233,6 +237,11 @@ Template.ogAtwrkCr.events({
         var flag = $(evt.currentTarget).val();
         atwrkFlag.set(flag);
         pricDisalbledSet(flag);
+        if(flag == '002') {
+            $('div[name=catelogDiv]').css({'display' : 'none'});
+            $('#check-writeInfo--catalogN').prop('checked', true);
+            catalog.set('N');
+        } else $('div[name=catelogDiv]').css({'display' : ''});
     },
     // 보증서 여/부
     'change input[name=check-writeInfo--hasInsurance]'(evt, tmpl) {
@@ -399,7 +408,6 @@ Template.ogAtwrkCr.events({
         var ogPric = $('input[name=001Pric]').val();
         var dtPric = $('input[name=002Pric]').val();
 
-
         var atFlag = atwrkFlag.get();
 
         var atstImage = imgUrl.get('uploadAtstImg') == undefined ? '' : imgUrl.get('uploadAtstImg');
@@ -430,7 +438,7 @@ Template.ogAtwrkCr.events({
         else if(guarant == undefined)           {   messagePopup({message : '보증서 여/부는 필수 선택입니다.'});      }
         else if(catlog == undefined)            {   messagePopup({message : '카다로그 여/부는 필수 선택입니다.'});    }
         else {
-            var data = {
+            let data = {
                 deleteList : deleteList.get(),
                 updateFlag : updateFlag.get(),
                 atwrkTp : atFlag,
@@ -501,6 +509,11 @@ Template.ogAtwrkCr.helpers({
             return (atwrkFlag.get() == '002' || atwrkFlag.get() == '003') ? 'block' : 'none';
         }        
     },
+    ogDtpChk() {
+        if(atwrkFlag.get() != undefined) {
+            return atwrkFlag.get() != '002';
+        }     
+    }
 
 });
 

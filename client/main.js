@@ -56,6 +56,8 @@ import './users/bSnsMber/bMsgManage.js';   // 갤러리 메시지 관리
 import './users/bSnsMber/glryAtwrks.js';   // 갤러리 Atwrk 화면
 import './users/bSnsMber/atwrkSalesReg.js'; // 판매등록 화면
 
+import './users/bSnsMber/glryAppMang.js';  // 갤러리 입점신청 관리 페이지
+
 // 로그인, 회원가입
 import './users/login.js';                // 로그인
 import './users/signUp.js';               // 회원가입

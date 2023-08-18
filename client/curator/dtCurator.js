@@ -67,6 +67,7 @@ function setQuery() {
     query = {}
     query = filters.get();
     query.atwrkIds = atwrkIdList.get();
+    
     options = {
         skip : skip.get(),
         limit: limit.get(),
@@ -104,6 +105,7 @@ Template.dtCurator.events({
         var sort = Meteor.clientCommonUtils.pageSort($(evt.currentTarget).val(), 'dtPrt');
         sortInfo.set(sort);
         setQuery();
+
         selectDigAtwrk();
     },
     // 필터 이벤트

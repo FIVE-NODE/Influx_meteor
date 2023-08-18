@@ -34,8 +34,6 @@ function setQuery() {
     }    
     
     var glryNm = $('#for-input__label').val();
-
-    console.log(glryNm);
     
     query = {
         area : area,
@@ -44,7 +42,7 @@ function setQuery() {
         skip : skip.get(),
         limit : limit.get()
     };
-    console.log(query);
+    
     return query;
 }
 

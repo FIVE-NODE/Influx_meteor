@@ -46,6 +46,12 @@ Template.myPageSelling.onCreated(function() {
 function seltTabAtwrk() {
     Meteor.call('seltTabAtwrk', query, options, function(err, res) {
         total.set(res.total);
+
+        // const moment = require('moment'); require('moment-timezone');
+        // const t1 = moment('20000201');
+        // const t2 = moment('20000301');
+        // console.log(moment.duration(t2.diff(t1)).asDays());
+
         atwrkInfo.set(res.list);
     });
 }
@@ -59,7 +65,7 @@ function setQuery() {
     options = {
         skip : skip.get(),
         limit: limit.get(),
-        // sort : sortInfo.get()
+        sort : sortInfo.get()
     };
 }
 
@@ -160,41 +166,44 @@ Template.myPageSelling.events({
     'click button[name=menuSchBtn]'(evt, tmpl) {
         var schList = $('input[name=menuSchChk]:checked');
         
-        if(schList.length > 0) {
-            var schSet = {};
-            var dataList = [];
-            var beforKind = '';
+        var schSet = {};
+        var dataList = [];
+        var beforKind = '';
 
-            for(i=0; i<schList.length; i++) {
-                var splitVal = schList[i].value.split('-');
-                var kind = splitVal[0];
-                var code = splitVal[1];
+        for(i=0; i<schList.length; i++) {
+            var splitVal = schList[i].value.split('-');
+            var kind = splitVal[0];
+            var code = splitVal[1];
 
-                if(beforKind != kind && beforKind != '') {
-                    schSet[beforKind] = dataList;
-                    dataList = [];
-                }
-
-                dataList.push(code);
-
-                beforKind = kind;
-
-                if(i === (schList.length -1)) schSet[beforKind] = dataList;
+            if(beforKind != kind && beforKind != '') {
+                schSet[beforKind] = dataList;
+                dataList = [];
             }
 
-            filters.set(schSet);
+            dataList.push(code);
 
-            Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
+            beforKind = kind;
 
-            setQuery();
-            
-            seltTabAtwrk();
+            if(i === (schList.length -1)) schSet[beforKind] = dataList;
+        }
 
-            $(`#${tabFlag.get()}`).addClass('is-active');
-        } else ;
+        filters.set(schSet);
+
+        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
+
+        setQuery();
+        
+        seltTabAtwrk();
+
+        $(`#${tabFlag.get()}`).addClass('is-active');
     },
     'click button[name=atwrkSort]'(evt, tmpl) {
-        sortInfo.set();
+        var targetVal = $(evt.currentTarget).val();
+        var sort = Meteor.clientCommonUtils.adSellingPageSort(targetVal);
+        sortInfo.set(sort);
+
+        setQuery();
+        seltTabAtwrk();
     },
     'click button[name=inventBtn]'(evt, tmpl) {
         FlowRouter.go('/inventoryMode');
@@ -273,6 +282,9 @@ Template.myPageSelling.helpers({
     materials() {
         return Meteor.codes.MATERIAL();
     },
+    atwrkDtpChk() {
+        return this.ogPrt.atwrkNm != undefined ? true : false;
+    }
 });
 
 
@@ -409,7 +421,7 @@ function tdDataSet(data) {
     var sellDate = '~';
     if(data.dtPrt.atwrkNm != undefined) {
         sellDate = Meteor.clientCommonUtils.dateFormatChg(data.dtPrt.selStrDt) +
-                   ' ~ ' + Meteor.clientCommonUtils.dateFormatChg(data.dtPrt.selStrDt)
+                   ' ~ ' + Meteor.clientCommonUtils.dateFormatChg(data.dtPrt.selEndDt);
     }
 
     switch(tabFlag.get()) {

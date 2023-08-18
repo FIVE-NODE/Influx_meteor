@@ -14,20 +14,20 @@
                             <div class="sch-wrap width--1680 mx-auto pl-90 justify-start">
                                 <div class="sch-block">
                                     <div class="btn-wrap btn-schTime">
-                                        <button type="button" class="is-active">1주일</button>
-                                        <button type="button">1개월</button>
-                                        <button type="button">3개월</button>
-                                        <button type="button">전체시기</button>
+                                        <button type="button" name="seltDate" id="1wek" class="is-active">1주일</button>
+                                        <button type="button" name="seltDate" id="1mon">1개월</button>
+                                        <button type="button" name="seltDate" id="3mon">3개월</button>
+                                        <button type="button" name="seltDate" id="all">전체시기</button>
                                     </div>
                                 </div>
                                 <div class="sch-block">
                                     <div class="form-wrap form-row">
                                         <div class="form-input width--125">
-                                            <input type="text" class="js-datepicker" value="">
+                                            <input type="text" name="strDate" class="js-datepicker" value="">
                                         </div>
                                         <span class="ml-5 mr-5">-</span>
                                         <div class="form-input width--125">
-                                            <input type="text" class="js-datepicker" value="">
+                                            <input type="text" name="endDate" class="js-datepicker" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@
                                     </div>
                                 </div>
                                 <div class="sch-block">
-                                    <button type="button" class="btn btn--blue btn--inquire">조 회</button>
+                                    <button type="button" name="schBtn" class="btn--blue btn--inquire">조 회</button>
                                 </div>
                             </div>
                         </div>
@@ -47,112 +47,115 @@
                             <div class="message-list d-block">
                                 <div class="message-item mb-50">
                                     <p class="message-item__tit">구매의사 메세지 (가격문의)</p>
-                                    <div class="message-item__view">
-
-                                        <div class="popup-wrap width--465">
-                                            <div class="popup-inner" style="width:463px;">
-                                                <div class="popup-head">
-                                                    <p class="popup-head__tit">작품가격문의 메세지 </p>
-                                                    <button type="button" class="popup-close">
-                                                        <img src="/image/common/icon/icon-popup-close.png" alt="">
-                                                    </button>
-                                                </div>
-                                                <div class="popup-cont popup-cont--deal">
-                                                    <p class="font-14 fontW-500 color--txt underline">보낸사람:홍길동</p>
-                                                    <div class="priceAsk-wrap">
-                                                        <div class="priceAsk-tit">
-                                                            <span class="priceAsk-tit__img">
-                                                                <img src="/image/sub/img-priceAsk--item01.png" alt="">
-                                                            </span>
-                                                            <span class="priceAsk-tit__txt">
-                                                                <em>백남준</em>
-                                                                <em>색의 변주곡 #980816, 1998</em>
-                                                                <em>120x230 cm, 캔버스에 유화</em>
-                                                            </span>
+                                    {{#each buyToMsg}}
+                                        {{#with atwrkInfo atwrkID}}
+                                            <div class="message-item__view">
+                                                <div class="popup-wrap width--465">
+                                                    <div class="popup-inner" style="width:463px;">
+                                                        <div class="popup-head">
+                                                            <p class="popup-head__tit">작품가격문의 메세지 </p>
+                                                            <button type="button" class="popup-close">
+                                                                <img src="/image/common/icon/icon-popup-close.png" alt="">
+                                                            </button>
                                                         </div>
-                                                        <div class="priceAsk-msg">
-                                                            <p class="priceAsk-msg__tit">메세지</p>
-                                                            <div class="form-wrap">
-                                                                <div class="form-textarea">
-                                                                    <textarea name="" id="">안녕하세요. 
-위 작품 구매에 관심이 있습니다. 
-작품 가격에 대한 정보를 보내 주시면 감사하겠습니다.                                                                                                                                                         
-                                                                    </textarea>
+                                                        <div class="popup-cont popup-cont--deal">
+                                                            <p class="font-14 fontW-500 color--txt underline">보낸사람:{{../nm}}</p>
+                                                            <div class="priceAsk-wrap">
+                                                                <div class="priceAsk-tit">
+                                                                    <span class="priceAsk-tit__img">
+                                                                        <img class="header-logo-img" src="{{selectMainImage this}}" alt="">
+                                                                    </span>
+                                                                    <span class="priceAsk-tit__txt">
+                                                                        <em>{{atstInfo.atstNm}}</em>
+                                                                        <em>{{ogPrt.atwrkNm}} , {{ogPrt.mkYY}}</em>
+                                                                        <em>{{ogPrt.wSize}}x{{ogPrt.hSize}} cm, {{codeToName ogPrt.metRias "MATERIAL"}}</em>
+                                                                    </span>
                                                                 </div>
+                                                                <div class="priceAsk-msg">
+                                                                    <p class="priceAsk-msg__tit">메세지</p>
+                                                                    <div class="form-wrap">
+                                                                        <div class="form-textarea">
+                                                                            <textarea name="" id="">{{../cn}}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="btn-wrap d-flex justify-center mt-20 pt-30 border-top">
+                                                                <button type="button" name="buyDelBtn" value="{{../_id}}" style="font-size:15px;" class="btn--white btn--round width--170 height-45 font-pre">삭            제</button>
+                                                                <button type="button" name="buyAnsBtn" value="{{../_id}}" style="font-size:15px;" class="btn--blue btn--round width--170 height-45 ml-40">답장보내기</button>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="btn-wrap d-flex justify-center mt-20 pt-30 border-top">
-                                                        <button type="button" class="btn btn--white btn--round width--170 height-45 font-pre">삭            제</button>
-                                                        <button type="button" class="btn btn--blue btn--round width--170 height-45 ml-40">답장보내기</button>
-                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                    </div>
+                                        {{/with}}
+                                    {{/each}}
                                 </div>
+
                                 <hr style="background-color:#8B8B8B;">
                                 <div class="message-item mt-50">
                                     <p class="message-item__tit">흥정(가격제안) 메세지</p>
                                     <div class="message-item__view">
-
-                                        <div class="popup-wrap  width--465">
-                                            <div class="popup-inner" style="width:463px;">
-                                                <div class="popup-head">
-                                                    <p class="popup-head__tit">흥정 메세지</p>
-                                                    <button type="button" class="popup-close">
-                                                        <img src="/image/common/icon/icon-popup-close.png" alt="">
-                                                    </button>
-                                                </div>
-                                                <div class="popup-cont popup-cont--priceAsk">
-                                                    <p class="font-14 fontW-500 color--txt underline">보낸사람:김홍도</p>
-                                                    <div class="priceAsk-wrap">
-                                                        <div class="priceAsk-tit">
-                                                            <span class="priceAsk-tit__img">
-                                                                <img src="/image/sub/img-priceAsk--item01.png" alt="">
-                                                            </span>
-                                                            <span class="priceAsk-tit__txt">
-                                                                <em>백남준</em>
-                                                                <em>색의 변주곡 #980816, 1998</em>
-                                                                <em>120x230 cm, 캔버스에 유화</em>
-                                                            </span>
+                                        {{#each hagglingMsg}}
+                                            {{#with atwrkInfo atwrkID}}
+                                                <div class="popup-wrap  width--465">
+                                                    <div class="popup-inner" style="width:463px;">
+                                                        <div class="popup-head">
+                                                            <p class="popup-head__tit">흥정 메세지</p>
+                                                            <button type="button" class="popup-close">
+                                                                <img src="/image/common/icon/icon-popup-close.png" alt="">
+                                                            </button>
                                                         </div>
-                                                        <div class="priceAsk-msg">
-                                                            <p class="priceAsk-msg__tit">메세지</p>
-                                                            <div class="form-wrap">
-                                                                <div class="form-textarea">
-                                                                    <textarea name="" id="">이 작품 판매가격 -10%인  900,000원에 구매 의사가 있습니다. </textarea>
+                                                        <div class="popup-cont popup-cont--priceAsk">
+                                                            <p class="font-14 fontW-500 color--txt underline">보낸사람:{{../nm}}</p>
+                                                            <div class="priceAsk-wrap">
+                                                                <div class="priceAsk-tit">
+                                                                    <span class="priceAsk-tit__img">
+                                                                        <img class="header-logo-img" src="{{selectMainImage this}}" alt="">
+                                                                    </span>
+                                                                    <span class="priceAsk-tit__txt">
+                                                                        <em>{{atstInfo.atstNm}}</em>
+                                                                        <em>{{ogPrt.atwrkNm}} , {{ogPrt.mkYY}}</em>
+                                                                        <em>{{ogPrt.wSize}}x{{ogPrt.hSize}} cm, {{codeToName metRias "MATERIAL"}}</em>
+                                                                    </span>
                                                                 </div>
+                                                                <div class="priceAsk-msg">
+                                                                    <p class="priceAsk-msg__tit">메세지</p>
+                                                                    <div class="form-wrap">
+                                                                        <div class="form-textarea">
+                                                                            <textarea name="" id="">{{../cn}}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-wrap mt-20 pt-30 border-top radio-message--deal">
+                                                                <div class="form-radio">
+                                                                    <input type="radio" name="radio-message--deal" id="radio-message--deal--01">
+                                                                    <label for="radio-message--deal--01">
+                                                                        구매자 흥정
+                                                                        <span>수 용</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-radio mt-10">
+                                                                    <input type="radio" name="radio-message--deal" id="radio-message--deal--02">
+                                                                    <label for="radio-message--deal--02">
+                                                                        구매자 흥정
+                                                                        <span>거 절</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="btn-wrap d-flex justify-center mt-30">
+                                                                <button type="button" name="haingDelBtn" value="{{_id}}" style="font-size:15px;" class="btn--white btn--round width--170 height-45 font-pre">삭            제</button>
+                                                                <button type="button" name="haingAnsBtn" value="{{_id}}" style="font-size:15px;" class="btn--blue btn--round width--170 height-45 ml-40">답장보내기</button>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-wrap mt-20 pt-30 border-top radio-message--deal">
-                                                        <div class="form-radio">
-                                                            <input type="radio" name="radio-message--deal" id="radio-message--deal--01">
-                                                            <label for="radio-message--deal--01">
-                                                                구매자 흥정
-                                                                <span>수 용</span>
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-radio mt-10">
-                                                            <input type="radio" name="radio-message--deal" id="radio-message--deal--02">
-                                                            <label for="radio-message--deal--02">
-                                                                구매자 흥정
-                                                                <span>거 절</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="btn-wrap d-flex justify-center mt-30">
-                                                        <button type="button" class="btn btn--white btn--round width--170 height-45 font-pre">삭            제</button>
-                                                        <button type="button" class="btn btn--blue btn--round width--170 height-45 ml-40">답장보내기</button>
-                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-
+                                            {{/with}}
+                                        {{/each}}
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

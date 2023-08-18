@@ -1,4 +1,4 @@
-import { Random } from 'meteor/random'; 
+import { Random } from 'meteor/random';
 import { Accounts } from 'meteor/accounts-base';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 

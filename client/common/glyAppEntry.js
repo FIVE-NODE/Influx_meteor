@@ -1,9 +1,12 @@
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+import { Random } from 'meteor/random';
+
 import './glyAppEntry.html';
 
 import '../popup/utilsPopUp.js';
 
 var regExpPhone = /^\d{2,3}\d{3,4}\d{4}$/;
-var regExpEmail = /[^a-z0-9@_.-]/gi;
+var regExpEmail = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');;
 
 Template.glyAppEntry.onCreated(function() {
     const instance = this;
@@ -18,6 +21,7 @@ Template.glyAppEntry.onCreated(function() {
     // 팝업 메시지
     popUpMessage    = new ReactiveVar('');
 
+    flag = new ReactiveVar(false);
 });
 
 Template.glyAppEntry.onRendered(function() {
@@ -34,12 +38,20 @@ Template.glyAppEntry.events({
         var evtTarget = $(evt.target);
         evtTarget.val(Meteor.clientCommonUtils.emailConsistency(evtTarget.val()));
     },
+    'input input[name=smaPhone1]'(evt, tmpl) {
+        maxLengthCheck(evt.currentTarget);
+    },
+    'input input[name=smaPhone2]'(evt, tmpl) {
+        maxLengthCheck(evt.currentTarget);
+    },
+    'input input[name=smaPhone3]'(evt, tmpl) {
+        maxLengthCheck(evt.currentTarget);
+    },
     'click .popup-close'(evt, tmpl) {
     },
     'click button[name=bsNumChk]' (evt, tmpl) {
         var bNum = $('input[name=bNum1]').val() + $('input[name=bNum2]').val() + $('input[name=bNum3]').val();
         Meteor.call('companyRegNumChk', bNum, function(err, res) {
-            res = JSON.parse(res)
             if(res.status_code === 'OK') {
                 var data = res.data[0];
                 var resData = {
@@ -54,23 +66,29 @@ Template.glyAppEntry.events({
                     resData.message = data.tax_type;
                     bnsNumChk.set(resData);
                 }
+            } else {
+                var resData = {
+                    chk : true,
+                    message : '이미 등롱된 사업자 번호 입니다.'
+                };
+                bnsNumChk.set(resData);
             }
         });
     },
     'click button[name=bnsSubmit]'() {
         var companyNm   = $('input[name=companyNm]').val();
         var smaNm       = $('input[name=smaNm]').val();
-        var smaPhone    = $('input[name=smaPhone]');
+        var smaPhone1   = $('input[name=smaPhone1]').val();
+        var smaPhone2   = $('input[name=smaPhone2]').val();
+        var smaPhone3   = $('input[name=smaPhone3]').val();
+        var smaPhone    = '';
         var smaEmail    = $('input[name=smaEmail]').val();
         var glyNm       = $('input[name=glyNm]').val();
         var zipCode     = $('input[name=zipCode]').val();
         var address     = $('input[name=address]').val();
         var detail      = $('input[name=detail]').val();
         var homeUrl     = $('input[name=homeUrl]').val();
-        smaPhone = smaPhone[0].value + smaPhone[1].value + smaPhone[2].value;
-
-        console.log(!regExpEmail.test(smaEmail));
-        console.log(regExpEmail.test(smaEmail));
+        smaPhone = smaPhone1 + smaPhone2 + smaPhone3;
 
         if(companyNm === '') {
             messagePopup({message : '회사이름을 입력해주세요'}); Meteor.clientCommonUtils.scrollToName('companyNm');
@@ -86,7 +104,7 @@ Template.glyAppEntry.events({
         } else if(smaEmail === '') {
             messagePopup({message : '담당자 이메일을 입력해주세요'});
             Meteor.clientCommonUtils.scrollToName('smaEmail');
-        } else if(regExpEmail.test(smaEmail)) {
+        } else if(!regExpEmail.test(smaEmail)) {
             messagePopup({message : '이메일을 정확하게 입력해주세요'});
             Meteor.clientCommonUtils.scrollToName('smaEmail');
         } else if(glyNm === '') {
@@ -100,39 +118,165 @@ Template.glyAppEntry.events({
             Meteor.clientCommonUtils.scrollToName('address');
         } else {
             var _id = Meteor.commonUtils.generateUUID();
+            
+            var rendomPass = Random.hexString(13);
+            var toDate = moment(new Date()).format('YYYYMMDD');
 
             var bsnsData = {
-                bsnsTP  : '001',
-                bsnsID  : bsnsID.get(),
-                bsnsNm  : companyNm,
-                homeUrl : homeUrl,
-                glryNm  : glyNm,
-                addr1   : address,
-                addr2   : detail,
-                zipCd   : zipCode,
-                dong    : this.addrs.bname,
-                area    : this.addrs.sido,
-                sigungu : this.addrs.sigungu,
-                bsnsChagNm : smaNm,
-                bsnsChagMob : smaPhone,
-                bsnsChagEmail : smaEmail
+                uInfos : {
+                    bsnsTp  : '001',
+                    bsnsID  : bsnsID.get(),
+                    bsnsNm  : companyNm,
+                    homeUrl : homeUrl,
+                    glryNm  : glyNm,
+                    addr1   : address,
+                    addr2   : detail,
+                    zipCd   : zipCode,
+                    dong    : this.addrs.bname,
+                    area    : this.addrs.sido,
+                    sigungu : this.addrs.sigungu,
+                    bsnsChagNm : smaNm,
+                    bsnsChagMob : smaPhone,
+                    bsnsChagEmail : smaEmail,
+                    insDt : toDate,
+                    ctrt : {
+                        stndPntReqID : '',
+                        ctrtInfo : ''
+                    },
+                    rprsnAtwrk: [],
+                    rprsnAtst: [],
+                    ntcn: [],
+                }
             };
-            
+    
+            var uEmail = smaEmail;
+            var id = bsnsID.get();
+    
             Accounts.createUser({
-                _id : _id,
                 email : smaEmail,
-                password : 'qawsedrf1!',
+                password : rendomPass,
                 profile : bsnsData
             }, function(error) {
-                if(error) console.log(error);
+                if(error) {
+                    console.log(error);
+                    if(error.error == 403) {
+                        console.log('here');
+                    }
+                }
                 else {
-                    messagePopup({
-                        message : '신청이 완료되었습니다.\n관리자 검토 후 임시비밀번호가 전달됩니다.',
-                        route : 'aOne',
-                        type: ''
+                    // messagePopup({message : '계정 생성 및 메시지 전송까지 3초정도 소요됩니다.'});
+    
+                    Meteor.logout(function(err) {
+                        if(err) console.log(err) 
+                        else {
+                            sessionStorage.removeItem('art_dex');
+                            sessionStorage.removeItem('art_session_index');
+                        }
+                    });
+    
+                    Meteor.call('passSendUpdStndPntReq', id);
+    
+                    Meteor.call('sendEmail', {
+                        to: uEmail,
+                        from: 'patrick@5node.co.kr',
+                        subject: "[SJLab] 갤러리(관리자) 임시 비밀번호 입니다.",
+                        text: '계정 : ' + uEmail + '\n'
+                        + '임시 비밀번호 :' + rendomPass
+                    }, function(err, res) {
+                        if(err) console.log('send email : ', err);
+                        else {
+                            FlowRouter.go('/login');
+                            alert('임시 비밀번호를 메일로 전송하였습니다.');
+                        }
                     });
                 }
             });
+
+            // var bsnsData = {
+            //     stndPntReqID : bsnsID.get(),
+            //     bsnsNm : companyNm,
+            //     homeUrl : homeUrl,
+            //     bsnsChagNm : smaNm,
+            //     bsnsChagMob : smaPhone,
+            //     bsnsChagEmail : smaEmail,
+            //     glryImage : '',
+            //     glryNm : glyNm,
+            //     area : this.addrs.sido,
+            //     dong : this.addrs.bname,
+            //     sigungu : this.addrs.sigungu,
+            //     zipCd : zipCode,
+            //     addr1 : address,
+            //     addr1 : detail,
+            //     atwrkDesc : '',
+            //     rprsnAtwrk : [],
+            //     crtfcNo : '',
+            //     sttus : '001',
+            //     reExam : '',
+            //     bsnsSign : '',
+            //     influxSign : '',
+            //     atchmnfl : []
+            // }
+
+            // Meteor.call('createStndPntReq', bsnsData, function(err, res) {
+            //     if(err) console.log(err);
+            //     else {
+            //         FlowRouter.go('/login');
+            //         alert('신청이 완료되었습니다.\n관리자 검토 후 임시비밀번호가 전달됩니다.');
+            //     }
+            // });
+            
+
+            // var bsnsData = {
+            //     uInfos : {
+            //         bsnsTP  : '001',
+            //         bsnsID  : bsnsID.get(),
+            //         bsnsNm  : companyNm,
+            //         homeUrl : homeUrl,
+            //         glryNm  : glyNm,
+            //         addr1   : address,
+            //         addr2   : detail,
+            //         zipCd   : zipCode,
+            //         dong    : this.addrs.bname,
+            //         area    : this.addrs.sido,
+            //         sigungu : this.addrs.sigungu,
+            //         bsnsChagNm : smaNm,
+            //         bsnsChagMob : smaPhone,
+            //         bsnsChagEmail : smaEmail,
+            //         insDt : '',
+            //         ctrt : {
+            //             stndPntReqID : '',
+            //             ctrtInfo : ''
+            //         },
+            //         rprsnAtwrk: [
+            //         ],
+            //         rprsnAtst: [
+            //         ],
+            //         ntcn: [
+            //         ],
+            //     }
+            // };
+
+            
+            
+            // Accounts.createUser({
+            //     _id : _id,
+            //     email : smaEmail,
+            //     password : 'qawsedrf1!',
+            //     profile : bsnsData
+            // }, function(error) {
+            //     if(error) console.log(error);
+            //     else {
+            //         Meteor.logout(function(err) {
+            //             if(err) console.log(err) 
+            //             else {
+            //                 sessionStorage.removeItem('art_dex');
+            //                 sessionStorage.removeItem('art_session_index');
+            //                 FlowRouter.go('/login');
+            //                 alert('신청이 완료되었습니다.\n관리자 검토 후 임시비밀번호가 전달됩니다.');
+            //             }
+            //         });
+            //     }
+            // });
             
         }
     }
@@ -142,6 +286,25 @@ Template.glyAppEntry.events({
 function messagePopup(message) {
     popUpMessage.set(message);
     $('#utilsPopUp').addClass('is-open');
+}
+
+function maxLengthCheck(object){
+    if (object.value.length > object.maxLength){
+        object.value = object.value.slice(0, object.maxLength);
+        var name = $(object).attr('name');
+        var chName = name.replace(/[0-9]/g, "");
+        switch(name){
+            case `${chName}1`:
+                $(`input[name=${chName}2]`).focus();
+                break;
+            case `${chName}2`:
+                $(`input[name=${chName}3]`).focus();
+                break;
+            default:
+                break;
+        }
+            
+    }
 }
 
 Template.glyAppEntry.helpers({

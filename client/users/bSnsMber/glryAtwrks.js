@@ -54,7 +54,7 @@ function setQuery() {
     options = {
         skip : skip.get(),
         limit: limit.get(),
-        // sort : sortInfo.get()
+        sort : sortInfo.get()
     };
 }
 
@@ -201,19 +201,31 @@ Template.glryAtwrks.events({
         if(Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip));
         else {
             setQuery();
+            seltTabAtwrk();
         }
     },
     'click a[name=next]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.nextPage(curPage, total.get(), limit, skip)) ;
         else {
             setQuery();
+            seltTabAtwrk();
         }
     },
     'click a[name=pageNum]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num));
         else {
             setQuery();
+            seltTabAtwrk();
         }
+    },
+    // 정렬 이벤트
+    'click button[name=arwrkSort]'(evt, tmpl) {
+        var targetVal = $(evt.currentTarget).val();
+        var sort = Meteor.clientCommonUtils.adminPageSort(targetVal);
+        sortInfo.set(sort);
+
+        setQuery();
+        seltTabAtwrk();
     }
 });
 
@@ -244,9 +256,7 @@ Template.glryAtwrks.helpers({
         if(Object.keys(this.ogPrt).length > 0) {
             return this.ogPrt.wSize + ' x ' + this.ogPrt.hSize; 
         }
-        else { 
-            return 'S, M, L';
-        }
+        else return 'S, M, L';
     },
     dtpChkAtwrkMaterials() {
         if(Object.keys(this.ogPrt).length > 0) {

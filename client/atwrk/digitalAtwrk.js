@@ -28,26 +28,24 @@ Template.digitalAtwrk.onCreated(function() {
         limit: limit.get()
     };
 
-    this.selectDigAtwrk = function() {
-        if(filters.get() != undefined) setQuery();
-
-        Meteor.call('selectDigAtwrk', query, options, function(err, res) {
-            total.set(res.total);
-            atwrkInfo.set(res.list);
-        });
-    };
-
-    this.selectDigHotAtwrk = function() {
-        Meteor.call('selectDigHotAtwrk', {}, function(err, res) {
-            hotAtwrkInfo.set(res);
-        });
-    }
-
-    
-    this.selectDigHotAtwrk();
-    
-    this.selectDigAtwrk();
+    selectDigHotAtwrk();
+    selectDigAtwrk();
 });
+
+function selectDigAtwrk() {
+    if(filters.get() != undefined) setQuery();
+
+    Meteor.call('selectDigAtwrk', query, options, function(err, res) {
+        total.set(res.total);
+        atwrkInfo.set(res.list);
+    });
+}
+
+function selectDigHotAtwrk() {
+    Meteor.call('selectDigHotAtwrk', {}, function(err, res) {
+        hotAtwrkInfo.set(res);
+    });
+}
 
 Template.digitalAtwrk.onRendered(function() {    
 });
@@ -55,64 +53,41 @@ Template.digitalAtwrk.onRendered(function() {
 Template.digitalAtwrk.events({
     'click button[name=allCancel]'() {
         $('input[name=filterChk]').prop('checked', false);
+        filterSchFunc();
     },
     'click button[name=priceCancelBtn]'() {
         cancelCheckBox('price');
+        filterSchFunc();
     },
     'click button[name=baseCancelBtn]'() {
         cancelCheckBox('base');
+        filterSchFunc();
     },
     'click button[name=style1CancelBtn]'() {
         cancelCheckBox('style1');
+        filterSchFunc();
     },
     'click button[name=style2CancelBtn]'() {
         cancelCheckBox('style2');
+        filterSchFunc();
     },
     // 정렬 이벤트
     'click button[name=sortList]'(evt, tmpl) {
         var sort = Meteor.clientCommonUtils.pageSort($(evt.currentTarget).val(), 'dtPrt');
         sortInfo.set(sort);
         setQuery();
-        tmpl.selectDigAtwrk();
+        selectDigAtwrk();
     },
     // 필터 이벤트
     'change input[name=filterChk]'(evt, tmpl) {
-        var chked = $('input[name=filterChk]:checked');
-        var dataList = [];
-        var beforKind = '';
-        var queryData = {};
-
-        for(var i=0; i < chked.length; i++) {
-            var splitVal = chked[i].value.split('-');
-            var kind = splitVal[0];
-            var code = splitVal[1];
-            var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
-
-            if(beforKind != kind && beforKind != '') {
-                queryData[beforKind] = dataList;
-                dataList = [];
-            }
-
-            dataList.push(codeData);
-
-            beforKind = kind;
-
-            if(i === (chked.length -1)) queryData[beforKind] = dataList;
-        }
-
-        filters.set(queryData);
-
-        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
-
-        setQuery();
-        tmpl.selectDigAtwrk();        
+        filterSchFunc();
     },
     // 페이지
     'click a[name=prev]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip));
         else {
             setQuery();
-            tmpl.selectDigAtwrk();
+            selectDigAtwrk();
             scrollMove();
         }
     },
@@ -120,7 +95,7 @@ Template.digitalAtwrk.events({
         if(Meteor.clientCommonUtils.nextPage(curPage, total.get(), limit, skip)) ;
         else {
             setQuery();
-            tmpl.selectDigAtwrk();
+            selectDigAtwrk();
             scrollMove();
         }
     },
@@ -128,11 +103,44 @@ Template.digitalAtwrk.events({
         if(Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num));
         else {
             setQuery();
-            tmpl.selectDigAtwrk();
+            selectDigAtwrk();
             scrollMove();
         }
     }
 });
+
+// 필터 변경시 및 일반 조회용
+function filterSchFunc() {
+    var chked = $('input[name=filterChk]:checked');
+    var dataList = [];
+    var beforKind = '';
+    var queryData = {};
+
+    for(var i=0; i < chked.length; i++) {
+        var splitVal = chked[i].value.split('-');
+        var kind = splitVal[0];
+        var code = splitVal[1];
+        var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
+
+        if(beforKind != kind && beforKind != '') {
+            queryData[beforKind] = dataList;
+            dataList = [];
+        }
+
+        dataList.push(codeData);
+
+        beforKind = kind;
+
+        if(i === (chked.length -1)) queryData[beforKind] = dataList;
+    }
+
+    filters.set(queryData);
+
+    Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
+
+    setQuery();
+    selectDigAtwrk();
+}
 
 // 선택해제 버튼 이벤트용 Func
 function cancelCheckBox(name) {

@@ -21,11 +21,9 @@ Template.authSample.events({
         }
     },
     'keyup button[name=loginBtn]'(evt, tmpl) {
-        console.log(' ===== 1');
         if(evt.keyCode === 13) $('button[name=loginBtn]').click();
     },  
     'keyup input[name=loginPwd]'(evt, tmpl) {
-        console.log(' ===== 2');
         if(evt.keyCode === 13) $('button[name=loginBtn]').click();
     },  
 });

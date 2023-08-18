@@ -135,83 +135,55 @@ Template.atwrkList.events({
     'click button[name=atstAllDeSelect]'(evt, tmpl) {
         $('button[name=rprsnAtst]').removeClass('is-active');
 
-        setQuery();
+        filterSchFunc();
         tmpl.selectAtwrkForBsns();
     },
-    'click button[name=allCancel]'() {
+    'click button[name=allCancel]'(evt, tmpl) {
         $('input[name=filterChk]').prop('checked', false);
         $('button[name=rprsnAtst]').removeClass('is-active');
 
-        setQuery();
+        filterSchFunc();
         tmpl.selectAtwrkForBsns();
     },
-    'click button[name=priceCancelBtn]'() {
+    'click button[name=priceCancelBtn]'(evt, tmpl) {
         cancelCheckBox('price');
 
-        setQuery();
+        filterSchFunc();
         tmpl.selectAtwrkForBsns();
     },
-    'click button[name=mediumCancelBtn]'() {
+    'click button[name=mediumCancelBtn]'(evt, tmpl) {
         cancelCheckBox('medium');
 
-        setQuery();
+        filterSchFunc();
         tmpl.selectAtwrkForBsns();
     },
-    'click button[name=mkyyCancelBtn]'() {
+    'click button[name=mkyyCancelBtn]'(evt, tmpl) {
         cancelCheckBox('mkyy');
 
-        setQuery();
+        filterSchFunc();
         tmpl.selectAtwrkForBsns();
     },
-    'click button[name=style1CancelBtn]'() {
+    'click button[name=style1CancelBtn]'(evt, tmpl) {
         cancelCheckBox('style1');
 
-        setQuery();
+        filterSchFunc();
         tmpl.selectAtwrkForBsns();
     },
-    'click button[name=style2CancelBtn]'() {
+    'click button[name=style2CancelBtn]'(evt, tmpl) {
         cancelCheckBox('style2');
 
-        setQuery();
+        filterSchFunc();
         tmpl.selectAtwrkForBsns();
     },
-    'click button[name=materialCancelBtn]'() {
+    'click button[name=materialCancelBtn]'(evt, tmpl) {
         cancelCheckBox('material');
 
-        setQuery();
+        filterSchFunc();
         tmpl.selectAtwrkForBsns();
     },
     // 필터 이벤트
     'change input[name=filterChk]'(evt, tmpl) {
-        var chked = $('input[name=filterChk]:checked');
-        var dataList = [];
-        var beforKind = '';
-        var queryData = {};
-
-        for(var i=0; i < chked.length; i++) {
-            var splitVal = chked[i].value.split('-');
-            var kind = splitVal[0];
-            var code = splitVal[1];
-            var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
-
-            if(beforKind != kind && beforKind != '') {
-                queryData[beforKind] = dataList;
-                dataList = [];
-            }
-
-            dataList.push(codeData);
-
-            beforKind = kind;
-
-            if(i === (chked.length -1)) queryData[beforKind] = dataList;
-        }
-
-        filterQuery.set(queryData);
-
-        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
-
-        setQuery();
-
+        filterSchFunc();
         tmpl.selectAtwrkForBsns();
     },
     'click a[name=prev]'(evt, tmpl) {
@@ -239,6 +211,37 @@ Template.atwrkList.events({
         }
     }
 });
+
+function filterSchFunc() {
+    var chked = $('input[name=filterChk]:checked');
+    var dataList = [];
+    var beforKind = '';
+    var queryData = {};
+
+    for(var i=0; i < chked.length; i++) {
+        var splitVal = chked[i].value.split('-');
+        var kind = splitVal[0];
+        var code = splitVal[1];
+        var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
+
+        if(beforKind != kind && beforKind != '') {
+            queryData[beforKind] = dataList;
+            dataList = [];
+        }
+
+        dataList.push(codeData);
+
+        beforKind = kind;
+
+        if(i === (chked.length -1)) queryData[beforKind] = dataList;
+    }
+
+    filterQuery.set(queryData);
+
+    Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
+
+    setQuery();
+}
 
 Template.atwrkList.helpers({
     atwrk() {

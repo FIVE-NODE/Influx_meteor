@@ -14,10 +14,10 @@
                                 <div class="sch-block">
                                     <p class="sch-label">주문내역 조회</p>
                                     <div class="btn-wrap btn-schTime">
-                                        <button name="seltDateBtn" id="1w" type="button" class="is-active">1주일</button>
-                                        <button name="seltDateBtn" id="1m" type="button">1개월</button>
-                                        <button name="seltDateBtn" id="3m" type="button">3개월</button>
-                                        <button name="seltDateBtn" id="all" type="button">전체시기</button>
+                                        <button name="seltDateBtn" id="1wek" type="button" class="is-active">1주일</button>
+                                        <button name="seltDateBtn" id="1mon" type="button">1개월</button>
+                                        <button name="seltDateBtn" id="3mon" type="button">3개월</button>
+                                        <!-- <button name="seltDateBtn" id="all" type="button">전체시기</button> -->
                                     </div>
                                 </div>
                                 <div class="sch-block">
@@ -33,9 +33,18 @@
                                 </div>
                                 <div class="sch-block">
                                     <div class="form-wrap">
-                                        <div class="form-input">
-                                            <input type="text" name="odTp" id="" placeholder="전체상태">
+                                        <div class="form-select form-select-custom">
+                                            <button type="button" style="width: 110px;" class="custom-select__tit">전체상태</button>
+                                            <ul class="custom-select__options" style="display: none;">
+                                                    <li class="is-active"><button type="button" name="seltStatus" value="ALL-000">전체상태</button></li>
+                                                {{#each ordetStatus}}
+                                                    <li><button type="button" name="seltStatus" value="ORDER_STATUS-{{code}}">{{name}}</button></li>
+                                                {{/each}}
+                                            </ul>
                                         </div>
+                                        <!-- <div class="form-input">
+                                            <input type="text" name="odTp" id="" placeholder="전체상태">
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="sch-block">

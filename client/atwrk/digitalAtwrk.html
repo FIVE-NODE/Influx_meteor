@@ -27,7 +27,7 @@
                                         <div class="hot-list">
                                             {{#each hotAtwrk}}
                                                 <div class="hot-item">
-                                                    <a href="">
+                                                    <a href="/atwrkDetail/{{_id}}">
                                                         <span class="hot-item__img">
                                                             {{#each image}}
                                                                 {{#if imgChk this}}
@@ -142,6 +142,9 @@
                                                 <a href="">더보기</a>
                                                 <button name="style2CancelBtn" type="button">선택해제</button>
                                             </div>
+                                        </div>
+                                        <div class="btn-wrap border-top pt-30 ta-r">
+                                            <button type="button" name="allCancel" class="uncheck-all">전체 선택 해제</button>
                                         </div>
                                     </div>
                                     <div class="product-list">

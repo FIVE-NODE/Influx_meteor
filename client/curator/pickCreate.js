@@ -178,7 +178,6 @@ Template.pickCreate.helpers({
     },
     preViewImg() {
         if(imgUrl != undefined) {
-            console.log(imgUrl.get());
             return imgUrl.get();
         }
     }

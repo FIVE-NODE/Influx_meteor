@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Pick, Atwrk, Mber, Inventory } from '../lib/collections.js';
+import { Pick, Atwrk, Mber, Inventory, StndPntReq, Cmmnc } from '../lib/collections.js';
 
 Meteor.publish('ArtStartPub', function() {
 });
@@ -26,6 +26,23 @@ Meteor.publish('userData', function() {
     } else {
         this.ready();
     }
+});
+
+Meteor.publish('mangeMsg', function() { 
+    if(this.userId) {
+        return Cmmnc.find();
+    } else {
+        this.ready();
+    }
+});
+
+Meteor.publish('glryAppMang', function() {
+    // if(this.userId) {
+        // return StndPntReq.find({}).fetch();
+    // } else {
+        // this.ready();
+        return StndPntReq.find();
+    // }
 });
 
 // Meteor.publish('inventory', function() {

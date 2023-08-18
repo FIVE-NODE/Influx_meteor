@@ -78,7 +78,6 @@ function scrollMove() {
 Template.exhibitionEvnt.events({
     // page당 갯수 이벤트
     'click button[name=pageVal]'(evt, tmpl) {
-        console.log(parseInt($(evt.currentTarget).text()));
         limit.set(parseInt($(evt.currentTarget).text()));
         setQuery();
         tmpl.selectExhigitionEvntList();
@@ -86,7 +85,6 @@ Template.exhibitionEvnt.events({
     },
     'click button[name=kind]'(evt, tmpl) {
         kind.set($(evt.currentTarget).val());
-        console.log(kind.get());
     },
     // 검색 이벤트
     'click button[name=schBtn]'(evt, tmpl) {

@@ -209,14 +209,20 @@ Meteor.methods({
         let res = {};
         
         var toDay = new Date();
-        var evntStrDay = moment(toDay).subtract(1, 'M').format('YYYYMMDD');
+        var evntEndDay = moment(toDay).subtract(1, 'M').format('YYYYMMDD');
+        var aftDay = moment(toDay).add(3, 'd').format('YYYYMMDD');
         toDay = moment(toDay).format('YYYYMMDD');
 
         option.sort = {
           'glry.glryNm' : 1
         };
 
-        var normal = { strDt : { $gte : evntStrDay, $lte : toDay} };
+        var normal = {
+          $or: [
+            { strDt : { $gte : toDay, $lte : aftDay} },
+            { endDt : { $gte : evntEndDay, $lte : toDay}}
+          ]
+      };
         
         if(!(Object.keys(data).length === 0)) {
           
@@ -268,7 +274,6 @@ Meteor.methods({
 
           res.total = Evnt.find(queryData).count();
           res.list = Evnt.find(queryData, option).fetch();
-
         } else {
           res.total = Evnt.find(normal).count();
           res.list = Evnt.find(normal, option).fetch();
@@ -344,6 +349,8 @@ Meteor.methods({
         let res = {};
 
         query._id = this.userId;
+
+        var normal = { 'ogPrt.selStrDt' : { $exists : true }, 'dtPrt.selStrDt' : { $exists : true } };
         
         var sellTp = query.sellTp != undefined ? {'ogPrt.sellTp' : query.sellTp} : {};
         var bsnsid = { 'glry.bsnsID' : query._id };
@@ -362,7 +369,7 @@ Meteor.methods({
         }
         
         if(og.length > 0 && dt.length == 0) kind = {'ogPrt.atwrkNm' : { $exists: true }};
-        else if(dt.length > 0 && og.length == 0) kind = {'dtPrt.atwrkNm' : { $exists: true }}
+        else if(dt.length > 0 && og.length == 0) kind = {'dtPrt.atwrkNm' : { $exists: true }, 'ogPrt.atwrkNm' : { $exists: false }}
         else kind = {};
 
         var metRias = query.MATERIAL != undefined ?
@@ -371,7 +378,30 @@ Meteor.methods({
         var queryData = { $and : [ sellTp, bsnsid, kind, atst, metRias ]};
 
         res.total = Atwrk.find(queryData).count();
-        res.list = Atwrk.find(queryData, option).fetch();
+
+        var options = []
+
+        if(option.sort == undefined || option.sort == {}) options = { $skip : option.skip}, { $limit : option.limit};
+        else options = { $sort : option.sort }, { $skip : option.skip}, { $limit : option.limit};
+
+        res.list = Atwrk.aggregate([
+          { $match : queryData },
+          {
+            $addFields : {
+              'str' : { $cond : [{ $ne : [ { $type :  "$ogPrt.selStrDt"}, 'missing' ] }, '$ogPrt.selStrDt', '$dtPrt.selStrDt'] },
+              'end' : { $cond : [{ $ne : [ { $type :  "$ogPrt.selEndDt"}, 'missing' ] }, '$ogPrt.selEndDt', '$dtPrt.selEndDt'] },
+            }
+          },
+          {
+            $addFields : {
+                "sortDateNum" : { $cond : [{ $ne : [ { $type : "$str" }, 'missing'] }, { $subtract : [ { $toDate : "$end"} , { $toDate : "$str"} ] },  '']},
+            }
+          },
+          options
+        ]);
+
+        // res.total = Atwrk.find(queryData).count();
+        // res.list = Atwrk.find(queryData, option).fetch();
 
         return res;
       } catch(e) {
