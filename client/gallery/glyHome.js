@@ -28,7 +28,6 @@ function setQuery() {
                 dong = addr;
             } else {
                 area = addr;
-                dong = addr;
             }
         } 
     }    
@@ -92,9 +91,19 @@ Template.glyHome.events({
         findDBs('selectGallery', setQuery(), datas, total);
     },
     'click a[name=pageNum]'() {
-        Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num);
-        findDBs('selectGallery', setQuery(), datas, total);
-    }
+        if(Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num));
+        else {
+            findDBs('selectGallery', setQuery(), datas, total);
+        }
+        // Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num);
+        
+    },
+    'keyup input[name=addr]'(evt, tmpl) {
+        if(evt.keyCode === 13) $('button[name=searchBtn]').click();
+    },
+    'keyup input[name=glryNm]'(evt, tmpl) {
+        if(evt.keyCode === 13) $('button[name=searchBtn]').click();
+    },
 });
 
 Template.glyHome.helpers({

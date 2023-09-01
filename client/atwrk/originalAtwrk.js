@@ -71,7 +71,7 @@ Template.originalAtwrk.onCreated(function() {
     this.selectOrgAtwrk();
 });
 
-Template.originalAtwrk.onRendered(function() {    
+Template.originalAtwrk.onRendered(function() {
 });
 
 Template.originalAtwrk.events({

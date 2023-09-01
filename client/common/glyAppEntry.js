@@ -138,6 +138,7 @@ Template.glyAppEntry.events({
                     bsnsChagNm : smaNm,
                     bsnsChagMob : smaPhone,
                     bsnsChagEmail : smaEmail,
+                    glryImage : "/image/main/img-mainSlide--gallery--0101.png",
                     insDt : toDate,
                     ctrt : {
                         stndPntReqID : '',

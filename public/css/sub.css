@@ -177,6 +177,8 @@ A seriese
       -ms-flex-pack: center;
           justify-content: center;
   height: 100%;
+  /* 신규추가 */
+  width: 100%;
 }
 .section-seperate__tit {
   width: 100%;
@@ -356,7 +358,7 @@ A seriese
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%;
-  margin-top: 17.2rem;
+  margin-top: 10%;
 }
 .copyright--join span {
   margin-left: 1rem;
@@ -1685,9 +1687,14 @@ B seriese
   border: 1px solid #b9b9b9;
   border-radius: 1.5rem;
   margin-left: 20px;
+  /* 신규추가 */
+  width: 36%;
 }
 .gallery-sch .form-input input {
-  width: 47rem;
+  /* 신규추가 */
+  width: 88%;
+  /* 기존 */
+  /* width: 47rem; */
   height: 100%;
   border: 0;
   border-top-left-radius: 1.5rem;

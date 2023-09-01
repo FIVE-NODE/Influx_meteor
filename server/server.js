@@ -31,6 +31,16 @@ Meteor.startup(() => {
 
   process.env.MAIL_URL = 'smtp://' + smtp.username + ':' + smtp.password + '@' + smtp.server + ':' + smtp.port;
 
+  // Accounts.emailTemplates.resetPassword.from = () => {
+
+  //   // Accounts.onResetPasswordLink
+  //   console.log(' ===== >>> ');
+  //   var answer = '안녕하세요 사용자의 비밀번호 초기화 링크는 입니다. \n';
+  //   return answer;
+  // }
+
+  
+
   // Meteor.call('fileFinds', '39f1db00-563e-4136-b10f-63a2b5da3285');
 
 });

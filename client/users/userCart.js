@@ -78,6 +78,7 @@ function sltUserCart() {
                     );
                 }
             } else {
+                console.log('val : ', val);
                 setData.forEach((cartData, cartNum) => {
                     if(cartData.atwrkInfo.glry.bsnsID == val.glry.bsnsID) {
                         if(cartData.atwrkFlag == 'dtPrt') delivFee += 6000;

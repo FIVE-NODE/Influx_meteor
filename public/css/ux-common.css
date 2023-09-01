@@ -1061,6 +1061,9 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-top: 2%;
+  margin-left: 5%;
+  margin-right: 3%;
 }
 .gnb a {
   display: block;
@@ -1070,9 +1073,11 @@ body {
   color: #585858;
   text-align: center;
 }
+
 .gnb a + a {
   margin-left: 6rem;
 }
+
 .gnb a span {
   display: block;
   margin-bottom: 0.5rem;

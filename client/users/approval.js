@@ -116,14 +116,14 @@ Template.approval.onCreated(function() {
     // 금액 데이터
     priceData = new ReactiveVar();
 
-    var ifba = JSON.parse(localStorage.getItem('if.ba.to')).l;
+    var ifba = localStorage.getItem('if.ba.to') == null ? '' : JSON.parse(localStorage.getItem('if.ba.to')).l;
     if(ifba == 'dir') {
         Meteor.call('decrypt', localStorage.getItem('crt_bundle'), function(err, res) {
             var data = JSON.parse(res);
             approAtList.set([data]);
             setPricData(data);
         })
-    } else {
+    } else if(ifba == 'all') {
         Meteor.call('decrypt', localStorage.getItem('crt_bundle'), function(err, res) {
             var data = JSON.parse(res);
             approAtList.set(data);

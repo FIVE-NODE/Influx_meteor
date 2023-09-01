@@ -47,6 +47,8 @@ Template.header.events({
     },
     'click a[name=quickMu]'(evt, tmpl) {
         var kind = $(evt.currentTarget).children('h2').text();
+        var href = $(evt.currentTarget).prop('href');
+
         var queryData = {};
         if(kind == '유화') {
             queryData.MATERIAL = ['001'];
@@ -70,6 +72,14 @@ Template.header.events({
                 name    : "500~1,000 만원"
             }];
             FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+        }
+        
+        // 같은 페이지 일경우 새로고침
+        var pageName = FlowRouter.getRouteName();
+        if(href.indexOf(pageName) > -1) {
+            setTimeout(function() {
+                location.reload();
+            }, 50);
         }
         
     },

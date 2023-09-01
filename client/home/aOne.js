@@ -72,6 +72,7 @@ function selectGlry() {
     Meteor.call('clientBsnsMber', function(e, data) {
         if(data != undefined && clientBsnsMber._collection._docs._map.size == 0) {
             data.forEach(function(map){
+                map.profile.uInfos._id = map._id;
                 clientBsnsMber.insert(map.profile.uInfos);
             });
         }
@@ -90,6 +91,7 @@ function selectBanr() {
 }
 
 Template.aOne.onCreated(async function() {
+
     const instance = this;
     instance.connectoin = new ReactiveVar();
 
