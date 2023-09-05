@@ -9,9 +9,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
+    "atob": "^2.1.2",
     "caniuse-lite": "^1.0.30001491",
+    "cheerio": "^1.0.0-rc.12",
     "jquery": "^3.6.0",
-    "meteor-node-stubs": "^1.2.1"
+    "meteor-node-stubs": "^1.2.1",
+    "react": "^18.2.0"
   },
   "meteor": {
     "mainModule": {
