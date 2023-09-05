@@ -260,7 +260,8 @@
 /* 모바일 환경 */
 .sampleTest2:not([data-touchable= 'true']) {
   max-height: 317px;
-  max-width: 380px;  
+  max-width: 380px;
+  min-height: 317px;
   width: 100%;
 }
 
