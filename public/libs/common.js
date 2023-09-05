@@ -47,7 +47,8 @@ function slideMenu(){
 }
 
 function popup(){
-    $('.popup').click(function(){
+    $('.popup, .js-popup').click(function(){
+        $('body').attr('style', 'overflow:hidden')
         const $this = $(this),
         dataId = $this.attr('data-id'),
         contId = $('#' + dataId);
@@ -77,6 +78,7 @@ function popup(){
     });
 
     $('.popup-close').click(function(){
+        $('body').attr('style', 'overflow:initial')
         $(this).parents('.popup-layout').removeClass('is-open');
     });
     $('.popup-chk').click(function() {

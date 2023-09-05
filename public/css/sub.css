@@ -68,6 +68,11 @@ common
   color: #585858;
   text-align: center;
 }
+@media (max-width: 1600px) {
+  .subTit {
+    padding: 0 2rem;
+  }
+}
 .subTit.border-top--0 {
   border-top: 0;
 }
@@ -151,6 +156,11 @@ common
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+@media (max-width: 1600px) {
+  .bradCrumb-curator .curator__inner {
+    padding: 0 2rem;
+  }
 }
 .bradCrumb-curator .bradCrumb {
   margin-top: 0;
@@ -1074,6 +1084,11 @@ A seriese
   max-width: 168rem;
   margin: 0 auto;
 }
+@media (max-width: 1600px) {
+  .mypage-subtit__inner {
+    padding: 0 2rem;
+  }
+}
 .mypage-subtit p {
   position: absolute;
   top: 50%;
@@ -1627,6 +1642,11 @@ B seriese
   margin: 0 auto;
   margin-top: 4rem;
 }
+@media (max-width: 1600px) {
+  .gallery__inner {
+    padding: 0 2rem;
+  }
+}
 .gallery-mainSlide {
   position: relative;
 }
@@ -2008,6 +2028,11 @@ B seriese
   max-width: 168rem;
   margin: 0 auto;
 }
+@media (max-width: 1600px) {
+  .product-kind .bradCrumb {
+    padding: 0 2rem;
+  }
+}
 .product-view__imgGroup {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2076,6 +2101,11 @@ B seriese
   font-size: 2.8rem;
   font-weight: 500;
 }
+@media (max-width: 1600px) {
+  .product-kind-tit__inner {
+    padding: 0 2rem;
+  }
+}
 .product-kind--original > .form-wrap {
   max-width: 162rem;
   margin: 0 auto;
@@ -2083,6 +2113,11 @@ B seriese
 }
 .product-kind--original > .form-wrap .form-select {
   margin-left: auto;
+}
+@media (max-width: 1600px) {
+  .product-kind--original > .form-wrap {
+    padding: 0 2rem;
+  }
 }
 .product-kind--original .product-list {
   grid-template-columns: repeat(4, 1fr);
@@ -2172,6 +2207,11 @@ B seriese
   max-width: 162rem;
   margin: 0 auto;
   margin-top: 3rem;
+}
+@media (max-width: 1600px) {
+  .product-kind--digital > .form-wrap {
+    padding: 0 2rem;
+  }
 }
 .product-hot {
   border-bottom: 1px solid #8B8B8B;
@@ -5429,7 +5469,10 @@ D seriese
   margin-top: 2rem;
   padding: 0 5.2rem;
 }
+
 .myGallery-checkTable table .form-row {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   margin-left: -1rem;
 }
 .myGallery-checkTable table .form-check {
@@ -6006,7 +6049,7 @@ D seriese
   font-weight: 700;
   color: #585858;
 }
-.saleCondition-block--suggest .first-choice input[type=checkbox] {
+.saleCondition-block--suggest .first-choice input[type=checkbox], .saleCondition-block--suggest .first-choice input[type=radio] {
   width: 1.7rem;
   height: 1.7rem;
   border-radius: 0.3rem;
@@ -6015,7 +6058,7 @@ D seriese
      -moz-appearance: none;
           appearance: none;
 }
-.saleCondition-block--suggest .first-choice input[type=checkbox]:checked {
+.saleCondition-block--suggest .first-choice input[type=checkbox]:checked, .saleCondition-block--suggest .first-choice input[type=radio]:checked {
   background-color: #18A0FB;
 }
 .saleCondition-block--suggest .second-choice .form-check {
@@ -6132,6 +6175,35 @@ D seriese
 }
 .saleCondition-block--permit .form-check + .form-input {
   margin-top: 1.6rem;
+}
+.saleCondition-block__dataBtn {
+  width: 17.6rem;
+  height: 6.3rem;
+  padding-right: 6rem;
+  border-radius: 0.5rem;
+  border: 1px solid #B9B9B9;
+  background: url("../image/sub/icon/icon-salesCalendar.png") no-repeat calc(100% - 1rem) center/3.4rem 2.9rem;
+}
+.saleCondition-block__dataBtn--date {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #585858;
+  text-align: right;
+}
+.saleCondition-block__dataBtn--time {
+  display: block;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #585858;
+  text-align: right;
+}
+.saleCondition-block__hyphen {
+  margin: 0 2rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #585858;
 }
 .saleCondition-block--permitNum .form-select .custom-select__tit {
   width: 41.2rem;
@@ -6705,6 +6777,12 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* 신규추가 CSS */
+.imgfitset {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .back {
   width: 100%;
   height: 100%;

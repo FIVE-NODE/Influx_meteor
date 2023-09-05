@@ -159,7 +159,8 @@ Template.header.helpers({
         var currentPageName = FlowRouter.getRouteName();
         if(currentPageName == 'myPageSelling' || currentPageName == 'ogAtwrkCr'
             || currentPageName == 'eventsCrList' || currentPageName == 'bMsgManage'
-            || currentPageName == 'inventoryMode'|| currentPageName == 'glryAtwrks') res = false;
+            || currentPageName == 'inventoryMode'|| currentPageName == 'glryAtwrks'
+            || currentPageName == 'atwrkSalesReg') res = false;
         return res;
     },
     glryInfo() {

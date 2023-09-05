@@ -165,6 +165,9 @@
 .slide-list--gallery .swiper-slide {
   position: relative;
 }
+.slide-list--gallery .swiper-slide img {
+  width: 100%;
+}
 .slide-list--gallery .swiper-slide__cont {
   position: absolute;
   bottom: 1.5rem;

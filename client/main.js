@@ -141,5 +141,10 @@ Template.body.helpers({
     var chk = FlowRouter.getRouteName();
     return chk === 'aOne' ? true : false;
   },
+  bootMinFlag() {
+    var chk = FlowRouter.getRouteName()
+    console.log(chk);
+    console.log(chk === 'atwrkSalesReg');
+    return chk === 'atwrkSalesReg';
+  }
 });
-

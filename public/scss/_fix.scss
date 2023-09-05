@@ -238,6 +238,9 @@
     &--336{
         width:36.6rem;
     }
+    &--412{
+        width:41.2rem;
+    }
     &--420{
         width:42rem;
     }
@@ -387,6 +390,13 @@
         &-100{
             padding-left:10rem;
             padding-right:10rem;
+        }
+        &-xl{
+            &--20{
+                @include media-breakpoint-down(n-xl){
+                    padding:0 2rem;
+                }
+            }
         }
     }
     &y{

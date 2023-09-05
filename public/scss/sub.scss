@@ -96,6 +96,9 @@ common
     font-weight:700;
     color:$txt;
     text-align:center;
+    @include media-breakpoint-down(n-xl){
+        padding:0 2rem;
+    }
     &.border-top--0{
         border-top:0;
     }
@@ -168,6 +171,9 @@ common
         .curator__inner{
             height:100%;
             align-items: center;
+            @include media-breakpoint-down(n-xl){
+                padding:0 2rem;
+            }
         }
         .bradCrumb{
             margin-top:0;
@@ -981,6 +987,9 @@ A seriese
             height:100%;
             max-width:168rem;
             margin:0 auto;
+            @include media-breakpoint-down(n-xl){
+                padding:0 2rem;
+            }
         }
         p{
             @include pos(absolute, $t:50%, $l:50%);
@@ -1518,6 +1527,9 @@ B seriese
         max-width:156rem;
         margin:0 auto;
         margin-top:4rem;
+        @include media-breakpoint-down(n-xl){
+            padding:0 2rem;
+        }
     }
     &-mainSlide{
         position:relative;
@@ -1889,6 +1901,9 @@ B seriese
         .bradCrumb{
             max-width:162rem;
             margin:0 auto;
+            @include media-breakpoint-down(n-xl){
+                padding:0 2rem;
+            }
         }
         &-tit{
             padding-bottom:2rem;
@@ -1899,6 +1914,9 @@ B seriese
                 margin-top:3rem;
                 font-size:2.8rem;
                 font-weight:500;
+                @include media-breakpoint-down(n-xl){
+                    padding:0 2rem;
+                }
             }
         }
         &--original{
@@ -1908,6 +1926,9 @@ B seriese
                 margin-top:3rem;
                 .form-select{
                     margin-left:auto;
+                }
+                @include media-breakpoint-down(n-xl){
+                    padding:0 2rem;
                 }
             }
             .product{
@@ -2003,6 +2024,9 @@ B seriese
                     max-width:162rem;
                     margin:0 auto;
                     margin-top:3rem;
+                    @include media-breakpoint-down(n-xl){
+                        padding:0 2rem;
+                    }
                 }
             }
         }
@@ -5039,6 +5063,7 @@ D seriese
     &-checkTable{
         table{
             .form-row{
+                flex-wrap:wrap;
                 margin-left:-1rem;
             }
             .form-check{
@@ -5525,7 +5550,7 @@ D seriese
                 }
             }
             .first-choice{
-                input[type='checkbox']{
+                input[type='checkbox'], input[type='radio']{
                     width:1.7rem;
                     height:1.7rem;
                     border-radius:.3rem;
@@ -5655,6 +5680,29 @@ D seriese
                 border:1px solid #B9B9B9;
                 @include font(1.6, 700, #8B8B8B);
             }
+        }
+        &__dataBtn{
+            width:17.6rem;
+            height:6.3rem;
+            padding-right:6rem;
+            border-radius:.5rem;
+            border:1px solid #B9B9B9;
+            background:url('../image/sub/icon/icon-salesCalendar.png') no-repeat calc(100% - 1rem) center/3.4rem 2.9rem;
+            &--date{
+                display:block;
+                @include font(1.6, 700, #585858);
+                text-align: right;
+            }
+            &--time{
+                display:block;
+                margin-top:1rem;
+                @include font(1.4, 500, #585858);
+                text-align: right;
+            }
+        }
+        &__hyphen{
+            margin:0 2rem;
+            @include font(1.6, 700, #585858);
         }
     }
     &-profile{
@@ -6159,3 +6207,5 @@ Z seriese
         }
     }
 }
+
+//responsive __ max-width
