@@ -2,6 +2,7 @@
     <div class="popup-layout" id="inventory_popup_preview">
         <div class="popup-wrap popup--additional">
             <div class="popup-inner" style="width:1680px;height:calc(100% - 5rem)">
+
                 <div class="popup-head">
                     <div class="subTit-tit--center">
                         <div class="subTit__inner  d-flex align-center">
@@ -15,17 +16,108 @@
                 </div>
 
                 <div class="popup-cont popup-cont--terms">
-                    <div class="sub-content__mypage">
-                        <div class="mypage-subtit--gallery height-66">
-                            <div class="mypage-subtit__inner">
-                                {{#with bsnsInfo}}
-                                    <p style="color:#000;">우) {{zipCd}} , {{addr1}}       Tel: {{bsnsChagMob}},    email: {{bsnsChagEmail}},   {{homeUrl}}</p>
-                                {{/with}}
-                            </div>
+                    
+                    
+                    <div class="mypage-subtit--gallery height-66" style="width:100%">
+                        <div class="">
+                            {{#with bsnsInfo}}
+                                <p style="color:#000; width: 100%;">우) {{zipCd}} , {{addr1}}       Tel: {{bsnsChagMob}},    email: {{bsnsChagEmail}},   {{homeUrl}}</p>
+                            {{/with}}
                         </div>
                     </div>
-                </div>
+                    
 
+
+
+                    <div class="table-wrap">
+                        {{#each printShow}}
+                        <table class="table-basic table--col table-basic--mygallery__inventory">
+                            <caption></caption>
+                            <colgroup>
+                                <col style="width:10%">
+                                <col style="width:15%">
+                                <col style="width:auto">
+                                <col style="width:10%">
+                                <col style="width:10%">
+                                <col style="width:10%">
+                                <col style="width:8%">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="d-flex align-center">
+                                            {{#with atstInfos}}
+                                                <span class="img-wrap">
+                                                    <img class="selling-img" src="{{image}}" alt="">
+                                                </span>
+                                                <p class="txt-wrap">
+                                                    <span class="ml-50 font-12 fontW-b">{{atstNm}}</span>
+                                                    <em class="ml-50 font-12 fontW-500">작가소개)    {{atstDesc}}</em>
+                                                </p>
+                                            {{/with}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{#each atwrkInfo}}
+                                <tr>
+                                    <td>Inventory 번호</td>
+                                    <td>작품사진</td>
+                                    <td>설     명</td>
+                                    <td>작품연도 </td>
+                                    <td>작 품 가 격</td>
+                                    <td>구    분</td>
+                                    <td>선택</td>
+                                </tr>
+                                <tr id="{{atwrkId}}">
+                                    <td>{{numbering @index}}</td>
+                                    <td>
+                                        <span>
+                                            <img class="selling-img" src="{{image}}" alt="">
+                                        </span>
+                                    </td>
+                                    {{#if ogChk ogNm}}
+                                        <td>제목:  {{dtNm}},    사이즈: {{dtSize}},     베이스:  {{codeToName dtBase "BASE"}}</td>
+                                        <td>{{dtYY}}</td>
+                                        <td class="line-20">
+                                            {{commaPric dtPric}}<br/>
+                                        </td>
+                                        <td>디지털 판화</td>
+                                    {{else}}
+                                        {{#if bothChk dtNm}}
+                                            <td>제목:  {{ogNm}},    크기: {{ogWSize}} x {{ogHSize}},     재료:  {{codeToName ogMet "MATERIAL"}}</td>
+                                            <td>{{ogYY}}</td>
+                                            <td class="line-20">
+                                                {{commaPric ogPric}}<br/>
+                                                ({{commaPric dtPric}})
+                                            </td>
+                                            <td>원 화 + 디지털판화</td>
+                                        {{else}}
+                                            <td>제목:  {{ogNm}},    크기: {{ogWSize}} x {{ogHSize}},     재료:  {{codeToName ogMet "MATERIAL"}}</td>
+                                            <td>{{ogYY}}</td>
+                                            <td class="line-20">
+                                                {{commaPric ogPric}}<br/>
+                                            </td>
+                                            <td>원 화</td>
+                                        {{/if}}
+                                    {{/if}}
+                                    <td>
+                                        <div class="form-wrap">
+                                            <div class="form-check">
+                                                <input type="checkbox" checked style="margin: 0px; width: 2.1rem; height: 2.1rem;" name="atwrkChkBox" id="" value="{{atwrkId}}" class="form-check__input">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                        {{/each}}
+                    </div>
+
+
+
+                  
+                </div>
             </div>
         </div>
     </div>

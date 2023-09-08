@@ -52,7 +52,7 @@
                                         <div class="saleCondition-block saleCondition-block--price mt-10">
                                             <div class="form-wrap">
                                                 <div class="form-input">
-                                                    <input type="text" name="pric">
+                                                    <input type="text" name="pric" id="scout">
                                                     <label >원</label>
                                                 </div>
                                             </div>
@@ -64,7 +64,7 @@
                                         <div class="saleCondition-block saleCondition-block--price mt-10">
                                             <div class="form-wrap">
                                                 <div class="form-input">
-                                                    <input type="text" name="pric">
+                                                    <input type="text" name="pric" id="bargain">
                                                     <label >원</label>
                                                 </div>
                                             </div>
@@ -118,6 +118,7 @@
                                         <h4 class="saleCondition__tit mt-30">구매자 흥정 (가격제안) 범위 선택 </h4>
                                         <div class="saleCondition-block saleCondition-block--suggest mt-20">
                                             <div class="d-flex flex-wrap width--465">
+
                                                 <div class="w-50 flex-1">
                                                     <div class="form-wrap">
                                                         <div class="form-block first-choice">
@@ -127,20 +128,21 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-block second-choice mt-5">
-
+                                                            {{#each seltBargain1}}
                                                             <div class="form-check">
                                                                 <label for="check-saleCondition-suggest--0101">
                                                                     <input type="radio" disabled="true" name="check-saleCondition-suggest01" id="check-saleCondition-suggest--0101">
                                                                     <span>
-                                                                        1,000,000 원
-                                                                        <em>현 판매 가격</em>
+                                                                        {{commaPric pric}} 원
+                                                                        <em>{{detail}}</em>
                                                                     </span>
                                                                 </label>
                                                             </div>
-
+                                                            {{/each}}
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="w-50 flex-1 ml-10">
                                                     <div class="form-wrap">
                                                         <div class="form-block first-choice">
@@ -150,37 +152,39 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-block second-choice mt-5">
-
+                                                            {{#each seltBargain2}}
                                                             <div class="form-check">
                                                                 <label for="check-saleCondition-suggest--0201">
                                                                     <input type="radio" disabled="true" name="check-saleCondition-suggest02" id="check-saleCondition-suggest--0201">
                                                                     <span>
-                                                                        1,000,000 원
-                                                                        <em>현 판매 가격</em>
+                                                                        {{commaPric pric}} 원
+                                                                        <em>{{detail}}</em>
                                                                     </span>
                                                                 </label>
                                                             </div>
-                                                            
+                                                            {{/each}}
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <p class="w-100 mt-5 font-11 color--sky">*판매 수수료가 포함된 가격입니다.</p>
                                             </div>
                                         </div>
                                     {{/if}}
 
                                     <h4 class="saleCondition__tit"></h4>
+                                    {{#if dtPrtChk}}
                                     <div class="saleCondition-block saleCondition-block--permit mt-30">
                                         <div class="form-wrap">
                                             <div class="form-check">
-                                                <label for="check-saleCondition--permit01">
-                                                    <span>디지털 판화 동시판매 허용 </span>
-                                                    <input type="checkbox" id="check-saleCondition--permit01">
-                                                </label>
+                                                    <label for="check-saleCondition--permit01">
+                                                        <span>디지털 판화 동시판매 허용 </span>
+                                                        <input type="checkbox" id="check-saleCondition--permit01">
+                                                    </label>
                                             </div>
                                         </div>
                                     </div>
-                                    
+                                    {{/if}}
                                     <div name="digitalSell" style="display: none;">
                                     <h4 class="saleCondition__tit mt-30">가격 입력</h4>
                                     <div class="saleCondition-block saleCondition-block--price mt-10">

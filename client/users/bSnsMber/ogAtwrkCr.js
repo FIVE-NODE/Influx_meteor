@@ -5,7 +5,7 @@ import './ogAtwrkCr.html';
 import '../../popup/utilsPopUp.js';
 
 const numberChk = /[^0-9.]/g; 
-const comma = /\B(?=(\d{3})+(?!\d))/g
+const comma = /\B(?=(\d{3})+(?!\d))/g;
 
 Template.ogAtwrkCr.onCreated(function() {
     // 작품 플래그

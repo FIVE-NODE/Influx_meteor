@@ -38,10 +38,21 @@ Template.header.events({
         var link = $(evt.currentTarget).val();
 
         var logedIn = Meteor.user();
-
+        
         if(logedIn != null && logedIn != undefined) {
-            if(link != '') FlowRouter.go(link);
-            else messagePopup({message : '화면 준비중 입니다.'});
+            console.log(logedIn);
+            if(link != '') {
+                // FlowRouter.go(link);
+                switch(link) {
+                    case 'alarm':
+                        if(logedIn.profile.uInfos.bsnsID != undefined) FlowRouter.go('/bMsgManage');
+                        else FlowRouter.go('/msgManage');
+                        break;
+                    default:
+                        FlowRouter.go(link);
+                        break;
+                }
+            } else messagePopup({message : '화면 준비중 입니다.'});
         }
         else messagePopup({message : '로그인 후 이용해주세요'});
     },

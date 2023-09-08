@@ -2,16 +2,13 @@ import './inventoryMode.html';
 
 import './inventoryPopup.js';
 
+var prtContent;
+
 Template.inventoryMode.onCreated(function() {
     query = { 'glry.bsnsID' : Meteor.userId() };
-
-    options = {};
   
     // 사용자 정보
     uInfo = new ReactiveVar();
-  
-    // 정렬
-    sortInfo = new ReactiveVar();
   
     // 필터 정보
     filters = new ReactiveVar({});
@@ -19,8 +16,11 @@ Template.inventoryMode.onCreated(function() {
     // 작품정보 리스트
     atstInfo = new ReactiveVar();
 
-    // 삭제할 작품 _id
-    delId = new ReactiveVar();
+    // 작가이름 리스트
+    atstList = new ReactiveVar();
+
+    // 선택작품 저장
+    seltAtstInfo = new ReactiveVar();
 
     renderFlag = new ReactiveVar(false);
 
@@ -36,8 +36,6 @@ Template.inventoryMode.onCreated(function() {
 function setQuery() {
     query = {};
     query = filters.get();
-    
-    options = {};
 }
 
 function seltInventoryMode() {
@@ -45,7 +43,9 @@ function seltInventoryMode() {
         renderFlag.set(false);
         if(err) console.log(err);
         else {
-            atstInfo.set(res);
+            atstInfo.set(res.data);
+            atstList.set(res.atstList);
+            seltAtstInfo.set(res.data);
             setTimeout(function() {
                 renderFlag.set(true);
             }, 200);
@@ -57,32 +57,49 @@ Template.inventoryMode.onRendered(function() {
 });
 
 Template.inventoryMode.events({
+    // 선탯 checkbox
+    'change input[name=atwrkChkBox]'(evt, tmpl) {
+        var chkId = $(evt.currentTarget).val();
+        if($(evt.currentTarget).prop('checked')) {
+            $(`#${chkId}`).find('td').css('color', '');
+            $(`#${chkId}`).find('img').css('filter', '');
+
+            let seltAtList = seltAtstInfo.get();
+            seltAtList.forEach(function(val, idx) {
+                let atwrkList = val.atwrkInfo.findIndex(function(item) { return item.atwrkId == chkId})
+                if (atwrkList > -1 && val.atwrkInfo[atwrkList].show == 'N') val.atwrkInfo[atwrkList].show = 'Y';
+            });
+
+            seltAtstInfo.set(seltAtList);
+        } else {
+            $(`#${chkId}`).find('td').css('color', '#B9B9B9');
+            $(`#${chkId}`).find('img').css('filter', 'opacity(0.5)');
+
+            let seltAtList = seltAtstInfo.get();
+            seltAtList.forEach(function(val, idx) {
+                let atwrkList = val.atwrkInfo.findIndex(function(item) { return item.atwrkId == chkId})
+                console.log(atwrkList);
+                if (atwrkList > -1) val.atwrkInfo[atwrkList].show = "N";
+            });
+
+            seltAtstInfo.set(seltAtList);
+        }
+    },
     // 메뉴 전체선택해제
     'click button[name=menuAllCancel]'(evt, tmpl) {
         filters.set({});
         $('input[name=menuSchChk]:checked').prop('checked', false);
     },
-    // 작품 삭제 버튼
-    'click button[name=delBtn]'(evt, tmpl) {
-        var atwrkId = $(evt.currentTarget).val();
+    'click button[name=printBtn]' (evt, tmpl) {
+        // printAreas
+        $('#printAreas');
 
-        delId.set(atwrkId);
-
-        $('#del_confirm_popup').addClass('is-open');
-    },
-    // 작품삭제 컨펌 삭제 버튼 이벤트
-    'click button[name=delConfirmBtn]'(evt, tmpl) {
-        var atwrkId = delId.get();
-        query.atwrkId = atwrkId;
+        prtContent = document.getElementById('printAreas');
+        window.onbeforeprint = beforePrint;
+        window.onafterprint = afterPrint;
+        window.print();
         
-        Meteor.call('delInventoryAtwrk', query, function(err, res) {
-            if(err) console.log(err);
-            else {
-                delId.set();
-            }
-        });
-
-        $('#del_confirm_popup').removeClass('is-open');
+        console.log($(evt.currentTarget).val());
     },
     // 상단 메뉴 검색 버튼 이벤트
     'click button[name=menuSchBtn]'(evt, tmpl) {
@@ -111,20 +128,27 @@ Template.inventoryMode.events({
             }
 
             filters.set(schSet);
-
             setQuery();
-
             seltInventoryMode();
 
         } else {
             filters.set({});
-
             setQuery();
-
             seltInventoryMode();
         };
     },
 });
+
+// 웹페이지 body 내용을 프린트하고 싶은 내용으로 교체
+function beforePrint(){
+	initBody = document.body.innerHTML;
+	document.body.innerHTML = prtContent.innerHTML;
+}
+
+// 프린트 후, 웹페이지 body 복구
+function afterPrint(){
+	document.body.innerHTML = initBody;
+}
 
 Template.inventoryMode.helpers({
     bsnsInfo() {
@@ -140,8 +164,8 @@ Template.inventoryMode.helpers({
         if(atstInfo.get() != undefined) return atstInfo.get();
     },
     glryAtstList() {
-        if(atstInfo.get() != undefined) {
-            let res = uInfo.get().rprsnAtst;
+        if(atstList.get() != undefined) {
+            let res = atstList.get();
             return res;
         }
     },
@@ -150,5 +174,31 @@ Template.inventoryMode.helpers({
     },
     renderFlag() {
         return renderFlag.get();
+    },
+    numbering(index) {
+        return (index + 1);
+    },
+    ogChk(ogNm) {
+        return ogNm == undefined;
+    },
+    bothChk(dtNm) {
+        return dtNm != undefined;
+    },
+    atstInfos() {
+        return this.atwrkInfo[0];
+    },
+    printShow() {
+        if(seltAtstInfo.get() != undefined) {
+            return seltAtstInfo.get();
+        }
+    },
+    printShowChk(data) {
+        switch(data.show) {
+            case 'N':
+                return false;
+            default:
+                return true;
+        }
     }
 });
+

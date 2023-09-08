@@ -6777,6 +6777,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* 신규추가 CSS */
+.myCollectImgSize {
+  max-width: 300px;
+  max-height: 400px;
+}
+
 .imgfitset {
   width: 100%;
   height: 100%;

@@ -1,5 +1,6 @@
+import { remove } from 'cheerio/lib/api/manipulation.js';
 import { Meteor } from 'meteor/meteor';
-import { Notice, FAQ, Cmmnc, ORDER, Atwrk, Pick, StndPntReq} from '../lib/collections.js';
+import { Notice, FAQ, Cmmnc, Order, Atwrk, Pick, StndPntReq} from '../lib/collections.js';
 
 // 좋아요, 구매하기, 장바구니, 소식받기, 조회수 등 공통으로 사용가능한 로직
 
@@ -39,6 +40,9 @@ Meteor.methods({
     // 커뮤니케이션 DB insert
     insertCommnc: function(bargainInfo) {
         try {
+            var today = moment(new Date()).format('YYYYMMDDHHmmss');
+            console.log(today);
+            bargainInfo.insDt = today;
             let res = Cmmnc.insert(bargainInfo);
 
             // templeCmmnc = JSON.parse(Assets.getText('json/cmmnc.json'));
@@ -70,8 +74,12 @@ Meteor.methods({
     answerCommnc: function(data) {
         try {
             var toDay = moment(new Date()).format('YYYYMMDDhhmmss');
-            console.log(toDay);
-            let res = Cmmnc.update({ _id : data._id }, { $set : { answ : data.answ, sttus : '002', answerDt :  toDay} });
+            var _id = data._id;
+            delete data._id;
+            data.answerDt = toDay;
+            data.sttus = '002';
+
+            let res = Cmmnc.update({ _id : _id }, { $set : data });
 
             return res;
         } catch(e) {
@@ -90,7 +98,7 @@ Meteor.methods({
             if(sttus == '') match = { $match : { mBerID : this.userId, insDt : query} };
             else match = { $match : { mBerID : this.userId, insDt : query, sttus : sttus} };
 
-            let res = ORDER.aggregate([
+            let res = Order.aggregate([
                 match,
                 {
                     $lookup: {

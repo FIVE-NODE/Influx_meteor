@@ -72,6 +72,26 @@ Template.purchaseList.onRendered(function() {
 });
 
 Template.purchaseList.events({
+    'blur input[name=endDate]' (evt, tmpl) {
+        var today = moment(new Date()).format('YYYY-MM-DD');
+        var strDay = moment($('input[name=strDate]').val()).format('YYYYMMDD');
+        var seltDay = moment($(evt.currentTarget).val()).format('YYYYMMDD');
+
+        if(seltDay < strDay) {
+            $(evt.currentTarget).val(moment(today).format('YYYY-MM-DD'));
+            alert('시작날짜 보다 종료날짜가 더 작습니다');
+        }
+    },
+    'blur input[name=strDate]' (evt, tmpl) {
+        var evtDay = $(evt.currentTarget).val();
+        var today = moment(new Date()).format('YYYYMMDD');
+        var seltDay = moment(evtDay).format('YYYYMMDD');
+
+        if(seltDay > today) {
+            $(evt.currentTarget).val(moment(today).format('YYYY-MM-DD'));
+            alert('오늘날짜 이후는 선택하실수 없습니다.');
+        }
+    },
     'click button[name=deliveryBtn]'(evt, tmpl) {
         $(evt.currentTarget).attr('data-id');
 

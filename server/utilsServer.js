@@ -228,32 +228,89 @@ Meteor.methods({
         try {
             let res = {};
             
-            var bsnsid = { bsnsID : this.userId };
+            var matchQuery = { 'glry.bsnsID' : this.userId };
 
-            var kind = query.KIND != undefined ? query.KIND : {};
-            var og = [];
-            var dt = [];
-            if(query.KIND != undefined) {
-                for(i=0; i<kind.length; i++) {
-                    if(kind[i] == 'ogPrt') og.push('ogPrt');
-                    else if(kind[i] == 'dtPrt') dt.push('dtPrt');
+            res.atstList = Atwrk.aggregate([
+                {
+                    $match : matchQuery
+                },
+                {
+                    $project : {
+                        atstNm : '$atstInfo.atstNm',
+                    }
+                },
+                {
+                    $group : {
+                        _id : '$atstNm',
+                    }
+                },
+                {
+                    $sort : { _id : 1 }
                 }
+            ]);
+
+            if(query.ATST != undefined) {
+                matchQuery['atstInfo.atstNm'] = { $in : query.ATST };
             }
-            
-            if(og.length > 0 && dt.length == 0) kind = {'atstAtwrk.ogPric' : { $exists: true }};
-            else if(dt.length > 0 && og.length == 0) kind = {'atstAtwrk.dtPric' : { $exists: true }}
-            else kind = {};
 
-            var atst = query.ATST != undefined ?
-            { atstNm : { $in : query.ATST } } : {};
+            res.data = Atwrk.aggregate([
+                {
+                    $match : matchQuery
+                    // { 
+                    //     'glry.bsnsID' : 'fc95aafc-747b-4c24-a4fa-ff816922a163',
+                    //     'atstInfo.atstNm' : { $in : query.ATST} 
+                    // }
+                },
+                {
+                    $unwind : '$image'
+                },
+                {
+                    $match : {
+                        'image.rprsn' : 'Y'
+                    }
+                },
+                {
+                    $project : {
+                        atwrkInfo : {
+                            atstNm : '$atstInfo.atstNm',
+                            image : '$image.imgID',
+                            atwrkId : '$_id',
+                            dtYY : '$dtPrt.mkYY',
+                            dtDesc : '$dtPrt.atwrkDesc',
+                            dtNm : '$dtPrt.atwrkNm',
+                            dtBase : '$dtPrt.base',
+                            dtPric : '$dtPrt.mPric',
+                            dtSize : 'S, M, L',
+                            ogYY : '$ogPrt.mkYY',
+                            ogDesc : '$ogPrt.atwrkDesc',
+                            ogNm : '$ogPrt.atwrkNm',
+                            ogMet : '$ogPrt.metRias',
+                            ogWSize : '$ogPrt.wSize',
+                            ogHSize : '$ogPrt.hSize',
+                            ogPric : '$ogPrt.pric',
+                            atstDesc : '$atstInfo.atstDesc',
+                            atstImage : '$atstInfo.atstImage',
+                            show : 'Y'
+                        },
+                        atstNm : '$atstInfo.atstNm',
+                    }
+                },
+                {
+                    $group : {
+                        _id : '$atstNm',
+                        // _id : {
+                        //     atstNm : '$atstNm',
+                        // },
+                        atwrkInfo : {
+                            $addToSet : '$atwrkInfo'
+                        }
+                    }
+                },
+                {
+                    $sort : { _id : 1 }
+                }
+            ]);
 
-            var metRias = query.MATERIAL != undefined ?
-            { 'atstAtwrk.metRias' : { $in : query.MATERIAL} } : {};
-            
-            var queryData = { $and : [ bsnsid, kind, atst, metRias ]};
-
-            res = Inventory.find(queryData).fetch();
-            
             return res;
         } catch(e) {
             console.log('Error : ', e);

@@ -1,27 +1,25 @@
 import './msgManage.html';
 
-// 팝업창
-import '../popup/utilsPopUp.js';
+import { Atwrk, Cmmnc } from '../../lib/collections.js';
 
 Template.msgManage.onCreated(function() {
-    uInfo = new ReactiveVar();
+    Meteor.subscribe('mangeMsg');
 
     msgList = new ReactiveVar();
+    seltDelId = new ReactiveVar();
 
-    this.autorun(() => {
-        const userData = Meteor.user();
-        if(userData != undefined && uInfo.get() == undefined) {
-            uInfo.set(userData.profile.uInfos);
-            seltMsgList();
-        }
-    });
+    // this.autorun(() => { 
+    //     if(userData != undefined) {
+    //         seltMsgList();
+    //     }
+    // });
 });
 
-function seltMsgList() {
-    Meteor.call('seltMsgListForMber', {}, function(err, res) {
-        msgList.set(res);
-    });
-}
+// function seltMsgList() {
+//     Meteor.call('seltMsgListForMber', {}, function(err, res) {
+//         msgList.set(res);
+//     });
+// }
 
 Template.msgManage.onRendered(function() {
 });
@@ -29,46 +27,41 @@ Template.msgManage.onRendered(function() {
 Template.msgManage.events({
     'click button[name=sendToGlry]'(evt, tmpl) {
         var index = $(evt.currentTarget).attr('id');
+        messagePopup('결재연동 준비중 입니다.');
+    },
+    'click button[name=delBtn]' (evt, tmpl) {
+        var evtTarget = $(evt.currentTarget);
+        var dataId = evtTarget.data('id');
+        var msgId = evtTarget.val();
 
-        var message = $(`#answ-${index}`).val();
-
-        if(message != undefined && message != '' && message.trim() != '') {
-            var userInfo = uInfo.get();
-
-            // 저장 데이터 셋팅
-            var inquiryInsInfo = {
-                "_id" : Meteor.commonUtils.generateUUID(),
-                "cmmncID": Meteor.userId(),
-                "nm": userInfo.nm === '' ? userInfo.nicNm : userInfo.nm,
-                "atwrkID": this.atwrkData._id,
-                "cmmncTp": '002',
-                "title": "",
-                "cn": message,
-                "bsnsID": this.atwrkData.glry.bsnsID,
-                "answ": "",
-                "sttus": "001"
-            };
-
-            //서버 콜
-            Meteor.call('insertCommnc', inquiryInsInfo, function(err, res) {
-                messagePopup({message : '가격문의 답장이 전송되었습니다.'});
-            });
-            
-        } else {
-            messagePopup({message : '메세지를 입력하세요'});    
-        }
+        $(`#${dataId}`).addClass('is-open');
+        seltDelId.set(msgId);
+    },
+    'click button[name=delAcceptBtn]' (evt, tmpl) {
+        Meteor.call('deleteCommnc', seltDelId.get(), function(err, res) {
+            if(err) console.log(err);
+            else {
+                alert('메시지가 삭제되었습니다.');
+                $('#confirm').removeClass('is-open');
+                seltDelId.set();
+            }
+        });
+        
     }
 });
 
 // 팝업 메시지 띄우기
 function messagePopup(message) {
-    popUpMessage.set(message);
+    $('#utilsPopUpMsg').text(message);
     $('#utilsPopUp').addClass('is-open');
 }
 
 Template.msgManage.helpers({
     msgList() {
-        return msgList.get();
+        return Cmmnc.find({ cmmncID : Meteor.userId(), sttus : '002' }).fetch();
+    },
+    atwrkInfo(atwrkId) {
+        return Atwrk.findOne({_id : atwrkId});
     },
     typeChk(type) {
         switch(type){
@@ -77,7 +70,7 @@ Template.msgManage.helpers({
             case '002':
                 return false;
         }
-    }
+    },
 });
 
 

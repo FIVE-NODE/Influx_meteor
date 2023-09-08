@@ -8,10 +8,13 @@ Template.atwrkSalesReg.onCreated(function() {
     //등록된 작품 정보
     atwrkInfo = new ReactiveVar();
 
+    // 판매방식
     sellkindFlag = new ReactiveVar();
 
+    // 디지털 판화 동시 판매 여부
     digitalBoth = new ReactiveVar(false);
 
+    // 랜더링 완료 여부
     renderFlag = new ReactiveVar(false);
 
     // 원화 최종 만매 개시 금액
@@ -20,11 +23,8 @@ Template.atwrkSalesReg.onCreated(function() {
     // 디지털 판화 최종 판매 개시 금액
     dtTotalPric = new ReactiveVar(0);
 
-    // 흥정 선택1
-    seltHagg1 = new ReactiveVar();
-
-    // 흥정 선택2
-    seltHagg2 = new ReactiveVar();
+    // 흥정셋팅 저장용
+    setBargain = new ReactiveDict();
 
     Meteor.call('selectAtwrkDetail', this.data.atwrkId(), function(err, res) {
         atwrkInfo.set(res);
@@ -163,8 +163,71 @@ Template.atwrkSalesReg.events({
     'click button[name=cancel]' (evt, tmpl) {
         history.back();
     },
-    'click button[name=sellDone]' (evt, tmpl) {
+    // 흥정용 가격 선택1, 선택2 셋팅
+    'blur #bargain' (evt, tmpl) {
+        var pric = Number($(evt.currentTarget).val().replace(/,/g, ''));
+        pric = pric + (pric * 0.05);
 
+        var seltBargain1 = [
+            { pric, detail : '현 판매 가격' },
+            { pric : pric - (pric *0.05), detail : '판매 가격의 -5%'},
+            { pric : pric - (pric *0.1), detail : '판매 가격의 -10%'},
+            { pric : pric - (pric *0.15), detail : '판매 가격의 -15%'}
+        ];
+
+        var seltBargain2 = [
+            { pric, detail : '현 판매 가격' },
+            { pric : pric - (pric *0.1), detail : '판매 가격의 -10%'},
+            { pric : pric - (pric *0.15), detail : '판매 가격의 -15%'},
+            { pric : pric - (pric *0.2), detail : '판매 가격의 -20%'}
+        ];
+
+        setBargain.set('seltBargain1', seltBargain1);
+        setBargain.set('seltBargain2', seltBargain2);
+    },
+    'click button[name=sellDone]' (evt, tmpl) {
+        // 개발중
+
+        // kind 종류 001(정찰가) 002(비딩) 003(흥정) 004(가격문의)
+        if(sellkindFlag.get() == undefined) alert('판매 방식을 선택해주세요');
+        else {
+            var validation = false;
+            var reqData = {};
+            var sellStrDt = moment($('span[name=seltStrDate]').text() + $('span[name=seltStrTime]').text()).format('YYYYMMDDHHmmss');
+            var sellEndDt = moment($('span[name=seltEndDate]').text() + $('span[name=seltEndTime]').text()).format('YYYYMMDDHHmmss');
+            var sellPric = 0;
+
+            // 판매방법에 따른 벨리데이션 체크
+            switch(sellkindFlag.get()) {
+                case '004':
+                    break;
+                case '002':
+                    var bidStrPric = $('input[name=strPric]').val();
+                    var immdPurchPric = $('input[name=endPric]').val();
+
+                    reqData.bid = {
+                        strAmt : bidStrPric,
+                        strDt : sellStrDt,
+                        endDt : sellEndDt,
+                        immdPurchPric
+                    };
+
+                    break;
+                default:
+                    break;
+            }
+
+
+            // 디지털 판화 동시판매에 따른 벨리데이션 체크
+            if(digitalBoth.get()) {
+
+            }
+
+            // 모든 벨리데이션 통과시 판맨등록 처리
+            if(validation) {
+
+            }
+        }   
     }
 });
 
@@ -239,4 +302,22 @@ Template.atwrkSalesReg.helpers({
     dtTotalPric() {
         return Meteor.commonUtils.priceComma(dtTotalPric.get());
     },
+    dtPrtChk() {
+        if(atwrkInfo.get() != undefined) {
+            return atwrkInfo.get().dtPrt.atwrkNm != undefined;
+        }
+    },
+    seltBargain1() {
+        if(setBargain.get('seltBargain1') != undefined)  {
+            return setBargain.get('seltBargain1');
+        }
+    },
+    seltBargain2() {
+        setBargain
+        if(setBargain.get('seltBargain2') != undefined)  {
+            return setBargain.get('seltBargain2');
+        }
+    }
+    
 });
+

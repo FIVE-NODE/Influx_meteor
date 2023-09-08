@@ -63,9 +63,11 @@ function sltUserCart() {
                 });
                 if(!chk) {
                     setData.forEach((cartData, cartNum) => {
-                        if(cartData.atwrkInfo.glry.bsnsID == val.glry.bsnsID) {
-                            if(cartData.atwrkFlag == 'dtPrt') delivFee += 6000;
-                            else ogPlus = '원화 배송은 상담사에게 문의해주세요';
+                        if(cartData.atwrkInfo != undefined) {
+                            if(cartData.atwrkInfo.glry.bsnsID == val.glry.bsnsID) {
+                                if(cartData.atwrkFlag == 'dtPrt') delivFee += 6000;
+                                else ogPlus = '원화 배송은 상담사에게 문의해주세요';
+                            }
                         }
                     });
                     glry.push(
@@ -78,11 +80,12 @@ function sltUserCart() {
                     );
                 }
             } else {
-                console.log('val : ', val);
                 setData.forEach((cartData, cartNum) => {
-                    if(cartData.atwrkInfo.glry.bsnsID == val.glry.bsnsID) {
-                        if(cartData.atwrkFlag == 'dtPrt') delivFee += 6000;
-                        else ogPlus = '원화 배송은 상담사에게 문의해주세요';
+                    if(cartData.atwrkInfo != undefined) {
+                        if(cartData.atwrkInfo.glry.bsnsID == val.glry.bsnsID) {
+                            if(cartData.atwrkFlag == 'dtPrt') delivFee += 6000;
+                            else ogPlus = '원화 배송은 상담사에게 문의해주세요';
+                        }
                     }
                 });
                 glry.push(
@@ -104,12 +107,15 @@ function sltUserCart() {
             for(idx in atList){
                 var flag = atList[idx].atwrkFlag;
                 var atInfo = atList[idx].atwrkInfo;
-                if(flag == 'ogPrt') proDuctPric += atInfo[flag].pric;
-                else {
+
+                if(atInfo != undefined) {
+                    if(flag == 'ogPrt') proDuctPric += atInfo[flag].pric;
+                    else {
                     var size = atList[idx].option.size;
                     size = size.toLowerCase();
                     proDuctPric += atInfo[flag][`${size}Pric`]
                     delivPric += 6000;
+                    }
                 }
             }
 

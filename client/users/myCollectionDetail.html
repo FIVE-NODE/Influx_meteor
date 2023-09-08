@@ -1,0 +1,112 @@
+<template name="myCollectionDetail">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
+    <section class="container">
+        <div class="content" id="capture">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__mypage">
+                        {{#with myCollect}}
+                        <div class="mypage-subtit">
+                            <div class="mypage-subtit__inner">
+                                <p>원 화 </p>
+                                <div class="btn-wrap ml-auto">
+                                    <button type="button" name="linkBtn" class="btn btn--round btn--white-black">링크복사</button>
+                                    <button type="button" name="pdfBtn" class="btn btn--round btn--white-black">PDF 저장</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-wrap">
+                            <div class="product-view">
+                                <div class="product-view__imgGroup">
+                                    <div class="imgGroup-list">
+                                        {{#each image}}
+                                        <button name="imgList" type="button">
+                                            <img src="{{imgID}}" alt="">
+                                        </button>
+                                        {{/each}}
+                                    </div>
+                                    <div class="imgGroup-detail">
+                                        <div class="imgGroup-detail__img">
+                                            <!-- 임시로 550 넣음 -->
+                                            <img name="mainImg" style="max-width: 550px;" src="{{selectMainImage this}}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-view__purchase">
+                                    <div class="tab-wrap tab-purchace">
+                                        <div class="tab-cont is-open" id="purchace--01">
+                                            <div class="purchace-wrap">
+                                                <div class="purchace-top">
+                                                    <p class="purchace__tit">{{atstInfo.atstNm}}</p>
+                                                    <p class="purchace__subtit mt-30">{{ogPrt.atwrkNm}}, {{ogPrt.mkYY}}</p>
+                                                    <span class="purchace__info mt-20">
+                                                        {{codeToName ogPrt.metRias "MATERIAL"}}<br>
+                                                        {{ogPrt.wSize}} x {{ogPrt.hSize}} cm                                                        
+                                                    </span>
+                                                    <p class="purchace__price mt-30">
+                                                        {{commaPric ogPrt.pric}} 원
+                                                        <button type="button" name="editPric" class="btn btn--sea popup" data-id="editPric">가격수정</button>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-view__info mb-100">
+                                    <div class="product-view__info--author">
+                                        <div class="author-name">
+                                            <span class="author-name__img">
+                                                <img src="/image/sub/img-product__author--img01.png" alt="">
+                                            </span>
+                                            {{atstInfo.atstNm}}
+                                        </div>
+                                        <div class="author-profile">
+                                            {{atstInfo.atstDesc}}
+                                        </div>
+                                    </div>
+
+                                    <!-- 1 -->
+                                    
+                                    <!-- 2 -->
+
+                                </div>
+                            </div>
+                        </div>
+                        {{/with}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /container -->
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+
+    <!-- popup -->
+    <div class="popup-layout" id="editPric">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:463px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit">가격수정</p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont popup-cont--modiPrice">
+                    <div class="form-wrap">
+                        <div class="form-input">
+                            <input type="text" placeholder="7,500,000 원" />
+                        </div>
+                    </div>
+                    <div class="btn-wrap d-flex justify-center mt-30">
+                        <button type="button" name="closePopup" class="btn btn--blue btn--round width--170 height-40 font-pre">취소하기</button>
+                        <button type="button" name="editPricBtn" class="btn btn--blue btn--round width--170 height-40 ml-20 font-pre">수정하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

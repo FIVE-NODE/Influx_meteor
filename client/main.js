@@ -44,6 +44,7 @@ import './users/approval.js';             // 결재하기
 import './users/purchaseList.js';         // 주문내역
 import './users/msgManage.js';            // 메시지 관리
 import './users/myCollection.js';         // 마이 컬랙션 페이지
+import './users/myCollectionDetail.js';         // 마이 컬랙션 상세 페이지
 
 // 관리자 운영자 페이지
 import './users/bSnsMber/myPageSelling.js';// 마이페이지 판매중인 상품

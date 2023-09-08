@@ -12,7 +12,9 @@
     "atob": "^2.1.2",
     "caniuse-lite": "^1.0.30001491",
     "cheerio": "^1.0.0-rc.12",
+    "html2canvas": "^1.4.1",
     "jquery": "^3.6.0",
+    "jspdf": "^2.5.1",
     "meteor-node-stubs": "^1.2.1",
     "react": "^18.2.0"
   },

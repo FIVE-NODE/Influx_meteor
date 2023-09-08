@@ -18,6 +18,10 @@ Template.bargainingRate.events({
             // 회원정보 가져오기
             var userInfo = userInfos.get();
 
+            console.log(selectRate.get());
+            console.log(pric);
+            console.log(bargainingPrice.get());
+
             // 저장 데이터 셋팅
             var bargainInfo = {
                 "_id" : Meteor.commonUtils.generateUUID(),
@@ -29,6 +33,11 @@ Template.bargainingRate.events({
                 "cn": `이 작품 판매가격 -${selectRate.get()}%인 ${Meteor.commonUtils.priceComma(bargainingPrice.get())}원에 구매 의사가 있습니다.`,
                 "bsnsID": this.glry.bsnsID,
                 "answ": "",
+                bargainInfo : {
+                    rate : selectRate.get(),
+                    pric : pric,
+                    ratePric : bargainingPrice.get()
+                },
                 "sttus": "001"
             };
 

@@ -29,36 +29,14 @@
                                                 <col style="width:auto">
                                             </colgroup>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <span class="font-pre">작 품 구 분</span>
-                                                    </th>
-                                                    <td>
-                                                        <div class="form-wrap">
-                                                            <div class="form-row">
-                                                                <div class="form-check">
-                                                                    <input type="checkbox" name="menuSchChk" value="KIND-ogPrt" id="check-mygallery--checksStyle01">
-                                                                    <label for="check-mygallery--checksStyle01">원 화</label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input type="checkbox" name="menuSchChk" value="KIND-dtPrt" id="check-mygallery--checksStyle02">
-                                                                    <label for="check-mygallery--checksStyle02">디지털 판화</label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input type="checkbox" name="menuSchChk" value="KIND-both" id="check-mygallery--checksStyle03">
-                                                                    <label for="check-mygallery--checksStyle03">원화 + 디지털판화</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                
                                                 <tr>
                                                     <th scope="row">
                                                         <div class="d-flex justify-between">
                                                             <span class="font-pre">아 티 스 트</span>
-                                                            <button type="button">
+                                                            <!-- <button type="button">
                                                                 <img src="/image/sub/icon/icon-plus.svg" alt="">
-                                                            </button>
+                                                            </button> -->
                                                         </div>
                                                     </th>
                                                     <td>
@@ -66,31 +44,15 @@
                                                             <div class="form-row">
                                                                 {{#each glryAtstList}}
                                                                     <div class="form-check">
-                                                                        <input type="checkbox" name="menuSchChk" value="ATST-{{this}}" id="check-mygallery--checksAuthor{{@index}}">
-                                                                        <label for="check-mygallery--checksAuthor{{@index}}">{{this}}</label>
+                                                                        <input type="checkbox" name="menuSchChk" value="ATST-{{_id}}" id="check-mygallery--checksAuthor{{@index}}">
+                                                                        <label for="check-mygallery--checksAuthor{{@index}}">{{_id}}</label>
                                                                     </div>
                                                                 {{/each}}                                                            
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <span class="font-pre">재            료</span>
-                                                    </th>
-                                                    <td>
-                                                        <div class="form-wrap">
-                                                            <div class="form-row">
-                                                                {{#each materials}}
-                                                                    <div class="form-check">
-                                                                        <input type="checkbox" name="menuSchChk" value="MATERIAL-{{code}}" id="check-mygallery--checksMaterial{{code}}">
-                                                                        <label for="check-mygallery--checksMaterial{{code}}">{{name}}</label>
-                                                                    </div>
-                                                                {{/each}}
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -108,7 +70,7 @@
                                         <div class="swiper table-swiper">
                                         <div class="swiper-wrapper">
                                         {{#each invntInfo}}
-                                        <div class="swiper-slide">
+                                        <div class="swiper-slide" style="max-height: 600px; min-height: 600px; overflow: auto;">
                                         <table class="table-basic table--col table-basic--mygallery__inventory">
                                             <caption></caption>
                                             <colgroup>
@@ -124,47 +86,69 @@
                                                 <tr>
                                                     <td colspan="7">
                                                         <div class="d-flex align-center">
-                                                            <span class="img-wrap">
-                                                                <img class="selling-img" src="{{atstImage}}" alt="">
-                                                            </span>
-                                                            <p class="txt-wrap">
-                                                                <span class="ml-50 font-12 fontW-b">{{atstNm}}</span>
-                                                                <em class="ml-50 font-12 fontW-500">작가소개)    {{atstDesc}}</em>
-                                                            </p>
+                                                            {{#with atstInfos}}
+                                                                <span class="img-wrap">
+                                                                    <img class="selling-img" src="{{image}}" alt="">
+                                                                </span>
+                                                                <p class="txt-wrap">
+                                                                    <span class="ml-50 font-12 fontW-b">{{atstNm}}</span>
+                                                                    <em class="ml-50 font-12 fontW-500">작가소개)    {{atstDesc}}</em>
+                                                                </p>
+                                                            {{/with}}
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                {{#each atstAtwrk}}
-                                                    <tr>
-                                                        <td>Inventory 번호</td>
-                                                        <td>작품사진</td>
-                                                        <td>설     명</td>
-                                                        <td>작품연도 </td>
-                                                        <td>작 품 가 격</td>
-                                                        <td>구    분</td>
-                                                        <td>삭제</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{invtNum}}</td>
-                                                        <td>
-                                                            <span>
-                                                                <img class="selling-img" src="{{rprnImage}}" alt="">
-                                                            </span>
-                                                        </td>
-                                                        <td>제목:  {{atwrkNm}},    크기: {{wSize}} x {{hSize}},     재료:  {{codeToName metRias "MATERIAL"}}</td>
-                                                        <td>{{mkYY}}</td>
+                                                {{#each atwrkInfo}}
+                                                <tr>
+                                                    <td>Inventory 번호</td>
+                                                    <td>작품사진</td>
+                                                    <td>설     명</td>
+                                                    <td>작품연도 </td>
+                                                    <td>작 품 가 격</td>
+                                                    <td>구    분</td>
+                                                    <td>선택</td>
+                                                </tr>
+                                                <tr id="{{atwrkId}}">
+                                                    <td>{{numbering @index}}</td>
+                                                    <td>
+                                                        <span>
+                                                            <img class="selling-img" src="{{image}}" alt="">
+                                                        </span>
+                                                    </td>
+                                                    {{#if ogChk ogNm}}
+                                                        <td>제목:  {{dtNm}},    사이즈: {{dtSize}},     베이스:  {{codeToName dtBase "BASE"}}</td>
+                                                        <td>{{dtYY}}</td>
                                                         <td class="line-20">
-                                                            {{commaPric ogPric}}<br/>
-                                                            ({{commaPric dtPric}})
+                                                            {{commaPric dtPric}}<br/>
                                                         </td>
-                                                        <td>{{flag}}</td>
-                                                        <td>
-                                                            <button type="button" name="delBtn" value="{{atwrkID}}">
-                                                                <img src="/image/sub/icon/icon-delete.png" alt="">
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                {{/each}}
+                                                        <td>디지털 판화</td>
+                                                    {{else}}
+                                                        {{#if bothChk dtNm}}
+                                                            <td>제목:  {{ogNm}},    크기: {{ogWSize}} x {{ogHSize}},     재료:  {{codeToName ogMet "MATERIAL"}}</td>
+                                                            <td>{{ogYY}}</td>
+                                                            <td class="line-20">
+                                                                {{commaPric ogPric}}<br/>
+                                                                ({{commaPric dtPric}})
+                                                            </td>
+                                                            <td>원 화 + 디지털판화</td>
+                                                        {{else}}
+                                                            <td>제목:  {{ogNm}},    크기: {{ogWSize}} x {{ogHSize}},     재료:  {{codeToName ogMet "MATERIAL"}}</td>
+                                                            <td>{{ogYY}}</td>
+                                                            <td class="line-20">
+                                                                {{commaPric ogPric}}<br/>
+                                                            </td>
+                                                            <td>원 화</td>
+                                                        {{/if}}
+                                                    {{/if}}
+                                                    <td>
+                                                        <div class="form-wrap">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" checked style="margin: 0px; width: 2.1rem; height: 2.1rem;" name="atwrkChkBox" id="" value="{{atwrkId}}" class="form-check__input">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {{/each}}
                                             </tbody>
                                         </table>
                                         </div>
@@ -183,6 +167,7 @@
             </div>
         </div>
     </section>
+
     <!-- /container -->
     <div class="popup-layout" id="del_confirm_popup">
         <div class="popup-wrap">
@@ -203,8 +188,119 @@
             </div>
         </div>
     </div>
+    
     <footer class="footer">
         {{> footer}}
     </footer>
-    {{> inventoryPopup}}
+    
+    <!-- popup -->
+    <div class="popup-layout" id="inventory_popup_preview">
+        <div class="popup-wrap popup--additional">
+            <div class="popup-inner" style="width:1680px;height:calc(100% - 5rem)">
+                <div class="popup-head">
+                    <div class="subTit-tit--center">
+                        <div class="subTit__inner  d-flex align-center">
+                            <img class="header-logo-img" src="/image/common/img-logo-default.png" alt="">
+                            <p class="subTit-tit--center__p color-blue">인벤토리 미리보기 팝업</p>
+                            <button type="button" class="popup-close">
+                                <img src="/image/sub/icon/icon-close-gray.png" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="popup-cont popup-cont--terms" style="overflow: auto;" id="printAreas">
+                    <div class="mypage-subtit mypage-subtit--gallery height-66">
+                        <div class="mypage-subtit__inner" style="border-bottom: 0px solid #b9b9b9;">
+                            {{#with bsnsInfo}}
+                            <p style="color:#000;">우) {{zipCd}} , {{addr1}}       Tel: {{bsnsChagMob}},    email: {{bsnsChagEmail}},   {{homeUrl}}</p>
+                            {{/with}}
+                            <div class="btn-wrap ml-auto mr-10">
+                                <button type="button" name="printBtn" class="btn btn--round btn--white-blue">인쇄하기</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-wrap" style="margin: 50px; width: 100%; text-align: center;">
+                        {{#each printShow}}
+                        <table class="table-basic table--col table-basic--mygallery__inventory" style="margin-top: 30px;">
+                            <caption></caption>
+                            <colgroup>
+                                <col style="width:10%">
+                                <col style="width:15%">
+                                <col style="width:auto">
+                                <col style="width:10%">
+                                <col style="width:10%">
+                                <col style="width:10%">
+                                <col style="width:8%">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="d-flex align-center">
+                                            {{#with atstInfos}}
+                                                <span class="img-wrap">
+                                                    <img class="selling-img" src="{{image}}" alt="">
+                                                </span>
+                                                <p class="txt-wrap">
+                                                    <span class="ml-50 font-12 fontW-b">{{atstNm}}</span>
+                                                    <em class="ml-50 font-12 fontW-500">작가소개)    {{atstDesc}}</em>
+                                                </p>
+                                            {{/with}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{#each atwrkInfo}}
+                                {{#if printShowChk this}}
+                                <tr>
+                                    <td>Inventory 번호</td>
+                                    <td>작품사진</td>
+                                    <td>설     명</td>
+                                    <td>작품연도 </td>
+                                    <td>작 품 가 격</td>
+                                    <td>비    고</td>
+                                </tr>
+                                <tr id="{{atwrkId}}">
+                                    <td>{{numbering @index}}</td>
+                                    <td>
+                                        <span>
+                                            <img class="selling-img" src="{{image}}" alt="">
+                                        </span>
+                                    </td>
+                                    {{#if ogChk ogNm}}
+                                        <td>제목:  {{dtNm}},    사이즈: {{dtSize}},     베이스:  {{codeToName dtBase "BASE"}}</td>
+                                        <td>{{dtYY}}</td>
+                                        <td class="line-20">
+                                            {{commaPric dtPric}}<br/>
+                                        </td>
+                                        <td>디지털 판화</td>
+                                    {{else}}
+                                        {{#if bothChk dtNm}}
+                                            <td>제목:  {{ogNm}},    크기: {{ogWSize}} x {{ogHSize}},     재료:  {{codeToName ogMet "MATERIAL"}}</td>
+                                            <td>{{ogYY}}</td>
+                                            <td class="line-20">
+                                                {{commaPric ogPric}}<br/>
+                                                ({{commaPric dtPric}})
+                                            </td>
+                                            <td>원 화 + 디지털판화</td>
+                                        {{else}}
+                                            <td>제목:  {{ogNm}},    크기: {{ogWSize}} x {{ogHSize}},     재료:  {{codeToName ogMet "MATERIAL"}}</td>
+                                            <td>{{ogYY}}</td>
+                                            <td class="line-20">
+                                                {{commaPric ogPric}}<br/>
+                                            </td>
+                                            <td>원 화</td>
+                                        {{/if}}
+                                    {{/if}}
+                                </tr>
+                                {{/if}}
+                            {{/each}}
+                            </tbody>
+                        </table>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

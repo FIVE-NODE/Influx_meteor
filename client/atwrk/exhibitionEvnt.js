@@ -32,12 +32,14 @@ Template.exhibitionEvnt.onCreated(function() {
     };
 
     this.selectExhigitionEvntBanr = function() {
+        console.log('1');
         Meteor.call('selectExhigitionEvntBanr', query, options, function(err, res) {
             evntBanr.set(res);
         });
     }
 
     this.selectExhigitionEvntList = function() {
+        console.log('2');
         if(headerSch.get() != undefined) {
             query = {
                 kindCode : headerSch.get().EVNT,
@@ -58,6 +60,7 @@ Template.exhibitionEvnt.onCreated(function() {
 });
 
 Template.exhibitionEvnt.onRendered(function() {
+    if(this.data.schQueryData() != undefined) $('#glryNm').val(headerSch.get().glryNm);
 });
 
 // DB 검색조건 수정 및 옵션 설정
