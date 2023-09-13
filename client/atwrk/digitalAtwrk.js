@@ -1,3 +1,5 @@
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+
 import './digitalAtwrk.html';
 
 Template.digitalAtwrk.onCreated(function() {
@@ -156,6 +158,8 @@ function setQuery() {
         limit: limit.get(),
         sort : sortInfo.get()
     };
+
+    FlowRouter.go('/digitalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(query)) });
 }
 
 // 스크롤 이동

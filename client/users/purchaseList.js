@@ -148,7 +148,6 @@ Template.purchaseList.events({
         seltOrderList();
     },
     'click button[name=delBtn]'(evt, tmpl) {
-        console.log(' ===== !!!! del');
 
     },
     'click button[name=seltStatus]'(evt, tmpl) {

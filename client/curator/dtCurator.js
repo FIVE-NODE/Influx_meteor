@@ -1,3 +1,5 @@
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+
 import './dtCurator.html';
 
 Template.dtCurator.onCreated(function() {
@@ -28,6 +30,10 @@ Template.dtCurator.onCreated(function() {
         limit: limit.get()
     };
 
+    if(this.data.schQueryData() != undefined)  {
+        filters.set(JSON.parse(this.data.schQueryData()));
+    }
+
     function seltCurDtList() {
         Meteor.call('selectPick', '002', function(err, res) {
             dtCurData.set(res);
@@ -50,6 +56,7 @@ Template.dtCurator.onCreated(function() {
 });
 
 function selectDigAtwrk() {
+    if(filters.get() != undefined) setQuery();
     Meteor.call('selectDigAtwrk', query, options, function(err, res) {
         total.set(res.total);
         atwrkInfo.set(res.list);
@@ -73,6 +80,8 @@ function setQuery() {
         limit: limit.get(),
         sort : sortInfo.get()
     };
+
+    FlowRouter.go('/dtCurator', {}, { data : encodeURIComponent(JSON.stringify(query)) });
 }
 
 // 스크롤 이동
@@ -230,4 +239,18 @@ Template.dtCurator.helpers({
     materials() {
         return Meteor.codes.MATERIAL();
     },
+    leftFilterChk(kind, code) {
+        var selectCodes = filters.get()[kind];
+        for(idx in selectCodes) {
+            if(typeof selectCodes[idx] === 'object') {
+                if(selectCodes[idx].code === code) {
+                    return 'checked';
+                }
+            } else {
+                if(selectCodes[idx] === code) {
+                    return 'checked';
+                }
+            }
+        }
+    }
 });

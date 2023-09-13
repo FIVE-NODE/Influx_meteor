@@ -194,12 +194,12 @@
     </footer>
     
     <!-- popup -->
-    <div class="popup-layout" id="inventory_popup_preview">
+    <div class="popup-layout page-break" id="inventory_popup_preview">
         <div class="popup-wrap popup--additional">
             <div class="popup-inner" style="width:1680px;height:calc(100% - 5rem)">
                 <div class="popup-head">
                     <div class="subTit-tit--center">
-                        <div class="subTit__inner  d-flex align-center">
+                        <div class="no-print subTit__inner  d-flex align-center">
                             <img class="header-logo-img" src="/image/common/img-logo-default.png" alt="">
                             <p class="subTit-tit--center__p color-blue">인벤토리 미리보기 팝업</p>
                             <button type="button" class="popup-close">
@@ -209,19 +209,22 @@
                     </div>
                 </div>
 
-                <div class="popup-cont popup-cont--terms" style="overflow: auto;" id="printAreas">
-                    <div class="mypage-subtit mypage-subtit--gallery height-66">
+                <div class="body-set overflowAutos popup-cont popup-cont--terms" id="printAreas">
+                    <div class="mypage-subtit mypage-subtit--gallery height-66" style="margin-top: 10px; display: flex; padding-left: 2%; padding-bottom: 10px;">
                         <div class="mypage-subtit__inner" style="border-bottom: 0px solid #b9b9b9;">
+                            <img class="header-logo-img" src="/image/common/img-logo-default.png" alt="">
                             {{#with bsnsInfo}}
-                            <p style="color:#000;">우) {{zipCd}} , {{addr1}}       Tel: {{bsnsChagMob}},    email: {{bsnsChagEmail}},   {{homeUrl}}</p>
+                            <img src="{{glryImage}}" style="width: 60px; height: 60px; margin-left: 40px;">
+                            <span style="margin-left: 15px; font-size: 1.4rem; font-weight: 700;">{{glryNm}}</span>
+                                <span  class="ml-auto" style="color:#000; font-size: 14px; font-weight: 700;">우) {{zipCd}} , {{addr1}}       Tel: {{bsnsChagMob}},    email: {{bsnsChagEmail}},   {{homeUrl}}</span>
                             {{/with}}
                             <div class="btn-wrap ml-auto mr-10">
-                                <button type="button" name="printBtn" class="btn btn--round btn--white-blue">인쇄하기</button>
+                                <button type="button" name="printBtn" class="no-print btn btn--round btn--white-blue">인쇄하기</button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="table-wrap" style="margin: 50px; width: 100%; text-align: center;">
+                    <div class="table-wrap" style="padding: 0px 13px;  width: 100%; text-align: center;">
                         {{#each printShow}}
                         <table class="table-basic table--col table-basic--mygallery__inventory" style="margin-top: 30px;">
                             <caption></caption>
@@ -229,10 +232,9 @@
                                 <col style="width:10%">
                                 <col style="width:15%">
                                 <col style="width:auto">
-                                <col style="width:10%">
-                                <col style="width:10%">
-                                <col style="width:10%">
                                 <col style="width:8%">
+                                <col style="width:12%">
+                                <col style="width:10%">
                             </colgroup>
                             <tbody>
                                 <tr>
@@ -240,7 +242,7 @@
                                         <div class="d-flex align-center">
                                             {{#with atstInfos}}
                                                 <span class="img-wrap">
-                                                    <img class="selling-img" src="{{image}}" alt="">
+                                                    <img style="max-height: 100px; min-height: 100px; max-width: 100px; min-width: 100px;" src="{{image}}" alt="">
                                                 </span>
                                                 <p class="txt-wrap">
                                                     <span class="ml-50 font-12 fontW-b">{{atstNm}}</span>
@@ -261,10 +263,10 @@
                                     <td>비    고</td>
                                 </tr>
                                 <tr id="{{atwrkId}}">
-                                    <td>{{numbering @index}}</td>
+                                    <td>{{atstNm}} - {{numbering @index}}</td>
                                     <td>
                                         <span>
-                                            <img class="selling-img" src="{{image}}" alt="">
+                                            <img style="max-height: 100px; min-height: 100px; max-width: 100px; min-width: 100px;" src="{{image}}" alt="">
                                         </span>
                                     </td>
                                     {{#if ogChk ogNm}}

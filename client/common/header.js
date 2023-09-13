@@ -16,12 +16,30 @@ function selectQuickMu() {
 }
 
 Template.header.onCreated(function() {
+    Meteor.subscribe('User');
+
+    uInfo = new ReactiveVar();
+
     menuFlag = new ReactiveVar(false);
     menuKind = new ReactiveVar('');
 
     quickMenu = new ReactiveVar();
 
+    interList = new ReactiveVar([]);
+
+    likeAtwrkList = new ReactiveVar();
+
     selectQuickMu();
+
+    this.autorun(function() {
+        let user = Meteor.user();
+        if(user != undefined) {
+            let data = user.profile.uInfos.ogPrtGood.concat(user.profile.uInfos.dtPrtGood);
+            sltInterestAtwrkCnt(data);
+        }
+    });
+    
+
 });
 
 Template.header.onRendered(function() {
@@ -33,6 +51,15 @@ function messagePopup(message) {
     $('#utilsPopUp').addClass('is-open');
 }
 
+function sltInterestAtwrkCnt(data)  {
+    // if(interList.get().length == 0) interList.set(uInfo.get().ogPrtGood.concat(uInfo.get().dtPrtGood));
+    // console.log(interList.get());
+    Meteor.call('sltInterestAtwrkCnt', data, function(err, res) {
+        likeAtwrkList.set(res);
+    });
+};
+
+
 Template.header.events({
     'click button[name=headerBtnMenu]'(evt, tmpl) {
         var link = $(evt.currentTarget).val();
@@ -40,9 +67,7 @@ Template.header.events({
         var logedIn = Meteor.user();
         
         if(logedIn != null && logedIn != undefined) {
-            console.log(logedIn);
             if(link != '') {
-                // FlowRouter.go(link);
                 switch(link) {
                     case 'alarm':
                         if(logedIn.profile.uInfos.bsnsID != undefined) FlowRouter.go('/bMsgManage');
@@ -120,9 +145,6 @@ Template.header.events({
     'click button[name=myPage]'(evt, tmpl) {
     },
     'click a'(evt, tmpl) {
-        // setTimeout(function(){
-        //     location.reload();
-        // }, 100);
     }
 });
 
@@ -189,6 +211,31 @@ Template.header.helpers({
         var currentPageName = FlowRouter.getRouteName();
         if(page === currentPageName) return 'is-active';
         else return '';
+    },
+    cartCount() {
+        if(Meteor.user() != undefined) {
+            var uInfos = Meteor.user().profile.uInfos;
+            return uInfos.cart.length;
+        }
+    },
+    likeCount() {
+        if(Meteor.user() != undefined) {
+            return likeAtwrkList.get();
+        }
+    },
+    ntcnCount() {
+        if(Meteor.user() != undefined) {
+            var uInfos = Meteor.user().profile.uInfos;
+            return uInfos.getNtcn.length;
+        }
+    },
+    loginChk() {
+        return Meteor.userId() != undefined;
+    },
+    pfImgChk() {
+        let uInfos = Meteor.user();
+
+        return uInfos.profile.uInfos.pfImg == '' ? '/image/common/img-header__imd__img.png' : uInfos.profile.uInfos.pfImg
     }
 });
 

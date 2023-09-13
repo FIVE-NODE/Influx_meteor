@@ -36,9 +36,7 @@ Template.myCollection.events({
     'click button[name=seltAllShow]' (evt, tmpl) {
         var chkAtwrk = $('input:checkbox[name=chkMyCollect]:checked');
         var dataList = [];
-        var outHtml = '';
-
-        console.log(chkAtwrk);
+        var outHtml = '';        
 
         // swiperLists
         for(i=0; i<chkAtwrk.length; i++) {

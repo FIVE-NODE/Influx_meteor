@@ -6777,6 +6777,10 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* 신규추가 CSS */
+.overflowAutos {
+  overflow: auto;
+}
+
 .myCollectImgSize {
   max-width: 300px;
   max-height: 400px;
@@ -6945,7 +6949,6 @@ input[type="number"]::-webkit-inner-spin-button {
   padding: 5px;
   border-radius: 1rem !important;
 }
-
 
 /* .hot-item::before {
   width: 4rem;

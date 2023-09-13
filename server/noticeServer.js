@@ -37,15 +37,32 @@ Meteor.methods({
             );
         }
     },
+    // 문의 보내기전 이미 보낸 기록이 있는 지 확인
+    findCommncChk: function(data) {
+        try {
+            let res = Cmmnc.findOne({ cmmncID : this.userId, atwrkID : data.atwrkID, bsnsID : data.bsnsID});
+
+            return res;
+        } catch(e) {
+            throw new Meteor.Error(500,'서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.');
+        }
+    },
     // 커뮤니케이션 DB insert
     insertCommnc: function(bargainInfo) {
         try {
             var today = moment(new Date()).format('YYYYMMDDHHmmss');
-            console.log(today);
+            var bsnsId = bargainInfo.bsnsID;
+
             bargainInfo.insDt = today;
+
             let res = Cmmnc.insert(bargainInfo);
 
-            // templeCmmnc = JSON.parse(Assets.getText('json/cmmnc.json'));
+            Meteor.users.update({ _id : bsnsId}, { $addToSet : { 'profile.uInfos.getNtcn' : {
+                ntDt : today,
+                cnmmncId : bargainInfo._id,
+                ntMsg : "",
+                ntYn : "N"
+            }}});
 
             return res;
         } catch(e) {
@@ -60,6 +77,9 @@ Meteor.methods({
     deleteCommnc: function(commncId) {
         try {
             let res = Cmmnc.remove({_id : commncId});
+
+            // 사용자의 알림에서도 삭제
+            Meteor.users.update({ _id : this.userId}, { $pull : { 'profile.uInfos.getNtcn' : { cnmmncId :commncId } } });
 
             return res;
         } catch(e) {
@@ -79,7 +99,21 @@ Meteor.methods({
             data.answerDt = toDay;
             data.sttus = '002';
 
+            // 사용자 고유 ID
+            let customerId = Cmmnc.findOne({ _id }).cmmncID;
+
             let res = Cmmnc.update({ _id : _id }, { $set : data });
+
+            // 기업 회원 알림 업데이트
+            Meteor.users.update({ _id : this.userId }, { $pull : { 'profile.uInfos.getNtcn' : { cnmmncId :_id } } });
+
+            // 사용자 회원 알림 업데이트
+            Meteor.users.update({ _id : customerId}, { $addToSet : { 'profile.uInfos.getNtcn' :  {
+                "ntDt" : toDay,
+                "cnmmncId" : _id,
+                "ntMsg" : "",
+                "ntYn" : "N"
+            }}});
 
             return res;
         } catch(e) {

@@ -32,14 +32,12 @@ Template.exhibitionEvnt.onCreated(function() {
     };
 
     this.selectExhigitionEvntBanr = function() {
-        console.log('1');
         Meteor.call('selectExhigitionEvntBanr', query, options, function(err, res) {
             evntBanr.set(res);
         });
     }
 
     this.selectExhigitionEvntList = function() {
-        console.log('2');
         if(headerSch.get() != undefined) {
             query = {
                 kindCode : headerSch.get().EVNT,

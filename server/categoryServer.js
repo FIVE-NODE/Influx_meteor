@@ -15,7 +15,9 @@ Meteor.methods({
             
             // 원화 작품 있는 것만 셋팅
             var normal = {
-              'ogPrt.atwrkNm' : { $exists: true }
+              'ogPrt.atwrkNm' : { $exists: true },
+              "delYn" : "N",
+              "soldYn" : "N"
             };
             
             if(!(Object.keys(data).length === 0)) {
@@ -110,7 +112,9 @@ Meteor.methods({
       try {
         // 디지털 판화 작품 있는 것만 셋팅
         var normal = {
-          'dtPrt.atwrkNm' : { $exists: true }
+          'dtPrt.atwrkNm' : { $exists: true },
+          "delYn" : "N",
+          "soldYn" : "N"
         };
 
         let res = Atwrk.find(normal, { limit: 10, sort : { 'dtPrt.goodCnt' : -1 }}).fetch();
@@ -131,7 +135,9 @@ Meteor.methods({
 
         // 디지털 판화 작품 있는 것만 셋팅
         var normal = {
-          'dtPrt.atwrkNm' : { $exists: true }
+          'dtPrt.atwrkNm' : { $exists: true },
+          "delYn" : "N",
+          "soldYn" : "N"
         };
 
         if(!(Object.keys(data).length === 0)) {
@@ -219,8 +225,8 @@ Meteor.methods({
 
         var normal = {
           $or: [
-            { strDt : { $gte : toDay, $lte : aftDay} },
-            { endDt : { $gte : evntEndDay, $lte : toDay}}
+            { strDt : { $gte : toDay, $lte : aftDay} }
+            ,{ endDt : { $gte : evntEndDay, $lte : toDay}}
           ]
       };
         
@@ -302,6 +308,20 @@ Meteor.methods({
         );
       }
     },
+    // 관심작품 리스트 cnt
+    sltInterestAtwrkCnt: function(data) {
+      try {
+        let res = Atwrk.find({ _id : { $in : data } }).count();
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
     sltUserCart: function(data) {
       try {
         let res = Atwrk.find({ _id : { $in : data } }).fetch();
@@ -343,14 +363,14 @@ Meteor.methods({
         );
       } 
     },
-    // 갤러리 마이페이지 Tab 변경시 조회
-    seltTabAtwrk: function(query, option) {
+     // 갤러리 마이페이지 atwrkList
+     glryAtwrkList: function(query, option) {
       try {
         let res = {};
 
         query._id = this.userId;
 
-        var normal = { 'ogPrt.selStrDt' : { $exists : true }, 'dtPrt.selStrDt' : { $exists : true } };
+        var normal = { 'soldYn' : 'N', 'delYn' : 'N' };
         
         var sellTp = query.sellTp != undefined ? {'ogPrt.sellTp' : query.sellTp} : {};
         var bsnsid = { 'glry.bsnsID' : query._id };
@@ -375,7 +395,67 @@ Meteor.methods({
         var metRias = query.MATERIAL != undefined ?
         { 'ogPrt.metRias' : { $in : query.MATERIAL} } : {};
         
-        var queryData = { $and : [ sellTp, bsnsid, kind, atst, metRias ]};
+        var queryData = { $and : [ normal, sellTp, bsnsid, kind, atst, metRias ]};
+
+        res.total = Atwrk.find(queryData).count();
+
+        var options = []
+
+        if(option.sort == undefined || option.sort == {}) options = { $skip : option.skip}, { $limit : option.limit};
+        else options = { $sort : option.sort }, { $skip : option.skip}, { $limit : option.limit};
+
+        res.list = Atwrk.aggregate([
+          { $match : queryData },
+          options
+        ]);
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      } 
+    },
+    // 갤러리 마이페이지 Tab 변경시 조회
+    seltTabAtwrk: function(query, option) {
+      try {
+        let res = {};
+
+        query._id = this.userId;
+
+        var normal = { 
+          'ogPrt.selStrDt' : { $exists : true }, 
+          'dtPrt.selStrDt' : { $exists : true },
+          'soldYn' : 'N',
+          'delYn' : 'N' 
+         };
+        
+        var sellTp = query.sellTp != undefined ? {'ogPrt.sellTp' : query.sellTp} : {};
+        var bsnsid = { 'glry.bsnsID' : query._id };
+
+        var atst = query.ATST != undefined ?
+        { 'atstInfo.atstNm' : { $in : query.ATST } } : {};
+
+        var kind = query.KIND != undefined ? query.KIND : {};
+        var og = [];
+        var dt = [];
+        if(query.KIND != undefined) {
+          for(i=0; i<kind.length; i++) {
+            if(kind[i] == 'ogPrt') og.push('ogPrt');
+            else if(kind[i] == 'dtPrt') dt.push('dtPrt');
+          }
+        }
+        
+        if(og.length > 0 && dt.length == 0) kind = {'ogPrt.atwrkNm' : { $exists: true }};
+        else if(dt.length > 0 && og.length == 0) kind = {'dtPrt.atwrkNm' : { $exists: true }, 'ogPrt.atwrkNm' : { $exists: false }}
+        else kind = {};
+
+        var metRias = query.MATERIAL != undefined ?
+        { 'ogPrt.metRias' : { $in : query.MATERIAL} } : {};
+        
+        var queryData = { $and : [ sellTp, bsnsid, kind, atst, metRias, normal ]};
 
         res.total = Atwrk.find(queryData).count();
 
@@ -415,10 +495,24 @@ Meteor.methods({
     // Bsns 갤러리 사용자 작품 삭제
     deleteAtwrkForGlry: function(query) {
       try{
-        let res = Atwrk.remove(query);
+        // let res = Atwrk.remove(query);
+        let res = Atwrk.update(query, { $set : { delYn : 'Y'}});
         let userId = this.userId;
         
+        // 갤러리 대표 작품에서 삭제
         Meteor.users.update({_id : userId}, { $pull : { 'profile.uInfos.rprsnAtwrk' : { atwrkID : query._id }} });
+
+        // 사용자 og좋아요 삭제
+        Meteor.users.update({'profile.uInfos.ogPrtGood' : query._id}, { $pull : { 'profile.uInfos.ogPrtGood' : query._id }});
+
+        // 사용자 dt좋아요 삭제
+        Meteor.users.update({'profile.uInfos.dtPrtGood' : query._id}, { $pull : { 'profile.uInfos.dtPrtGood' : query._id }});
+
+        // 사용자 ntcn 삭제
+        Meteor.users.update({'profile.uInfos.ntcn' : query._id}, { $pull : { 'profile.uInfos.ntcn' : query._id }});
+
+        // 사용자 cart삭제
+        Meteor.users.update({'profile.uInfos.cart.atwrkId' : query._id}, { $pull : { 'profile.uInfos.cart.atwrkId' : query._id }});
         
         return res;
       } catch(e) {

@@ -72,9 +72,8 @@ Template.pickCreate.events({
                     encoding : 'binary'
                 };
                 Meteor.call('saveFile', image, function(err, res) {
-                    if(err) {
-                        console.log(err);
-                    } else {
+                    if(err) console.log(err);
+                    else {
                         imgUrl.set(res.fileName);
                     }
                 });

@@ -2,7 +2,7 @@ import './inventoryMode.html';
 
 import './inventoryPopup.js';
 
-var prtContent;
+var prtContent = '<link rel="stylesheet" href="/css/sub.css">';
 
 Template.inventoryMode.onCreated(function() {
     query = { 'glry.bsnsID' : Meteor.userId() };
@@ -78,7 +78,7 @@ Template.inventoryMode.events({
             let seltAtList = seltAtstInfo.get();
             seltAtList.forEach(function(val, idx) {
                 let atwrkList = val.atwrkInfo.findIndex(function(item) { return item.atwrkId == chkId})
-                console.log(atwrkList);
+                
                 if (atwrkList > -1) val.atwrkInfo[atwrkList].show = "N";
             });
 
@@ -92,14 +92,23 @@ Template.inventoryMode.events({
     },
     'click button[name=printBtn]' (evt, tmpl) {
         // printAreas
-        $('#printAreas');
+        $('#printAreas').removeClass('overflowAutos');
 
-        prtContent = document.getElementById('printAreas');
-        window.onbeforeprint = beforePrint;
-        window.onafterprint = afterPrint;
-        window.print();
+        prtContent += document.getElementById('printAreas').innerHTML;
         
-        console.log($(evt.currentTarget).val());
+        document.body.innerHTML = prtContent;
+
+        window.onbeforeprint = function(ev) {
+            // document.getElementById('inventory_popup_preview"').innerHTML = prtContent;
+        };
+
+        // window.onafterprint = afterPrint;
+
+        setTimeout(function() {
+            window.print();
+
+            location.reload();
+        }, 250);
     },
     // 상단 메뉴 검색 버튼 이벤트
     'click button[name=menuSchBtn]'(evt, tmpl) {

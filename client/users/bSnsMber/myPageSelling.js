@@ -417,9 +417,12 @@ function tdDataSet(data) {
     var sellTp = Meteor.codes.SELL_TYPE(data.ogPrt.sellTp);
 
     var sellDate = '~';
-    if(data.dtPrt.atwrkNm != undefined) {
-        sellDate = Meteor.clientCommonUtils.dateFormatChg(data.dtPrt.selStrDt) +
-                   ' ~ ' + Meteor.clientCommonUtils.dateFormatChg(data.dtPrt.selEndDt);
+    if(data.dtPrt.atwrkNm != undefined && data.ogPrt.atwrkNm == undefined) {
+        sellDate = moment(data.dtPrt.selStrDt, 'YYYYMMDDHHmm').format('YYYY.MM.DD hh:mm A') +
+                   ' ~ ' + moment(data.dtPrt.selEndDt, 'YYYYMMDDHHmm').format('YYYY.MM.DD hh:mm A');
+    } else {
+        sellDate = moment(data.ogPrt.selStrDt, 'YYYYMMDDHHmm').format('YYYY.MM.DD hh:mm A') +
+                   ' ~ ' + moment(data.ogPrt.selEndDt, 'YYYYMMDDHHmm').format('YYYY.MM.DD hh:mm A');
     }
 
     switch(tabFlag.get()) {

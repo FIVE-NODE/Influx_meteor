@@ -1,9 +1,6 @@
 import './inventoryPopup.html';
 
 Template.inventoryPopup.onCreated(function() {
-    this.autorun(() => {
-        console.log(seltAtstInfo.get());
-    });
 });
 
 Template.inventoryPopup.onRendered(function() {

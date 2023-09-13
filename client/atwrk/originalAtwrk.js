@@ -164,6 +164,8 @@ function setQuery() {
         limit: limit.get(),
         sort : sortInfo.get()
     };
+
+    FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(query)) });
 }
 
 // 스크롤 이동

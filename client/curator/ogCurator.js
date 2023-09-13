@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+
 import './ogCurator.html';
 
 Template.ogCurator.onCreated(function() {
@@ -28,6 +30,10 @@ Template.ogCurator.onCreated(function() {
         limit: limit.get()
     };
 
+    if(this.data.schQueryData() != undefined)  {
+        filters.set(JSON.parse(this.data.schQueryData()));
+    }
+
     function seltCurOgList() {
         Meteor.call('selectPick', '001', function(err, res) {
             ogCurData.set(res);
@@ -50,6 +56,7 @@ Template.ogCurator.onCreated(function() {
 });
 
 function selectOrgAtwrk() {
+    if(filters.get() != undefined) setQuery();
     Meteor.call('selectOrgAtwrk', query, options, function(err, res) {
         total.set(res.total);
         atwrkInfo.set(res.list);
@@ -72,6 +79,8 @@ function setQuery() {
         limit: limit.get(),
         sort : sortInfo.get()
     };
+
+    FlowRouter.go('/ogCurator', {}, { data : encodeURIComponent(JSON.stringify(query)) });
 }
 
 // 스크롤 이동
@@ -235,5 +244,19 @@ Template.ogCurator.helpers({
     },
     materials() {
         return Meteor.codes.MATERIAL();
+    },
+    leftFilterChk(kind, code) {
+        var selectCodes = filters.get()[kind];
+        for(idx in selectCodes) {
+            if(typeof selectCodes[idx] === 'object') {
+                if(selectCodes[idx].code === code) {
+                    return 'checked';
+                }
+            } else {
+                if(selectCodes[idx] === code) {
+                    return 'checked';
+                }
+            }
+        }
     }
 });

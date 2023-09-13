@@ -35,13 +35,13 @@ Template.glryAtwrks.onCreated(function() {
         const userData = Meteor.user();
         if(userData != undefined && uInfo.get() == undefined) {
             uInfo.set(userData.profile.uInfos);
-            seltTabAtwrk();
+            glryAtwrkList();
         }
     });
 });
 
-function seltTabAtwrk() {
-    Meteor.call('seltTabAtwrk', query, options, function(err, res) {
+function glryAtwrkList() {
+    Meteor.call('glryAtwrkList', query, options, function(err, res) {
         total.set(res.total);
         atwrkInfo.set(res.list);
     });
@@ -158,11 +158,11 @@ Template.glryAtwrks.events({
 
             setQuery();
             
-            seltTabAtwrk();
+            glryAtwrkList();
         } else {
             setQuery();
 
-            seltTabAtwrk();
+            glryAtwrkList();
         };
     },
     // 작품 삭제 버튼
@@ -184,7 +184,7 @@ Template.glryAtwrks.events({
             if(err) {
             } else {
                 setQuery();
-                seltTabAtwrk();
+                glryAtwrkList();
             }
         });
 
@@ -194,28 +194,28 @@ Template.glryAtwrks.events({
     'click button[name=setPageNum]'(evt, tmpl) {
         limit.set(parseInt($(evt.currentTarget).val()));
         setQuery();
-        seltTabAtwrk();
+        glryAtwrkList();
     },
      // 페이지
     'click a[name=prev]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip));
         else {
             setQuery();
-            seltTabAtwrk();
+            glryAtwrkList();
         }
     },
     'click a[name=next]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.nextPage(curPage, total.get(), limit, skip)) ;
         else {
             setQuery();
-            seltTabAtwrk();
+            glryAtwrkList();
         }
     },
     'click a[name=pageNum]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num));
         else {
             setQuery();
-            seltTabAtwrk();
+            glryAtwrkList();
         }
     },
     // 정렬 이벤트
@@ -225,7 +225,7 @@ Template.glryAtwrks.events({
         sortInfo.set(sort);
 
         setQuery();
-        seltTabAtwrk();
+        glryAtwrkList();
     }
 });
 

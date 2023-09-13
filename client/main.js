@@ -94,27 +94,15 @@ import './users/authSample.js';
 
 Template.body.onCreated(function() {
 
-  // chPage = new ReactiveVar('aOne');
-
   Meteor.subscribe('userData');
   Meteor.subscribe('Pick');
   Meteor.subscribe('Atwrk');
-
-  // this.changePage = chPage;
 
   this.userPop = this.subscribe('userData');
   this.pickPub = this.subscribe('Pick');
   this.atwrkPub = this.subscribe('Atwrk');
 
   pageInfo = this;
-
-  // this.autorun(() => {
-  //   console.log("auto run");
-  //   streamer.on(test, function(res) {
-  //     console.log(test);
-  //     console.log(res);
-  //   });
-  // });
 });
 
 Template.body.onRendered(function() {
@@ -128,14 +116,10 @@ Template.body.events({
 });
 
 Template.body.helpers({
-  // changePage() {
-  //   return chPage.get();
-  // },
   pageInfo() {
     return pageInfo;
   },
   changeCss(changeCss) {
-    console.log('changeCss : ', changeCss);
     return true;
   },
   subFlag() {
@@ -144,8 +128,6 @@ Template.body.helpers({
   },
   bootMinFlag() {
     var chk = FlowRouter.getRouteName()
-    console.log(chk);
-    console.log(chk === 'atwrkSalesReg');
     return chk === 'atwrkSalesReg';
   }
 });

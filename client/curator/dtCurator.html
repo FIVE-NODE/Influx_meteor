@@ -64,7 +64,7 @@
                                                 <div class="form-wrap" id="artwork-price">
                                                     {{#each pricedtPrt}}
                                                         <div class="form-radio form-row">
-                                                            <input value="ARTWORK_PRICE_DTPRT-{{code}}" name="filterChk" type="radio" class="form-radio__input" id="radio-lnb--price{{code}}">
+                                                            <input {{leftFilterChk "ARTWORK_PRICE_DTPRT" this.code}} value="ARTWORK_PRICE_DTPRT-{{code}}" name="filterChk" type="radio" class="form-radio__input" id="radio-lnb--price{{code}}">
                                                             <label for="radio-lnb--price{{code}}">{{name}}</label>
                                                         </div>
                                                     {{/each}}
@@ -84,7 +84,7 @@
                                                 <div class="form-wrap" id="artwork-base">
                                                     {{#each base}}
                                                         <div class="form-check form-row">
-                                                            <input value="BASE-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--base{{code}}">
+                                                            <input {{leftFilterChk "BASE" this.code}} value="BASE-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--base{{code}}">
                                                             <label for="check-lnb--base{{code}}">{{name}}</label>
                                                         </div>
                                                     {{/each}}
@@ -104,7 +104,7 @@
                                                 <div class="form-wrap" id="artwork-style1">
                                                     {{#each style1}}
                                                         <div class="form-check form-row">
-                                                            <input value="STYLE_1-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-01-{{code}}">
+                                                            <input {{leftFilterChk "STYLE_1" this.code}} value="STYLE_1-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-01-{{code}}">
                                                             <label for="check-lnb--style-01-{{code}}">{{name}}</label>
                                                         </div>
                                                     {{/each}}
@@ -124,7 +124,7 @@
                                                 <div class="form-wrap" id="artwork-style2">
                                                     {{#each style2}}
                                                         <div class="form-check form-row">
-                                                            <input value="STYLE_2-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-02-{{code}}">
+                                                            <input {{leftFilterChk "STYLE_2" this.code}} value="STYLE_2-{{code}}" name="filterChk" type="checkbox" class="form-check__input" id="check-lnb--style-02-{{code}}">
                                                             <label for="check-lnb--style-02-{{code}}">{{name}}</label>
                                                         </div>
                                                     {{/each}}

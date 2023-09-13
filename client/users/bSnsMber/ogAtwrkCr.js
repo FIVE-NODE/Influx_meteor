@@ -323,9 +323,10 @@ Template.ogAtwrkCr.events({
                             deleteList.set(deleteData);
                         }
                         imgUrl.set(imgId, res.fileName);
+                        
                         $(`div[name=${imgId}]`).css({
                             'background-size' : 'contain',
-                            'background-image' : `url(/temp/${imgUrl.get(imgId)})`,
+                            'background-image' : `url(/temps/${imgUrl.get(imgId)})`,
                             'background-repeat': 'no-repeat',
                             'background-position': 'center center'
                         });
@@ -375,7 +376,7 @@ Template.ogAtwrkCr.events({
         var imgSize = new Image();
         var _height;
 
-        imgSize.src = '/temp/' + imgAll.mainUploadImg;
+        imgSize.src = '/temps/' + imgAll.mainUploadImg;
         _height = imgSize.height;
 
         if(_height < 320) mainImgSize = 'S';

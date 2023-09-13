@@ -58,12 +58,7 @@ Template.glryAppMang.events({
             password : rendomPass,
             profile : bsnsData
         }, function(error) {
-            if(error) {
-                console.log(error);
-                if(error.error == 403) {
-                    console.log('here');
-                }
-            }
+            if(error) console.log(error);
             else {
                 // messagePopup({message : '계정 생성 및 메시지 전송까지 3초정도 소요됩니다.'});
 

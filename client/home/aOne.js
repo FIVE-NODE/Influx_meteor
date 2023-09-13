@@ -118,6 +118,9 @@ Template.aOne.onCreated(async function() {
     // selectGlry       갤러리
     selectGlry();
 
+    // $(window).on('scroll', function(e) {
+        
+    // });
 
 
 });
@@ -132,6 +135,8 @@ Template.aOne.onRendered(function() {
 });
 
 Template.aOne.events({
+    'scroll #move' (evt, tmpl) {
+    },
     'click button[name=pickOg]'(evt, tmpl) {
         // 큐레잍픽 원화
         selectPickCategory('pickOg');

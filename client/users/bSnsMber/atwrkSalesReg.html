@@ -190,7 +190,7 @@
                                     <div class="saleCondition-block saleCondition-block--price mt-10">
                                         <div class="form-wrap">
                                             <div class="form-input">
-                                                <input type="text">
+                                                <input type="text" name="dtPric">
                                                 <label >원</label>
                                             </div>
                                         </div>
@@ -200,17 +200,18 @@
                                         <div class="form-wrap">
                                             <div class="form-row">
                                                 <div class="form-select form-select-custom">
-                                                    <button type="button" class="custom-select__tit height-55 pl-10">100작품</button>
+                                                    <button type="button" class="custom-select__tit height-55 pl-10">100</button>
                                                     <ul class="custom-select__options" style="display: none;">
-                                                        <li class="is-active"><button type="button">100작품</button></li>
-                                                        <li><button type="button">200작품 </button></li>
-                                                        <li><button type="button">300작품 </button></li>
+                                                        <li class="is-active"><button name="seltDtCnt" type="button">100</button></li>
+                                                        <li><button name="seltDtCnt" type="button">200</button></li>
+                                                        <li><button name="seltDtCnt" type="button">300</button></li>
+                                                        <li><button name="seltDtCnt" type="button">직접입력</button></li>
                                                     </ul>
                                                 </div>
                                                 <div class="calc-box">
-                                                    50,000
+                                                    <input name="dtSellCnt" disabled type="number" value=100 style="font-size: 1.4rem; font-weight: 700; color: #585858;background-color: #FFFFFF; border: 0px; width: 100%;">
+                                                    <label style="width: 35px;">작품</label>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -248,7 +249,7 @@
                                     <p class="saleCondition-profile__txt">
                                             <strong>{{atstInfo.atstNm}}</strong>
                                             <span>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName ogPrt.metRias "MATERIAL"}}</span>
-                                            <em>{{commaPric ogPrt.pric}}원</em>
+                                            <em>{{commaPric ogPrt.pric}} 원</em>
                                         </p>
                                 </div>
                                 {{/with}}

@@ -114,10 +114,6 @@ Meteor.methods({
         var nicNmChgCnt = uData.profile.uInfos.nicNmChgCnt;
         var nicNmChgMM = uData.profile.uInfos.nicNmChgMM;
 
-        console.log(toDate);
-        console.log(nicNmChgMM);
-        console.log(nicNmChgCnt);
-
         if(toDate == nicNmChgMM) {
           if(nicNmChgCnt == 4) {
             res.message = '이번달 최대 변경횟수입니다.';
@@ -287,9 +283,6 @@ Meteor.methods({
     // 갤러리 조회 가나다 순
     selectGallery: function(query) {
       try{
-
-        console.log(query);
-
         var queryData = {
           'profile.uInfos.bsnsTp'  : '001',
           'profile.uInfos.glryNm'  : { $regex : query.glryNm },
@@ -313,13 +306,7 @@ Meteor.methods({
         res.total = Meteor.users.find(queryData).count();
         res.list  = Meteor.users.find(queryData, options).fetch();
 
-        console.log('queryData', queryData);
-        console.log('options : ', options);
-        console.log(res.list);
-
         res.list = setRetData(res.list);
-
-        
 
         return res
       } catch(e) {
@@ -348,7 +335,11 @@ Meteor.methods({
     selectAtwrkForBsns: function(_id, data ,options) {
       try{
         let res = {};
-        var normal = {'glry.bsnsID' : _id};
+        var normal = {
+          'glry.bsnsID' : _id,
+          "delYn" : "N",
+          "soldYn" : "N"
+      };
 
         if(Object.keys(data).length > 0) {
 

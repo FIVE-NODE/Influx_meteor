@@ -93,8 +93,6 @@ Template.login.events({
         var inputVal = $(evt.currentTarget).val();
         var validation =  emailChkVal.test(inputVal);
 
-        console.log('inputVal', validation);
-
         if(inputVal == '') {
             $('input[name=schEmail]').css({'border' : '1px solid red'});
             emailSchMessage.set('이메일을 입력해주세요');

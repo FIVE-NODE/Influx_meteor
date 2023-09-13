@@ -139,7 +139,6 @@ Template.changeMberInfo.events({
         Meteor.call('nicNmUpdate', nicNm, function(err, res) {
             if(err) console.log(err);
             else {
-                console.log(res);
                 messagePopup({message : '닉네임 변경이 완료되었습니다.'});
                 $('button[name=passChgCancel]').click();
             }
@@ -410,7 +409,6 @@ Template.changeMberInfo.helpers({
         if(uInfo.get() != undefined) {
             var res = uInfo.get();
             res.ID = uProfile.get().emails[0].address;
-            console.log(res);
             return res;
         }
     },

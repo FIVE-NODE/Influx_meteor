@@ -11,10 +11,8 @@ Template.bidAmtProcess.onRendered(function() {
 
 Template.bidAmtProcess.events({
     'click button[name=mobileReq]'(evt, tmpl) {
-        console.log('휴대폰 본인인증 메시지 전송');
     },
     'click button[name=mobileAuth]'(evt, tmpl) {
-        console.log('문자메시지 6자리 확인');
     },
     'click button[name=backPop]'(evt, tmpl) {
         $('#bidAmtProcess').removeClass('is-open');

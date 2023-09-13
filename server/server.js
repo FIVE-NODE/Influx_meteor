@@ -49,16 +49,6 @@ Meteor.onConnection(conn => {
   
 });
 
-// Accounts.onCreateUser((options, user) => {
-//   console.log('onCreateUser : ', user);
-
-//   user._id = Meteor.commonUtils.generateUUID();
-
-//   console.log('sertCreateUser : ', user );
-
-//   return user;
-// });
-
 Meteor.methods({
   // Pick 큐레이터 픽
   insertPick: function() {
@@ -137,7 +127,6 @@ Meteor.methods({
   },
   updateAtwrk: function(data) {
     try {
-      console.log('data', data);
       var _id = data._id;
 
       let oldData =  Atwrk.findOne({ _id });
@@ -180,7 +169,7 @@ Meteor.methods({
         image.push(imgObj);
       }
 
-      if(data.atstImage != undefined) {
+      if(data.atstImage != '' && data.atstImage != undefined) {
         var tempChk = data.atstImage.split('/');
         if(tempChk.length == 1) {
           var blob = Meteor.wrapAsync(fs.readFile)(tempDir + data.atstImage);
@@ -212,7 +201,7 @@ Meteor.methods({
       if(data.atwrkTp != '001') {
         var dtPric = parseInt(data.dtPric.replace(/,/g, ''));
         dtPrt = {
-          atwkNm    : data.atwrkNm,
+          atwrkNm    : data.atwrkNm,
           mkYY      : data.mkYY,
           base      : data.base == undefined ? '' : data.base,
           style1    : data.style1,
@@ -269,6 +258,33 @@ Meteor.methods({
       var delPath = deletePath;
       for(idx in delList) {
         fs.unlinkSync(delPath + delList[idx]);
+      }
+
+      return res;
+    } catch(e) {
+      console.log('Error : ', e);
+      throw new Meteor.Error(
+        500,
+        '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+      )
+    }
+  },
+  // 판매등록
+  updateSalesAtwrk: function(data) {
+    try {
+      let res;
+    
+      if(data.dtPrt.sellStrDt == undefined) {
+        // 원화만 있을 경우
+        res = Atwrk.update({ _id : data._id}, {  $set : { ogPrt : data.ogPrt } });
+      } else {
+        if(data.sellStrDt == undefined) {
+          // 디지털 판화만 있을 경우
+          res = Atwrk.update({ _id }, { $set : {  dtPrt : data.dtPrt }});
+        } else {
+          // 원화 + 디지털 판화
+          res = Atwrk.update({ _id }, { $set : { ogPrt : data.ogPrt, dtPrt : data.dtPrt } });
+        }
       }
 
       return res;
@@ -347,15 +363,15 @@ Meteor.methods({
       if(data.atwrkTp != '001') {
         var dtPric = parseInt(data.dtPric.replace(/,/g, ''));
         var dtPrt = {
-          atwkNm    : data.atwrkNm,
+          atwrkNm    : data.atwrkNm,
           mkYY      : data.mkYY,
           base      : data.base == undefined ? '' : data.base,
           style1    : data.style1,
           style2    : data.style2,
           leCnt     : 0,
           selCnt    : 0,
-          selStrDt  : "",
-          selEndDt  : "",
+          // selStrDt  : "",
+          // selEndDt  : "",
           viewCnt   : 0,
           goodCnt   : 0,
           sPric     : dtPric,
@@ -401,6 +417,8 @@ Meteor.methods({
         sngl: data.sngl,
         updDt: "",
         insDt: toDate,
+        soldYn : 'N',                       // 원화 팔렸거나 디지털판화 전부 팔렸을때 
+        delYn : 'N'                         // 이미 팔린 작품 삭제여부 확인
       };
 
       var res = Atwrk.insert(createData);

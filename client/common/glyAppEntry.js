@@ -147,6 +147,7 @@ Template.glyAppEntry.events({
                     rprsnAtwrk: [],
                     rprsnAtst: [],
                     ntcn: [],
+                    getNtcn : []
                 }
             };
     
@@ -158,12 +159,7 @@ Template.glyAppEntry.events({
                 password : rendomPass,
                 profile : bsnsData
             }, function(error) {
-                if(error) {
-                    console.log(error);
-                    if(error.error == 403) {
-                        console.log('here');
-                    }
-                }
+                if(error) console.log(error);
                 else {
                     // messagePopup({message : '계정 생성 및 메시지 전송까지 3초정도 소요됩니다.'});
     
@@ -191,94 +187,7 @@ Template.glyAppEntry.events({
                         }
                     });
                 }
-            });
-
-            // var bsnsData = {
-            //     stndPntReqID : bsnsID.get(),
-            //     bsnsNm : companyNm,
-            //     homeUrl : homeUrl,
-            //     bsnsChagNm : smaNm,
-            //     bsnsChagMob : smaPhone,
-            //     bsnsChagEmail : smaEmail,
-            //     glryImage : '',
-            //     glryNm : glyNm,
-            //     area : this.addrs.sido,
-            //     dong : this.addrs.bname,
-            //     sigungu : this.addrs.sigungu,
-            //     zipCd : zipCode,
-            //     addr1 : address,
-            //     addr1 : detail,
-            //     atwrkDesc : '',
-            //     rprsnAtwrk : [],
-            //     crtfcNo : '',
-            //     sttus : '001',
-            //     reExam : '',
-            //     bsnsSign : '',
-            //     influxSign : '',
-            //     atchmnfl : []
-            // }
-
-            // Meteor.call('createStndPntReq', bsnsData, function(err, res) {
-            //     if(err) console.log(err);
-            //     else {
-            //         FlowRouter.go('/login');
-            //         alert('신청이 완료되었습니다.\n관리자 검토 후 임시비밀번호가 전달됩니다.');
-            //     }
-            // });
-            
-
-            // var bsnsData = {
-            //     uInfos : {
-            //         bsnsTP  : '001',
-            //         bsnsID  : bsnsID.get(),
-            //         bsnsNm  : companyNm,
-            //         homeUrl : homeUrl,
-            //         glryNm  : glyNm,
-            //         addr1   : address,
-            //         addr2   : detail,
-            //         zipCd   : zipCode,
-            //         dong    : this.addrs.bname,
-            //         area    : this.addrs.sido,
-            //         sigungu : this.addrs.sigungu,
-            //         bsnsChagNm : smaNm,
-            //         bsnsChagMob : smaPhone,
-            //         bsnsChagEmail : smaEmail,
-            //         insDt : '',
-            //         ctrt : {
-            //             stndPntReqID : '',
-            //             ctrtInfo : ''
-            //         },
-            //         rprsnAtwrk: [
-            //         ],
-            //         rprsnAtst: [
-            //         ],
-            //         ntcn: [
-            //         ],
-            //     }
-            // };
-
-            
-            
-            // Accounts.createUser({
-            //     _id : _id,
-            //     email : smaEmail,
-            //     password : 'qawsedrf1!',
-            //     profile : bsnsData
-            // }, function(error) {
-            //     if(error) console.log(error);
-            //     else {
-            //         Meteor.logout(function(err) {
-            //             if(err) console.log(err) 
-            //             else {
-            //                 sessionStorage.removeItem('art_dex');
-            //                 sessionStorage.removeItem('art_session_index');
-            //                 FlowRouter.go('/login');
-            //                 alert('신청이 완료되었습니다.\n관리자 검토 후 임시비밀번호가 전달됩니다.');
-            //             }
-            //         });
-            //     }
-            // });
-            
+            });       
         }
     }
 });

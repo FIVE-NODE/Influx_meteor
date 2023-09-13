@@ -18,10 +18,6 @@ Template.bargainingRate.events({
             // 회원정보 가져오기
             var userInfo = userInfos.get();
 
-            console.log(selectRate.get());
-            console.log(pric);
-            console.log(bargainingPrice.get());
-
             // 저장 데이터 셋팅
             var bargainInfo = {
                 "_id" : Meteor.commonUtils.generateUUID(),

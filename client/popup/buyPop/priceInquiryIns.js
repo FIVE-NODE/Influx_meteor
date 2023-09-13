@@ -12,29 +12,41 @@ Template.priceInquiryIns.events({
         var message = $('#inquiryMsg').val();
 
         if(message != undefined && message != '' && message.trim() != '') {
-            // 회원정보 가져오기
-            var userInfo = userInfos.get();
 
-            // 저장 데이터 셋팅
-            var inquiryInsInfo = {
-                "_id" : Meteor.commonUtils.generateUUID(),
-                "cmmncID": Meteor.userId(),
-                "nm": userInfo.nm === '' ? userInfo.nicNm : userInfo.nm,
-                "atwrkID": this._id,
-                "cmmncTp": '002',
-                "title": "",
-                "cn": message,
-                "bsnsID": this.glry.bsnsID,
-                "answ": "",
-                "sttus": "001"
-            };
+            var atwrkId = this._id;
+            var bsndId = this.glry.bsnsID;
 
-            //서버 콜
-            Meteor.call('insertCommnc', inquiryInsInfo, function(err, res) {
-                $('#priceInquiryIns').removeClass('is-open');
-                messagePopup({message : '가격문의가 전송 되었습니다.'});
+            Meteor.call('findCommncChk', { atwrkID : this._id, bsnsID : this.glry.bsnsID }, function(err, findMsg) {
+                if(findMsg == undefined) {
+                    // 메시지 보낸 기록 없을 경우
+                    
+                    // 회원정보 가져오기
+                    var userInfo = userInfos.get();
+    
+                    // 저장 데이터 셋팅
+                    var inquiryInsInfo = {
+                        "_id" : Meteor.commonUtils.generateUUID(),
+                        "cmmncID": Meteor.userId(),
+                        "nm": userInfo.nm === '' ? userInfo.nicNm : userInfo.nm,
+                        "atwrkID": atwrkId,
+                        "cmmncTp": '002',
+                        "title": "",
+                        "cn": message,
+                        "bsnsID": bsndId,
+                        "answ": "",
+                        "sttus": "001"
+                    };
+    
+                    //서버 콜
+                    Meteor.call('insertCommnc', inquiryInsInfo, function(err, res) {
+                        $('#priceInquiryIns').removeClass('is-open');
+                        messagePopup({message : '가격문의가 전송 되었습니다.'});
+                    });
+                } else {
+                    messagePopup({message : '이미 보낸 메시지 기록이 있습니다.'});
+                }
             });
-            
+ 
         } else {
             messagePopup({message : '메세지를 입력하세요'});    
         }

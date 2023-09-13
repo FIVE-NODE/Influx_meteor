@@ -11,6 +11,48 @@ Template.artistMenu.events({
         $('input[name=artistChk]').prop("checked", false);
     },
     'click button[name=schBtn]'(evt, tmpl) {
+        var chked = $('input[name=artistChk]:checked');
+        var atstNm = $('input[name=atstNm]').val();
+
+        var chked = $('input[name=chk]:checked');
+
+        // 검색조건 하나라도 선택했을때
+        if(chked.length > 0 || atstNm != '') {
+            var queryData = {};
+            var dataList = [];
+            var beforKind = '';
+
+            queryData.atstNm = atstNm;
+
+            console.log(chked.length);
+
+            // query 데이터 설정
+            for(var i=0; i < chked.length; i++) {
+                var splitVal = chked[i].value.split('-');
+                var kind = splitVal[0];
+                var code = splitVal[1];
+                var codeData = Meteor.clientCommonUtils.dataSet(kind, code);
+                
+                if(beforKind != kind && beforKind != '') {
+                    queryData[beforKind] = dataList;
+                    dataList = [];
+                }
+
+                dataList.push(codeData);
+
+                beforKind = kind;
+
+                if(i === (chked.length -1)) queryData[beforKind] = dataList;
+            }
+
+            console.log(queryData);
+
+            // FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+            
+            // location.reload();
+        } else {
+            // 검색조건 하나도 선택하지 않았을때.
+        }
     }
 });
 

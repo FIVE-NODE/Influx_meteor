@@ -1,7 +1,11 @@
+
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+
 import './atwrkSalesReg.html';
 
 const numberChk = /[^0-9.]/g; 
 const comma = /\B(?=(\d{3})+(?!\d))/g;
+const delComma = /,/g;
 
 Template.atwrkSalesReg.onCreated(function() {
 
@@ -81,6 +85,15 @@ function inputComma(pric) {
     pric.val(pricVal.replace(numberChk, '').replace(comma, ','));
 }
 
+function setPric(getPric) {
+    var pric = getPric.replace(delComma, "");
+    if(pric == '') ogTotalPric.set(0);
+    else {
+        pric = Number(pric);
+        ogTotalPric.set(Math.round(pric + (pric * 0.05)));
+    }
+}
+
 Template.atwrkSalesReg.events({
     'keyup input[name=strPric]'(evt, tmpl) {
         inputComma($(evt.currentTarget));
@@ -91,13 +104,32 @@ Template.atwrkSalesReg.events({
     'keyup input[name=pric]'(evt, tmpl) {
         inputComma($(evt.currentTarget));
     },
+    'keyup input[name=dtPric]'(evt, tmpl) {
+        inputComma($(evt.currentTarget));
+    },
     'change input[name=pric]'(evt, tmpl) {
-        var pric = parseInt($(evt.currentTarget).val().replace(/,/g, ""));
-        ogTotalPric.set(pric + (pric * 0.05));        
+        var pric = $(evt.currentTarget).val().replace(delComma, "");
+        if(pric == '') ogTotalPric.set(0);
+        else {
+            pric = Number(pric);
+            ogTotalPric.set(Math.round(pric + (pric * 0.05)));
+        }
     },
     'change input[name=endPric]'(evt, tmpl) {
-        var pric = parseInt($(evt.currentTarget).val().replace(/,/g, ""));
-        ogTotalPric.set(pric + (pric * 0.05));
+        var pric = $(evt.currentTarget).val().replace(delComma, "");
+        if(pric == '') ogTotalPric.set(0);
+        else {
+            pric = Number(pric);
+            ogTotalPric.set(Math.round(pric + (pric * 0.05)));
+        }
+    },
+    'change input[name=dtPric]'(evt, tmpl) {
+        var pric = $(evt.currentTarget).val().replace(delComma, "");
+        if(pric == '') dtTotalPric.set(0);
+        else {
+            pric = Number(pric);
+            dtTotalPric.set(Math.round(pric + (pric * 0.05)));
+        }
     },
     'change input[name=check-saleCondition--method]'(evt, tmpl) {
         sellkindFlag.set($(evt.currentTarget).val());
@@ -129,7 +161,7 @@ Template.atwrkSalesReg.events({
             var seltStrTime = moment(seltStrDay + ' ' + $('#ogStrTime').val(), 'YYYYMMDD hh:mm A');
             var seltEndTime = moment(seltEndDay + ' ' + $('#ogEndTime').val(), 'YYYYMMDD hh:mm A');
             var timeChk = moment.duration(seltEndTime.diff(seltStrTime)).asMinutes();
-            console.log(timeChk);
+            
             if(timeChk > -1) setDateTime('ogEndDateTime');
             else alert('시작 날짜의 시간은 종료날짜의 시간보다 빠를수 없습니다.');
         } else setDateTime('ogEndDateTime');
@@ -139,7 +171,7 @@ Template.atwrkSalesReg.events({
         var seltDay = $('#datepicker3').val();
 
         var seltEndDay = moment($('#datepicker4').val()).format('YYYYMMDD');
-        console.log(seltEndDay);
+        
         if(today > seltDay) {
             alert('선택하신 날짜가 오늘 날짜보다 전 입니다.');
         } else setDateTime('dtStrDateTime');
@@ -155,7 +187,7 @@ Template.atwrkSalesReg.events({
             var seltStrTime = moment(seltStrDay + ' ' + $('#ogStrTime').val(), 'YYYYMMDD hh:mm A');
             var seltEndTime = moment(seltEndDay + ' ' + $('#ogEndTime').val(), 'YYYYMMDD hh:mm A');
             var timeChk = moment.duration(seltEndTime.diff(seltStrTime)).asMinutes();
-            console.log(timeChk);
+            
             if(timeChk > -1) setDateTime('ogEndDateTime');
             else alert('시작 날짜의 시간은 종료날짜의 시간보다 빠를수 없습니다.');
         } else setDateTime('dtEndDateTime');
@@ -165,7 +197,7 @@ Template.atwrkSalesReg.events({
     },
     // 흥정용 가격 선택1, 선택2 셋팅
     'blur #bargain' (evt, tmpl) {
-        var pric = Number($(evt.currentTarget).val().replace(/,/g, ''));
+        var pric = Number($(evt.currentTarget).val().replace(delComma, ''));
         pric = pric + (pric * 0.05);
 
         var seltBargain1 = [
@@ -185,48 +217,109 @@ Template.atwrkSalesReg.events({
         setBargain.set('seltBargain1', seltBargain1);
         setBargain.set('seltBargain2', seltBargain2);
     },
+    // 디지털 판화 작품 개수 선택
+    'click button[name=seltDtCnt]'(evt, tmpl) {
+        var cnt = $(evt.currentTarget).text();
+        if(cnt == '직접입력') {
+            $('input[name=dtSellCnt]').prop('disabled', false);
+            $('input[name=dtSellCnt]').focus();
+        } else {
+            $('input[name=dtSellCnt]').prop('disabled', true);
+            $('input[name=dtSellCnt]').val(cnt);
+        }
+    },
     'click button[name=sellDone]' (evt, tmpl) {
-        // 개발중
-
         // kind 종류 001(정찰가) 002(비딩) 003(흥정) 004(가격문의)
         if(sellkindFlag.get() == undefined) alert('판매 방식을 선택해주세요');
         else {
-            var validation = false;
-            var reqData = {};
-            var sellStrDt = moment($('span[name=seltStrDate]').text() + $('span[name=seltStrTime]').text()).format('YYYYMMDDHHmmss');
-            var sellEndDt = moment($('span[name=seltEndDate]').text() + $('span[name=seltEndTime]').text()).format('YYYYMMDDHHmmss');
-            var sellPric = 0;
+            let atInfos = atwrkInfo.get();
+            var today = moment(new Date()).format('YYYYMMDD hh:mm A');
+            console.log('today : ', today);
+            var ogValidation = false;
+            var dtValidation = true;
+            var pupMsg = '';
+
+            var sellStrDt = moment($('span[name=seltStrDate]').text() + ' ' + $('span[name=seltStrTime]').text(), 'YYYYMMDD hh:mm A').format('YYYYMMDDHHmm');
+            var sellEndDt = moment($('span[name=seltEndDate]').text() + ' ' + $('span[name=seltEndTime]').text(), 'YYYYMMDD hh:mm A').format('YYYYMMDDHHmm');
 
             // 판매방법에 따른 벨리데이션 체크
             switch(sellkindFlag.get()) {
                 case '004':
+                    ogValidation = true;
                     break;
                 case '002':
-                    var bidStrPric = $('input[name=strPric]').val();
-                    var immdPurchPric = $('input[name=endPric]').val();
+                    var bidStrPric = Number($('input[name=strPric]').val().replace(delComma, ""));
+                    var immdPurchPric = Number($('input[name=endPric]').val().replace(delComma, ""));
 
-                    reqData.bid = {
+                    if(bidStrPric >= immdPurchPric) {
+                        pupMsg = '즉시 구매 가격보다 비딩 시작 가격이 더 큽니다.';
+                        break;
+                    }
+
+                    atInfos.ogPrt.pric =  bidStrPric;
+                    atInfos.ogPrt.bid = {
                         strAmt : bidStrPric,
                         strDt : sellStrDt,
                         endDt : sellEndDt,
                         immdPurchPric
                     };
 
+                    ogValidation = true;
                     break;
                 default:
+                    var pric = Number($('input[name=pric]').val().replace(delComma, ""));
+                    if(pric == 0 || pric < 100000) {
+                        pupMsg = '금액은 0이 될수 없으며 최소 100,000 원 이상이여야 합니다.';
+                        break;
+                    }
+
+                    atInfos.ogPrt.pric =  ogTotalPric.get();
+
+                    ogValidation = true;
                     break;
             }
 
+            atInfos.ogPrt.selStrDt = sellStrDt;
+            atInfos.ogPrt.selEndDt = sellEndDt;
 
             // 디지털 판화 동시판매에 따른 벨리데이션 체크
             if(digitalBoth.get()) {
+                dtValidation = false;
 
+                var selCnt = Number($('input[name=dtSellCnt]').val());
+
+                if(dtTotalPric.get() == 0 || dtTotalPric.get() < 100000)  pupMsg = '금액은 0이 될수 없으며 최소 100,000 원 이상이여야 합니다.';
+                else if(selCnt == 0) pupMsg = '허용작품수 를 선택/입력 해주세요.';
+                else {
+                    var dtSellStrDt = moment($('span[name=dtSeltStrDate]').text() + ' ' + $('span[name=dtSeltStrTime]').text(), 'YYYYMMDD hh:mm A').format('YYYYMMDDHHmm');
+                    var dtSellEndDt = moment($('span[name=dtSeltEndDate]').text() + ' ' + $('span[name=dtSeltEndTime]').text(), 'YYYYMMDD hh:mm A').format('YYYYMMDDHHmm');
+
+                    atInfos.dtPrt.selStrDt = dtSellStrDt;
+                    atInfos.dtPrt.selEndDt = dtSellEndDt;
+                    atInfos.dtPrt.sPric = dtTotalPric.get();
+                    atInfos.dtPrt.mPric = (dtTotalPric.get() + 30000);
+                    atInfos.dtPrt.lPric = (dtTotalPric.get() + 60000);
+                    atInfos.dtPrt.leCnt = selCnt;
+                    atInfos.dtPrt.selCnt = selCnt;
+                    
+
+                    dtValidation = true;
+                }
             }
 
-            // 모든 벨리데이션 통과시 판맨등록 처리
-            if(validation) {
-
-            }
+            // 모든 벨리데이션 통과시 판매등록 처리
+            if(ogValidation && dtValidation) {
+                atInfos.ogPrt.sellTp = sellkindFlag.get();
+                Meteor.call('updateSalesAtwrk', atInfos, function(err, res) {
+                    if(err) console.log(err);
+                    else {
+                        if(res >= 1) {
+                            alert('판매등록이 완료되었습니다.');
+                        }
+                        FlowRouter.go('/glryAtwrks');
+                    }
+                });
+            } else alert(pupMsg);
         }   
     }
 });
@@ -320,4 +413,5 @@ Template.atwrkSalesReg.helpers({
     }
     
 });
+
 

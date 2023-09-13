@@ -69,33 +69,27 @@ Template.signUp.events({
                         "nicNmChgMM": "",
                         "pwChgDt": "",
                         "mob": "",
-                        "ntcn": [
-                        ],
+                        "ntcn": [],
+                        getNtcn : [],
                         "addr2": "",
                         "recptnYn": "",
                         "addr1": "",
                         "memYn": "",
                         "secsnTp": "",
-                        "deliv": [
-                        ],
+                        "deliv": [],
                         "zipCd": "",
-                        "dtPrtGood": [
-                        ],
-                        "ogPrtGood": [
-                        ],
-                        "dtPrtView" : [
-                        ],
-                        "ogPrtView" : [
-                        ],
-                        "cart": [
-                        ],
+                        "dtPrtGood": [],
+                        "ogPrtGood": [],
+                        "dtPrtView" : [],
+                        "ogPrtView" : [],
+                        "cart": [],
                         "nicNmChgCnt": 0,
                         "secsnDt": "",
                         "pfImg": "",
                         "secsnRsn": "",
                         "nicNm": nicNmValue.get(),
                         "nm": "",
-                        "cid": ""
+                        "cid": "",
                     }
                 }
             }, function(err, res) {
@@ -131,8 +125,6 @@ Template.signUp.events({
             emailChk.set(true);
             if(emailSelf.get()) emailValue.set(email + '@' + $('#selfEmAdrs').val());
             else emailValue.set(email + '@' + address);
-
-            console.log(emailValue.get());
 
             $('select[name=emailSelect]').attr('disabled', true);
             $('#selfEmAdrs').attr('disabled', true);
