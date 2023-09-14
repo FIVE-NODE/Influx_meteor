@@ -3,6 +3,11 @@ import { Template } from 'meteor/templating';
 import { Pick } from '../../lib/collections.js';
 import { clientAtwrk, clientDtpHome, clientOgHome, clientEvntHome, clientBsnsMber, clientBanr } from '../lib/clientCollections.js';
 
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+
+
+
 import './aOne.html';
 
 import '../popup/utilsPopUp.js';

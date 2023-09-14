@@ -258,7 +258,7 @@ Meteor.methods({
 
         var queryData = {
           'profile.uInfos.bsnsTp' : '001',
-          'profile.uInfos.bsnsNm' : { $exists : true }
+          'profile.uInfos.glryNm' : { $exists : true }
         };
 
         var options = {
@@ -283,26 +283,22 @@ Meteor.methods({
     // 갤러리 조회 가나다 순
     selectGallery: function(query) {
       try{
+
         var queryData = {
           'profile.uInfos.bsnsTp'  : '001',
           'profile.uInfos.glryNm'  : { $regex : query.glryNm },
           'profile.uInfos.dong' : { $regex : query.dong },
           'profile.uInfos.area' : { $regex : query.area }
-          // $and : [
-          //   { 'profile.uInfos.dong' : query.dong },
-          //   { 'profile.uInfos.area' : { $regex : query.area } },
-            // { 'profile.uInfos.dong' : { $regex : query.dong } },
-            // { 'profile.uInfos.area' : { $regex : query.area } },
-          // ]
         };
 
         var options = {
           skip  : query.skip,
           limit : query.limit,
-          sort  : { bsnsNm : -1},
+          sort  : { 'profile.uInfos.glryNm' : 1 },
         };
 
         let res   = {};
+
         res.total = Meteor.users.find(queryData).count();
         res.list  = Meteor.users.find(queryData, options).fetch();
 

@@ -1,3 +1,5 @@
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+
 import './artistMenu.html';
 
 Template.artistMenu.onCreated(function() {
@@ -14,17 +16,13 @@ Template.artistMenu.events({
         var chked = $('input[name=artistChk]:checked');
         var atstNm = $('input[name=atstNm]').val();
 
-        var chked = $('input[name=chk]:checked');
-
         // 검색조건 하나라도 선택했을때
         if(chked.length > 0 || atstNm != '') {
             var queryData = {};
             var dataList = [];
             var beforKind = '';
 
-            queryData.atstNm = atstNm;
-
-            console.log(chked.length);
+            queryData.ATSTNM = [atstNm];
 
             // query 데이터 설정
             for(var i=0; i < chked.length; i++) {
@@ -45,11 +43,9 @@ Template.artistMenu.events({
                 if(i === (chked.length -1)) queryData[beforKind] = dataList;
             }
 
-            console.log(queryData);
-
-            // FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+            FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
             
-            // location.reload();
+            location.reload();
         } else {
             // 검색조건 하나도 선택하지 않았을때.
         }

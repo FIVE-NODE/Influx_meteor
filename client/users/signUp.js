@@ -151,29 +151,19 @@ Template.signUp.events({
         if(!passChk.test(pass)) {
             messagePopup({message : '비밀번호는 영문, 숫자 8자리 입니다.'});
         } else {
-            var passReChk = $('input[name=passwordChk]').val();
-            if(passReChk != '') {
-                if(passReChk === pass) {
-                    passwordChk.set(true);
-                    messagePopup({message : '비밀번호가 일치 합니다.'});
-                }
-                else {
-                    passwordChk.set(false);
-                    messagePopup({message : '비밀번호가 일치 하지 않습니다.'});
-                }
-            }   
+            $('input[name=passwordChk]').val('');
+
             passwordValue.set(pass);
         }
     },
     'change input[name=passwordChk]'() {
         // 재입력 비밀번호
         var pass = $('input[name=passwordChk]').val();
-        if(pass === passwordValue.get()) {
-            messagePopup({message : '비밀번호가 일치 합니다.'});
-            passwordChk.set(true);
-        } else {
-            messagePopup({message : '비밀번호가 일치 하지 않습니다.'});
+        if(pass != passwordValue.get()) {
             passwordChk.set(false);
+            messagePopup({message : '비밀번호가 일치 하지 않습니다.'});
+        } else {
+            passwordChk.set(true);
         }
     },
     // 닉네임
@@ -355,3 +345,4 @@ Template.signUp.helpers({
         return sendDoneEmail.get();
     }
 });
+
