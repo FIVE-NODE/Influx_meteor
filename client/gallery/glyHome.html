@@ -15,7 +15,13 @@
                                                 <div class="swiper-slide">
                                                     <a href="" name="detail" value="{{_id}}">
                                                         <span class="gallery-swiper__img">
-                                                            <img class="glryHome-newGlry-maxSize" src="{{glryImage}}" alt="">
+                                                            <img 
+                                                                src=""
+                                                                data-src="{{glryImage}}"
+                                                                class="testSample glryHome-newGlry-maxSize lazyload"
+                                                                alt=""
+                                                            >
+                                                            <!-- <img class="glryHome-newGlry-maxSize" src="{{glryImage}}" alt=""> -->
                                                         </span>
                                                         <span class="gallery-swiper__txt">
                                                             <em>{{glryNm}}</em>
@@ -58,7 +64,13 @@
                                         <div class="gallery-item">
                                             <a href="" name="detail" value="{{_id}}">
                                                 <span class="gallery-item__img">
-                                                    <img src="{{glryImage}}" alt="">
+                                                    <img 
+                                                        src=""
+                                                        data-src="{{glryImage}}"
+                                                        class="testSample lazyload"
+                                                        alt=""
+                                                    >
+                                                    <!-- <img src="{{glryImage}}" alt=""> ADDSCC -->
                                                 </span>
                                                 <span class="gallery-item__txt">
                                                     <em>{{glryNm}}</em>

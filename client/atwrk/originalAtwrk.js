@@ -2,6 +2,9 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import './originalAtwrk.html';
 
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+
 
 function seltAtwrkSetList() {
     var chked = $('input[name=filterChk]:checked');

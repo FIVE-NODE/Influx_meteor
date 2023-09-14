@@ -12,7 +12,13 @@
                                 <div class="product-comp">
                                     <div class="product-comp__inner">
                                         <span class="product-comp__img">
-                                            <img src="{{details.glryImage}}" alt="">
+                                            <img 
+                                                src=""
+                                                data-src="{{details.glryImage}}}"
+                                                class="testSample lazyload"
+                                                alt=""
+                                            >
+                                            <!-- <img src="{{details.glryImage}}" alt=""> -->
                                         </span>
                                         <p class="product-comp__name">{{details.glryNm}}</p>
                                         <p class="product-comp__info">About
@@ -26,7 +32,13 @@
                                 {{#if glryEvtInfo}}
                                     <div class="product-capt">
                                         <div class="product-capt__img">
-                                            <img src="{{glryEvtInfo.image}}" alt="">
+                                            <img 
+                                                src=""
+                                                data-src="{{glryEvtInfo.image}}"
+                                                class="testSample  lazyload"
+                                                alt=""
+                                            >
+                                            <!-- <img src="{{glryEvtInfo.image}}" alt=""> -->
                                         </div>
                                             <p class="product-capt__info">
                                                 {{codeToName glryEvtInfo.evntTp "EVENT_TYPE"}}
@@ -189,7 +201,13 @@
                                             <div class="product-item product-item{{imgInfo.size}}">
                                                 <a name="atwrkDetail" value="{{_id}}" href="">
                                                     <span class="product-item__img">
-                                                        <img src="{{imgInfo.imgID}}" alt="">
+                                                        <img 
+                                                            src=""
+                                                            data-src="{{imgInfo.imgID}}"
+                                                            class="testSample lazyload"
+                                                            alt=""
+                                                        >
+                                                        <!-- <img src="{{imgInfo.imgID}}" alt=""> -->
                                                     </span>
                                                     <span class="product-item__tit">{{atstNm}}</span>
                                                     <span class="product-item__cont">

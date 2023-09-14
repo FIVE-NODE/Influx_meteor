@@ -1,5 +1,8 @@
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+
 import './glyHome.html';
 
 // DB 조회

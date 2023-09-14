@@ -24,7 +24,13 @@
                                                 <div class="curator-kind__info">
                                                     <a href="/{{codeToUrl thmTp}}" name="detailBtn" id="{{thmTp}}">
                                                         <span class="curator-kind__info--img">
-                                                            <img class="curator-img" src="{{image}}" alt="">
+                                                            <img 
+                                                                src=""
+                                                                data-src="{{image}}"
+                                                                class="testSample curator-img lazyload"
+                                                                alt=""
+                                                            >
+                                                            <!-- <img class="curator-img" src="{{image}}" alt=""> SCADD -->
                                                             <strong>
                                                                 Curator Pick!!
                                                                 <em>{{codeToEngSub thmTp}}</em>

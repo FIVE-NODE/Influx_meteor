@@ -1,5 +1,8 @@
 import './curatorPick.html';
 
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+
 Template.curatorPick.onCreated(function() {
     pick = new ReactiveVar();
 

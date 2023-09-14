@@ -1,5 +1,8 @@
 import './newEntryAtwrk.html';
 
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+
 Template.newEntryAtwrk.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);

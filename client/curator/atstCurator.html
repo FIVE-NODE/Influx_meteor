@@ -14,7 +14,13 @@
                                             {{#with ogCurData}}
                                                 <a href="">
                                                     <span class="curator-kind__info--img">
-                                                        <img src="{{image}}" alt="">
+                                                        <img 
+                                                            src=""
+                                                            data-src="{{image}}"
+                                                            class="testSample lazyload"
+                                                            alt=""
+                                                        >
+                                                        <!-- <img src="{{image}}" alt=""> ADDSCC -->
                                                         <strong>
                                                             Curator Pick!!
                                                             <em></em>
@@ -193,7 +199,13 @@
                                         <div class="product-item">
                                             <a name="atwrkDetail" value="{{_id}}" href="/atwrkDetail/{{_id}}">
                                                 <span class="product-item__img">
-                                                    <img src="{{imgInfo.imgID}}" alt="">
+                                                    <img 
+                                                        src=""
+                                                        data-src="{{imgInfo.imgID}}"
+                                                        class="testSample lazyload"
+                                                        alt=""
+                                                    >
+                                                    <!-- <img src="{{imgInfo.imgID}}" alt=""> ADDSCC -->
                                                 </span>
                                                 <span class="product-item__tit">{{atstNm}}</span>
                                                 <span class="product-item__cont">

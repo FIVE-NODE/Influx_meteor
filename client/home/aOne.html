@@ -13,12 +13,15 @@
                                         <div class="banner-item">
                                             <a href="">
                                                 <span class="banner-item__img">
-                                                    <img 
-                                                        src="/image/common/loading.gif"
+                                                    <!-- <div id="loadings" class='testSample sampleBaner'> -->
+                                                        <!-- /image/common/simpleLoading.gif -->
+                                                    <img
+                                                        src=""
                                                         data-src="{{image}}"
-                                                        class="sampleTest lazyload"
+                                                        class="testSample sampleBaner lazyload"
                                                         alt=""
                                                     >
+                                                    <!-- </div> -->
                                                 </span>
                                                 <span class="banner-item__txt">
                                                     <strong>{{title}}</strong>
@@ -51,8 +54,9 @@
                         <!-- 큐레이터 Pick 로직 -->
                         <div class="swiper">
                             <div class="swiper-wrapper">
-                                {{#if pick}}
-                                    {{#each pick.atstAtwrk}}
+                                <!-- {{#if pick}} -->
+                                    <!-- {{#each pick.atstAtwrk}} -->
+                                    {{#each pick}}
                                         <div class="swiper-slide">
                                             <div class="btn-wrap btn-slide--check">
                                                 <button name="shBasket" value="{{_id}}" type="button" title="장바구니 넣기">
@@ -68,15 +72,14 @@
                                                     </button>
                                                 {{/if}}
                                             </div>
-                                            <a href="/atwrkDetail/{{atwrkID}}" name="atDetail" value="{{atwrkID}}">
-                                                <img src="{{testImage}}" class="sampleTest">
-                                                <!-- <img 
-                                                    src="/image/common/loading.gif"
-                                                    data-srcset="{{testImage}}"
-                                                    data-sizes="auto"
-                                                    class="sampleTest lazyload"
+                                            <a class="" href="/atwrkDetail/{{atwrkID}}" name="atDetail" value="{{atwrkID}}">
+                                                <!-- /image/common/simpleLoading.gif -->
+                                                <img 
+                                                    src=""
+                                                    data-src="{{testImage}}"
+                                                    class="testSample sampleTest lazyload"
                                                     alt=""
-                                                > -->
+                                                >
                                             </a>
                                             <p class="swiper-slide__tit">{{atstNm}}</p>
                                             <p class="swiper-slide__txt">
@@ -86,7 +89,7 @@
                                             </p>
                                         </div>
                                     {{/each}}
-                                {{/if}}
+                                <!-- {{/if}} -->
                             </div>
                         </div>
                         <div class="swiper-button-prev"></div>
@@ -114,10 +117,11 @@
                                         {{#each image}}
                                             {{#if mainImgChk rprsn}}
                                                 <a href="/atwrkDetail/{{../_id}}" name="atDetail">
+                                                    <!-- /image/common/loading.gif -->
                                                     <img 
-                                                        src="/image/common/loading.gif"
+                                                        src=""
                                                         data-src="{{imgID}}"
-                                                        class="sampleTest lazyload"
+                                                        class="testSample sampleTest lazyload"
                                                         alt=""
                                                     >
                                                     <!-- <img class="sampleTest" src="{{imgID}}" alt=""> -->
@@ -160,13 +164,13 @@
                                         {{#each image}}
                                             {{#if mainImgChk rprsn}}
                                                 <a href="/atwrkDetail/{{../_id}}">
+                                                    <!-- /image/common/loading.gif -->
                                                     <img 
-                                                        src="/image/common/loading.gif"
+                                                        src=""
                                                         data-src="{{imgID}}"
-                                                        class="sampleTest lazyload"
+                                                        class="testSample sampleTest lazyload"
                                                         alt=""
                                                     >
-                                                    <!-- <img class="sampleTest" src="{{imgID}}" alt=""> -->
                                                 </a>
                                             {{/if}}
                                         {{/each}}
@@ -205,13 +209,13 @@
                                         {{#each image}}
                                             {{#if mainImgChk rprsn}}
                                                 <a href="/atwrkDetail/{{../_id}}">
+                                                    <!-- /image/common/loading.gif -->
                                                     <img 
-                                                        src="/image/common/loading.gif"
+                                                        src=""
                                                         data-src="{{imgID}}"
-                                                        class="sampleTest lazyload"
+                                                        class="testSample sampleTest lazyload"
                                                         alt=""
                                                     >
-                                                    <!-- <img class="sampleTest" src="{{imgID}}" alt=""> -->
                                                 </a>
                                             {{/if}}
                                         {{/each}}
@@ -241,13 +245,13 @@
                                 {{#each evntHome}}
                                     <div class="swiper-slide">
                                         <a href="/">
+                                            <!-- /image/common/loading.gif -->
                                             <img 
-                                                src="/image/common/loading.gif"
+                                                src=""
                                                 data-src="{{image}}"
-                                                class="sampleTest2 lazyload"
+                                                class="testSample sampleTest2 lazyload"
                                                 alt=""
                                             >
-                                            <!-- <img class="sampleTest2" src="{{image}}" alt=""> -->
                                         </a>
                                         <div class="swiper-slide__cont">
                                             <p class="swiper-slide__tit">{{title}}</p>
@@ -274,13 +278,13 @@
                                 {{#each glryHome}}
                                     <div class="swiper-slide">
                                         <a href="/atwrkList/{{_id}}">
+                                            <!-- /image/common/loading.gif -->
                                             <img 
-                                                src="/image/common/loading.gif"
+                                                src=""
                                                 data-src="{{glryImage}}"
-                                                class="sampleTest2 lazyload"
+                                                class="testSample sampleTest2 lazyload"
                                                 alt=""
                                             >
-                                            <!-- <img class="sampleTest2" src="{{glryImage}}" alt=""> -->
                                         </a>
                                         <div class="swiper-slide__cont">
                                             <p class="swiper-slide__tit">{{glryNm}}</p>

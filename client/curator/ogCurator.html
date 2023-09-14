@@ -13,7 +13,13 @@
                                         <div class="curator-kind__info" id="move">
                                             {{#with ogCurData}}
                                             <span class="curator-kind__info--img">
-                                                <img src="{{image}}" alt="">
+                                                <img 
+                                                    src=""
+                                                    data-src="{{image}}"
+                                                    class="testSample lazyload"
+                                                    alt=""
+                                                >
+                                                <!-- <img src="{{image}}" alt=""> -->
                                                 <strong>
                                                     Curator Pick!!
                                                     <em>Original Artworks</em>
@@ -186,7 +192,13 @@
                                         <div class="product-item">
                                             <a name="atwrkDetail" value="{{_id}}" href="/atwrkDetail/{{_id}}">
                                                 <span class="product-item__img">
-                                                    <img src="{{imgInfo.imgID}}" alt="">
+                                                    <img 
+                                                        src=""
+                                                        data-src="{{imgInfo.imgID}}"
+                                                        class="testSample lazyload"
+                                                        alt=""
+                                                    >
+                                                    <!-- testSample <img src="{{imgInfo.imgID}}" alt=""> ADDSCC-->
                                                 </span>
                                                 <span class="product-item__tit">{{atstNm}}</span>
                                                 <span class="product-item__cont">

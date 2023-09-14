@@ -255,6 +255,7 @@
 
 .sampleTest {
   max-height: 250px;
+  min-height: 250px;
 }
 
 /* 모바일 환경 */

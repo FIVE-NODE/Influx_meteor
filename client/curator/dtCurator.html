@@ -15,7 +15,13 @@
                                             {{#with dtCurData}}
                                                 <a href="">
                                                     <span class="curator-kind__info--img">
-                                                        <img src="{{image}}" alt="">
+                                                        <img 
+                                                            src=""
+                                                            data-src="{{image}}"
+                                                            class="testSample lazyload"
+                                                            alt=""
+                                                        >
+                                                        <!-- <img src="{{image}}" alt=""> ADDSCC -->
                                                         <strong>
                                                             Curator Pick!!
                                                             <em>Digital Edition printmaking </em>
@@ -141,7 +147,13 @@
                                             <div class="product-item">
                                                 <a href="/atwrkDetail/{{_id}}">
                                                     <span class="product-item__img">
-                                                        <img class="dtpListSize" src="{{imgInfo.imgID}}" alt="">
+                                                        <img 
+                                                            src=""
+                                                            data-src="{{imgInfo.imgID}}"
+                                                            class="testSample dtpListSize lazyload"
+                                                            alt=""
+                                                        >
+                                                        <!-- /image/common/simpleLoading.gif <img class="dtpListSize" src="{{imgInfo.imgID}}" alt=""> -->
                                                     </span>
                                                     <span class="product-item__tit">{{atwrkNm}}</span>
                                                     <span class="product-item__auth">{{atstNm}}</span>

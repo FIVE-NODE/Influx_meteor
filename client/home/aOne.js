@@ -6,8 +6,6 @@ import { clientAtwrk, clientDtpHome, clientOgHome, clientEvntHome, clientBsnsMbe
 import 'lazysizes';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 
-
-
 import './aOne.html';
 
 import '../popup/utilsPopUp.js';
@@ -96,6 +94,7 @@ function selectBanr() {
 }
 
 Template.aOne.onCreated(async function() {
+    Meteor.subscribe('Pick');
 
     const instance = this;
     instance.connectoin = new ReactiveVar();
@@ -135,6 +134,10 @@ Template.aOne.onRendered(function() {
         var location = $('#headerPs').offset().top;
         Meteor.commonUtils.scrollTop(location);
     }, 50);
+
+    // setTimeout(function() {
+    //     $('#loadings img').css('display', '');
+    // }, 1000);
 
     dataComplet.set(true);
 });
@@ -215,19 +218,20 @@ Template.aOne.helpers({
         let data = clientBanr.find().fetch();
         return data;
     },
-    pick() {
-        let data = Pick.findOne({thmTp : pickCategory.get()});
-        
-        if(data != undefined) {
-            var atstAtwrkList = data.atstAtwrk;
-            atstAtwrkList.forEach(function(ele) {
-                ele.pric = Meteor.commonUtils.priceComma(ele.pric);
-            });
-            data.atstAtwrk = atstAtwrkList;
+    pick() { 
+        if(pickCategory.get() != undefined) {
+            let data = Pick.findOne({thmTp : pickCategory.get()});
+            
+            if(data != undefined) {
+                var atstAtwrkList = data.atstAtwrk;
+                atstAtwrkList.forEach(function(ele) {
+                    ele.pric = Meteor.commonUtils.priceComma(ele.pric);
+                });
+                data.atstAtwrk = atstAtwrkList;
 
-            return data;
+                return data.atstAtwrk;
+            }
         }
-        
     },
     atwrk() {
         let res = clientAtwrk.find().fetch();

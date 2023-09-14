@@ -167,7 +167,13 @@
                                             <div class="product-item product-item{{imgInfo.size}}">
                                                 <a name="atwrkDetail" value="{{_id}}" href="/atwrkDetail/{{_id}}">
                                                     <span class="product-item__img">
-                                                        <img src="{{imgInfo.imgID}}" alt="">
+                                                        <img 
+                                                            src=""
+                                                            data-src="{{imgInfo.imgID}}"
+                                                            class="testSample lazyload"
+                                                            alt=""
+                                                        >
+                                                        <!-- <img src="{{imgInfo.imgID}}" alt=""> -->
                                                     </span>
                                                     <span class="product-item__tit">{{atstNm}}</span>
                                                     <span class="product-item__cont">

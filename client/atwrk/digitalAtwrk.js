@@ -2,6 +2,9 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import './digitalAtwrk.html';
 
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+
 Template.digitalAtwrk.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);

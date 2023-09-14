@@ -31,7 +31,13 @@
                                                         <span class="hot-item__img">
                                                             {{#each image}}
                                                                 {{#if imgChk this}}
-                                                                    <img class="hotDigital" src="{{this.imgID}}" alt="">
+                                                                    <img 
+                                                                        src=""
+                                                                        data-src="{{this.imgID}}"
+                                                                        class="testSample hotDigital lazyload"
+                                                                        alt=""
+                                                                    >
+                                                                    <!-- <img class="hotDigital" src="{{this.imgID}}" alt=""> -->
                                                                 {{/if}}
                                                             {{/each}}
                                                         </span>
@@ -152,7 +158,13 @@
                                             <div class="product-item">
                                                 <a href="/atwrkDetail/{{_id}}">
                                                     <span class="product-item__img">
-                                                        <img class="dtpListSize" src="{{imgInfo.imgID}}" alt="">
+                                                        <img 
+                                                            src=""
+                                                            data-src="{{imgInfo.imgID}}"
+                                                            class="testSample dtpListSize lazyload"
+                                                            alt=""
+                                                        >
+                                                        <!-- <img class="dtpListSize" src="{{imgInfo.imgID}}" alt=""> -->
                                                     </span>
                                                     <span class="product-item__tit">{{atwrkNm}}</span>
                                                     <span class="product-item__auth">{{atstNm}}</span>
