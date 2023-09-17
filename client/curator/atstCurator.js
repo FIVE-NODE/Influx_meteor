@@ -7,7 +7,7 @@ Template.atstCurator.onCreated(function() {
      // page 정보
      curPage = new ReactiveVar(1);
      skip = new ReactiveVar(0);
-     limit = new ReactiveVar(3);
+     limit = new ReactiveVar(15);
      total = new ReactiveVar(0);
 
     // 필터 정보

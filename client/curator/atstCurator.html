@@ -11,29 +11,38 @@
                                 <div class="curator__inner">
                                     <div class="curator-kind curator-kind--author">
                                         <div class="curator-kind__info" id="move">
-                                            {{#with ogCurData}}
-                                                <a href="">
-                                                    <span class="curator-kind__info--img">
-                                                        <img 
-                                                            src=""
-                                                            data-src="{{image}}"
-                                                            class="testSample lazyload"
-                                                            alt=""
-                                                        >
-                                                        <!-- <img src="{{image}}" alt=""> ADDSCC -->
-                                                        <strong>
-                                                            Curator Pick!!
-                                                            <em></em>
-                                                        </strong>
-                                                    </span>
-                                                </a>
-                                                <p class="curator-kind__info--txt">
-                                                    <strong>{{thmNm}}</strong>
-                                                        <em>
-                                                            {{thmDesc}}
-                                                        </em>
+                                            {{#if ogCurData}}
+                                                {{#with ogCurData}}
+                                                    <a href="">
+                                                        <span class="curator-kind__info--img">
+                                                            <img 
+                                                                src=""
+                                                                data-src="{{image}}"
+                                                                class="testSample lazyload"
+                                                                alt=""
+                                                            >
+                                                            <!-- <img src="{{image}}" alt=""> ADDSCC -->
+                                                            <strong>
+                                                                Curator Pick!!
+                                                                <em></em>
+                                                            </strong>
+                                                        </span>
+                                                    </a>
+                                                    <p class="curator-kind__info--txt">
+                                                        <strong>{{thmNm}}</strong>
+                                                            <em>
+                                                                {{thmDesc}}
+                                                            </em>
+                                                    </p>
+                                                {{/with}}
+                                            {{else}}
+                                                <span class="curator-kind__info--img testSample" style="min-width: 300px; height: 300px;">
+                                                </span>
+                                                <p class="testSample curator-kind__info--txt">
+                                                    <strong></strong>
+                                                    <em></em>
                                                 </p>
-                                            {{/with}}
+                                            {{/if}}
                                         </div>
                                     </div>
                                 </div>
@@ -195,27 +204,34 @@
                                         </div>
                                     </div>
                                     <div class="product-list">
-                                        {{#each atwrkList}}
-                                        <div class="product-item">
-                                            <a name="atwrkDetail" value="{{_id}}" href="/atwrkDetail/{{_id}}">
-                                                <span class="product-item__img">
-                                                    <img 
-                                                        src=""
-                                                        data-src="{{imgInfo.imgID}}"
-                                                        class="testSample lazyload"
-                                                        alt=""
-                                                    >
-                                                    <!-- <img src="{{imgInfo.imgID}}" alt=""> ADDSCC -->
-                                                </span>
-                                                <span class="product-item__tit">{{atstNm}}</span>
-                                                <span class="product-item__cont">
-                                                    {{atwrkNm}}, {{wSize}} x {{hSize}}, {{codeToName ogPrt "MATERIAL"}}<br/>
-                                                    {{glryNm}}<br/>
-                                                    {{pric}} 원                                                    
-                                                </span>
-                                            </a>
-                                        </div>
-                                        {{/each}}
+                                        {{#if atwrkList}}
+                                            {{#each atwrkList}}
+                                                <div class="product-item">
+                                                    <a name="atwrkDetail" value="{{_id}}" href="/atwrkDetail/{{_id}}">
+                                                        <span class="product-item__img">
+                                                            <img 
+                                                                src=""
+                                                                data-src="{{imgInfo.imgID}}"
+                                                                class="testSample lazyload"
+                                                                alt=""
+                                                            >
+                                                            <!-- <img src="{{imgInfo.imgID}}" alt=""> ADDSCC -->
+                                                        </span>
+                                                        <span class="product-item__tit">{{atstNm}}</span>
+                                                        <span class="product-item__cont">
+                                                            {{atwrkNm}}, {{wSize}} x {{hSize}}, {{codeToName ogPrt "MATERIAL"}}<br/>
+                                                            {{glryNm}}<br/>
+                                                            {{pric}} 원                                                    
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            {{/each}}
+                                        {{else}}
+                                            {{#if dataChk}}
+                                            {{else}}
+                                                {{{atwrkLoading "product-item__img"}}}
+                                            {{/if}}
+                                        {{/if}}
                                     </div>
                                 </div>
                                  <!-- 페이징 영역 -->

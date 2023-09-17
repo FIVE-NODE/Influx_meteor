@@ -7,7 +7,7 @@ Template.exhibitionEvnt.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
-    limit = new ReactiveVar(10);
+    limit = new ReactiveVar(15);
     total = new ReactiveVar(0);
 
     // 검색조건 변수
@@ -25,6 +25,7 @@ Template.exhibitionEvnt.onCreated(function() {
 
     if(this.data.schQueryData() != undefined)  {
         headerSch.set(JSON.parse(this.data.schQueryData()));
+        console.log(headerSch.get());
     }
 
     query = {};
@@ -58,6 +59,8 @@ Template.exhibitionEvnt.onCreated(function() {
     this.selectExhigitionEvntBanr();
 
     this.selectExhigitionEvntList();
+
+
 });
 
 Template.exhibitionEvnt.onRendered(function() {
@@ -144,4 +147,22 @@ Template.exhibitionEvnt.helpers({
         let res = Meteor.clientCommonUtils.setPage(limit.get(), total.get());
         return res;
     },
+    evntBanrDataChk() {
+        if(evntBanr.get() == undefined){
+            setTimeout(function(){ 
+                return false;
+            }, 600);
+        } else {
+            return true;
+        }
+    },
+    evntListDataChk() {
+        if(evntList.get() == undefined){
+            setTimeout(function(){ 
+                return false;
+            }, 600);
+        } else {
+            return true;
+        }
+    }
 });

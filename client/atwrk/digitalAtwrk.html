@@ -25,30 +25,36 @@
                                     <div class="product-hot__inner">
                                         <p class="product-hot__tit ta-c">HOT 인기 디지털 에디션 판화 </p>
                                         <div class="hot-list">
-                                            {{#each hotAtwrk}}
-                                                <div class="hot-item">
-                                                    <a href="/atwrkDetail/{{_id}}">
-                                                        <span class="hot-item__img">
-                                                            {{#each image}}
-                                                                {{#if imgChk this}}
-                                                                    <img 
-                                                                        src=""
-                                                                        data-src="{{this.imgID}}"
-                                                                        class="testSample hotDigital lazyload"
-                                                                        alt=""
-                                                                    >
-                                                                    <!-- <img class="hotDigital" src="{{this.imgID}}" alt=""> -->
-                                                                {{/if}}
-                                                            {{/each}}
-                                                        </span>
-                                                        <span class="hot-item__tit">
-                                                            {{dtPrt.atwrkNm}}  |  {{atstInfo.atstNm}}
-                                                        </span>
-                                                        <span class="hot-item__price">{{commaPric dtPrt.sPric}}원</span>
-                                                        <span class="hot-item__comp">{{glry.glryNm}} 갤러리</span>
-                                                    </a>
-                                                </div>
-                                            {{/each}}
+                                            {{#if hotAtwrk}}
+                                                {{#each hotAtwrk}}
+                                                    <div class="hot-item">
+                                                        <a href="" name="toDetails">
+                                                            <span class="hot-item__img">
+                                                                {{#each image}}
+                                                                    {{#if imgChk this}}
+                                                                        <img 
+                                                                            src=""
+                                                                            data-src="{{this.imgID}}"
+                                                                            class="hotDigital lazyload"
+                                                                            alt=""
+                                                                        >
+                                                                    {{/if}}
+                                                                {{/each}}
+                                                            </span>
+                                                            <span class="hot-item__tit">
+                                                                {{dtPrt.atwrkNm}}  |  {{atstInfo.atstNm}}
+                                                            </span>
+                                                            <span class="hot-item__price">{{commaPric dtPrt.sPric}}원</span>
+                                                            <span class="hot-item__comp">{{glry.glryNm}} 갤러리</span>
+                                                        </a>
+                                                    </div>
+                                                {{/each}}
+                                            {{else}}
+                                                {{#if dataChk}}
+                                                {{else}}
+                                                    {{{ loadingHotDigital "hotDigital" }}}
+                                                {{/if}}
+                                            {{/if}}
                                         </div>
                                     </div>
                                 </div>
@@ -154,25 +160,32 @@
                                         </div>
                                     </div>
                                     <div class="product-list">
-                                        {{#each atwrkList}}
-                                            <div class="product-item">
-                                                <a href="/atwrkDetail/{{_id}}">
-                                                    <span class="product-item__img">
-                                                        <img 
-                                                            src=""
-                                                            data-src="{{imgInfo.imgID}}"
-                                                            class="testSample dtpListSize lazyload"
-                                                            alt=""
-                                                        >
-                                                        <!-- <img class="dtpListSize" src="{{imgInfo.imgID}}" alt=""> -->
-                                                    </span>
-                                                    <span class="product-item__tit">{{atwrkNm}}</span>
-                                                    <span class="product-item__auth">{{atstNm}}</span>
-                                                    <span class="product-item__price">{{commaPric pric}}원</span>
-                                                    <span class="product-item__comp">{{glryNm}}</span>
-                                                </a>
-                                            </div>
-                                        {{/each}}
+                                        {{#if atwrkList}}
+                                            {{#each atwrkList}}
+                                                <div class="product-item">
+                                                    <a href="" name="toDetails">
+                                                        <span class="product-item__img">
+                                                            <img 
+                                                                src=""
+                                                                data-src="{{imgInfo.imgID}}"
+                                                                class="dtpListSize lazyload"
+                                                                alt=""
+                                                            >
+                                                            <!-- <img class="dtpListSize" src="{{imgInfo.imgID}}" alt=""> -->
+                                                        </span>
+                                                        <span class="product-item__tit">{{atwrkNm}}</span>
+                                                        <span class="product-item__auth">{{atstNm}}</span>
+                                                        <span class="product-item__price">{{commaPric pric}}원</span>
+                                                        <span class="product-item__comp">{{glryNm}}</span>
+                                                    </a>
+                                                </div>
+                                            {{/each}}
+                                        {{else}}
+                                            {{#if dataChk}}
+                                            {{else}}
+                                                {{{ loadingScr "dtpListSize" }}}
+                                            {{/if}}
+                                        {{/if}}
                                     </div>
                                 </div>
                                  <!-- 페이징 영역 -->

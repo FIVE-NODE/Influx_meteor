@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+
 import { Pick } from '../../lib/collections.js';
 import { clientAtwrk, clientDtpHome, clientOgHome, clientEvntHome, clientBsnsMber, clientBanr } from '../lib/clientCollections.js';
 
@@ -122,11 +124,6 @@ Template.aOne.onCreated(async function() {
     // selectGlry       갤러리
     selectGlry();
 
-    // $(window).on('scroll', function(e) {
-        
-    // });
-
-
 });
 
 Template.aOne.onRendered(function() {
@@ -134,17 +131,9 @@ Template.aOne.onRendered(function() {
         var location = $('#headerPs').offset().top;
         Meteor.commonUtils.scrollTop(location);
     }, 50);
-
-    // setTimeout(function() {
-    //     $('#loadings img').css('display', '');
-    // }, 1000);
-
-    dataComplet.set(true);
 });
 
 Template.aOne.events({
-    'scroll #move' (evt, tmpl) {
-    },
     'click button[name=pickOg]'(evt, tmpl) {
         // 큐레잍픽 원화
         selectPickCategory('pickOg');
@@ -197,7 +186,8 @@ Template.aOne.events({
         }
     },
     'click a[name=atDetail]'(evt, tmpl) {
-        // FlowRouter.go(`/atwrkDetail/${this.atwrkID}`);
+        var kind = pickCategory.get() == '002' ? 'dtPrt' : '';
+        FlowRouter.go(`/atwrkDetail/${this.atwrkID}`, {} , { flag : encodeURIComponent(kind)});
     }
 
 });
@@ -209,13 +199,10 @@ function selectPickCategory(category) {
 }
 
 // 이벤트 용 함수 끝//
-
 Template.aOne.helpers({
-    isComplet() {
-        return dataComplet.get();
-    },
     banr() {
         let data = clientBanr.find().fetch();
+        
         return data;
     },
     pick() { 

@@ -49,6 +49,7 @@ function address(instance) {
             // document.getElementById("sample3_address").value = addr;
             // this.data.addrs.curValue.zonecode = data.zonecode;
             // this.data.addrs.curValue.addr = addr;
+
             $('input[name=zipCode]').val(data.zonecode);
             $('input[name=address]').val(addr + ' ' + extraAddr);
 
@@ -61,11 +62,11 @@ function address(instance) {
             // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
             // searchAddr.style.display = 'none';
 
-            flag.set(true);
-            $('#addrs-Popup').removeClass('is-open');
-
             // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
             document.body.scrollTop = currentScroll;
+
+            flag.set(true);
+            $('#addrs-Popup').removeClass('is-open');
         },
         // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
         onresize : function(size) {

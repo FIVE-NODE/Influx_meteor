@@ -58,6 +58,171 @@ Template.registerHelper('dateFormatChg', function(date, form) {
     return date.replace(format, `$1${form}$2${form}$3`);
 });
 
-Template.registerHelper('filterRes', function() {
 
+Template.registerHelper('filterRes', function() {
+    
+});
+
+// 기본 로딩 화면 셋팅
+Template.registerHelper('loadingScr', function(clsNm) {
+        return `
+        <div class="swiper-slide">
+            <div class="banner-item">
+                <span class="banner-item__img">
+                    <div class="testSample ${clsNm}"></div>
+                </span>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="banner-item">
+                <span class="banner-item__img">
+                    <div class="testSample ${clsNm}"></div>
+                </span>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="banner-item">
+                <span class="banner-item__img">
+                    <div class="testSample ${clsNm}"></div>
+                </span>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="banner-item">
+                <span class="banner-item__img">
+                    <div class="testSample ${clsNm}"></div>
+                </span>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="banner-item">
+                <span class="banner-item__img">
+                    <div class="testSample ${clsNm}"></div>
+                </span>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="banner-item">
+                <span class="banner-item__img">
+                    <div class="testSample ${clsNm}"></div>
+                </span>
+            </div>
+        </div>
+        `;
+});
+
+// height 크기가 다르게 나오는 로딩 화면
+Template.registerHelper('atwrkLoading', function(clsNm) {
+    return `
+        <div class="product-item product-itemM">
+            <span class="product-item__img">
+                <div class="testSample"></div>
+            </span>
+        </div>
+        <div class="product-item product-itemM">
+            <span class="product-item__img">
+                <div class="testSample"></div>
+            </span>
+        </div>
+        <div class="product-item product-itemM">
+            <span class="product-item__img">
+                <div class="testSample"></div>
+            </span>
+        </div>
+        <div class="product-item product-itemM">
+            <span class="product-item__img">
+                <div class="testSample"></div>
+            </span>
+        </div>
+    `;
+});
+
+// height 크기가 다르게 나오는 로딩 화면
+Template.registerHelper('loadingHotDigital', function(clsNm) {
+    return `
+        <div class="hot-item" style="margin-bottom: 3rem;">
+            <span class="hot-item__img">
+                <div class="testSample ${clsNm}"></div>
+            </span>
+            <span class="testSample hot-item__price"></span>
+            <span class="testSample hot-item__comp"></span>
+        </div>
+        <div class="hot-item" style="margin-bottom: 3rem;">
+            <span class="hot-item__img">
+                <div class="testSample ${clsNm}"></div>
+            </span>
+            <span class="testSample hot-item__price"></span>
+            <span class="testSample hot-item__comp"></span>
+        </div>
+        <div class="hot-item" style="margin-bottom: 3rem;">
+            <span class="hot-item__img">
+                <div class="testSample ${clsNm}"></div>
+            </span>
+            <span class="testSample hot-item__price"></span>
+            <span class="testSample hot-item__comp"></span>
+        </div>
+        <div class="hot-item" style="margin-bottom: 3rem;">
+            <span class="hot-item__img">
+                <div class="testSample ${clsNm}"></div>
+            </span>
+            <span class="testSample hot-item__price"></span>
+            <span class="testSample hot-item__comp"></span>
+        </div>
+            <div class="hot-item" style="margin-bottom: 3rem;">
+            <span class="hot-item__img">
+                <div class="testSample ${clsNm}"></div>
+            </span>
+            <span class="testSample hot-item__price"></span>
+            <span class="testSample hot-item__comp"></span>
+        </div>
+        <div class="hot-item" style="margin-bottom: 3rem;">
+            <span class="hot-item__img">
+                <div class="testSample ${clsNm}"></div>
+            </span>
+            <span class="testSample hot-item__price"></span>
+            <span class="testSample hot-item__comp"></span>
+        </div>
+        <div class="hot-item" style="margin-bottom: 3rem;">
+            <span class="hot-item__img">
+                <div class="testSample ${clsNm}"></div>
+            </span>
+            <span class="testSample hot-item__price"></span>
+            <span class="testSample hot-item__comp"></span>
+        </div>
+        <div class="hot-item" style="margin-bottom: 3rem;">
+            <span class="hot-item__img">
+                <div class="testSample ${clsNm}"></div>
+            </span>
+            <span class="testSample hot-item__price"></span>
+            <span class="testSample hot-item__comp"></span>
+        </div>
+        <div class="hot-item" style="margin-bottom: 3rem;">
+            <span class="hot-item__img">
+                <div class="testSample ${clsNm}"></div>
+            </span>
+            <span class="testSample hot-item__price"></span>
+            <span class="testSample hot-item__comp"></span>
+        </div>
+        <div class="hot-item" style="margin-bottom: 3rem;">
+            <span class="hot-item__img">
+                <div class="testSample ${clsNm}"></div>
+            </span>
+            <span class="testSample hot-item__price"></span>
+            <span class="testSample hot-item__comp"></span>
+        </div>
+    `;
+});
+
+Template.registerHelper('customLoading', function(wSize, hSize, clsNm, count) {
+    return `<div class="${clsNm} testSample" style="width:${wSize}px; height:${hSize}px;"></div>`;
+});
+
+Template.registerHelper('dataChk', function() {
+    if(atwrkInfo.get() == undefined){
+        setTimeout(function(){ 
+            return false;
+        }, 600);
+    } else {
+        return true;
+    }
 });

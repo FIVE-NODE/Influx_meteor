@@ -570,12 +570,28 @@ Meteor.methods({
         );
       } 
     },
-    // 알림등록 / 소식받기 클릭 시 비즈니스 회원 알림 등록
-    insertNotice: function(userId, bsnsId) {
+     // 알림등록 / 소식받기 삭제
+     deleteNotice: function(_id, bsnsId) {
       try {
         let res = {};
 
-        res = BsnsMber.update({_id : bsnsId}, { $addToSet : { ntcn : userId }});
+        res = Meteor.users.update({ _id }, { $pull : { 'profile.uInfos.ntcn' : bsnsId }});
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 알림등록 / 소식받기 클릭 시 비즈니스 회원 알림 등록
+    insertNotice: function(_id, bsnsId) {
+      try {
+        let res = {};
+
+        res = Meteor.users.update({ _id }, { $addToSet : { 'profile.uInfos.ntcn' : bsnsId }});
 
         return res;
       } catch(e) {

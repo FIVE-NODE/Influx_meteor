@@ -444,12 +444,15 @@ Meteor.methods({
       toDate = moment(toDate).format('YYYYMMDD');
       agoDate = moment(agoDate).format('YYYYMMDD');
 
-      let res = Atwrk.find({'ogPrt.atwrkNm' : { $exists : true }, insDt : {$gte : agoDate, $lte : toDate}},
-        { 
-          $sample : { size : 12 },
-          sort : { insDt : -1 }
-        }
-      ).fetch();
+      var normal = {
+        'ogPrt.atwrkNm' : { $exists: true },
+        "delYn" : "N",
+        "soldYn" : "N",
+        "sellYn" : "Y",
+        insDt : {$gte : agoDate, $lte : toDate},
+      };
+
+      let res = Atwrk.find(normal, { $sample : { size : 12 }, sort : { insDt : -1 } }).fetch();
 
       return res;
     } catch(e) {

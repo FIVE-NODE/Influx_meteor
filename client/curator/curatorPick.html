@@ -18,34 +18,62 @@
 
                                 <div class="curator-intro__bot">
                                     <div class="curator__inner">
-                                        {{#each pickList}}
-                                            <div class="curator-kind curator-kind--original">
-                                                <p class="curator-kind__tit">큐레이터 픽!! {{codeToName thmTp "THM_TP"}} </p>
-                                                <div class="curator-kind__info">
-                                                    <a href="/{{codeToUrl thmTp}}" name="detailBtn" id="{{thmTp}}">
-                                                        <span class="curator-kind__info--img">
-                                                            <img 
-                                                                src=""
-                                                                data-src="{{image}}"
-                                                                class="testSample curator-img lazyload"
-                                                                alt=""
-                                                            >
-                                                            <!-- <img class="curator-img" src="{{image}}" alt=""> SCADD -->
-                                                            <strong>
-                                                                Curator Pick!!
-                                                                <em>{{codeToEngSub thmTp}}</em>
-                                                            </strong>
-                                                        </span>
-                                                    </a>
-                                                    <p class="curator-kind__info--txt">
-                                                        <strong>{{thmNm}}</strong>
-                                                        <em>
-                                                           {{thmDesc}}
-                                                        </em>
-                                                    </p>
+                                        {{#if pickList}}
+                                            {{#each pickList}}
+                                                <div class="curator-kind curator-kind--original">
+                                                    <p class="curator-kind__tit">큐레이터 픽!! {{codeToName thmTp "THM_TP"}} </p>
+                                                    <div class="curator-kind__info">
+                                                        <a href="/{{codeToUrl thmTp}}" name="detailBtn" id="{{thmTp}}">
+                                                            <span class="curator-kind__info--img">
+                                                                <img 
+                                                                    src=""
+                                                                    data-src="{{image}}"
+                                                                    class="curator-img lazyload"
+                                                                    alt=""
+                                                                >
+                                                                <!-- <img class="curator-img" src="{{image}}" alt=""> SCADD -->
+                                                                <strong>
+                                                                    Curator Pick!!
+                                                                    <em>{{codeToEngSub thmTp}}</em>
+                                                                </strong>
+                                                            </span>
+                                                        </a>
+                                                        <p class="curator-kind__info--txt">
+                                                            <strong>{{thmNm}}</strong>
+                                                            <em>
+                                                            {{thmDesc}}
+                                                            </em>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        {{/each}}
+                                            {{/each}}
+                                        {{else}}
+                                            {{#if dataChk}}
+                                            {{else}}
+                                                <div class="curator-kind curator-kind--original">
+                                                    <p class="curator-kind__tit">큐레이터 픽!! 원화 </p>
+                                                    <div class="curator-kind__info">
+                                                        <span class="curator-kind__info--img">
+                                                            <div class="testSample" style="max-width: 802px; max-height: 265px; min-height:280px; min-width: 802px;"></div>
+                                                        </span>
+                                                        <p class="curator-kind__info--txt testSample">
+                                                            <strong class="testSample"></strong>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="curator-kind curator-kind--original">
+                                                    <p class="curator-kind__tit">큐레이터 픽!! 디지털 판화 </p>
+                                                    <div class="curator-kind__info">
+                                                        <span class="curator-kind__info--img">
+                                                            <div class="testSample" style="max-width: 802px; max-height: 265px; min-height:280px; min-width: 802px;"></div>
+                                                        </span>
+                                                        <p class="curator-kind__info--txt testSample">
+                                                            <strong class="testSample"></strong>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            {{/if}}
+                                        {{/if}}
                                     </div>
                                 </div>
                             </div>

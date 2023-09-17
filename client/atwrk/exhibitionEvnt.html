@@ -11,26 +11,32 @@
                                 <div class="gallery-mainSlide">
                                     <div class="swiper">
                                         <div class="swiper-wrapper">
-                                            {{#each banr}}
-                                                <div class="swiper-slide">
-                                                    <a href="">
-                                                        <span class="gallery-swiper__img">
-                                                            <img 
-                                                                src=""
-                                                                data-src="{{image}}"
-                                                                class="testSample lazyload"
-                                                                alt=""
-                                                            >
-                                                            <!-- <img src="{{image}}" alt=""> -->
-                                                        </span>
-                                                        <span class="gallery-swiper__txt">
-                                                            <strong>{{title}} {{codeToName evntTp "EVENT_TYPE"}} </strong>
-                                                            <em>{{dateFormatChg strDt "."}} ~ {{dateFormatChg endDt "."}}</em>
-                                                            <em>{{glry.glryNm}}</em>
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            {{/each}}
+                                            {{#if banr}}
+                                                {{#each banr}}
+                                                    <div class="swiper-slide">
+                                                        <a href="">
+                                                            <span class="gallery-swiper__img">
+                                                                <img 
+                                                                    src=""
+                                                                    data-src="{{image}}"
+                                                                    class="lazyload"
+                                                                    alt=""
+                                                                >
+                                                            </span>
+                                                            <span class="gallery-swiper__txt">
+                                                                <strong>{{title}} {{codeToName evntTp "EVENT_TYPE"}} </strong>
+                                                                <em>{{dateFormatChg strDt "."}} ~ {{dateFormatChg endDt "."}}</em>
+                                                                <em>{{glry.glryNm}}</em>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                {{/each}}
+                                            {{else}}
+                                                {{#if evntBanrDataChk}}
+                                                {{else}}
+                                                    {{{customLoading "swiper-slide gallery-swiper__img" "400" "500"}}}
+                                                {{/if}}
+                                            {{/if}}
                                         </div>
                                     </div>
                                     <div class="swiper-button-next"></div>
@@ -49,7 +55,7 @@
                                                     {{/each}}
                                                 </ul>
                                             </div>
-                                            <label class="form-input__label">검 색</label>
+                                            <label class="form-input__label" style="width:40px;">검 색</label>
                                             <div class="form-input form-row">
                                                 <input type="text" name="area" placeholder="지역 : 도시, 구, 동" />
                                                 <button name="schBtn" type="button">
@@ -68,26 +74,36 @@
                             </div>
                             <div class="gallery__inner" id="move">
                                 <div class="gallery-list mt-70">
-                                    {{#each evntList}}
-                                        <div class="gallery-item">
-                                            <a href="">
-                                                <span class="gallery-item__img">
-                                                    <img 
-                                                        src=""
-                                                        data-src="{{image}}"
-                                                        class="testSample lazyload"
-                                                        alt=""
-                                                    >
-                                                    <!-- <img src="{{image}}" alt=""> -->
-                                                </span>
-                                                <span class="gallery-item__txt">
-                                                    <strong>{{title}} ㅣ {{codeToName evntTp "EVENT_TYPE"}}</strong>
-                                                    <em>{{dateFormatChg strDt "."}} ~ {{dateFormatChg endDt "."}}</em>
-                                                    <em>{{glry.glryNm}}, {{glry.area}}, {{glry.dong}}</em>
-                                                </span>
-                                            </a>
-                                        </div>
-                                    {{/each}}
+                                    {{#if evntList}}
+                                        {{#each evntList}}
+                                            <div class="gallery-item">
+                                                <a href="">
+                                                    <span class="gallery-item__img">
+                                                        <img 
+                                                            src=""
+                                                            data-src="{{image}}"
+                                                            class="lazyload"
+                                                            alt=""
+                                                        >
+                                                        <!-- <img src="{{image}}" alt=""> -->
+                                                    </span>
+                                                    <span class="gallery-item__txt">
+                                                        <strong>{{title}} ㅣ {{codeToName evntTp "EVENT_TYPE"}}</strong>
+                                                        <em>{{dateFormatChg strDt "."}} ~ {{dateFormatChg endDt "."}}</em>
+                                                        <em>{{glry.glryNm}}, {{glry.area}}, {{glry.dong}}</em>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        {{/each}}
+                                    {{else}}
+                                        {{#if evntListDataChk}}
+                                        {{else}}
+                                            <div class="gallery-item testSample" style="width: 378px; height: 301px;"></div>
+                                            <div class="gallery-item testSample" style="width: 378px; height: 301px;"></div>
+                                            <div class="gallery-item testSample" style="width: 378px; height: 301px;"></div>
+                                            <div class="gallery-item testSample" style="width: 378px; height: 301px;"></div>
+                                        {{/if}}
+                                    {{/if}}
                                 </div>
                             </div>
                             <div class="pagination-wrap mt-100 mb-60">

@@ -14,6 +14,11 @@ Template.bidAmount.events({
         var selectPric = $(evt.currentTarget).val();
         $('input[name=bidPric]').val(Meteor.commonUtils.priceComma(selectPric));
     },
+    'keydown input[name=bidPric]'(evt, tmpl) {
+        if(evt.keyCode == 13) {
+            evt.preventDefault();
+        }
+    },
     'change input[name=bidPric]'(evt, tmpl) {
         var pric = $(evt.currentTarget).val();
         $('input[name=bidPric]').val(Meteor.commonUtils.priceComma(pric));
@@ -39,7 +44,6 @@ Template.bidAmount.helpers({
         if(this.ogPrt.bid.bidInfo != undefined) {
             return this.ogPrt.bid.bidInfo.length;
         }
-        
     },
     autoPricBid(perSent) {
         if(this.ogPrt.bid.nPric != undefined) {

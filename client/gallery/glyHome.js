@@ -56,7 +56,7 @@ Template.glyHome.onCreated(function() {
     // pageing 처리를 위한 변수
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
-    limit = new ReactiveVar(2);
+    limit = new ReactiveVar(15);
     total = new ReactiveVar(0);
 
     query = {

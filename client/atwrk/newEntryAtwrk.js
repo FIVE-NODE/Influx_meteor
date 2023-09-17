@@ -7,7 +7,7 @@ Template.newEntryAtwrk.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
-    limit = new ReactiveVar(2);
+    limit = new ReactiveVar(15);
     total = new ReactiveVar(0);
 
     // 필터 정보
@@ -27,18 +27,10 @@ Template.newEntryAtwrk.onCreated(function() {
         limit: limit.get()
     };
 
-    Meteor.call('selectOrgAtwrk', query, options, function(err, res) {
-        total.set(res.total);
-        atwrkInfo.set(res.list);
-    })
-});
+    console.log(query);
 
-function selectOrgAtwrk() {
-    Meteor.call('selectOrgAtwrk', query, options, function(err, res) {
-        total.set(res.total);
-        atwrkInfo.set(res.list);
-    });
-}
+    Meteor.commonUtils.commonOriginalAtwrk(query, options);
+});
 
 Template.newEntryAtwrk.onRendered(function()  {
 });
@@ -65,6 +57,12 @@ function setQuery() {
 function scrollMove() {
     var location = $('#move').offset().top;
     Meteor.commonUtils.scrollTop(location);
+}
+
+function pageClick() {
+    setQuery();
+    Meteor.commonUtils.commonOriginalAtwrk(query, options);
+    scrollMove();
 }
 
 Template.newEntryAtwrk.events({
@@ -102,7 +100,7 @@ Template.newEntryAtwrk.events({
         sortInfo.set(sort);
         setQuery();
         
-        selectOrgAtwrk();
+        Meteor.commonUtils.commonOriginalAtwrk(query, options);
     },
     // 필터 이벤트
     'change input[name=filterChk]'(evt, tmpl) {
@@ -112,25 +110,19 @@ Template.newEntryAtwrk.events({
     'click a[name=prev]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip));
         else {
-            setQuery();
-            selectOrgAtwrk();
-            scrollMove();
+            pageClick();
         }
     },
     'click a[name=next]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.nextPage(curPage, total.get(), limit, skip)) ;
         else {
-            setQuery();
-            selectOrgAtwrk();
-            scrollMove();
+            pageClick();
         }
     },
     'click a[name=pageNum]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num));
         else {
-            setQuery();
-            selectOrgAtwrk();
-            scrollMove();
+            pageClick();
         }
     }
 });
@@ -164,7 +156,7 @@ function seltSchFilters() {
     Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
 
     setQuery();
-    selectOrgAtwrk();
+    Meteor.commonUtils.commonOriginalAtwrk(query, options);
 }
 
 Template.newEntryAtwrk.helpers({

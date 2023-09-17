@@ -16,13 +16,16 @@ Template.artistMenu.events({
         var chked = $('input[name=artistChk]:checked');
         var atstNm = $('input[name=atstNm]').val();
 
+        // $('#clickToArtist').removeClass('is-open');
+        // $('#slideMenus').removeClass('is-open');
+
         // 검색조건 하나라도 선택했을때
         if(chked.length > 0 || atstNm != '') {
             var queryData = {};
             var dataList = [];
             var beforKind = '';
 
-            queryData.ATSTNM = [atstNm];
+            queryData.ATSTNM = atstNm == '' ? undefined : [atstNm];
 
             // query 데이터 설정
             for(var i=0; i < chked.length; i++) {
@@ -63,4 +66,5 @@ Template.artistMenu.helpers({
         return Meteor.codes.MK_YEAR();
     },
 });
+
 

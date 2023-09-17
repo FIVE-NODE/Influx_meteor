@@ -23,7 +23,7 @@ Template.userCart.onCreated(function() {
 
     renderFlag = new ReactiveVar(false);
 
-    totalProCnt = new ReactiveVar();
+    totalProCnt = new ReactiveVar(0);
 
     this.autorun(() => {
         const userData = Meteor.user();
@@ -132,6 +132,7 @@ function sltUserCart() {
 
         atwrkList.set(setData);
         glryList.set(glry);
+        console.log('list length', atwrkList.get().length);
         totalProCnt.set(atwrkList.get().length);
 
         renderFlag.set(true);
@@ -212,21 +213,27 @@ Template.userCart.events({
         var seltPrtChk = $('input[name=seltPro]:checked');
         var sendData = [];
         var setData = atwrkList.get();
+        console.log(setData);
+        if(seltPrtChk.length == 0) {
+            messagePopup({message : '1개이상 선택해주세요'});
+        } else {
+            for(i=0; i<seltPrtChk.length; i++) {
+                var chkVal = $(seltPrtChk[i]).attr('id').split('-');
+                var data = setData[chkVal[1]];
+                var getCnt = $(`button[name=MAINCNT_${chkVal[1]}_${data.atwrkId}]`).text();
+                
+                data.cnt = getCnt;
+                sendData.push(data);
+            }
 
-        for(i=0; i<seltPrtChk.length; i++) {
-            var chkVal = $(seltPrtChk[i]).attr('id').split('-');
-            var data = setData[chkVal[1]];
-            var getCnt = $(`button[name=MAINCNT_${chkVal[1]}_${data.atwrkId}]`).text();
-            
-            data.cnt = getCnt;
-            sendData.push(data);
+            console.log(sendData);
+    
+            Meteor.call('encrypt', JSON.stringify(sendData), function(err, res){
+                localStorage.setItem('if.ba.to', JSON.stringify({l : 'all'}));
+                localStorage.setItem('crt_bundle', res);
+                FlowRouter.go('/approval');
+            });
         }
-
-        Meteor.call('encrypt', JSON.stringify(sendData), function(err, res){
-            localStorage.setItem('if.ba.to', JSON.stringify({l : 'all'}));
-            localStorage.setItem('crt_bundle', res);
-            FlowRouter.go('/approval');
-        });
     },
     'click button[name=chgCnt]'(evt, tmpl) {
         var seltCnt = parseInt($(evt.currentTarget).text());

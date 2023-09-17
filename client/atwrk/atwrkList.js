@@ -9,7 +9,7 @@ Template.atwrkList.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
-    limit = new ReactiveVar(4);
+    limit = new ReactiveVar(15);
     total = new ReactiveVar(0);
 
     // 화면 렌더 조건

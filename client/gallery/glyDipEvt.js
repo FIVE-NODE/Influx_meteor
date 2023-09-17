@@ -6,7 +6,7 @@ Template.glyDipEvt.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
-    limit = new ReactiveVar(4);
+    limit = new ReactiveVar(15);
     total = new ReactiveVar(0);
 
     // 작품 정보

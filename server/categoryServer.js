@@ -17,9 +17,10 @@ Meteor.methods({
             var normal = {
               'ogPrt.atwrkNm' : { $exists: true },
               "delYn" : "N",
-              "soldYn" : "N"
+              "soldYn" : "N",
+              "sellYn" : "Y"
             };
-            
+
             if(!(Object.keys(data).length === 0)) {
               // 필터 조건이 있을경우 해당하는 조건 만 AND 로 조회한다.
 

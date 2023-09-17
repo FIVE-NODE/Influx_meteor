@@ -29,7 +29,6 @@ function seltAtwrkSetList() {
 
         if(i === (chked.length -1)) queryData[beforKind] = dataList;
     }
-
     filters.set(queryData);
 
     Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
@@ -41,7 +40,7 @@ Template.originalAtwrk.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
-    limit = new ReactiveVar(10);
+    limit = new ReactiveVar(15);
     total = new ReactiveVar(0);
 
     atwrkInfo = new ReactiveVar();
@@ -63,55 +62,44 @@ Template.originalAtwrk.onCreated(function() {
         limit: limit.get()
     };
 
-    this.selectOrgAtwrk = function() {
-        if(filters.get() != undefined) setQuery();
-        Meteor.call('selectOrgAtwrk', query, options, function(err, res) {
-            total.set(res.total);
-            atwrkInfo.set(res.list);
-        });
-    };
+    if(filters.get() != undefined) setQuery();
 
-    this.selectOrgAtwrk();
+    Meteor.commonUtils.commonOriginalAtwrk(query, options);
 });
 
-Template.originalAtwrk.onRendered(function() {
+Template.originalAtwrk.onRendered(function() {    
 });
+
+// 필터 해제시 나 필터 이벤트시 동작
+function eventSet(name) {
+    cancelCheckBox(name);
+    seltAtwrkSetList();
+    Meteor.commonUtils.commonOriginalAtwrk(query, options);
+}
 
 Template.originalAtwrk.events({
     'click button[name=allCancel]'() {
         $('input[name=filterChk]').prop('checked', false);
         seltAtwrkSetList();
-        tmpl.selectOrgAtwrk();
+        Meteor.commonUtils.commonOriginalAtwrk(query, options);
     },
     'click button[name=priceCancelBtn]'(evt, tmpl) {
-        cancelCheckBox('price');
-        seltAtwrkSetList();
-        tmpl.selectOrgAtwrk();
+        eventSet('price');
     },
     'click button[name=mediumCancelBtn]'(evt, tmpl) {
-        cancelCheckBox('medium');
-        seltAtwrkSetList();
-        tmpl.selectOrgAtwrk();
+        eventSet('medium');
     },
     'click button[name=mkyyCancelBtn]'(evt, tmpl) {
-        cancelCheckBox('mkyy');
-        seltAtwrkSetList();
-        tmpl.selectOrgAtwrk();
+        eventSet('mkyy');
     },
     'click button[name=style1CancelBtn]'(evt, tmpl) {
-        cancelCheckBox('style1');
-        seltAtwrkSetList();
-        tmpl.selectOrgAtwrk();
+        eventSet('style1');
     },
     'click button[name=style2CancelBtn]'(evt, tmpl) {
-        cancelCheckBox('style2');
-        seltAtwrkSetList();
-        tmpl.selectOrgAtwrk();
+        eventSet('style2');
     },
     'click button[name=materialCancelBtn]'(evt, tmpl) {
-        cancelCheckBox('material');
-        seltAtwrkSetList();
-        tmpl.selectOrgAtwrk();
+        eventSet('material');
     },
     // 정렬 이벤트
     'click button[name=sortList]'(evt, tmpl) {
@@ -119,19 +107,19 @@ Template.originalAtwrk.events({
         sortInfo.set(sort);
         setQuery();
         
-        tmpl.selectOrgAtwrk();
+        Meteor.commonUtils.commonOriginalAtwrk(query, options);
     },
     // 필터 이벤트
     'change input[name=filterChk]'(evt, tmpl) {
         seltAtwrkSetList();
-        tmpl.selectOrgAtwrk();
+        Meteor.commonUtils.commonOriginalAtwrk(query, options);
     },
     // 페이지
     'click a[name=prev]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip));
         else {
             setQuery();
-            tmpl.selectOrgAtwrk();
+            Meteor.commonUtils.commonOriginalAtwrk(query, options);
             scrollMove();
         }
     },
@@ -139,16 +127,20 @@ Template.originalAtwrk.events({
         if(Meteor.clientCommonUtils.nextPage(curPage, total.get(), limit, skip)) ;
         else {
             setQuery();
-            tmpl.selectOrgAtwrk();
+            Meteor.commonUtils.commonOriginalAtwrk(query, options);
             scrollMove();
         }
     },
     'click a[name=pageNum]'(evt, tmpl) {
-        if(Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num));
-        else {
-            setQuery();
-            tmpl.selectOrgAtwrk();
-            scrollMove();
+        var activePage = $('a[name=pageNum].is-active').text();
+        var clickPage = $(evt.currentTarget).text();
+        if(activePage != clickPage) {
+            if(Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num));
+            else {
+                setQuery();
+                Meteor.commonUtils.commonOriginalAtwrk(query, options);
+                scrollMove();
+            }
         }
     }
 });
@@ -213,7 +205,7 @@ Template.originalAtwrk.helpers({
             }
         }
 
-        return res.length === 0 ? false : res;
+        return res.length === 0 ? [] : res;
     },
     priceOgPrt() {
         return Meteor.codes.ARTWORK_PRICE_OGPRT();
@@ -250,7 +242,9 @@ Template.originalAtwrk.helpers({
                 }
             }
         }
+    },
+    renderEnd() {
+        return true;
     }
-
 });
   

@@ -71,6 +71,7 @@ function setPricData(data) {
         if(flag == 'ogPrt') {
             totalProPric += atInfo.atwrkInfo[flag].pric;
         } else {
+            console
             var size = atInfo.option.size.toLowerCase();
             totalProPric += atInfo.atwrkInfo[flag][`${size}Pric`]
             delivPric += (6000 * parseInt(atInfo.cnt));
@@ -195,6 +196,7 @@ Template.approval.events({
     },
     'click button[name=addrsBtn]'(evt, tmpl) {
         addresLib.addres(tmpl);
+        $('body').attr('style', 'overflow:initial');
     },
     'click input[name=radio-basket--method]'(evt, tmpl) {
         var flag = $(evt.currentTarget).val();
@@ -309,17 +311,18 @@ Template.approval.events({
         // 배송시 요청사항
         var seltDeliv = selectDeliv.get();
 
-        if(recptnNm == '')                              messagePopup({message : '수령인을 입랙해주세요'});
+        if(recptnNm == '')                              messagePopup({message : '수령인을 입력해주세요'});
         else if(mob1 == '' || mob2 == '' || mob3 == '') messagePopup({message : '휴대전화를 정확하게 입력해주세요'});
-        else if(!homePhChk.get()) if(homePhone1 == '' || homePhone2 == '' || homePhone3 == '') messagePopup({message : '전화번호를 입력해주세요'});
-        else if(zipCode == '' || addr2 == '')           messagePopup({message : '주소를 입력해주세요'});
+        else if(!homePhChk.get()) {
+            if(homePhone1 == '' || homePhone2 == '' || homePhone3 == '') messagePopup({message : '전화번호를 입력해주세요'});
+        } else if(zipCode == '' || addr2 == '')           messagePopup({message : '주소를 입력해주세요'});
         else if(approValFlag == undefined)              messagePopup({message : '결재 수단을 선택해주세요'});
         else if(!term1 || !term2)                        messagePopup({message : '필수 약관을 모두 동의해주세요'});
         else {
             if(defDeli) {
 
             }
-            messagePopup({message : '결재화면으로 이동'});
+            messagePopup({message : '결제 준비중입니다.'});
         }
 
     },
@@ -377,5 +380,13 @@ Template.approval.helpers({
     },
     priceData() {
         if(priceData.get() != undefined) return priceData.get();
+    },
+    checkZeroPric(pric) {
+        if(pric > 0) return '+';
+        else return '';
+    },
+    checkZeroSalrPric(pric) {
+        if(pric > 0) return '-';
+        else return '';
     }
 });

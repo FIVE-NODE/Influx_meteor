@@ -163,27 +163,34 @@
 
                                     <!-- 작품 데이터 영역 -->
                                     <div class="product-list">
-                                        {{#each atwrkList}}
-                                            <div class="product-item product-item{{imgInfo.size}}">
-                                                <a name="atwrkDetail" value="{{_id}}" href="/atwrkDetail/{{_id}}">
-                                                    <span class="product-item__img">
-                                                        <img 
-                                                            src=""
-                                                            data-src="{{imgInfo.imgID}}"
-                                                            class="testSample lazyload"
-                                                            alt=""
-                                                        >
-                                                        <!-- <img src="{{imgInfo.imgID}}" alt=""> -->
-                                                    </span>
-                                                    <span class="product-item__tit">{{atstNm}}</span>
-                                                    <span class="product-item__cont">
-                                                        {{atwrkNm}}, {{wSize}} x {{hSize}}, {{codeToName ogPrt "MATERIAL"}}<br/>
-                                                        {{glryNm}}<br/>
-                                                        {{pric}} 원
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        {{/each}}
+                                        {{#if atwrkList}}
+                                            {{#each atwrkList}}
+                                                <div class="product-item product-item{{imgInfo.size}}">
+                                                    <a name="atwrkDetail" value="{{_id}}" href="/atwrkDetail/{{_id}}">
+                                                        <span class="product-item__img">
+                                                            <img 
+                                                                src=""
+                                                                data-src="{{imgInfo.imgID}}"
+                                                                class="lazyload"
+                                                                alt=""
+                                                            >
+                                                            <!-- <img src="{{imgInfo.imgID}}" alt=""> -->
+                                                        </span>
+                                                        <span class="product-item__tit">{{atstNm}}</span>
+                                                        <span class="product-item__cont">
+                                                            {{atwrkNm}}, {{wSize}} x {{hSize}}, {{codeToName ogPrt "MATERIAL"}}<br/>
+                                                            {{glryNm}}<br/>
+                                                            {{pric}} 원
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            {{/each}}
+                                        {{else}}
+                                            {{#if dataChk}}
+                                            {{else}}
+                                                {{{atwrkLoading "product-item product-itemL"}}}
+                                            {{/if}}
+                                        {{/if}}
                                     </div>
                                     <!-- 작품 데이터 영역 끝 -->
 
@@ -192,11 +199,11 @@
                                 <!-- 페이징 영역 -->
                                 <div class="pagination-wrap mt-40 mb-40">
                                     <div class="pagination">
-                                        <a href="" name="prev" class="link-prev"></a>
+                                        <a href="javascript:void(0);" name="prev" class="link-prev"></a>
                                         {{#each page}}
-                                            <a href="" id="pageNum{{num}}" name="pageNum" class="{{active}}">{{num}}</a>
+                                            <a href="javascript:void(0);" id="pageNum{{num}}" name="pageNum" class="{{active}}">{{num}}</a>
                                         {{/each}}
-                                        <a href="" name="next" class="link-next"></a>
+                                        <a href="javascript:void(0);" name="next" class="link-next"></a>
                                     </div>
                                 </div>
                                 <!-- 페이징 영역 끝 -->
@@ -207,8 +214,10 @@
             </div>
         </div>
     </section>
-    <script type="text/javascript" src="/libs/common.js"></script>
-    <script type="text/javascript" src="/libs/sub.js"></script>
+    {{#if renderEnd}}
+        <script type="text/javascript" src="/libs/common.js"></script> 
+        <script type="text/javascript" src="/libs/sub.js"></script>
+    {{/if}}
     <footer class="footer">
         {{> footer}}
     </footer>

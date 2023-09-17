@@ -55,6 +55,10 @@ Template.atwrkDetail.onCreated(function() {
     // dtPrt(디지털 판화)
     tabFlag = new ReactiveVar('ogPrt');
 
+    if(this.data.clickFlag() != '' && this.data.clickFlag() != undefined) {
+        tabFlag.set(this.data.clickFlag());
+    }
+
     // 원화, 디지털 판화 둘다 있을땐 true 하나만 있을 땐 false;
     bothFlag = new ReactiveVar(false);
 
@@ -76,6 +80,7 @@ Template.atwrkDetail.onCreated(function() {
     // 디지털 판화용 구매하기 리스트 넘기기
     listProduct =  new ReactiveVar([]);
 
+    ntcnFlagChk = new ReactiveVar(false);
 
     renderFlag = new ReactiveVar(false);
 
@@ -182,6 +187,10 @@ Template.atwrkDetail.onRendered(function() {
 
     let img = new Image();
     img.src = $('#target').attr('src');
+
+    if(this.data.clickFlag() != undefined) {
+        $(`button[name=${tabFlag.get()}Tab`).addClass('is-active');
+    }
 });
 
 function msPsSetData(flag ,size, frame) {
@@ -309,8 +318,20 @@ Template.atwrkDetail.events({
         }
     },
     // 구매하기 원화
-    'click button[name=ogPrtBuy]'(evt, tmpl) {
-        console.log('ogPrt buy ======= ');
+    'click a[name=ogPrtBuy]'(evt, tmpl) {
+        let dataSet = [
+            {
+                atwrkFlag : tabFlag.get(),
+                atwrkInfo : this,
+                atwrkId : this._id
+            }
+        ]
+            
+        Meteor.call('encrypt', JSON.stringify(dataSet), function(err, res){
+            localStorage.setItem('if.ba.to', JSON.stringify({l : 'all'}));
+            localStorage.setItem('crt_bundle', res);
+            FlowRouter.go('/approval', {});
+        });
     },
     // 구매하기 디지털 판화
     'click button[name=dtPrtBuy]'(evt, tmpl) {
@@ -362,10 +383,18 @@ Template.atwrkDetail.events({
     'click button[name=getNews]'(evt, tmpl) {
         if(userInfos.get() != undefined) {
             var bsnsID = this.glry.bsnsID;
-            
-            Meteor.call('insertNotice', userId, bsnsID, function(err, res) {
-                messagePopup({message : '소식받기 적용이 완료되었습니다.'});
-            });
+
+            if(ntcnFlagChk.get()) {
+                Meteor.call('deleteNotice', userId, bsnsID, function(err, res) {
+                    ntcnFlagChk.set(false);
+                    messagePopup({message : '소식받기 적용이 해제되었습니다.'});
+                });
+            } else {
+                Meteor.call('insertNotice', userId, bsnsID, function(err, res) {
+                    ntcnFlagChk.set(true);
+                    messagePopup({message : '소식받기 적용이 완료되었습니다.'});
+                });
+            }
 
         } else {
             // 비 로그인 사용자는 팝업창
@@ -413,27 +442,31 @@ Template.atwrkDetail.events({
     },
     // 추가한 상품 취소
     'click a[name=cancelPr]'(evt, tmpl) {
-        var index = $(evt.currentTarget).parent().attr('name');
+        if(listProduct.get().length == 1) {
+            messagePopup({message : '1개 이상 선택하셔야 합니다.'});
+        } else {
+            var index = $(evt.currentTarget).parent().attr('name');
 
-        var midlePro = midleProList.get();
-        midlePro.delete($(evt.currentTarget).attr('id'));
-        midleProList.set(midlePro);
+            var midlePro = midleProList.get();
+            midlePro.delete($(evt.currentTarget).attr('id'));
+            midleProList.set(midlePro);
 
-        var pric = setDtPric.get();
-        pric.splice(index, 1);
-        setDtPric.set(pric);
+            var pric = setDtPric.get();
+            pric.splice(index, 1);
+            setDtPric.set(pric);
 
-        var cntList = proCntList.get();
-        var cntCur = cntList[index];
-        var digtCnt = digitalCnt.get();
-        digitalCnt.set(digtCnt - cntCur);
-        cntList.splice(index, 1);
-        proCntList.set(cntList);
+            var cntList = proCntList.get();
+            var cntCur = cntList[index];
+            var digtCnt = digitalCnt.get();
+            digitalCnt.set(digtCnt - cntCur);
+            cntList.splice(index, 1);
+            proCntList.set(cntList);
 
-        // 구매리스트 데이터 전달에도 삭제
-        var seltList = listProduct.get();
-        seltList.splice(index, 1);
-        listProduct.set(seltList);
+            // 구매리스트 데이터 전달에도 삭제
+            var seltList = listProduct.get();
+            seltList.splice(index, 1);
+            listProduct.set(seltList);
+        }
     },
     'click a[name=otherAtwrk]'(evt, tmpl) {
         var atwrkId = $(evt.currentTarget).attr('id');
@@ -484,27 +517,9 @@ Template.atwrkDetail.helpers({
             res.ogPrtOpen = '';
             res.dtPrtOpen = '';
 
-            if(res.ogPrt.pric != undefined) {
-                // res.ogPrt.pric = Meteor.commonUtils.priceComma(res.ogPrt.pric);
-                res.ogPrtActive = 'is-active';
-                res.ogPrtOpen = 'is-open';
-            }
-            
-            if(res.dtPrt.sPric != undefined) {
-                limitCnt.set(res.dtPrt.selCnt);
-                // res.dtPrt.sPric = Meteor.commonUtils.priceComma(res.dtPrt.sPric);
-                // res.dtPrt.mPric = Meteor.commonUtils.priceComma(res.dtPrt.mPric);
-                // res.dtPrt.lPric = Meteor.commonUtils.priceComma(res.dtPrt.lPric);
-                if(res.ogPrt.pric === undefined) {
-                    res.dtPrtActive = 'is-active';
-                    res.dtPrtOpen = 'is-open';
-                }
-            }
-
-
-            // 메인이미지
-            // res.mainImage = images.get().find(isRprsn);
-            
+            res[`${tabFlag.get()}Active`] = 'is-active'; 
+            res[`${tabFlag.get()}Open`] = 'is-open';
+   
             renderFlag.set(true);
 
             return res;
@@ -647,5 +662,28 @@ Template.atwrkDetail.helpers({
     },
     utilsJsRenderAfter() {
         return renderFlag.get();
+    },
+    // 소식받기 체크
+    newsChk() {
+        if(userInfos.get() != undefined) {
+            var bsnsID = this.glry.bsnsID;
+            var news = userInfos.get().ntcn;
+
+            news.find(function(elem) {
+                if(elem == bsnsID) {
+                    ntcnFlagChk.set(true);
+                    return true;
+                }
+            });
+            
+            return ntcnFlagChk.get() ? '/image/sub/icon/icon-alarm-on.png' : '/image/sub/icon/icon-alarm.png';
+        } else {
+            return '/image/sub/icon/icon-alarm.png';
+        }
+    },
+    //ogPrt bid 체크
+    ogPrtChk() {
+        var res =  detail.get();
+        return res.ogPrt.atwrkNm != undefined ? true : false;
     }
 });

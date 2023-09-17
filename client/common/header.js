@@ -18,7 +18,7 @@ function selectQuickMu() {
 Template.header.onCreated(function() {
     Meteor.subscribe('User');
 
-    uInfo = new ReactiveVar();
+    uInfo = new ReactiveVar(Meteor.user());
 
     menuFlag = new ReactiveVar(false);
     menuKind = new ReactiveVar('');
@@ -33,12 +33,11 @@ Template.header.onCreated(function() {
 
     this.autorun(function() {
         let user = Meteor.user();
-        if(user != undefined) {
+        if(user != undefined && likeAtwrkList.get() == undefined) {
             let data = user.profile.uInfos.ogPrtGood.concat(user.profile.uInfos.dtPrtGood);
             sltInterestAtwrkCnt(data);
         }
     });
-    
 
 });
 
@@ -52,8 +51,6 @@ function messagePopup(message) {
 }
 
 function sltInterestAtwrkCnt(data)  {
-    // if(interList.get().length == 0) interList.set(uInfo.get().ogPrtGood.concat(uInfo.get().dtPrtGood));
-    // console.log(interList.get());
     Meteor.call('sltInterestAtwrkCnt', data, function(err, res) {
         likeAtwrkList.set(res);
     });
@@ -111,12 +108,12 @@ Template.header.events({
         }
         
         // 같은 페이지 일경우 새로고침
-        var pageName = FlowRouter.getRouteName();
-        if(href.indexOf(pageName) > -1) {
-            setTimeout(function() {
-                location.reload();
-            }, 50);
-        }
+        // var pageName = FlowRouter.getRouteName();
+        // if(href.indexOf(pageName) > -1) {
+        //     setTimeout(function() {
+        //         location.reload();
+        //     }, 50);
+        // }
         
     },
     'click a[name=glryMenu]'(evt, tmpl) {
@@ -234,8 +231,9 @@ Template.header.helpers({
     },
     pfImgChk() {
         let uInfos = Meteor.user();
-
-        return uInfos.profile.uInfos.pfImg == '' ? '/image/common/img-header__imd__img.png' : uInfos.profile.uInfos.pfImg
+        if(uInfos != undefined) {
+            return uInfos.profile.uInfos.pfImg == '' ? '/image/common/img-header__imd__img.png' : uInfos.profile.uInfos.pfImg
+        }
     }
 });
 

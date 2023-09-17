@@ -12,10 +12,14 @@ function messagePopup(message) {
 
 Template.footer.onCreated(function() {
     popUpMessage    = new ReactiveVar('');      // 팝업 메시지
+    footerRenderFlags = new ReactiveVar(false);
 });
 
 Template.footer.onRendered(function() {
-
+    setTimeout(function() {
+        footerRenderFlags.set(true);
+        $('.footer').css('background-color', '#1868B7');
+    }, 1000);
 });
 
 Template.footer.events({
@@ -33,6 +37,9 @@ Template.footer.events({
 Template.footer.helpers({
     popup() {
         return popUpMessage.get();
+    },
+    oneSec() {
+        return footerRenderFlags.get();
     }
 });
 

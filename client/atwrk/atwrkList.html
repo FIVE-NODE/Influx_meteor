@@ -14,11 +14,10 @@
                                         <span class="product-comp__img">
                                             <img 
                                                 src=""
-                                                data-src="{{details.glryImage}}}"
+                                                data-src="{{details.glryImage}}"
                                                 class="testSample lazyload"
                                                 alt=""
                                             >
-                                            <!-- <img src="{{details.glryImage}}" alt=""> -->
                                         </span>
                                         <p class="product-comp__name">{{details.glryNm}}</p>
                                         <p class="product-comp__info">About
@@ -47,6 +46,16 @@
                                             <a href="/glyDipEvt/{{glryEvtInfo._id}}" class="product-capt__btn">상 세 보 기</a>
                                     </div>
                                 {{/if}}
+                            {{else}}
+                                <div class="product-comp">
+                                    <div class="product-comp__inner">
+                                        <span class="product-comp__img">
+                                            <div class="testSample" style="width:200px; height:200px;"></div>
+                                        </span>
+                                        <p class="testSample product-comp__name" style="width:100px; height:40px;"></p>
+                                        <p class="testSample product-comp__info" style="width:100px; height:40px; margin-left: 30px;"></p>
+                                    </div>
+                                </div>
                             {{/if}}
                             <div class="product-group">
                                 <div class="lnb-wrap">
@@ -218,6 +227,11 @@
                                                 </a>
                                             </div>
                                         {{/each}}
+                                    {{else}}
+                                        {{#if dataChk}}
+                                        {{else}}
+                                            {{{atwrkLoading "product-item product-itemL"}}}
+                                        {{/if}}
                                     {{/if}}
                                 </div>
                             </div>

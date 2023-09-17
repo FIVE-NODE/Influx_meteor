@@ -29,6 +29,12 @@ Template.artMenu.events({
     'click button[name=schBtn]'(evt, tmpl) {
         var chked = $('input[name=chk]:checked');
 
+        // $('#slideMenus').removeClass('is-open');
+        // $('#clickToArtwork').removeClass('is-open');
+        // $('#slideMenu-artwork-cont01').removeClass('is-open');
+        // $('#slideMenu-artwork-cont02').removeClass('is-open');
+        
+
         // 검색조건 하나라도 선택했을때
         if(chked.length > 0) {
             var queryData = {};

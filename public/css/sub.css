@@ -2012,7 +2012,7 @@ B seriese
 }
 .product-itemM {
   height: 48rem;
-  grid-row: span 7;
+  grid-row: span 9;
 }
 .product-itemL {
   height: 70rem;
@@ -2126,7 +2126,7 @@ B seriese
   border-radius: 0;
 }
 .product-kind--original .product-itemM {
-  grid-row: span 6;
+  grid-row: span 7;
 }
 .product-kind--original .product-itemL {
   grid-row: span 9;
@@ -2308,6 +2308,8 @@ B seriese
 }
 .imgGroup-list button img {
   width: 100%;
+  /* 신규추가 */
+  object-fit: cover;
 }
 .imgGroup-list button + button {
   margin-top: 1.5rem;

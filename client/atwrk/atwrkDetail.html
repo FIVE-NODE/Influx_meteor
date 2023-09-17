@@ -94,7 +94,7 @@
                                                                     <a href="" name="shBasket" class="btn btn--blue btn--round">장 바 구 니</a>
                                                                 </div>
                                                                 <div class="btn-wrap purchace__btns mt-10">
-                                                                    <a href="/approval" name="ogPrtBuy" class="btn btn--blue btn--round">구 매 하 기</a>
+                                                                    <a href="" name="ogPrtBuy" class="btn btn--blue btn--round">구 매 하 기</a>
                                                                 </div>
                                                             {{else if priceChk}}
                                                                 <div class="btn-wrap purchace__btns mt-50">
@@ -102,7 +102,7 @@
                                                                 </div>
                                                             {{else}}
                                                                 <div class="btn-wrap purchace__btns mt-50">
-                                                                    <a href="/approval" name="ogPrtBuy" class="btn btn--blue btn--round {{sellTpChk}}">구 매 하 기</a>
+                                                                    <a href="" name="ogPrtBuy" class="btn btn--blue btn--round {{sellTpChk}}">구 매 하 기</a>
                                                                     <a href="" name="shBasket" class="btn btn--blue btn--round {{sellTpChk}}">장 바 구 니</a>
                                                                 </div>
                                                             {{/if}}
@@ -126,7 +126,7 @@
                                                                 <p class="purchace-comp__tit">{{atwrkDetail.glry.glryNm}}</p>
                                                                 <p class="purchace-comp__addr">{{atwrkDetail.glry.area}} {{atwrkDetail.glry.sigungu}} {{atwrkDetail.glry.dong}}</p>
                                                                 <button type="button" name="getNews" class="purchace-comp__btn">
-                                                                    <img src="/image/sub/icon/icon-alarm.png" alt="">
+                                                                    <img src="{{newsChk}}" alt="">
                                                                     소 식 받 기
                                                                 </button>
                                                             </div>
@@ -348,14 +348,16 @@
             </div>
 
             <!-- 구매 / 비딩 / 가격문의 팝업 -->
-            {{> bidAmount this}}
-            {{> bidAmtProcess this}}
-            {{> bargainingAccept this}}
-            {{> bargainingRate this}}
-            {{> bargainingRefuse this}}
-            {{> priceInquiryIns this}}
-            {{> priceInquiryAns this}}
-            {{> priceInquiryPay this}}
+            {{#if ogPrtChk}}
+                {{> bidAmount this}}
+                {{> bidAmtProcess this}}
+                {{> bargainingAccept this}}
+                {{> bargainingRate this}}
+                {{> bargainingRefuse this}}
+                {{> priceInquiryIns this}}
+                {{> priceInquiryAns this}}
+                {{> priceInquiryPay this}}
+            {{/if}}
 
             {{/with}}
         </div>

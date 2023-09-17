@@ -187,9 +187,9 @@
                                             <dt>총 상품금액</dt>
                                             <dd>{{commaPric totalProPric}} 원</dd>
                                             <dt>총 배송비 </dt>
-                                            <dd>+{{commaPric delivPric}}원</dd>
+                                            <dd>{{checkZeroPric delivPric}}{{commaPric delivPric}}원</dd>
                                             <dt>총 활인금액</dt>
-                                            <dd>-{{commaPric salePric}}원</dd>
+                                            <dd>{{checkZeroSalrPric salePric}}{{commaPric salePric}}원</dd>
                                             <dt>최종 결재 금액</dt>
                                             <dd>
                                                 <strong>{{commaPric totalPric}}</strong> 원

@@ -9,7 +9,7 @@ Template.digitalAtwrk.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
-    limit = new ReactiveVar(10);
+    limit = new ReactiveVar(15);
     total = new ReactiveVar(0);
 
     hotAtwrkInfo = new ReactiveVar();
@@ -111,6 +111,9 @@ Template.digitalAtwrk.events({
             selectDigAtwrk();
             scrollMove();
         }
+    },
+    'click a[name=toDetails]'(evt, tmpl) {
+        FlowRouter.go(`/atwrkDetail/${this._id}`, {}, { flag : encodeURIComponent('dtPrt') });
     }
 });
 

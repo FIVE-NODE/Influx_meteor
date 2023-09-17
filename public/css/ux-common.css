@@ -1192,7 +1192,7 @@ nav button {
 
 .footer {
   padding: 3rem 4.5rem;
-  background-color: #1868B7;
+  /* background-color: #1868B7; */
 }
 .footer__inner {
   max-width: 168rem;

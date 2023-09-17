@@ -11,25 +11,42 @@
                                 <div class="gallery-mainSlide">
                                     <div class="swiper">
                                         <div class="swiper-wrapper">
-                                            {{#each newGallery}}
-                                                <div class="swiper-slide">
-                                                    <a href="" name="detail" value="{{_id}}">
+                                            {{#if newGallery}}
+                                                {{#each newGallery}}
+                                                    <div class="swiper-slide">
+                                                        <a href="" name="detail" value="{{_id}}">
+                                                            <span class="gallery-swiper__img">
+                                                                <img 
+                                                                    src=""
+                                                                    data-src="{{glryImage}}"
+                                                                    class="glryHome-newGlry-maxSize lazyload"
+                                                                    alt=""
+                                                                >
+                                                                <!-- <img class="glryHome-newGlry-maxSize" src="{{glryImage}}" alt=""> -->
+                                                            </span>
+                                                            <span class="gallery-swiper__txt">
+                                                                <em>{{glryNm}}</em>
+                                                                {{area}}, {{dong}}
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                {{/each}}
+                                            {{else}}
+                                                {{#if dataChk}}
+                                                {{else}}
+                                                    <div class="swiper-slide">
                                                         <span class="gallery-swiper__img">
-                                                            <img 
-                                                                src=""
-                                                                data-src="{{glryImage}}"
-                                                                class="testSample glryHome-newGlry-maxSize lazyload"
-                                                                alt=""
-                                                            >
-                                                            <!-- <img class="glryHome-newGlry-maxSize" src="{{glryImage}}" alt=""> -->
+                                                            <div class="testSample" style="width:773px; height: 462px; border-radius: 20px;"></div>                                                        
                                                         </span>
-                                                        <span class="gallery-swiper__txt">
-                                                            <em>{{glryNm}}</em>
-                                                            {{area}}, {{dong}}
+                                                    </div>
+                                                    
+                                                    <div class="swiper-slide">
+                                                        <span class="gallery-swiper__img">
+                                                            <div class="testSample" style="width:773px; height: 462px; border-radius: 20px;"></div>                                                        
                                                         </span>
-                                                    </a>
-                                                </div>
-                                            {{/each}}
+                                                    </div>
+                                                {{/if}}
+                                            {{/if}}
                                         </div>
                                     </div>
 
@@ -60,25 +77,36 @@
                             </div>
                             <div class="gallery__inner">
                                 <div class="gallery-list mt-70">
-                                    {{#each searchGallery}}
-                                        <div class="gallery-item">
-                                            <a href="" name="detail" value="{{_id}}">
-                                                <span class="gallery-item__img">
-                                                    <img 
-                                                        src=""
-                                                        data-src="{{glryImage}}"
-                                                        class="testSample lazyload"
-                                                        alt=""
-                                                    >
-                                                    <!-- <img src="{{glryImage}}" alt=""> ADDSCC -->
-                                                </span>
-                                                <span class="gallery-item__txt">
-                                                    <em>{{glryNm}}</em>
-                                                    {{area}}, {{dong}}
-                                                </span>
-                                            </a>
-                                        </div>
-                                    {{/each}}
+                                    {{#if searchGallery}}
+                                        {{#each searchGallery}}
+                                            <div class="gallery-item">
+                                                <a href="" name="detail" value="{{_id}}">
+                                                    <span class="gallery-item__img">
+                                                        <img 
+                                                            src=""
+                                                            data-src="{{glryImage}}"
+                                                            class="testSample lazyload"
+                                                            alt=""
+                                                        >
+                                                        <!-- <img src="{{glryImage}}" alt=""> ADDSCC -->
+                                                    </span>
+                                                    <span class="gallery-item__txt">
+                                                        <em>{{glryNm}}</em>
+                                                        {{area}}, {{dong}}
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        {{/each}}
+                                    {{else}}
+                                        {{#if dataChk}}
+                                        {{else}}
+                                            <div class="gallery-item testSample" style="width: 299px; height: 281px;"></div>
+                                            <div class="gallery-item testSample" style="width: 299px; height: 281px;"></div>
+                                            <div class="gallery-item testSample" style="width: 299px; height: 281px;"></div>
+                                            <div class="gallery-item testSample" style="width: 299px; height: 281px;"></div>
+                                            <div class="gallery-item testSample" style="width: 299px; height: 281px;"></div>
+                                        {{/if}}
+                                    {{/if}}
                                 </div>
                                 <div class="gallery__inner">
                                     <div class="pagination-wrap mt-100 mb-60">

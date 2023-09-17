@@ -1,5 +1,6 @@
 <template name="footer">
     <!-- <script type="text/javascript" src="/libs/common.js"></script> -->
+    {{#if oneSec}}
     <section class="footer__inner">
         <article class="footer__nav">
             <a href="/zOne">회사소개</a>
@@ -32,5 +33,6 @@
             <p class="txt">SJLab 사이트의 이미지 및 문자등의 자료 또는 정보(웹사이트 화면  포함)에 대한 무단복제, 전송, 배포, 크롤링/스크래핑 등의 행위는 저작권법, 부정경쟁방지 및  영업비밀보호에 관한 법률 등 관련 법령에 의하여 엄격히 금지 됩니다. </p>
         </article>
     </section>
+    {{/if}}
     {{> utilsPopUp popup}}
 </template>
