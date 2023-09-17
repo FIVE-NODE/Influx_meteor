@@ -15,6 +15,7 @@ Meteor.clientCommonUtils = {
     },
     prevPage : function(curPage, total, limit, skip) {
         var res = true;
+        console.log(curPage.get());
         if((curPage.get() -  1) == 0) ;
         else {
             curPage.set(curPage.get() - 1);
@@ -27,7 +28,7 @@ Meteor.clientCommonUtils = {
     },
     nextPage : function(curPage, total, limit, skip) {
         var res = true;
-        if(total < (curPage.get() *  limit.get())) ;
+        if(total <= (curPage.get() * limit.get())) ;
         else {
             curPage.set(curPage.get() + 1);
             $('.is-active').removeClass('is-active');
@@ -154,6 +155,19 @@ Meteor.clientCommonUtils = {
         }
 
         return res;
+    },
+    commonCodeToName: function(code, named) {
+        var codeMap = Meteor.codes.ALLCODE();
+
+        codeMap = codeMap[named];
+    
+        var res = {};
+        
+        Object.keys(codeMap).find(name => {
+            if(codeMap[name].code === code) res = codeMap[name];
+        });
+    
+        return res.name;
     },
     // sort 정렬
     pageSort: function(kind, flag) {

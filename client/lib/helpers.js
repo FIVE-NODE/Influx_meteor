@@ -226,3 +226,14 @@ Template.registerHelper('dataChk', function() {
         return true;
     }
 });
+
+// 메인 화면 데이터 없는지 있는지 확인
+Template.registerHelper('dataSetChk', function(data) {
+    if(data == undefined)  {
+        setTimeout(function(){ 
+            return false;
+        }, 600);
+    } else {
+        return true;
+    }
+});

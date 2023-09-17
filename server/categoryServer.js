@@ -237,14 +237,13 @@ Meteor.methods({
           { 'glry.glryNm' : { $regex : data.glryNm }} : {};
 
           var kindCode = data.kindCode != '' ? 
-          { evntTp : data.kindCode } : {};
+          { evntTp :  data.kindCode } : {};
 
           // 헤더의 검색으로 들어왔을 때만 사용하는 변수
           var areasSch = [];
-
-          var areas = data.area
+          var areas = data.area;
           var area = {};
-
+          
           if(Array.isArray(areas)) {
             // 검색으로 리스트로 넘어 왔을때
             for(idx in areas) {
@@ -261,6 +260,8 @@ Meteor.methods({
                 areasSch.push({ 'glry.area' : { $regex : areas[idx]} });
               }
             }
+
+            kindCode = data.kindCode != undefined ? { evntTp : { $in : data.kindCode }} : {};
           } else if(areas != undefined){
             // 퀵메뉴 통해 들어와서 검색을 이용했을때
             areas = areas.trim();
@@ -275,9 +276,16 @@ Meteor.methods({
             } 
           }
           
-          var queryData = areasSch.length === 0 ? 
+          var queryData = areasSch.length == 0 ? 
             { $and : [normal, glryNm, kindCode, area ] } :
-            { $and : [normal, glryNm, kindCode ], $or : areasSch};
+            { $and : [normal, glryNm, kindCode], $or : areasSch};
+          
+          console.log('normal : ', normal);
+          console.log('glryNm : ', glryNm);
+          console.log('kindCode : ', kindCode);
+          console.log('area : ', area);
+          console.log('areasSch : ', areasSch);
+          console.log(queryData);
 
           res.total = Evnt.find(queryData).count();
           res.list = Evnt.find(queryData, option).fetch();
@@ -514,6 +522,9 @@ Meteor.methods({
 
         // 사용자 cart삭제
         Meteor.users.update({'profile.uInfos.cart.atwrkId' : query._id}, { $pull : { 'profile.uInfos.cart.atwrkId' : query._id }});
+
+        // 큐레이터 픽 에서 삭제
+        Pick.update({'atstAtwrk.atwrkID' : query._id}, { $pull : { 'atstAtwrk.atwrkID' : query._id }});
         
         return res;
       } catch(e) {
@@ -619,4 +630,5 @@ Meteor.methods({
       } 
     }
 });
+
 

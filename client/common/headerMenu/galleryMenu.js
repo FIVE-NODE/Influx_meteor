@@ -47,6 +47,7 @@ Template.galleryMenu.events({
             }
             // Session.set('data', queryData);
 
+            console.log(queryData);
             FlowRouter.go('/exhibitionEvnt', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
 
             location.reload();

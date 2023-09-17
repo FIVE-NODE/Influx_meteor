@@ -82,6 +82,7 @@ function popup(){
         $(this).parents('.popup-layout').removeClass('is-open');
     });
     $('.popup-chk').click(function() {
+        $('body').attr('style', 'overflow:initial')
         $(this).parents('.popup-layout').removeClass('is-open');
     });
 }

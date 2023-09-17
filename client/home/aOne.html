@@ -136,7 +136,10 @@
                                         </div>
                                     {{/each}}
                                 {{else}}
-                                    {{{loadingScr "sampleTest"}}}
+                                    {{#if dataSetChk atwrk}}
+                                    {{else}}
+                                        {{{loadingScr "sampleTest"}}}
+                                    {{/if}}
                                 {{/if}}
                             </div>
                         </div>

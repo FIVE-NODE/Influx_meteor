@@ -394,7 +394,14 @@ Meteor.methods({
     // 작품 ID 로 작품 조회
     selectAtwrkDetail: function(_id) {
       try{
-        let res = Atwrk.findOne({'_id' : _id});
+        let normal = {
+          '_id' : _id,
+          "delYn" : "N",
+          "soldYn" : "N",
+          "sellYn" : "Y"
+        };
+
+        let res = Atwrk.findOne(normal);
 
         return res;
       } catch(e) {
@@ -462,7 +469,15 @@ Meteor.methods({
     // 갤러리 ID(사업자 ID) 로 최신작 10개 조회
     selectLatestGlryList: function(_id) {
       try{
-        let res = Atwrk.find({'glry.bsnsID' : _id}, { limit : 10, sort : { insDt : -1 } }).fetch();
+        let normal = {
+          'glry.bsnsID' : _id,
+          "delYn" : "N",
+          "soldYn" : "N",
+          "sellYn" : "Y"
+        };
+
+
+        let res = Atwrk.find(normal, { limit : 10, sort : { insDt : -1 } }).fetch();
 
         return res;
       } catch(e) {

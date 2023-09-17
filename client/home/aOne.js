@@ -207,7 +207,9 @@ Template.aOne.helpers({
     },
     pick() { 
         if(pickCategory.get() != undefined) {
-            let data = Pick.findOne({thmTp : pickCategory.get()});
+            let data = Pick.findOne({
+                thmTp : pickCategory.get(),
+            });
             
             if(data != undefined) {
                 var atstAtwrkList = data.atstAtwrk;
@@ -221,16 +223,16 @@ Template.aOne.helpers({
         }
     },
     atwrk() {
-        let res = clientAtwrk.find().fetch();
+        let res = clientAtwrk.find(Meteor.commonUtils.normalSetQuy()).fetch();
         if(res != undefined) {
             return res;
         }
     },
     dtpHome() {
-        return clientDtpHome.find().fetch();
+        return clientDtpHome.find(Meteor.commonUtils.normalSetQuy()).fetch();
     },
     ogHome() {
-        return clientOgHome.find().fetch();
+        return clientOgHome.find(Meteor.commonUtils.normalSetQuy()).fetch();
     },
     evntHome() {
         return clientEvntHome.find().fetch();

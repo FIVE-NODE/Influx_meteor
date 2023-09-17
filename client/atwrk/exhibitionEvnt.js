@@ -7,7 +7,7 @@ Template.exhibitionEvnt.onCreated(function() {
     // page 정보
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
-    limit = new ReactiveVar(15);
+    limit = new ReactiveVar(10);
     total = new ReactiveVar(0);
 
     // 검색조건 변수
@@ -23,12 +23,16 @@ Template.exhibitionEvnt.onCreated(function() {
     headerSch = new ReactiveVar();
 
 
+    query = {};
+
     if(this.data.schQueryData() != undefined)  {
         headerSch.set(JSON.parse(this.data.schQueryData()));
-        console.log(headerSch.get());
+        query = {
+            kindCode : headerSch.get().EVNT,
+            area : headerSch.get().REGION,
+            glryNm : headerSch.get().glryNm,
+        }
     }
-
-    query = {};
 
     options = {
         skip : skip.get(),
@@ -42,14 +46,6 @@ Template.exhibitionEvnt.onCreated(function() {
     }
 
     this.selectExhigitionEvntList = function() {
-        if(headerSch.get() != undefined) {
-            query = {
-                kindCode : headerSch.get().EVNT,
-                area : headerSch.get().REGION,
-                glryNm : headerSch.get().glryNm,
-            }
-        }
-        
         Meteor.call('selectExhigitionEvntList', query, options, function(err, res) {
             total.set(res.total);
             evntList.set(res.list);
@@ -64,7 +60,35 @@ Template.exhibitionEvnt.onCreated(function() {
 });
 
 Template.exhibitionEvnt.onRendered(function() {
-    if(this.data.schQueryData() != undefined) $('#glryNm').val(headerSch.get().glryNm);
+    if(this.data.schQueryData() != undefined) 
+    if(headerSch.get() != undefined) {
+        var kinds = $('button[name=kind]');
+        var headerSchData = headerSch.get();
+
+        if(headerSchData.EVNT != undefined) {
+            for(var i=0; i < kinds.length; i++) {
+                if(headerSchData.EVNT[0] == kinds[i].value) {
+                    $('input[name=kinds]').text(Meteor.clientCommonUtils.commonCodeToName(kinds[i].value, 'EVENT_TYPE'));
+                    $(kinds[i]).addClass('is-active');
+                }
+            }
+        }
+
+        if(headerSchData.REGION != undefined) {
+            var region = '';
+
+            headerSchData.REGION.forEach(function(val, idx){
+                if((headerSchData.REGION.length - 1) == idx) region += val;
+                else region += (`${val},`);
+            });
+
+            $('input[name=area]').val(region);
+        }
+
+        if(headerSchData.glryNm != undefined) {
+            $('#glryNm').val(headerSch.get().glryNm);
+        }
+    }
 });
 
 // DB 검색조건 수정 및 옵션 설정
@@ -83,6 +107,12 @@ function scrollMove() {
 }
 
 Template.exhibitionEvnt.events({
+    // limit 이벤트
+    'click button[name=pageVal]'(evt, tmpl) {
+        limit.set(parseInt($(evt.currentTarget).val()));
+        setQuery();
+        tmpl.selectExhigitionEvntList();
+    },
     // page당 갯수 이벤트
     'click button[name=pageVal]'(evt, tmpl) {
         limit.set(parseInt($(evt.currentTarget).text()));
@@ -95,11 +125,11 @@ Template.exhibitionEvnt.events({
     },
     // 검색 이벤트
     'click button[name=schBtn]'(evt, tmpl) {
-        var kindCode = kind.get();
+        var kindCode = kind.get(); 
         var area = $('input[name=area]').val();
         var glryNm = $('#glryNm').val();
         var queryData = { kindCode, area, glryNm };
-
+        
         query = queryData;
 
         setQuery();
