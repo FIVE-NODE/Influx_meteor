@@ -40,7 +40,7 @@ import './atwrk/atwrkDetail.js';          // 작품 디테일
 import './atwrk/atwrkList.js';            // 작품리스트
 import './users/interestAtwrk.js'         // 유저 관심작품 리스트
 import './users/userCart.js';             // 유저 장바구니
-import './users/approval.js';             // 결재하기
+import './users/approval.js';             // 결제하기
 import './users/purchaseList.js';         // 주문내역
 import './users/msgManage.js';            // 메시지 관리
 import './users/myCollection.js';         // 마이 컬랙션 페이지

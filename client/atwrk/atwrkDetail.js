@@ -627,7 +627,7 @@ Template.atwrkDetail.helpers({
     sellTpChk() {
         return !(this.ogPrt.sellTp === '001') ? 'disabled' : '';
     },
-    // bid 체크 001 : 정찰가 / 002 : 비딩 / 003 : 흥정 / 004 : 가격문의
+    // bid 체크 | 001 : 정찰가 / 002 : 비딩 / 003 : 흥정 / 004 : 가격문의
     bidChk() {
         return this.ogPrt.sellTp === '002';
     },

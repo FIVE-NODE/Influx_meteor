@@ -6952,6 +6952,10 @@ input[type="number"]::-webkit-inner-spin-button {
   border-radius: 1rem !important;
 }
 
+.disblock-text-align {
+  text-align: center; display: block;
+}
+
 /* .hot-item::before {
   width: 4rem;
   font-size: 1.8rem;
