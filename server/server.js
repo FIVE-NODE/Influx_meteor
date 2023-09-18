@@ -481,9 +481,8 @@ Meteor.methods({
   },
   selectOgHome: function() {
     try {
-      let res = Atwrk.find({
-        'ogPrt.atwrkNm' : { $exists : true }
-      }, {sort : {'ogPrt.goodCnt' : -1}, limit : 20}).fetch();
+      
+      let res = Atwrk.find({'ogPrt.atwrkNm' : { $exists : true }}, {sort : {'ogPrt.goodCnt' : -1}, limit : 20}).fetch();
 
       return res;
     } catch(e) {

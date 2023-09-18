@@ -251,6 +251,11 @@ Template.atwrkSalesReg.events({
                     var bidStrPric = Number($('input[name=strPric]').val().replace(delComma, ""));
                     var immdPurchPric = Number($('input[name=endPric]').val().replace(delComma, ""));
 
+                    if(bidStrPric < 100000) {
+                        pupMsg = '비딩 최소 시작 금액은 100,000 원 부터 입니다.';
+                        break;
+                    }
+
                     if(bidStrPric >= immdPurchPric) {
                         pupMsg = '즉시 구매 가격보다 비딩 시작 가격이 더 큽니다.';
                         break;
@@ -261,7 +266,8 @@ Template.atwrkSalesReg.events({
                         strAmt : bidStrPric,
                         strDt : sellStrDt,
                         endDt : sellEndDt,
-                        immdPurchPric
+                        immdPurchPric,
+                        nPric : bidStrPric
                     };
 
                     ogValidation = true;

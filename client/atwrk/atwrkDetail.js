@@ -101,6 +101,7 @@ Template.atwrkDetail.onCreated(function() {
             else if(res.dtPrt.atwrkNm != undefined) bothFlag.set(true);
 
             if(res.dtPrt.sPric != undefined) {
+                limitCnt.set(res.dtPrt.selCnt);
                 var setMidleList = new Set();
                 var setData = `${res.atstInfo.atstNm}, ${res.dtPrt.atwrkNm}, ${res.dtPrt.mkYY}/S 사이즈/알루미늄`;
                 setMidleList.add(setData);
@@ -204,36 +205,40 @@ function msPsSetData(flag ,size, frame) {
     midleDatas.add(setData);
 
     if(midleSize != midleDatas.size) {
-        var pric = setDtPric.get();
-        pric.push(details.dtPrt[`${lower}Pric`]);
-
-        var cntList = proCntList.get();
-        cntList.push(1);
-
-        normalPric.set(details.dtPrt[`${lower}Pric`]);
-        proCntList.set(cntList);
-        midleProList.set(midleDatas);
-        setDtPric.set(pric);
-        
-        var totalCnt = 0;
-        for(idx in proCntList.get()) {
-            totalCnt += proCntList.get()[idx];
-        }
-        digitalCnt.set(totalCnt);
-
-        // 구매하기 데이터 넘기기 위한 리스트업
-        var dtpListPro = listProduct.get();
-        var setObject = {
-            atwrkId : details._id,
-            atwrkFlag : tabFlag.get(),
-            cnt : 1,
-            option : {
-                size,
-                frame
+        if(limitCnt.get() <= digitalCnt.get()) {
+            messagePopup({message : `최대 구매 가능한 갯수는 ${limitCnt.get()}개 입니다.`});
+        } else {
+            var pric = setDtPric.get();
+            pric.push(details.dtPrt[`${lower}Pric`]);
+    
+            var cntList = proCntList.get();
+            cntList.push(1);
+    
+            normalPric.set(details.dtPrt[`${lower}Pric`]);
+            proCntList.set(cntList);
+            midleProList.set(midleDatas);
+            setDtPric.set(pric);
+            
+            var totalCnt = 0;
+            for(idx in proCntList.get()) {
+                totalCnt += proCntList.get()[idx];
             }
-        };
-        dtpListPro.push(setObject);
-        listProduct.set(dtpListPro);
+            digitalCnt.set(totalCnt);
+    
+            // 구매하기 데이터 넘기기 위한 리스트업
+            var dtpListPro = listProduct.get();
+            var setObject = {
+                atwrkId : details._id,
+                atwrkFlag : tabFlag.get(),
+                cnt : 1,
+                option : {
+                    size,
+                    frame
+                }
+            };
+            dtpListPro.push(setObject);
+            listProduct.set(dtpListPro);
+        }
     }
 }
 
@@ -279,6 +284,7 @@ Template.atwrkDetail.events({
     'click button[name=psCnt]'(evt, tmpl) {
         var index = $(evt.currentTarget).val();
         var inputVal = parseInt($(`#cnt${index}`).val());
+        console.log(limitCnt.get());
         if(digitalCnt.get() >= limitCnt.get()) {
             alert(`최대 구매 가능한 갯수는 ${limitCnt.get()}개 입니다.`);
         } else {
@@ -292,6 +298,27 @@ Template.atwrkDetail.events({
             var editSetData = listProduct.get();
             editSetData[index].cnt = editSetData[index].cnt + 1;
             listProduct.set(editSetData);
+        }
+    },
+    //  갤러리 다른 작품들 장바구니 등록
+    'click button[name=otherBasket]' (evt, tmpl) {
+        // 로그인 체크
+        if(Meteor.userId() == null) messagePopup({message : '로그인 후 이용해주세요'});
+        else { 
+            var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
+            var atwrkFlag = $(evt.currentTarget).val();
+
+            // 작품 원화 or 디지털 판화 체크
+            if(atwrkFlag == 'dtPrt') messagePopup({message : '디지털 판화는 작품상세보기에서 옵션 선택후 추가해주세요'});
+            else {
+                var setData = { atwrkId, atwrkFlag };
+                Meteor.call('insertBasket', setData, function(err, res) {
+                    if(err) console.log(err);
+                    else {
+                        messagePopup({message : '장바구니 등록이 완료되었습니다.'});
+                    }
+                });    
+            }
         }
     },
     // 장바구니
@@ -342,6 +369,19 @@ Template.atwrkDetail.events({
     // 드래그 투 무브 이벤트
     'click button[name=imgInterior]'(evt, tmpl) {
         sampleInterior.set(true);
+    },
+    // 갤러리 다른 작품들 좋아요 이벤트
+    'click button[name=otherGoodBtn]' (evt, tmpl) {
+        var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
+        var atwrkFlag = tabFlag.get();
+
+        // 로그인 체크
+        if(Meteor.userId() == null) messagePopup({message : '로그인 후 이용해주세요'});
+        else {
+            // 좋아요 등록
+            Meteor.clientCommonUtils.goodBtnEvnt(atwrkId, atwrkFlag, bothFlag.get());
+            messagePopup({message : '좋아요 등록이 완료되었습니다.'});   
+        }
     },
     // 좋아요 버튼 이벤트
     'click .goodBtnEvt'(evt, tmpl) {
@@ -685,5 +725,9 @@ Template.atwrkDetail.helpers({
     ogPrtChk() {
         var res =  detail.get();
         return res.ogPrt.atwrkNm != undefined ? true : false;
+    },
+    // 현재남은 작품의 개수 출력
+    leftAtCnt() {
+        if(limitCnt.get() != undefined) return (limitCnt.get() - digitalCnt.get());
     }
 });

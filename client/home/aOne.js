@@ -36,7 +36,6 @@ function selectAtwrk() {
 function selectDtpHome() {
     clientDtpHome.remove();
     Meteor.call('selectDtpHome', function(e, data) {
-        // if(data != undefined){
         if(data != undefined && clientDtpHome._collection._docs._map.size == 0) {
             data.forEach(function(map){
                 map.dtPrt.mPric = Meteor.commonUtils.priceComma(map.dtPrt.mPric);
@@ -50,7 +49,6 @@ function selectDtpHome() {
 function selectOgHome() {
     clientOgHome.remove();
     Meteor.call('selectOgHome', function(e, data) {
-        // if(data != undefined) {
         if(data != undefined && clientOgHome._collection._docs._map.size == 0) {
             data.forEach(function(map){
                 map.ogPrt.pric = Meteor.commonUtils.priceComma(map.ogPrt.pric);

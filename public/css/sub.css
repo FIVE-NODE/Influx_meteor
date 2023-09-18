@@ -6779,6 +6779,10 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* 신규추가 CSS */
+.txt-align-right {
+  text-align: right;
+}
+
 .overflowAutos {
   overflow: auto;
 }
