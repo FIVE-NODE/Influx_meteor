@@ -2,11 +2,16 @@ import './myCollection.html';
 
 import { Atwrk, Order } from '../../lib/collections.js';
 
+// 팝업창
+import '../popup/utilsPopUp.js';
+
 Template.myCollection.onCreated(function() {
     Meteor.subscribe('Atwrk');
     Meteor.subscribe('Order');
 
     popUpList = new ReactiveVar();
+
+    popUpMessage = new ReactiveVar();
 
     // this.autorun(function() {
         // if(popUpList.get() != undefined) {
@@ -26,6 +31,13 @@ Template.myCollection.onCreated(function() {
 Template.myCollection.onRendered(function() {
 });
 
+// 팝업 메시지 띄우기
+function messagePopup(message) {
+    popUpMessage.set(message);
+    $('#utilsPopUp').addClass('is-open');
+}
+
+
 Template.myCollection.events({
     'click button[name=allSelt]' (evt, tmpl) {
         $('input[name=chkMyCollect]').prop('checked', true);
@@ -35,50 +47,56 @@ Template.myCollection.events({
     },
     'click button[name=seltAllShow]' (evt, tmpl) {
         var chkAtwrk = $('input:checkbox[name=chkMyCollect]:checked');
-        var dataList = [];
-        var outHtml = '';        
+        if(chkAtwrk.length != 0) {
+            $('#detail_popup').addClass('is-open');
 
-        // swiperLists
-        for(i=0; i<chkAtwrk.length; i++) {
-            var seltId = $(chkAtwrk[i]).val();
-            var imgUrl = $(`#${seltId}`).attr('src');
-            var detail = $(`span[name=${seltId}]`).html().split('<br>')[0];
-            var atstNm = $(`p[name=${seltId}]`).text();
+            var dataList = [];
+            var outHtml = '';        
 
-            dataList.push({
-                imgUrl,
-                atstNm,
-                detail
-            });
+            // swiperLists
+            for(i=0; i<chkAtwrk.length; i++) {
+                var seltId = $(chkAtwrk[i]).val();
+                var imgUrl = $(`#${seltId}`).attr('src');
+                var detail = $(`span[name=${seltId}]`).html().split('<br>')[0];
+                var atstNm = $(`p[name=${seltId}]`).text();
 
-            var showData = 
-            `   <div class="swiper-slide">
-                    <span class="fullscreenView__img">
-                        <img src="${imgUrl}" alt="">
-                    </span>
-                    <div class="fullscreenView__txt">
-                        <p>${atstNm}</p>
-                        <span>
-                            ${detail}<br/>
-                            (제목, 크기, 재료)
+                dataList.push({
+                    imgUrl,
+                    atstNm,
+                    detail
+                });
+
+                var showData = 
+                `   <div class="swiper-slide">
+                        <span class="fullscreenView__img">
+                            <img src="${imgUrl}" alt="">
                         </span>
-                    </div>
-                </div>`;
+                        <div class="fullscreenView__txt">
+                            <p>${atstNm}</p>
+                            <span>
+                                ${detail}<br/>
+                                (제목, 크기, 재료)
+                            </span>
+                        </div>
+                    </div>`;
 
-            outHtml += showData;
+                outHtml += showData;
+            }
+
+            // popUpList.set(dataList);
+            $('#swiperLists').html(outHtml);
+
+            const swiper = new Swiper('.swiper', {       
+                navigation:{
+                    nextEl: '.my-button-next',
+                    prevEl: '.my-button-prev',
+                },
+                observer: true,
+                observeParents: true
+            });
+        } else {
+            messagePopup({message : '작품을 선택해주세요'});
         }
-
-        // popUpList.set(dataList);
-        $('#swiperLists').html(outHtml);
-
-        const swiper = new Swiper('.swiper', {       
-            navigation:{
-                nextEl: '.my-button-next',
-                prevEl: '.my-button-prev',
-            },
-            observer: true,
-            observeParents: true
-        });
     },
 });
 
@@ -108,5 +126,8 @@ Template.myCollection.helpers({
         if(popUpList.get() != undefined) {
             return popUpList.get();
         }
-    }
+    },
+    popup() {
+        return popUpMessage.get();
+    },
 });

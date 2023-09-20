@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Pick, Atwrk, Mber, Inventory, StndPntReq, Cmmnc, Order } from '../lib/collections.js';
+import { Pick, Atwrk, Mber, Inventory, StndPntReq, Cmmnc, Order, PageList } from '../lib/collections.js';
 
 Meteor.publish('ArtStartPub', function() {
 });
@@ -22,7 +22,11 @@ Meteor.publish('User', function(_id) {
 
 Meteor.publish('Order', function() {
     return Order.find();
-})
+});
+
+Meteor.publish('PageList', function() {
+    return PageList.find();
+});
 
 Meteor.publish('userData', function() {
     if(this.userId) {

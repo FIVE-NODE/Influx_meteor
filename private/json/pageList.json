@@ -1,0 +1,20 @@
+{
+    "user" : [
+        "/interestAtwrk",
+        "/purchaseList",
+        "/msgManage",
+        "/userCart",
+        "/myCollection",
+        "/changeMberInfo"
+    ],
+    "gallery" : [
+        "/myPageSelling",
+        "/glryAtwrks",
+        "/inventoryMode",
+        "/ogAtwrkCr",
+        "/eventsCrList",
+        "/bMsgManage",
+        "/atwrkSalesReg",
+        "/pickCreate"
+    ]
+}

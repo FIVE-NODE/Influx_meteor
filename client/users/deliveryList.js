@@ -11,6 +11,17 @@ Template.deliveryList.onCreated(function() {
 Template.deliveryList.onRendered(function() {
 });
 
+function setDelivReq(delivReq) {
+    let delReqList =  $('button[name=editSelectDeliv]');
+    
+    for(var i=0; i<delReqList.length; i++) {
+        if(delReqList[i].innerText == delivReq) {
+            $(delReqList[i]).click();
+            break;
+        }
+    }
+}
+
 Template.deliveryList.events({
     // 기본 배송지 선택 이벤트
     'click button[name=defDelivYn]'(evt, tmpl) {
@@ -25,41 +36,66 @@ Template.deliveryList.events({
         var evntId = $(evt.currentTarget).val();
         var seltPastDelivData = delivData.get()[evntId];
         var mobList = seltPastDelivData.mob.split(' ');
-        var hPhoneList = seltPastDelivData.mob.split(' ');
+        var hPhoneList = seltPastDelivData.phone.split(' ');
         var delivEtc = seltPastDelivData.delivReqEtc != undefined ? seltPastDelivData.delivReqEtc : '';
+        var delivReq = this.delivReq;
 
         editDelivData.set(seltPastDelivData);
+
+        console.log(this);
 
         $('input[name=editRecptnNm]').val(seltPastDelivData.recptnNm);
         $('input[name=editDelivNm]').val(seltPastDelivData.delivNm);
         $('input[name=editMob1]').val(mobList[0]);
         $('input[name=editMob2]').val(mobList[1]);
         $('input[name=editMob3]').val(mobList[2]);
-        $('input[name=editHomePhone1]').val(hPhoneList[0]);
-        $('input[name=editHomePhone2]').val(hPhoneList[1]);
-        $('input[name=editHomePhone3]').val(hPhoneList[2]);
+
+        if(hPhoneList[0] != '' && hPhoneList[1] != '' && hPhoneList[2] != '') {
+            if($('#check-addrWrite--no-edit').is(':checked')) {
+                $('#check-addrWrite--no-edit').click();
+            }
+
+            $('input[name=editHomePhone1]').val(hPhoneList[0]);
+            $('input[name=editHomePhone2]').val(hPhoneList[1]);
+            $('input[name=editHomePhone3]').val(hPhoneList[2]);
+        } else {
+            if(!$('#check-addrWrite--no-edit').is(':checked')) {
+                $('#check-addrWrite--no-edit').click();
+            } else homePhChk.set(true);
+            $('input[name=editHomePhone1]').val('');
+            $('input[name=editHomePhone2]').val('');
+            $('input[name=editHomePhone3]').val('');
+            
+        }
+        
         $('input[name=editZipCode]').val(seltPastDelivData.zipCd);
         $('input[name=editAddress]').val(seltPastDelivData.addr1);
         $('input[name=editAddr2]').val(seltPastDelivData.addr2);
-        $('input[name=editDelivReqEtc]').val(delivEtc);
 
-        if(defadres.defDelivYn == 'Y') {
-            $('#check-addrWrite--default-edit').prop('checked', defadres.defDelivYn == 'Y');
+        if(delivReq == '직접입력') {
+            setDelivReq(delivReq);
+            $('input[name=editDelivReqEtc]').val(delivEtc);
+
+        } else if(delivReq == '') {
+            setDelivReq('배송시 요청사항을 선택해주세요.');
+        } else {
+            setDelivReq(delivReq);
+            $('input[name=editSelectDeliv]').val(delivReq);
+        }
+        
+
+        if(this.defDelivYn == 'Y') {
+            $('#check-addrWrite--default-edit').prop('checked', this.defDelivYn == 'Y');
             defDelivYn.set(true);
         } else {
             $('#check-addrWrite--default-edit').prop('checked', false);
             defDelivYn.set(false);
         }
 
-        if(hPhoneList.length == 0) {
-            $('#check-addrWrite--no-edit').prop('checked', hPhoneList.length == 0);
-            $('#check-addrWrite--no-edit').prop('disabled', ture);
-        } else $('#check-addrWrite--no-edit').prop('checked', false);
-        
     },
     // 배송지 삭제
     'click button[name=delivDele]'(evt, tmpl) {
-        var _id = userId.get();
+        var _id = Meteor.userId();
         var delDta = delivData.get()[$(evt.currentTarget).val()];
         Meteor.call('deliveryDel', _id, delDta, function(err, res) {
             var info = uInfo.get();

@@ -443,7 +443,7 @@ function tdDataSet(data) {
 
             let res3 = `
                 <td>${Meteor.commonUtils.priceComma(data.ogPrt.bid.strAmt) + ' 원'}<br/>(${dtPrtPric})</td>
-                <td>${Meteor.commonUtils.priceComma(data.ogPrt.pric) + ' 원'}</td>
+                <td>${Meteor.commonUtils.priceComma(data.ogPrt.bid.immdPurchPric) + ' 원'}</td>
                 <td>${Meteor.commonUtils.priceComma(data.ogPrt.bid.nPric) + ' 원'}</td>
                 <td>(${bidLen})</td>
                 <td>${sellDate}</td>

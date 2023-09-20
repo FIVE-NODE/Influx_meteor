@@ -1,8 +1,6 @@
 <template name="changeMberInfo">
     <section class="container">
         {{#with uInfo}}
-        <script type="text/javascript" src="/libs/common.js"></script>
-        <script type="text/javascript" src="/libs/sub.js"></script>
         <div class="content">
             <div class="content__inner">
                 <div class="sub-content">
@@ -137,7 +135,7 @@
                                                 <div class="form-input form-row">
                                                     <input type="text" name="email" class="code-inquire__input" placeholder="이메일 주소 입력">
                                                 </div>
-                                                <button type="button" name="emailSendBtn" class="btn code-inquire__btn col-3 bg--silver">인 증 하 기</button>
+                                                <button type="button" disabled name="emailSendBtn" class="btn code-inquire__btn col-3 bg--silver">인 증 하 기</button>
                                             </div>
                                             <div class="form-row code-inquire width--250">
                                                 <div class="form-input form-row">
@@ -152,6 +150,9 @@
                                                 <img src="/image/sub/icon/icon-exclamation.png" alt="" class="mr-5">
                                                 이메일을 받지 못하셨나요?  이메일 <a href="" name="reSendEmail" class="ml-5 fontW-700 underline">재전송하기</a>
                                             </span>
+                                            <div class="btn-wrap mt-10 w-100 ta-l">
+                                                <button type="button" name="emailChgCancel" class="font-pre">취   소</button>
+                                            </div>
                                         </dd>
                                     {{else}}
                                         <dd>
@@ -238,12 +239,17 @@
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript" src="/libs/common.js"></script>
+        <script type="text/javascript" src="/libs/sub.js"></script>
+
         {{/with}}
     </section>
     {{> deliveryList}}
     {{> deliveryEdit}}
     {{> deliveryReg}}
     {{> withDrawalUser}}
+
     <footer class="footer">
         {{> footer}}
     </footer>

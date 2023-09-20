@@ -14,7 +14,7 @@
                     {{#each priceOgPrt}}
                         <div class="artwork-item">
                             <div class="form-input form-radio  form-row">
-                                <input value="ARTWORK_PRICE_OGPRT-{{code}}" type="radio" class="form-radio__input" name="chk" id="radio-artwork--price{{code}}" />
+                                <input {{leftFilterChk "ARTWORK_PRICE_OGPRT" this.code}} value="ARTWORK_PRICE_OGPRT-{{code}}" type="radio" class="form-radio__input" name="chk" id="radio-artwork--price{{code}}" />
                                 <span class="form-radio__span"></span>
                                 <label for="radio-artwork--price{{code}}" class="form-radio__label">{{name}}</label>
                             </div>
@@ -26,7 +26,7 @@
                     {{#each medium}}
                         <div class="artwork-item">
                             <div class="form-input form-check  form-row">
-                                <input value="MEDIUM-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-medium{{code}}" />
+                                <input {{leftFilterChk "MEDIUM" this.code}} value="MEDIUM-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-medium{{code}}" />
                                 <span class="form-check__span"></span>
                                 <label for="check-artwork-medium{{code}}" class="form-check__label">{{name}}</label>
                             </div>
@@ -38,7 +38,7 @@
                     {{#each mkyy}}
                         <div class="artwork-item">
                             <div class="form-input form-check  form-row">
-                                <input value="MK_YEAR-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-year{{code}}" />
+                                <input {{leftFilterChk "MK_YEAR" this.code}} value="MK_YEAR-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-year{{code}}" />
                                 <span class="form-check__span"></span>
                                 <label for="check-artwork-year{{code}}" class="form-check__label">{{name}}</label>
                             </div>
@@ -50,7 +50,7 @@
                     {{#each style1}}
                         <div class="artwork-item">
                             <div class="form-input form-check  form-row">
-                                <input value="STYLE_1-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-01-{{code}}" />
+                                <input {{leftFilterChk "STYLE_1" this.code}} value="STYLE_1-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-01-{{code}}" />
                                 <span class="form-check__span"></span>
                                 <label for="check-artwork-style-01-{{code}}" class="form-check__label">{{name}}</label>
                             </div>
@@ -62,7 +62,7 @@
                     {{#each style2}}
                         <div class="artwork-item">
                             <div class="form-input form-check  form-row">
-                                <input value="STYLE_2-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-02-{{code}}" />
+                                <input {{leftFilterChk "STYLE_2" this.code}} value="STYLE_2-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-02-{{code}}" />
                                 <span class="form-check__span"></span>
                                 <label for="check-artwork-style-02-{{code}}" class="form-check__label">{{name}}</label>
                             </div>
@@ -74,7 +74,7 @@
                     {{#each materials}}
                         <div class="artwork-item">
                             <div class="form-input form-check  form-row">
-                                <input value="MATERIAL-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-material{{code}}" />
+                                <input {{leftFilterChk "MATERIAL" this.code}} value="MATERIAL-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-material{{code}}" />
                                 <span class="form-check__span"></span>
                                 <label for="check-artwork-material{{code}}" class="form-check__label">{{name}}</label>
                             </div>

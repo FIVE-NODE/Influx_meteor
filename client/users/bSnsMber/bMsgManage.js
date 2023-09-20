@@ -57,23 +57,30 @@ Template.bMsgManage.events({
         switch(evtTarget.attr('id')) {
             case '1wek':
                 toDate.subtract(1, 'w').toDate();
+                toDate = toDate.format('YYYY-MM-DD');
                 break;
             case '1mon':
                 toDate.subtract(1, 'M').toDate();
+                toDate = toDate.format('YYYY-MM-DD');
                 break;
             case '3mon':
                 toDate.subtract(3, 'M').toDate();
+                toDate = toDate.format('YYYY-MM-DD');
                 break;
             default:
+                today = toDate.format('YYYY');
+                toDate = toDate.format('YYYY');
                 break;
         }
 
-        $('input[name=strDate]').val(toDate.format('YYYY-MM-DD'));
+
+        $('input[name=strDate]').val(toDate);
         $('input[name=endDate]').val(today);
     },
     'click button[name=schBtn]'(evt, tmpl) {
         var stDt = $('input[name=strDate]').val();
         var enDt = $('input[name=endDate]').val();
+        if(enDt.length == 4) enDt = moment(new Date()).format('YYYYMMDD');
         strDate.set(moment(stDt).format('YYYYMMDD'));
         endDate.set(moment(enDt).format('YYYYMMDD'));
     },
@@ -171,3 +178,5 @@ Template.bMsgManage.helpers({
         }
     },
 });
+
+

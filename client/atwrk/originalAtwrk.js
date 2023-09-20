@@ -30,11 +30,20 @@ function seltAtwrkSetList() {
         if(i === (chked.length -1)) queryData[beforKind] = dataList;
     }
     filters.set(queryData);
+    console.log(Object.keys(queryData).includes('ATSTNM'));
+    if(Object.keys(queryData).includes('ATSTNM')) {
+        atstFilterHeader.set(queryData);
+    } else {
+        queryData.kind = 'ogPrt';
+        agFilterHeader.set(queryData);
+    }
 
     Meteor.clientCommonUtils.pageNum(curPage, skip, limit, 1);
 
-    setQuery();
+    FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
 }
+
+
 
 Template.originalAtwrk.onCreated(function() {
     // page 정보
@@ -51,10 +60,6 @@ Template.originalAtwrk.onCreated(function() {
     // sort 정보
     sortInfo = new ReactiveVar();
     
-    if(this.data.schQueryData() != undefined)  {
-        filters.set(JSON.parse(this.data.schQueryData()));
-    }
-
     query = {};
 
     options = {
@@ -62,12 +67,36 @@ Template.originalAtwrk.onCreated(function() {
         limit: limit.get()
     };
 
-    if(filters.get() != undefined) setQuery();
+    this.autorun(function() {
+        if(Template.currentData().schQueryData() !== undefined) {
+            let filterData = JSON.parse(Template.currentData().schQueryData());
+            if(filterData != undefined && Object.keys(filterData).length > 0) {
+                filters.set(filterData);
 
-    Meteor.commonUtils.commonOriginalAtwrk(query, options);
+                setQuery();
+
+                Meteor.commonUtils.commonOriginalAtwrk(query, options);
+            }
+        } else {
+            filters.set({});
+            setQuery();
+            Meteor.commonUtils.commonOriginalAtwrk(query, options);
+        }
+    });
+
 });
 
-Template.originalAtwrk.onRendered(function() {    
+// DB 검색조건 수정 및 옵션 설정
+function setQuery() {
+    query = filters.get();
+    options = {
+        skip : skip.get(),
+        limit: limit.get(),
+        sort : sortInfo.get()
+    };
+}
+
+Template.originalAtwrk.onRendered(function() {
 });
 
 // 필터 해제시 나 필터 이벤트시 동작
@@ -112,7 +141,7 @@ Template.originalAtwrk.events({
     // 필터 이벤트
     'change input[name=filterChk]'(evt, tmpl) {
         seltAtwrkSetList();
-        Meteor.commonUtils.commonOriginalAtwrk(query, options);
+        // Meteor.commonUtils.commonOriginalAtwrk(query, options);
     },
     // 페이지
     'click a[name=prev]'(evt, tmpl) {
@@ -149,18 +178,6 @@ Template.originalAtwrk.events({
 function cancelCheckBox(name) {
     var input = $(`#artwork-${name} input`);
     input.prop('checked', false);
-}
-
-// DB 검색조건 수정 및 옵션 설정
-function setQuery() {
-    query = filters.get();
-    options = {
-        skip : skip.get(),
-        limit: limit.get(),
-        sort : sortInfo.get()
-    };
-
-    FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(query)) });
 }
 
 // 스크롤 이동

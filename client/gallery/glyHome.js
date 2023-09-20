@@ -56,7 +56,7 @@ Template.glyHome.onCreated(function() {
     // pageing 처리를 위한 변수
     curPage = new ReactiveVar(1);
     skip = new ReactiveVar(0);
-    limit = new ReactiveVar(1);
+    limit = new ReactiveVar(10);
     total = new ReactiveVar(0);
 
     query = {
@@ -119,6 +119,24 @@ Template.glyHome.helpers({
     page() {
         let res = Meteor.clientCommonUtils.setPage(limit.get(), total.get());
         return res;
+    },
+    glryDataChk() {
+        if(datas.get('selectGallery') == undefined){
+            setTimeout(function(){ 
+                return false;
+            }, 600);
+        } else {
+            return true;
+        }
+    },
+    newGlryDataChk() {
+        if(datas.get('selectNewGallery') == undefined){
+            setTimeout(function(){ 
+                return false;
+            }, 600);
+        } else {
+            return true;
+        }
     }
     
 });

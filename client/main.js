@@ -93,7 +93,6 @@ import './lib/helpers.js';
 import './users/authSample.js';
 
 Template.body.onCreated(function() {
-
   Meteor.subscribe('userData');
   Meteor.subscribe('Pick');
   Meteor.subscribe('Atwrk');
@@ -103,6 +102,47 @@ Template.body.onCreated(function() {
   this.atwrkPub = this.subscribe('Atwrk');
 
   pageInfo = this;
+
+  let pages = Meteor.commonUtils.pageList;
+  let pageName = FlowRouter.getRouteName(); 
+
+  this.autorun(function() {
+    if(Meteor.userId()) {
+      if(Meteor.user()) {
+        if(Meteor.user().profile.uInfos.bsnsID == undefined) {
+          if(pages.gallery.includes(pageName)) FlowRouter.go('/aOne');
+        } else {
+          if(pages.user.includes(pageName)) FlowRouter.go('/aOne');
+          
+        }
+      }
+    } else {
+      if(pages.user.includes(pageName)) {
+          FlowRouter.go('/login');
+      } else if(pages.gallery.includes(pageName)) {
+          FlowRouter.go('/login');
+      }
+    }
+
+    // if(Session.get('pageList') != undefined) {
+    //   let pages = Session.get('pageList')
+    //   let currentPage = '/' + FlowRouter.getRouteName();
+    //   if(Meteor.userId()) {
+    //     if(Meteor.user().profile.uInfos.bsnsID == undefined) {
+    //       if(pages.gallery.includes(currentPage)) FlowRouter.go('/aOne');
+    //     } else {
+    //       if(pages.user.includes(currentPage)) FlowRouter.go('/aOne');
+    //     }
+    //   } else {
+    //       if(pages.user.includes(currentPage)) {
+    //           FlowRouter.go('/login');
+    //       } else if(pages.gallery.includes(currentPage)) {
+    //           FlowRouter.go('/login');
+    //       }
+    //   }
+    // }
+  });
+
 });
 
 Template.body.onRendered(function() {
@@ -127,7 +167,8 @@ Template.body.helpers({
     return chk === 'aOne' ? true : false;
   },
   bootMinFlag() {
-    var chk = FlowRouter.getRouteName()
+    var chk = FlowRouter.getRouteName();
     return chk === 'atwrkSalesReg';
   }
 });
+

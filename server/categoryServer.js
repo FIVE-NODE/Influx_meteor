@@ -244,24 +244,27 @@ Meteor.methods({
           var areas = data.area;
           var area = {};
           
-          if(Array.isArray(areas)) {
+          if(Array.isArray(areas) || Array.isArray(kindCode.evntTp)) {
             // 검색으로 리스트로 넘어 왔을때
-            for(idx in areas) {
 
-              if(areas[idx].length != 2) {
+            if(Array.isArray(areas) != undefined) {
+              for(idx in areas) {
 
-                var splitVal = areas[idx].split('.');
+                if(areas[idx].length != 2) {
 
-                for(num in splitVal) {
-                  areasSch.push({ 'glry.area' : { $regex : splitVal[num]} });  
+                  var splitVal = areas[idx].split('.');
+
+                  for(num in splitVal) {
+                    areasSch.push({ 'glry.area' : { $regex : splitVal[num]} });  
+                  }
+
+                } else {
+                  areasSch.push({ 'glry.area' : { $regex : areas[idx]} });
                 }
-
-              } else {
-                areasSch.push({ 'glry.area' : { $regex : areas[idx]} });
               }
             }
 
-            kindCode = data.kindCode != undefined ? { evntTp : { $in : data.kindCode }} : {};
+            kindCode = Object.keys(data.kindCode).length > 0 ? { evntTp : { $in : data.kindCode }} : {};
           } else if(areas != undefined){
             // 퀵메뉴 통해 들어와서 검색을 이용했을때
             areas = areas.trim();
@@ -279,14 +282,7 @@ Meteor.methods({
           var queryData = areasSch.length == 0 ? 
             { $and : [normal, glryNm, kindCode, area ] } :
             { $and : [normal, glryNm, kindCode], $or : areasSch};
-          
-          console.log('normal : ', normal);
-          console.log('glryNm : ', glryNm);
-          console.log('kindCode : ', kindCode);
-          console.log('area : ', area);
-          console.log('areasSch : ', areasSch);
-          console.log(queryData);
-
+        
           res.total = Evnt.find(queryData).count();
           res.list = Evnt.find(queryData, option).fetch();
         } else {

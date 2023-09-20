@@ -34,8 +34,10 @@ Template.header.onCreated(function() {
     this.autorun(function() {
         let user = Meteor.user();
         if(user != undefined && likeAtwrkList.get() == undefined) {
-            let data = user.profile.uInfos.ogPrtGood.concat(user.profile.uInfos.dtPrtGood);
-            sltInterestAtwrkCnt(data);
+            if(user.profile.uInfos.ogPrtGood != undefined) {
+                let data = user.profile.uInfos.ogPrtGood.concat(user.profile.uInfos.dtPrtGood);
+                sltInterestAtwrkCnt(data);
+            }
         }
     });
 
@@ -80,41 +82,39 @@ Template.header.events({
     },
     'click a[name=quickMu]'(evt, tmpl) {
         var kind = $(evt.currentTarget).children('h2').text();
-        var href = $(evt.currentTarget).prop('href');
 
         var queryData = {};
-        if(kind == '유화') {
-            queryData.MATERIAL = ['001'];
-            FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
-        } else if(kind =='카툰/일러스트') {
-            queryData.BASE = ['003'];
-            FlowRouter.go('/digitalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
-        } else if(kind == '20만원 미만(디지털)') {
-            queryData.ARTWORK_PRICE_DTPRT = [{
-                code    : '004',
-                min     : 100000,
-                max     : 300000,
-                name    : '10~30 만원'
-            }];
-            FlowRouter.go('/digitalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
-        } else if(kind == '500만원 이상(원화)'){
-            queryData.ARTWORK_PRICE_OGPRT = [{
-                code    : '004',
-                min     : 5000000,
-                max     : 10000000,
-                name    : "500~1,000 만원"
-            }];
-            FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+        switch(kind) {
+            case '원화':
+                FlowRouter.go('/originalAtwrk', {}, { data : {}});
+                break;
+            case '유화':
+                queryData.MATERIAL = ['001'];
+                FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+                break;
+            case '카툰/일러스트':
+                queryData.BASE = ['003'];
+                FlowRouter.go('/digitalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+                break;
+            case '20만원 미만(디지털)':
+                queryData.ARTWORK_PRICE_DTPRT = [{
+                    code    : '004',
+                    min     : 100000,
+                    max     : 300000,
+                    name    : '10~30 만원'
+                }];
+                FlowRouter.go('/digitalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+                break;
+            case '500만원 이상(원화)':
+                queryData.ARTWORK_PRICE_OGPRT = [{
+                    code    : '004',
+                    min     : 5000000,
+                    max     : 10000000,
+                    name    : "500~1,000 만원"
+                }];
+                FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
+                break;
         }
-        
-        // 같은 페이지 일경우 새로고침
-        // var pageName = FlowRouter.getRouteName();
-        // if(href.indexOf(pageName) > -1) {
-        //     setTimeout(function() {
-        //         location.reload();
-        //     }, 50);
-        // }
-        
     },
     'click a[name=glryMenu]'(evt, tmpl) {
         var link = $(evt.currentTarget).attr('id');

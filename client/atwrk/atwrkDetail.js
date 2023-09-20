@@ -95,7 +95,7 @@ Template.atwrkDetail.onCreated(function() {
 
     function selectAtwrkDetail () {
         Meteor.call('selectAtwrkDetail', FlowRouter.getParam('_id'), function(err, res) {
-
+            
             // 원화가 없는경우 dtPrt 디지털 판화로 셋팅
             if(res.ogPrt.atwrkNm === undefined) tabFlag.set('dtPrt');
             else if(res.dtPrt.atwrkNm != undefined) bothFlag.set(true);

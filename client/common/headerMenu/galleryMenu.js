@@ -3,6 +3,7 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import './galleryMenu.html';
 
 Template.galleryMenu.onCreated(function() {
+    glryFilterHeader = new ReactiveVar({});
 });
 
 Template.galleryMenu.onRendered(function() {
@@ -47,13 +48,15 @@ Template.galleryMenu.events({
             }
             // Session.set('data', queryData);
 
-            console.log(queryData);
             FlowRouter.go('/exhibitionEvnt', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
 
-            location.reload();
+            // location.reload();
         } else {
             // 검색조건 하나도 선택하지 않았을때.
         }
+
+        $('#slideMenus').removeClass('is-open');
+        $('#clickToGallery').removeClass('is-open');
     }
 });
 
