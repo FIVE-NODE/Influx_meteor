@@ -1,5 +1,6 @@
 import './purchaseList.html';
 
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import '../popup/userPop/deliveryTracking.js';
 
 // 팝업창
@@ -138,11 +139,8 @@ Template.purchaseList.events({
         $('input[name=endDate]').val(today);
     },
     'click button[name=dateSchBtn]'(evt, tmpl) {
-        console.log(' ============ cccc');
         var strDate = moment($('input[name=strDate]').val()).format('YYYYMMDD');
         var endDate = moment($('input[name=endDate]').val()).format('YYYYMMDD');
-
-        var odTp = $('input[name=odTp]').val();
 
         strSchDate.set(strDate);
         endSchDate.set(endDate);
@@ -156,7 +154,8 @@ Template.purchaseList.events({
         seltStatus.set($(evt.currentTarget).val().split('-')[1]);
     },
     'click button[name=orderDetail]'(evt, tmpl) {
-        messagePopup({message : '화면 준비중 입니다.'});
+        let id = $(evt.currentTarget).attr('id');
+        FlowRouter.go(`/orderDetail/${id}`);
     }
 });
 
@@ -174,5 +173,9 @@ Template.purchaseList.helpers({
     },
     ordetStatus() {
         return Meteor.codes.ORDER_STATUS();
+    },
+    lastItemChk(idx) {
+        if(orderList.get().length == idx) return true;
+        else false;
     }
 });

@@ -44,7 +44,7 @@ import './users/approval.js';             // 결제하기
 import './users/purchaseList.js';         // 주문내역
 import './users/msgManage.js';            // 메시지 관리
 import './users/myCollection.js';         // 마이 컬랙션 페이지
-import './users/myCollectionDetail.js';         // 마이 컬랙션 상세 페이지
+import './users/myCollectionDetail.js';   // 마이 컬랙션 상세 페이지
 
 // 관리자 운영자 페이지
 import './users/bSnsMber/myPageSelling.js';// 마이페이지 판매중인 상품
@@ -56,6 +56,7 @@ import './users/bSnsMber/ogAtwrkCr.js';    // 원화 작품 등록 화면
 import './users/bSnsMber/bMsgManage.js';   // 갤러리 메시지 관리
 import './users/bSnsMber/glryAtwrks.js';   // 갤러리 Atwrk 화면
 import './users/bSnsMber/atwrkSalesReg.js'; // 판매등록 화면
+import './users/orderDetail.js';           // 주문상세내역
 
 import './users/bSnsMber/glryAppMang.js';  // 갤러리 입점신청 관리 페이지
 

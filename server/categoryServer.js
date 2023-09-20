@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import fs from 'fs';
-import { Atwrk, Evnt, Pick } from '../lib/collections.js';
+import { Atwrk, Evnt, Pick, Order } from '../lib/collections.js';
 
 // 원화 는 원화만, 디지털 판화는 판화만 특정 카테고리만 조회 하는 서버로직
 
@@ -624,6 +624,20 @@ Meteor.methods({
           '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
         );
       } 
+    },
+    // 주문상세내역 조회
+    seltOrderDetail: function(orderId) {
+      try {
+        let res = Order.findOne({ _id : orderId });
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
     }
 });
 
