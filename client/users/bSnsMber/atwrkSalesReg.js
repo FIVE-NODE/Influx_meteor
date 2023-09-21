@@ -30,8 +30,12 @@ Template.atwrkSalesReg.onCreated(function() {
     // 흥정셋팅 저장용
     setBargain = new ReactiveDict();
 
+    // 디지털판화면일때
+    onlyDtpChk = new ReactiveVar(false);
+
     Meteor.call('seltAtwrkSellSet', this.data.atwrkId(), function(err, res) {
         atwrkInfo.set(res);
+        if(Object.keys(res.ogPrt).length == 0) onlyDtpChk.set(true);
     });
 
     this.autorun(() => {
@@ -76,6 +80,15 @@ Template.atwrkSalesReg.onRendered(function() {
     $('span[name=dtSeltStrTime]').text(toTime);
     $('span[name=dtSeltEndDate]').text(today);
     $('span[name=dtSeltEndTime]').text(toTime);
+
+
+    setTimeout(function() {
+        if(onlyDtpChk.get()) {
+            let dtSell = $('#check-saleCondition--permit01');
+            dtSell.click();
+            dtSell.attr('disabled', true);
+        }
+    }, 600);
 
 });
 
@@ -235,7 +248,6 @@ Template.atwrkSalesReg.events({
         else {
             let atInfos = atwrkInfo.get();
             var today = moment(new Date()).format('YYYYMMDD hh:mm A');
-            console.log('today : ', today);
             var ogValidation = false;
             var dtValidation = true;
             var pupMsg = '';
@@ -373,7 +385,6 @@ function setDateTime (flag) {
 Template.atwrkSalesReg.helpers({
     atInfo() {
         if(atwrkInfo.get() != undefined && atwrkInfo.get() != null) {
-            console.log(atwrkInfo.get());
             return atwrkInfo.get();
         }
     },
@@ -415,10 +426,12 @@ Template.atwrkSalesReg.helpers({
         }
     },
     seltBargain2() {
-        setBargain
         if(setBargain.get('seltBargain2') != undefined)  {
             return setBargain.get('seltBargain2');
         }
+    },
+    onlyDtp() {
+        return onlyDtpChk.get();
     }
     
 });

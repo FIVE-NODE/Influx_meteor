@@ -42,8 +42,6 @@ Template.deliveryList.events({
 
         editDelivData.set(seltPastDelivData);
 
-        console.log(this);
-
         $('input[name=editRecptnNm]').val(seltPastDelivData.recptnNm);
         $('input[name=editDelivNm]').val(seltPastDelivData.delivNm);
         $('input[name=editMob1]').val(mobList[0]);

@@ -8,6 +8,7 @@ const numberChk = /[^0-9.]/g;
 const comma = /\B(?=(\d{3})+(?!\d))/g;
 
 Template.ogAtwrkCr.onCreated(function() {
+    console.log('this : ', this.data.flag());
     // 작품 플래그
     atwrkFlag = new ReactiveVar(this.data.flag());
 

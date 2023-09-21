@@ -284,7 +284,7 @@ Template.atwrkDetail.events({
     'click button[name=psCnt]'(evt, tmpl) {
         var index = $(evt.currentTarget).val();
         var inputVal = parseInt($(`#cnt${index}`).val());
-        console.log(limitCnt.get());
+        
         if(digitalCnt.get() >= limitCnt.get()) {
             alert(`최대 구매 가능한 갯수는 ${limitCnt.get()}개 입니다.`);
         } else {

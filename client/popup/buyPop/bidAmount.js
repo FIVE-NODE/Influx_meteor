@@ -47,7 +47,6 @@ Template.bidAmount.helpers({
     },
     autoPricBid(perSent) {
         if(this.ogPrt.bid.nPric != undefined) {
-            console.log(perSent)
             var nPric = this.ogPrt.bid.nPric;
             var chPric = Math.floor((nPric * perSent) + nPric);
             return chPric;

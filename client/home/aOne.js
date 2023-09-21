@@ -130,10 +130,6 @@ Template.aOne.onRendered(function() {
         var location = $('#headerPs').offset().top;
         Meteor.commonUtils.scrollTop(location);
     }, 50);
-
-    // setTimeout(function() {
-    //     console.log(' ============= ', PageList.findOne({}));
-    // }, 1000);
 });
 
 Template.aOne.events({

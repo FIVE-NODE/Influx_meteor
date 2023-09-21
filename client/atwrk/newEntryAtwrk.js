@@ -27,8 +27,6 @@ Template.newEntryAtwrk.onCreated(function() {
         limit: limit.get()
     };
 
-    console.log(query);
-
     Meteor.commonUtils.commonOriginalAtwrk(query, options);
 });
 

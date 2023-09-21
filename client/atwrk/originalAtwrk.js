@@ -30,7 +30,7 @@ function seltAtwrkSetList() {
         if(i === (chked.length -1)) queryData[beforKind] = dataList;
     }
     filters.set(queryData);
-    console.log(Object.keys(queryData).includes('ATSTNM'));
+    
     if(Object.keys(queryData).includes('ATSTNM')) {
         atstFilterHeader.set(queryData);
     } else {

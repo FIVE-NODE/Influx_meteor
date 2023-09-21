@@ -46,10 +46,6 @@ Template.myPageSelling.onCreated(function() {
 function seltTabAtwrk() {
     Meteor.call('seltTabAtwrk', query, options, function(err, res) {
         total.set(res.total);
-        // const moment = require('moment'); require('moment-timezone');
-        // const t1 = moment('20000201');
-        // const t2 = moment('20000301');
-        // console.log(moment.duration(t2.diff(t1)).asDays());
         atwrkInfo.set(res.list);
     });
 }

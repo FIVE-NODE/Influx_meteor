@@ -674,8 +674,6 @@ Meteor.methods({
         let res = {};
         let userId = Meteor.userId();
 
-        console.log(userId);
-
         if(data.defDelivYn == 'Y') {
           Meteor.users.update({ _id : userId, 'profile.uInfos.deliv.defDelivYn' : 'Y'}, { $set : { 'profile.uInfos.deliv.$.defDelivYn' : 'N'}});
           res = Meteor.users.update({_id : userId}, { $addToSet : { 'profile.uInfos.deliv' : data }});

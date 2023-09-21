@@ -44,7 +44,6 @@ Template.registerHelper('selectMainImage', function(data) {
     var mainImage = '';
     var images = data.image;
     for(idx in images) {
-        console.log('sel', images[idx].rprsn);
         if(images[idx].rprsn == 'Y'){
             mainImage = images[idx].imgID;
             return mainImage;

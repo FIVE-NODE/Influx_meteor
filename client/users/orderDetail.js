@@ -15,7 +15,6 @@ Template.orderDetail.onCreated(function() {
 function seltOrderDetail() {
     Meteor.call('seltOrderDetail', FlowRouter.getParam('_id'),function(err, res) {
         orderDetilInfo.set(res);
-        console.log(orderDetilInfo.get());
     });
 }
 
@@ -53,7 +52,6 @@ Template.orderDetail.helpers({
     },
     atwrkInfos() {
         let info = Atwrk.findOne({_id : this.atwrkID});
-        console.log(info);
         return info;
     },
     confirmPurch(insDt) {

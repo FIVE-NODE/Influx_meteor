@@ -15,7 +15,7 @@ Meteor.clientCommonUtils = {
     },
     prevPage : function(curPage, total, limit, skip) {
         var res = true;
-        console.log(curPage.get());
+        
         if((curPage.get() -  1) == 0) ;
         else {
             curPage.set(curPage.get() - 1);

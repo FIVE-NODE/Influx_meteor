@@ -189,8 +189,6 @@ Template.changeMberInfo.events({
 
         var defadres = {};
         var deliv = uInfo.get().deliv;
-
-        console.log(deliv);
         
         deliv.forEach(function(val, num) {
             if(val.defDelivYn == 'Y') defadres = val;

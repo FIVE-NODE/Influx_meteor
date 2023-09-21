@@ -17,6 +17,9 @@
                         <div class="saleCondition-wrap mt-40">
                             <div class="saleCondition__inner width--950 mx-auto">
                                 <div class="saleCondition-checks">
+                                    {{#if onlyDtp}}
+                                        <div style="margin-top: 150px; margin-bottom: 150px;"></div>
+                                    {{else}}
                                     <h4 class="saleCondition__tit">판매 방식선택</h4>
                                     <div class="saleCondition-block saleCondition-block--method mt-10">
                                         <div class="form-wrap">
@@ -171,6 +174,7 @@
                                             </div>
                                         </div>
                                     {{/if}}
+                                    {{/if}}
 
                                     <h4 class="saleCondition__tit"></h4>
                                     {{#if dtPrtChk}}
@@ -178,7 +182,7 @@
                                         <div class="form-wrap">
                                             <div class="form-check">
                                                     <label for="check-saleCondition--permit01">
-                                                        <span>디지털 판화 동시판매 허용 </span>
+                                                        <span name="dtText">디지털 판화 동시판매 허용 </span>
                                                         <input type="checkbox" id="check-saleCondition--permit01">
                                                     </label>
                                             </div>
@@ -239,19 +243,31 @@
                                         <span class="font-24 fontW-b font-pre">{{dtTotalPric}}   원</span> 
                                     </div>
                                     </div>
-
                                 </div>
                                 {{#with atInfo}}
-                                <div class="saleCondition-profile">
-                                    <span class="saleCondition-profile__img">
-                                        <img class="imgfitset" src="{{selectMainImage this}}" alt="">
-                                    </span>
-                                    <p class="saleCondition-profile__txt">
-                                            <strong>{{atstInfo.atstNm}}</strong>
-                                            <span>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName ogPrt.metRias "MATERIAL"}}</span>
-                                            <em>{{commaPric ogPrt.pric}} 원</em>
-                                        </p>
-                                </div>
+                                    {{#if onlyDtp}}
+                                        <div class="saleCondition-profile">
+                                            <span class="saleCondition-profile__img">
+                                                <img class="imgfitset" src="{{selectMainImage this}}" alt="">
+                                            </span>
+                                            <p class="saleCondition-profile__txt">
+                                                <strong>{{atstInfo.atstNm}}</strong>
+                                                <span>{{dtPrt.atwrkNm}}, {{codeToName dtPrt.base "BASE"}}</span>
+                                                <em>{{commaPric dtPrt.sPric}} 원</em>
+                                            </p>
+                                        </div>
+                                    {{else}}
+                                        <div class="saleCondition-profile">
+                                            <span class="saleCondition-profile__img">
+                                                <img class="imgfitset" src="{{selectMainImage this}}" alt="">
+                                            </span>
+                                            <p class="saleCondition-profile__txt">
+                                                <strong>{{atstInfo.atstNm}}</strong>
+                                                <span>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName ogPrt.metRias "MATERIAL"}}</span>
+                                                <em>{{commaPric ogPrt.pric}} 원</em>
+                                            </p>
+                                        </div>
+                                    {{/if}}
                                 {{/with}}
                                 <div class="btn-wrap mt-100 mb-100 ta-c">
                                     <button type="button" name="cancel" class="exbtn-simple btn--round btn--white height-40 width--149 font-pre">취     소</button>

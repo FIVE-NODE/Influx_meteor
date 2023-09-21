@@ -85,8 +85,6 @@ Template.deliveryReg.events({
         address(tmpl);
     },
     'click button[name=delivIns]'(evt, tmpl) {
-        console.log(' ============= ');
-
         var recptnNm = $('input[name=recptnNm]').val().trim();
 
         var delivNm = $('input[name=delivNm]').val();

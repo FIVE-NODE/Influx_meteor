@@ -132,7 +132,7 @@ function sltUserCart() {
 
         atwrkList.set(setData);
         glryList.set(glry);
-        console.log('list length', atwrkList.get().length);
+        
         totalProCnt.set(atwrkList.get().length);
 
         renderFlag.set(true);
@@ -213,7 +213,7 @@ Template.userCart.events({
         var seltPrtChk = $('input[name=seltPro]:checked');
         var sendData = [];
         var setData = atwrkList.get();
-        console.log(setData);
+        
         if(seltPrtChk.length == 0) {
             messagePopup({message : '1개이상 선택해주세요'});
         } else {
@@ -225,8 +225,6 @@ Template.userCart.events({
                 data.cnt = getCnt;
                 sendData.push(data);
             }
-
-            console.log(sendData);
     
             Meteor.call('encrypt', JSON.stringify(sendData), function(err, res){
                 localStorage.setItem('if.ba.to', JSON.stringify({l : 'all'}));

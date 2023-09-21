@@ -40,7 +40,7 @@ Template.exhibitionEvnt.onCreated(function() {
 
     selectExhigitionEvntBanr();
 
-    selectExhigitionEvntList();
+    if(this.data.schQueryData() == undefined) selectExhigitionEvntList();
 
     this.autorun(function() {
         if(Template.currentData().schQueryData() !== undefined) {

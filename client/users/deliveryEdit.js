@@ -39,7 +39,6 @@ function maxLengthCheck(object){
 
 Template.deliveryEdit.events({
     'change #check-addrWrite--no-edit'(evt, tmpl) {
-        console.log(' ============ ', $('#check-addrWrite--no-edit').is(':checked'));
         if($('#check-addrWrite--no-edit').is(':checked')) {
             $('.homephones').attr('disabled', true);
             homePhChk.set(true);
