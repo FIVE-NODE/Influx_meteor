@@ -8,7 +8,6 @@ const numberChk = /[^0-9.]/g;
 const comma = /\B(?=(\d{3})+(?!\d))/g;
 
 Template.ogAtwrkCr.onCreated(function() {
-    console.log('this : ', this.data.flag());
     // 작품 플래그
     atwrkFlag = new ReactiveVar(this.data.flag());
 
@@ -48,7 +47,7 @@ Template.ogAtwrkCr.onCreated(function() {
     deleteList = new ReactiveVar([]);
 
     if(this.data.atwrkId() != undefined) {
-        Meteor.call('selectAtwrkDetail', this.data.atwrkId(), function(err, res) {
+        Meteor.call('selectAtwrkDetail', this.data.atwrkId(), 'N', function(err, res) {
             atwrkInfo.set(res);
 
             // 업데이트 수정 로직 (데이터 셋)
@@ -56,12 +55,10 @@ Template.ogAtwrkCr.onCreated(function() {
                 var atInfo = atwrkInfo.get();
 
                 // 작품 구분 셋팅
-                if(atInfo.atwrkTp == '001') $('#check-writeInfo--productAdmit--01').prop('checked', true);
-                else if(atInfo.atwrkTp == '002') {
-                    $('#check-writeInfo--productAdmit--02').prop('checked', true);
-                    $('div[name=catelogDiv]').css({'display' : 'none'});
-                }
-                else $('#check-writeInfo--productAdmit--03').prop('checked', true);
+                if(atInfo.atwrkTp == '001')$('#check-writeInfo--productAdmit--01').click();
+                else if(atInfo.atwrkTp == '002') $('#check-writeInfo--productAdmit--02').click();
+                else $('#check-writeInfo--productAdmit--03').click();
+
                 atwrkFlag.set(atInfo.atwrkTp);
 
                 var image = atInfo.image;
@@ -102,9 +99,9 @@ Template.ogAtwrkCr.onCreated(function() {
                 $('textarea[name=atstAddDesc]').val(atInfo.atstInfo.atstAddDesc);
                 
                 pricDisalbledSet(atInfo.atwrkTp);
-
+                
                 // 작품 제목, 제작년도 크기
-                if(atInfo.atwrk == '002') {
+                if(atInfo.atwrkTp == '002') {
                     $('input[name=atwrkNm]').val(atInfo.dtPrt.atwrkNm);
                     $('input[name=mkYY]').val(atInfo.dtPrt.mkYY);
                     $('input[name=002Pric]').val(atInfo.dtPrt.sPric);
@@ -115,6 +112,8 @@ Template.ogAtwrkCr.onCreated(function() {
                     style1.set(atInfo.dtPrt.style1);
                     $(`button[name=seltStyle2]`).text($(`#STYLE2_${atInfo.dtPrt.style2}`).text());
                     style2.set(atInfo.dtPrt.style2);
+
+                    $('input[name=002Pric]').val(atInfo.dtPrt.sPric.toString().replace(comma,','));
                 } else {
                     $('input[name=atwrkNm]').val(atInfo.ogPrt.atwrkNm);
                     $('input[name=mkYY]').val(atInfo.ogPrt.mkYY);
@@ -137,41 +136,42 @@ Template.ogAtwrkCr.onCreated(function() {
                     }
 
                     $('input[name=001Pric]').val(atInfo.ogPrt.pric.toString().replace(comma,','));
+
                     if(atInfo.atwrkTp == '003') $('input[name=002Pric]').val(atInfo.dtPrt.sPric.toString().replace(comma,','));
                 }
 
-                switch(atInfo.ogPrt.wartyYn) {
-                    case '001':
-                        $('#check-writeInfo--hasInsuranceY').prop('checked', true);
-                        guarantee.set('001');
-                        break;
-                    case '002':
-                        $('#check-writeInfo--hasInsuranceN').prop('checked', true);
-                        $('#check-writeInfo--admitInsuranceY').prop('checked', true);
-                        guarantee.set('002');
-                        break;
-                    default:
-                        $('#check-writeInfo--hasInsuranceN').prop('checked', true);
-                        $('#check-writeInfo--admitInsuranceN').prop('checked', true);
-                        guarantee.set('003');
-                        break;
+                if(Object.keys(atInfo.ogPrt) != 0) {
+                    switch(atInfo.ogPrt.wartyYn) {
+                        case '001':
+                            $('#check-writeInfo--hasInsuranceY').prop('checked', true);
+                            guarantee.set('001');
+                            break;
+                        case '002':
+                            $('#check-writeInfo--hasInsuranceN').prop('checked', true);
+                            $('#check-writeInfo--admitInsuranceY').prop('checked', true);
+                            guarantee.set('002');
+                            break;
+                        default:
+                            $('#check-writeInfo--hasInsuranceN').prop('checked', true);
+                            $('#check-writeInfo--admitInsuranceN').prop('checked', true);
+                            guarantee.set('003');
+                            break;
+                    }
+    
+                    if(atInfo.ogPrt.catgYn == 'Y') {
+                        $('#check-writeInfo--catalogY').prop('checked', true);
+                        catalog.set('Y');
+                    } else {
+                        $('#check-writeInfo--catalogN').prop('checked', true);
+                        catalog.set('N');
+                    }
                 }
-
-                if(atInfo.ogPrt.catgYn == 'Y') {
-                    $('#check-writeInfo--catalogY').prop('checked', true);
-                    catalog.set('Y');
-                } else {
-                    $('#check-writeInfo--catalogN').prop('checked', true);
-                    catalog.set('N');
-                }
+                
 
                 updateFlag.set(true);
             }
         });
     }
-
-    this.autorun(() => {
-    });
 });
 
 Template.ogAtwrkCr.onRendered(function() {
@@ -187,7 +187,7 @@ Template.ogAtwrkCr.onRendered(function() {
 // 인풋 콤마 찍기
 function inputComma(pric) {
     var pricVal = pric.val().toString();
-    pric.val(pricVal.replace(numberChk, '').replace(comma, ','));
+    pric.val(Meteor.clientCommonUtils.onlyNumAndComma(pricVal));
 }
 
 // 팝업 메시지 띄우기
@@ -196,8 +196,20 @@ function messagePopup(message) {
     $('#utilsPopUp').addClass('is-open');
 }
 
+// 작품 등록시 선택한 것에 따른 display 변경
+function flagSetDislay(display) {
+    $('dt[name=ogSizeDt]').css('display', display);
+    $('dd[name=ogSizeDd]').css('display', display);
+    
+    $('dt[name=ogMediDt]').css('display', display);
+    $('dd[name=ogMediDd]').css('display', display);
+    
+    $('dt[name=ogMateDt]').css('display', display);
+    $('dd[name=ogMateDd]').css('display', display);   
+}
 
-// 금액별 CSS 셋팅
+
+// 등록 Flag 별 CSS 셋팅
 function pricDisalbledSet(flag) {
     switch(flag) {
         case '003':
@@ -211,6 +223,8 @@ function pricDisalbledSet(flag) {
 
             $('dt[name=baseDt]').css('display', '');
             $('dd[name=baseDd]').css('display', '');
+
+            flagSetDislay('');
             break;
         default:
             $(`input[name=${flag}Pric]`).prop('disabled', false);
@@ -220,6 +234,10 @@ function pricDisalbledSet(flag) {
             if(flag == 002) {
                 $('dt[name=baseDt]').css('display', '');
                 $('dd[name=baseDd]').css('display', '');
+
+                flagSetDislay('none');
+            } else {
+                flagSetDislay('');
             }
 
             flag = flag == '001' ? '002' : '001';
@@ -240,9 +258,15 @@ Template.ogAtwrkCr.events({
         pricDisalbledSet(flag);
         if(flag == '002') {
             $('div[name=catelogDiv]').css({'display' : 'none'});
+            $('dd[name=guarantee]').css({'display' : 'none'});
+            $('dt[name=guarantee]').css({'display' : 'none'});
             $('#check-writeInfo--catalogN').prop('checked', true);
             catalog.set('N');
-        } else $('div[name=catelogDiv]').css({'display' : ''});
+        } else {
+            $('dd[name=guarantee]').css({'display' : ''});
+            $('dt[name=guarantee]').css({'display' : ''});
+            $('div[name=catelogDiv]').css({'display' : ''});
+        }
     },
     // 보증서 여/부
     'change input[name=check-writeInfo--hasInsurance]'(evt, tmpl) {

@@ -412,13 +412,13 @@ Meteor.methods({
       }
     },
     // 작품 ID 로 작품 조회
-    selectAtwrkDetail: function(_id) {
+    selectAtwrkDetail: function(_id, sellYn) {
       try{
         let normal = {
           '_id' : _id,
           "delYn" : "N",
           "soldYn" : "N",
-          "sellYn" : "Y"
+          sellYn
         };
 
         let res = Atwrk.findOne(normal);

@@ -32,12 +32,14 @@ Template.header.onCreated(function() {
     selectQuickMu();
 
     this.autorun(function() {
-        let user = Meteor.user();
-        if(user != undefined && likeAtwrkList.get() == undefined) {
-            if(user.profile.uInfos.ogPrtGood != undefined) {
-                let data = user.profile.uInfos.ogPrtGood.concat(user.profile.uInfos.dtPrtGood);
-                sltInterestAtwrkCnt(data);
-            }
+        if(Meteor.user() != undefined) {
+            let data = Meteor.user().profile.uInfos.ogPrtGood.concat(Meteor.user().profile.uInfos.dtPrtGood);
+            sltInterestAtwrkCnt(data);
+            // if(Meteor.user().profile.uInfos.ogPrtGood != undefined) {
+            //     let data = Meteor.user().profile.uInfos.ogPrtGood.concat(Meteor.user().profile.uInfos.dtPrtGood);
+            //     console.log(data);
+            //     sltInterestAtwrkCnt(data);
+            // }
         }
     });
 

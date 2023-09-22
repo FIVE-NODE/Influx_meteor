@@ -209,7 +209,7 @@ Template.userCart.events({
         });
     },
     'click button[name=seltBuyBtn]'(evt, tmpl) {
-        // 선택한 작품 결재 페이지로 이동
+        // 선택한 작품 결제 페이지로 이동
         var seltPrtChk = $('input[name=seltPro]:checked');
         var sendData = [];
         var setData = atwrkList.get();

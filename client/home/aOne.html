@@ -85,7 +85,10 @@
                                         </div>
                                     {{/each}}
                                 {{else}}
-                                    {{{loadingScr "sampleTest"}}}
+                                    {{#if dataSetChk pick}}
+                                        {{{loadingScr "sampleTest"}}}
+                                    {{else}}
+                                    {{/if}}
                                 {{/if}}
                             </div>
                         </div>
@@ -137,8 +140,8 @@
                                     {{/each}}
                                 {{else}}
                                     {{#if dataSetChk atwrk}}
-                                    {{else}}
                                         {{{loadingScr "sampleTest"}}}
+                                    {{else}}
                                     {{/if}}
                                 {{/if}}
                             </div>

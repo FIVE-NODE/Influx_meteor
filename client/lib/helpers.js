@@ -229,10 +229,10 @@ Template.registerHelper('dataChk', function() {
 
 // 메인 화면 데이터 없는지 있는지 확인
 Template.registerHelper('dataSetChk', function(data) {
-    if(data == undefined)  {
+    if(data == undefined || data.length == 0)  {
         setTimeout(function(){ 
-            return false;
-        }, 600);
+            return true;
+        }, 700);
     } else {
         return true;
     }

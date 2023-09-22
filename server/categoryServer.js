@@ -115,7 +115,8 @@ Meteor.methods({
         var normal = {
           'dtPrt.atwrkNm' : { $exists: true },
           "delYn" : "N",
-          "soldYn" : "N"
+          "soldYn" : "N",
+          "sellYn" : "Y"
         };
 
         let res = Atwrk.find(normal, { limit: 10, sort : { 'dtPrt.goodCnt' : -1 }}).fetch();
@@ -302,7 +303,13 @@ Meteor.methods({
     // 관심작품 조회 List
     sltInterestAtwrk: function(data, option) {
       try {
-        let res = Atwrk.find({ _id : { $in : data } }).fetch();
+        var normal = {
+          _id : { $in : data },
+          "delYn" : "N",
+          "soldYn" : "N",
+          "sellYn" : "Y"
+        };
+        let res = Atwrk.find(normal).fetch();
 
         return res;
       } catch(e) {
@@ -316,7 +323,13 @@ Meteor.methods({
     // 관심작품 리스트 cnt
     sltInterestAtwrkCnt: function(data) {
       try {
-        let res = Atwrk.find({ _id : { $in : data } }).count();
+        var normal = {
+          _id : { $in : data },
+          "delYn" : "N",
+          "soldYn" : "N",
+          "sellYn" : "Y"
+        };
+        let res = Atwrk.find(normal).count();
 
         return res;
       } catch(e) {
@@ -329,7 +342,14 @@ Meteor.methods({
     },
     sltUserCart: function(data) {
       try {
-        let res = Atwrk.find({ _id : { $in : data } }).fetch();
+        var normal = { 
+          _id : { $in : data },
+          'soldYn' : 'N',
+          'delYn' : 'N',
+          'sellYn' : 'Y'
+        };
+
+        let res = Atwrk.find(normal).fetch();
 
         return res;
       }  catch(e) {

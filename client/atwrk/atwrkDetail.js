@@ -89,12 +89,15 @@ Template.atwrkDetail.onCreated(function() {
         if(userData != undefined && userInfos.get() == undefined) {
             userInfos.set(userData.profile.uInfos);
         }
+
+        if(FlowRouter.getParam('_id')) {
+            console.log(' === ! ');
+            selectAtwrkDetail();
+        }
     });
 
-    selectAtwrkDetail();
-
     function selectAtwrkDetail () {
-        Meteor.call('selectAtwrkDetail', FlowRouter.getParam('_id'), function(err, res) {
+        Meteor.call('selectAtwrkDetail', FlowRouter.getParam('_id'), 'Y', function(err, res) {
             
             // 원화가 없는경우 dtPrt 디지털 판화로 셋팅
             if(res.ogPrt.atwrkNm === undefined) tabFlag.set('dtPrt');
@@ -117,18 +120,20 @@ Template.atwrkDetail.onCreated(function() {
 
                 normalPric.set(res.dtPrt.sPric);
 
-                // 구매정보 셋팅
-                listProduct.set([
-                    {
-                        atwrkFlag: 'dtPrt',
-                        atwrkId : res._id,
-                        cnt : 1,
-                        option: {
-                            size : 'S',
-                            frame : '알루미늄'
+                if(listProduct.get().length == 0) {
+                    // 구매정보 셋팅
+                    listProduct.set([
+                        {
+                            atwrkFlag: 'dtPrt',
+                            atwrkId : res._id,
+                            cnt : 1,
+                            option: {
+                                size : 'S',
+                                frame : '알루미늄'
+                            }
                         }
-                    }
-                ])
+                    ]);
+                }
             }
 
             if(userInfos.get() != undefined) {
@@ -361,9 +366,17 @@ Template.atwrkDetail.events({
         });
     },
     // 구매하기 디지털 판화
-    'click button[name=dtPrtBuy]'(evt, tmpl) {
-        Meteor.call('encrypt', JSON.stringify(detail.get()), function(err, res) {
-            localStorage.setItem('art_od', res);
+    'click a[name=dtPrtBuy]'(evt, tmpl) {
+        let dtpData = listProduct.get();
+    
+        for(var i=0; i<dtpData.length; i++) {
+             dtpData[i].atwrkInfo = this;;
+        }
+
+        Meteor.call('encrypt', JSON.stringify(dtpData), function(err, res) {
+            localStorage.setItem('if.ba.to', JSON.stringify({l : 'dir'}));
+            localStorage.setItem('crt_bundle', res);
+            FlowRouter.go('/approval', {});
         });
     },
     // 드래그 투 무브 이벤트
@@ -511,7 +524,7 @@ Template.atwrkDetail.events({
     'click a[name=otherAtwrk]'(evt, tmpl) {
         var atwrkId = $(evt.currentTarget).attr('id');
         FlowRouter.go(`/atwrkDetail/${atwrkId}`);
-        location.reload();
+        // location.reload();
     }
 });
 

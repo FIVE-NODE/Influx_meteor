@@ -105,9 +105,9 @@ Template.deliveryReg.events({
 
         if(recptnNm == '')                              messagePopup({message : '수령인을 입력해주세요'});
         else if(mob1 == '' || mob2 == '' || mob3 == '') messagePopup({message : '휴대전화를 정확하게 입력해주세요'});
-        else if(!homePhChk.get()) {
-            if(homePhone1 == '' || homePhone2 == '' || homePhone3 == '') messagePopup({message : '전화번호를 입력해주세요'});
-        } else if(addr2 == '') {
+        else if((!homePhChk.get()) && (homePhone1 == '' || homePhone2 == '' || homePhone3 == '')) {
+            messagePopup({message : '전화번호를 입력해주세요'});
+        } else if(addr2 == '' || addr1 == '') {
             messagePopup({message : '주소를 입력해주세요'});
         } else { 
             var mobSet = mob1 + ' ' + mob2 + ' ' + mob3;

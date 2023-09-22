@@ -43,7 +43,8 @@
                                             <div class="lnb-cont__list">
                                                 <div class="form-wrap" id="artwork-price">
                                                     {{#each priceOgPrt}}
-                                                        <div class="form-radio form-row">
+                                                    <!-- style="{{styles @index}}" -->
+                                                        <div class="form-radio form-row" >
                                                             <input {{leftFilterChk "ARTWORK_PRICE_OGPRT" this.code}} value="ARTWORK_PRICE_OGPRT-{{code}}" type="radio" name="filterChk" class="form-radio__input" id="radio-lnb--price{{code}}">
                                                             <label for="radio-lnb--price{{code}}">{{name}}</label>
                                                         </div>
@@ -51,7 +52,7 @@
                                                 </div>
                                             </div>
                                             <div class="lnb-cont__link">
-                                                <a href="">더보기</a>
+                                                <a href="" value="PRICE">더보기</a>
                                                 <button name="priceCancelBtn" type="button">선택해제</button>
                                             </div>
                                         </div>

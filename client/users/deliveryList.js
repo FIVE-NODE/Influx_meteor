@@ -31,6 +31,24 @@ Template.deliveryList.events({
 
         Meteor.call('defaultDelivChg', selectDelivData.get());
     },
+    // 배송지 등록
+    'click button[name=delivRegBtn]'(evt, tmpl) {
+        $('input[name=recptnNm]').val('');
+        $('input[name=delivNm]').val('');
+        $('input[name=mob1]').val('');
+        $('input[name=mob2]').val('');
+        $('input[name=mob3]').val('');
+        $('input[name=homePhone1]').val('');
+        $('input[name=homePhone2]').val('');
+        $('input[name=homePhone3]').val('');
+        $('input[name=zipCode]').val('');
+        $('input[name=address]').val('');
+        $('input[name=addr2]').val('');
+        $('input[name=delivReqEtc]').val('');
+        
+        $('#check-addrWrite--default').prop('checked', false);
+        $('#check-addrWrite--no').prop('checked', false);
+    },
     // 배송지 수정
     'click button[name=delivEdit]'(evt, tmpl) {
         var evntId = $(evt.currentTarget).val();

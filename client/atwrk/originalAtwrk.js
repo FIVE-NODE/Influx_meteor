@@ -107,6 +107,18 @@ function eventSet(name) {
 }
 
 Template.originalAtwrk.events({
+    // 더보기 이벤트
+    // 'click a[name=moreInfo]'(evt, tmpl) {
+    //     var val = $(evt.currentTarget).attr('value');
+    //     let divs = $(`div[name=${val}]`);
+    //     for(var i=0; i<divs.length; i++) {
+    //         if($(divs[i]).css("display") == "none") {
+    //             $(divs[i]).css('display', 'block');
+    //         } else if($(divs[i]).css("display") == "block") {
+    //             $(divs[i]).css('display', 'none');
+    //         }
+    //     }        
+    // },
     'click button[name=allCancel]'() {
         $('input[name=filterChk]').prop('checked', false);
         seltAtwrkSetList();
@@ -262,6 +274,11 @@ Template.originalAtwrk.helpers({
     },
     renderEnd() {
         return true;
+    },
+    styles(idx) {
+        if(idx > 3) {
+            return `style="display: none;"`;
+        }
     }
 });
   

@@ -27,7 +27,7 @@ Template.msgManage.onRendered(function() {
 Template.msgManage.events({
     'click button[name=sendToGlry]'(evt, tmpl) {
         var index = $(evt.currentTarget).attr('id');
-        messagePopup('결재연동 준비중 입니다.');
+        messagePopup('결제연동 준비중 입니다.');
     },
     'click button[name=delBtn]' (evt, tmpl) {
         var evtTarget = $(evt.currentTarget);

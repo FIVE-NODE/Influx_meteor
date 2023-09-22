@@ -50,7 +50,7 @@ Template.bidAmtProcess.helpers({
     bidVat() {
         if(selectBidPrice.get() != undefined) {
             var selectBidPric = selectBidPrice.get();
-            var bidVatPric = (selectBidPric * 0.15);
+            var bidVatPric = Math.floor((selectBidPric * 0.15));
             vatPric.set(bidVatPric);
             return Meteor.commonUtils.priceComma(bidVatPric);
         }
@@ -58,7 +58,7 @@ Template.bidAmtProcess.helpers({
     bidPuyPric() {
         if(selectBidPrice.get() != undefined) {
             var selectBidPric = selectBidPrice.get();
-            var bidVatPric = (selectBidPric * 0.15) + selectBidPric;
+            var bidVatPric = Math.floor((selectBidPric * 0.15) + selectBidPric);
             totalPric.set(bidVatPric);
             return Meteor.commonUtils.priceComma(bidVatPric);
         }
