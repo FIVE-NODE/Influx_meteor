@@ -177,7 +177,7 @@ Template.glyAppEntry.events({
                 if(error) {
                     console.log(error);
                     if(error.error == 403) messagePopup({message : '이미 등록된 갤러리 이메일 입니다.'});
-                }else {
+                } else {
                     // messagePopup({message : '계정 생성 및 메시지 전송까지 3초정도 소요됩니다.'});
     
                     Meteor.logout(function(err) {
