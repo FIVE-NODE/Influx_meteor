@@ -5,7 +5,27 @@ $(function(){
     fileUpload();
     // buttonCount();
     slideMenu();
+    mobileMenu();
+    
+    const gnbSwiper = new Swiper('.gnb.swiper', {
+        slidesPerView:'auto',
+        breakpoints:{
+            320:{
+                allowTouchMove:true,
+                spaceBetween:30,
+            },
+            720:{
+                spaceBetween:40,
+            },
+            1400:{
+                allowTouchMove:false,
+                spaceBetween:60,
+            }
+        }
+    });
+
 });
+
 
 function slideMenu(){
     const slideMenuBtn = $('.slideMenu__btn'),
@@ -148,5 +168,49 @@ function buttonCount(){
     }
     });
 }
+
+function mobileMenu(){
+    $('.btn-mobile').on('click', function(){
+        $('.sideMenu-mo').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+    })
+    $('.btn-sideMenu__close').on('click', function(){
+        $('.sideMenu-mo').removeClass('is-open');
+        $('body').css('overflow', 'initial');
+    })
+}
+
+$(window).on('scroll', function(){
+    var scrollTop = $(window).scrollTop();
+    let winWh = $(window).width();
+    if( winWh <= 1280){
+        if ( scrollTop > 1) {
+            $('.header__top').addClass('solid');
+            $('.header__bottom').addClass('move-down');
+            $('.container').addClass('move-down');
+        } else {
+            $('.header__top').removeClass('solid');
+            $('.header__bottom').removeClass('move-down');
+            $('.container').removeClass('move-down');
+        };
+        if ( scrollTop > 180) {
+            $('.sort-group').addClass('solid');
+            $('.lnb-wrap').addClass('move-dowm');
+            $('.product-group').addClass('move-dowm');
+        }else{
+            $('.sort-group').removeClass('solid');
+            $('.lnb-wrap').removeClass('move-dowm');
+            $('.product-group').removeClass('move-dowm');
+        }
+    }else{
+        $('.header__top').removeClass('solid');
+        $('.header__bottom').removeClass('move-down');
+        $('.container').removeClass('move-down');
+        $('.sort-group').removeClass('solid');
+        $('.lnb-wrap').removeClass('move-dowm');
+        $('.product-group').removeClass('move-dowm');
+    }
+}).trigger('scroll');
+
 
 // javascript
