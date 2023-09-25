@@ -139,7 +139,8 @@ Meteor.methods({
         var normal = {
           'dtPrt.atwrkNm' : { $exists: true },
           "delYn" : "N",
-          "soldYn" : "N"
+          "soldYn" : "N",
+          "sellYn" : "Y"
         };
 
         if(!(Object.keys(data).length === 0)) {

@@ -33,13 +33,10 @@ Template.header.onCreated(function() {
 
     this.autorun(function() {
         if(Meteor.user() != undefined) {
-            let data = Meteor.user().profile.uInfos.ogPrtGood.concat(Meteor.user().profile.uInfos.dtPrtGood);
-            sltInterestAtwrkCnt(data);
-            // if(Meteor.user().profile.uInfos.ogPrtGood != undefined) {
-            //     let data = Meteor.user().profile.uInfos.ogPrtGood.concat(Meteor.user().profile.uInfos.dtPrtGood);
-            //     console.log(data);
-            //     sltInterestAtwrkCnt(data);
-            // }
+            if(Meteor.user().profile.uInfos.ogPrtGood != undefined) {
+                let data = Meteor.user().profile.uInfos.ogPrtGood.concat(Meteor.user().profile.uInfos.dtPrtGood);
+                sltInterestAtwrkCnt(data);
+            }
         }
     });
 
@@ -214,7 +211,7 @@ Template.header.helpers({
     cartCount() {
         if(Meteor.user() != undefined) {
             var uInfos = Meteor.user().profile.uInfos;
-            return uInfos.cart.length;
+            if(uInfos.cart != undefined) return uInfos.cart.length;
         }
     },
     likeCount() {
@@ -225,7 +222,7 @@ Template.header.helpers({
     ntcnCount() {
         if(Meteor.user() != undefined) {
             var uInfos = Meteor.user().profile.uInfos;
-            return uInfos.getNtcn.length;
+            if(uInfos.getNtcn != undefined) return uInfos.getNtcn.length;
         }
     },
     loginChk() {
