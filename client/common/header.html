@@ -62,7 +62,9 @@
                         
                         <span class="nav-btn__img">
                             {{#if loginChk}}
-                                <span class="secondary-nav__items-count notification-badge items js-wishlist-number">{{ntcnCount}}</span>
+                                {{#if ntcnCount}}
+                                    <span class="secondary-nav__items-count notification-badge items js-wishlist-number">{{ntcnCount}}</span>
+                                {{/if}}
                             {{/if}}
                             <img src="/image/common/icon/icon-bell.png" alt="">
                         </span>
@@ -72,14 +74,18 @@
                     {{#if userChk}}
                         <button value="/interestAtwrk" name="headerBtnMenu"  type="button" class="nav-btn nav-btn--favor">
                             <span class="nav-btn__img">
-                                <span class="secondary-nav__items-count notification-badge items js-wishlist-number">{{likeCount}}</span>
+                                {{#if likeCount}}
+                                    <span class="secondary-nav__items-count notification-badge items js-wishlist-number">{{likeCount}}</span>
+                                {{/if}}
                                 <img src="/image/common/icon/icon-heart.png" alt="">
                             </span>
                             <span class="nav-btn__txt">관 심</span>
                         </button>
                         <button value="/userCart" name="headerBtnMenu" type="button" class="nav-btn nav-btn--basket">
                             <span class="nav-btn__img">
-                                <span class="secondary-nav__items-count notification-badge items js-wishlist-number">{{cartCount}}</span>
+                                {{#if cartCount}}
+                                    <span class="secondary-nav__items-count notification-badge items js-wishlist-number">{{cartCount}}</span>
+                                {{/if}}
                                 <img src="/image/common/icon/icon-shopping-cart.png" alt="">
                             </span>
                             <span class="nav-btn__txt">장바구니</span>

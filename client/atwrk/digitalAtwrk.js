@@ -22,10 +22,6 @@ Template.digitalAtwrk.onCreated(function() {
     // sort 정보
     sortInfo = new ReactiveVar();
 
-    if(this.data.schQueryData() != undefined)  {
-        filters.set(JSON.parse(this.data.schQueryData()));
-    }
-
     query = {};
 
     options = {
@@ -33,8 +29,24 @@ Template.digitalAtwrk.onCreated(function() {
         limit: limit.get()
     };
 
+    this.autorun(function() {
+        if(Template.currentData().schQueryData() != undefined) {
+            let filterData = JSON.parse(Template.currentData().schQueryData());
+            if(filterData != undefined && Object.keys(filterData).length > 0) {
+                filters.set(filterData);
+
+                setQuery;
+
+                selectDigAtwrk();
+            }
+        } else {
+            filters.set({});
+            setQuery();
+            selectDigAtwrk();
+        }
+    });
+
     selectDigHotAtwrk();
-    selectDigAtwrk();
 });
 
 function selectDigAtwrk() {
