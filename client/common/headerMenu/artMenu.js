@@ -3,6 +3,7 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import './artMenu.html';
 
 Template.artMenu.onCreated(function() {
+    agFilterHeader = new ReactiveVar({});
     
     // 원화 와 디지털 판화 변경시 바뀌는 플레그
     artKindFlag = new ReactiveVar('ogPrt');
@@ -29,11 +30,6 @@ Template.artMenu.events({
     'click button[name=schBtn]'(evt, tmpl) {
         var chked = $('input[name=chk]:checked');
 
-        // $('#slideMenus').removeClass('is-open');
-        // $('#clickToArtwork').removeClass('is-open');
-        // $('#slideMenu-artwork-cont01').removeClass('is-open');
-        // $('#slideMenu-artwork-cont02').removeClass('is-open');
-        
 
         // 검색조건 하나라도 선택했을때
         if(chked.length > 0) {
@@ -68,11 +64,12 @@ Template.artMenu.events({
             } else {
                 FlowRouter.go('/digitalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
             }
-            
-            location.reload();
         } else {
             // 검색조건 하나도 선택하지 않았을때.
         }
+
+        $('#slideMenus').removeClass('is-open');
+        $('#clickToArtwork').removeClass('is-open');        
     }
     
 });
@@ -104,6 +101,20 @@ Template.artMenu.helpers({
     },
     base() {
         return Meteor.codes.BASE();
-    }
+    },
+    leftFilterChk(kind, code) {
+        var selectCodes = agFilterHeader.get()[kind];
+        for(idx in selectCodes) {
+            if(typeof selectCodes[idx] === 'object') {
+                if(selectCodes[idx].code === code) {
+                    return 'checked';
+                }
+            } else {
+                if(selectCodes[idx] === code) {
+                    return 'checked';
+                }
+            }
+        }
+    },
 });
 

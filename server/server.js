@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import fs from 'fs';
-import {  Atwrk, Pick, Evnt, Files, Chunk, Banr, BsnsMber, Mber } from '../lib/collections.js';
+import { Session } from 'meteor/session';
+import {  Atwrk, Pick, Evnt, Files, Chunk, Banr, BsnsMber, Mber, PageList } from '../lib/collections.js';
 
 import '../lib/common.js';
 import '../lib/router.js';
@@ -50,6 +51,30 @@ Meteor.onConnection(conn => {
 });
 
 Meteor.methods({
+  // pageListCall
+  pageListCall: function() {
+    try {
+      return JSON.parse(Assets.getText('json/pageList.json'));
+    } catch(e) {
+      console.log('Error : ', e);
+      throw new Meteor.Error(
+        500,
+        '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+      )
+    }
+  },
+  // pagSet
+  pageSet: function() {
+    try {
+      return PageList.findOne({});
+    } catch(e) {
+      console.log('Error : ', e);
+      throw new Meteor.Error(
+        500,
+        '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
+      )
+    }
+  },
   // Pick 큐레이터 픽
   insertPick: function() {
     try {
@@ -273,17 +298,17 @@ Meteor.methods({
   updateSalesAtwrk: function(data) {
     try {
       let res;
-    
-      if(data.dtPrt.sellStrDt == undefined) {
+
+      if(data.dtPrt.selStrDt == undefined) {
         // 원화만 있을 경우
-        res = Atwrk.update({ _id : data._id}, {  $set : { ogPrt : data.ogPrt } });
+        res = Atwrk.update({ _id : data._id}, {  $set : { ogPrt : data.ogPrt, sellRegYn : 'Y' } });
       } else {
-        if(data.sellStrDt == undefined) {
+        if(data.ogPrt.selStrDt == undefined) {
           // 디지털 판화만 있을 경우
-          res = Atwrk.update({ _id }, { $set : {  dtPrt : data.dtPrt }});
+          res = Atwrk.update({ _id : data._id}, { $set : {  dtPrt : data.dtPrt, sellRegYn : 'Y' }});
         } else {
           // 원화 + 디지털 판화
-          res = Atwrk.update({ _id }, { $set : { ogPrt : data.ogPrt, dtPrt : data.dtPrt } });
+          res = Atwrk.update({ _id : data._id}, { $set : { ogPrt : data.ogPrt, dtPrt : data.dtPrt, sellRegYn : 'Y' } });
         }
       }
 

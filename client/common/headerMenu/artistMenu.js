@@ -3,6 +3,7 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import './artistMenu.html';
 
 Template.artistMenu.onCreated(function() {
+    atstFilterHeader = new ReactiveVar();
 });
 
 Template.artistMenu.onRendered(function() {
@@ -14,10 +15,7 @@ Template.artistMenu.events({
     },
     'click button[name=schBtn]'(evt, tmpl) {
         var chked = $('input[name=artistChk]:checked');
-        var atstNm = $('input[name=atstNm]').val();
-
-        // $('#clickToArtist').removeClass('is-open');
-        // $('#slideMenus').removeClass('is-open');
+        var atstNm = $('input[name=menuAtstNm]').val();
 
         // 검색조건 하나라도 선택했을때
         if(chked.length > 0 || atstNm != '') {
@@ -48,10 +46,13 @@ Template.artistMenu.events({
 
             FlowRouter.go('/originalAtwrk', {}, { data : encodeURIComponent(JSON.stringify(queryData)) });
             
-            location.reload();
+            // location.reload();
         } else {
             // 검색조건 하나도 선택하지 않았을때.
         }
+
+        $('#slideMenus').removeClass('is-open');
+        $('#clickToArtist').removeClass('is-open');      
     }
 });
 
@@ -64,6 +65,20 @@ Template.artistMenu.helpers({
     },
     mkyy() {
         return Meteor.codes.MK_YEAR();
+    },
+    leftFilterChk(kind, code) {
+        var selectCodes = agFilterHeader.get()[kind];
+        for(idx in selectCodes) {
+            if(typeof selectCodes[idx] === 'object') {
+                if(selectCodes[idx].code === code) {
+                    return 'checked';
+                }
+            } else {
+                if(selectCodes[idx] === code) {
+                    return 'checked';
+                }
+            }
+        }
     },
 });
 

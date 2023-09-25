@@ -1,5 +1,6 @@
 import './purchaseList.html';
 
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import '../popup/userPop/deliveryTracking.js';
 
 // 팝업창
@@ -76,20 +77,21 @@ Template.purchaseList.events({
         var today = moment(new Date()).format('YYYY-MM-DD');
         var strDay = moment($('input[name=strDate]').val()).format('YYYYMMDD');
         var seltDay = moment($(evt.currentTarget).val()).format('YYYYMMDD');
-
+        
         if(seltDay < strDay) {
             $(evt.currentTarget).val(moment(today).format('YYYY-MM-DD'));
-            alert('시작날짜 보다 종료날짜가 더 작습니다');
         }
     },
     'blur input[name=strDate]' (evt, tmpl) {
         var evtDay = $(evt.currentTarget).val();
         var today = moment(new Date()).format('YYYYMMDD');
         var seltDay = moment(evtDay).format('YYYYMMDD');
+        var endDay = moment($('input[name=endDate]').val()).format('YYYYMMDD');
 
         if(seltDay > today) {
             $(evt.currentTarget).val(moment(today).format('YYYY-MM-DD'));
-            alert('오늘날짜 이후는 선택하실수 없습니다.');
+        } else if(seltDay > endDay) {
+            $(evt.currentTarget).val(moment(endDay).format('YYYY-MM-DD'));
         }
     },
     'click button[name=deliveryBtn]'(evt, tmpl) {
@@ -140,8 +142,6 @@ Template.purchaseList.events({
         var strDate = moment($('input[name=strDate]').val()).format('YYYYMMDD');
         var endDate = moment($('input[name=endDate]').val()).format('YYYYMMDD');
 
-        var odTp = $('input[name=odTp]').val();
-
         strSchDate.set(strDate);
         endSchDate.set(endDate);
 
@@ -152,6 +152,10 @@ Template.purchaseList.events({
     },
     'click button[name=seltStatus]'(evt, tmpl) {
         seltStatus.set($(evt.currentTarget).val().split('-')[1]);
+    },
+    'click button[name=orderDetail]'(evt, tmpl) {
+        let id = $(evt.currentTarget).attr('id');
+        FlowRouter.go(`/orderDetail/${id}`);
     }
 });
 
@@ -169,5 +173,9 @@ Template.purchaseList.helpers({
     },
     ordetStatus() {
         return Meteor.codes.ORDER_STATUS();
+    },
+    lastItemChk(idx) {
+        if(orderList.get().length == idx) return true;
+        else false;
     }
 });

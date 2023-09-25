@@ -7,6 +7,7 @@
             <button name="dtp" type="button" class="artwork-tit__btn" data-id="slideMenu-artwork-cont02">디지털 판화</button>
         </div>
 
+<<<<<<< HEAD
         <div class="artwork-wrap col-10  d-flex is-open" id="slideMenu-artwork-cont01">
             <div class="artwork-box col-10">
                 <div class="artwork-group">
@@ -79,6 +80,78 @@
                                     <span class="form-check__span"></span>
                                     <label for="check-artwork-material{{code}}" class="form-check__label">{{name}}</label>
                                 </div>
+=======
+        <div class="artwork-wrap col-10 d-flex is-open" id="slideMenu-artwork-cont01">
+            <div class="artwork-group col-10">
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">가 격(단위 만원)</p>
+                    {{#each priceOgPrt}}
+                        <div class="artwork-item">
+                            <div class="form-input form-radio  form-row">
+                                <input {{leftFilterChk "ARTWORK_PRICE_OGPRT" this.code}} value="ARTWORK_PRICE_OGPRT-{{code}}" type="radio" class="form-radio__input" name="chk" id="radio-artwork--price{{code}}" />
+                                <span class="form-radio__span"></span>
+                                <label for="radio-artwork--price{{code}}" class="form-radio__label">{{name}}</label>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">미디엄(Medium)</p>
+                    {{#each medium}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input {{leftFilterChk "MEDIUM" this.code}} value="MEDIUM-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-medium{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artwork-medium{{code}}" class="form-check__label">{{name}}</label>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">제작연도 </p>
+                    {{#each mkyy}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input {{leftFilterChk "MK_YEAR" this.code}} value="MK_YEAR-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-year{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artwork-year{{code}}" class="form-check__label">{{name}}</label>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">스타일1(Styles1) </p>
+                    {{#each style1}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input {{leftFilterChk "STYLE_1" this.code}} value="STYLE_1-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-01-{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artwork-style-01-{{code}}" class="form-check__label">{{name}}</label>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">스타일2(Styles1) </p>
+                    {{#each style2}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input {{leftFilterChk "STYLE_2" this.code}} value="STYLE_2-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-style-02-{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artwork-style-02-{{code}}" class="form-check__label">{{name}}</label>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+                <div class="artwork-list">
+                    <p class="artwork-list__tit">재료(Materials) </p>
+                    {{#each materials}}
+                        <div class="artwork-item">
+                            <div class="form-input form-check  form-row">
+                                <input {{leftFilterChk "MATERIAL" this.code}} value="MATERIAL-{{code}}" name="chk" type="checkbox" class="form-check__input" id="check-artwork-material{{code}}" />
+                                <span class="form-check__span"></span>
+                                <label for="check-artwork-material{{code}}" class="form-check__label">{{name}}</label>
+>>>>>>> 16ca76bc4c756fe8c7e96f0b4450003d89629c18
                             </div>
                         {{/each}}
                     </div>

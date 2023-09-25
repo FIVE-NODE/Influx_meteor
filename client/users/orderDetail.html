@@ -1,0 +1,345 @@
+<template name="orderDetail">
+    <section class="container">
+        <div class="content">
+            <div class="content__inner">
+                <div class="sub-content border-0">
+                    <div class="sub-content__mypage">
+                        <div class="mypage-subtit">
+                            <div class="mypage-subtit__inner">
+                                <p>주문내역 상세 </p>
+                            </div>
+                        </div>
+                        <div class="purchase-wrap">
+                            {{#with orderDetilInfo}}
+                            <div class="purchase-box purchase-box--num">
+                                <dl class="purchase-box__dl">                                    
+                                    <dt>주문번호</dt>
+                                    <dd>{{odNo}}</dd>
+                                    <dt>주문날짜</dt>
+                                    <dd class="color--gray">{{dateFormat}}</dd>
+                                </dl>
+                                <div class="btn-wrap">
+                                    <button type="button" class="popup" name="popOpen" data-id="orderReceipt">영수증조회</button>
+                                    <button type="button">내역삭제</button>
+                                </div>
+                            </div>
+                            <div class="purchase-box purchase-box--compInfo">
+                                <div class="purchase-box__tit">
+                                    <strong>갤러리 SUN</strong>
+                                    <span class="img-wrap">
+                                        <img src="/image/sub/icon/icon-purchase__home.png" alt="">
+                                    </span>
+                                    <em class="img-wrap">
+                                        <img src="/image/sub/icon/icon-purchase__truck.png" alt="">
+                                    </em>
+                                    <p>2,500원 선결제</p>
+                                </div>
+                                <button type="button" class="purchase-box--compInfo__btn">
+                                    <span>
+                                        <img src="/image/sub/icon/icon-purchase__phone.png" alt="">
+                                    </span>
+                                    전화번호 보기
+                                </button>
+                                <ul class="purchase-box--compInfo__ul lists lists-dot lists-dot--big">
+                                    <li>판매자에게 직접 연락하시면 빠른 확인이 가능합니다. </li>
+                                    <li class="">
+                                        <span class="color-blue fontW-700">구매확정 이후 환불 문의</span>는 판매자에게 문의해 주세요.
+                                    </li>
+                                    <li class="">
+                                        <a href="" class="color-blue fontW-700">
+                                            판매자정보 확인하기 &gt;
+                                        </a>
+                                    </li>
+                                </ul>
+                                
+                                {{#each odAtwrk}}
+                                    {{#with atwrkInfos}}
+                                        <div class="purchase-box--compInfo__detail">
+                                            <span class="img-wrap">
+                                                <img style="width: 130px;" src="{{selectMainImage this}}" alt="">
+                                            </span>
+                                            <div class="txt-wrap">
+                                                <em>{{dateFormat ../../insDt}} 결제</em>
+                                                <span>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}X{{ogPrt.hSize}}cm, {{glry.glryNm}}</span>
+                                                <strong>{{commaPric ../amt}} 원</strong>
+                                                <p>구매확정일 : {{confirmPurch ../../insDt}}</p>
+                                                <div class="btn-wrap">
+                                                    <button type="button">배 송 조 회</button>
+                                                    <button type="button">재 구 매</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{/with}}
+                                {{/each}}
+
+                            </div>
+                            <div class="purchase-box purchase-box--areaInfo">
+                                <div class="purchase-box__tit">
+                                    <strong>배송지 정보</strong>
+                                </div>
+                                <dl class="purchase-box__dl">
+                                    <dt>수  령  인</dt>
+                                    <dd>{{odNm}}</dd>
+                                    <dt>연  락  처</dt>
+                                    <dd>{{mob}}</dd>
+                                    <dt>배 송 지</dt>
+                                    <dd>{{addr1}}<br/>{{addr2}}</dd>
+                                    <dt>배송메모</dt>
+                                    <dd>-</dd>
+                                </dl>
+                            </div>
+                            <div class="purchase-box purchase-box--price">
+                                <div class="purchase-box__tit">
+                                    <strong>주문금액</strong>
+                                    <span>{{commaPric totalPric}} 원</span>
+                                </div>
+                                <dl class="purchase-box__dl">
+                                    <dt>상품금액</dt>
+                                    <dd>{{commaPric totalPric}}원</dd>
+                                    <dt>배  송  비</dt>
+                                    <dd>+ 0원</dd>
+                                    <dt>쿠폰활인</dt>
+                                    <dd>- 0원</dd>
+                                </dl>
+                            </div>
+                            <div class="purchase-box purchase-box--detail">
+                                <div class="purchase-box__tit">
+                                    <strong>결제상세</strong>
+                                    <span>{{commaPric totalPric}} 원</span>
+                                </div>
+                                <dl class="purchase-box__dl">
+                                    <dt>카드결제</dt>
+                                    <dd class="d-flex">
+                                        <span> | 국민(1234-****-****-****)  | 일시불</span>
+                                        <em class="ml-auto">{{commaPric totalPric}}원</em>
+                                    </dd>
+                                </dl>
+                                <p class="purchase-box__txt">무이자 적용 여부는 카드사로 문의하시면 정확하게 확인할 수 있습니다. </p>
+                            </div>
+                            <div class="purchase-box purchase-box--benefit">
+                                <div class="purchase-box__tit">
+                                    <strong>포인트 혜택</strong>
+                                    <span>0원</span>
+                                </div>
+                                <dl class="purchase-box__dl">
+                                    <dt>구매정립</dt>
+                                    <dd>5,000 원</dd>
+                                </dl>
+                                <p class="purchase-box__txt">무이자 적용 여부는 카드사로 문의하시면 정확하게 확인할 수 있습니다. </p>
+                            </div>
+
+                            
+                             <!-- 주문내역 영수증 내역확인 -->
+                            <div class="popup-layout" id="orderReceipt">
+                                <div class="popup-wrap">
+                                    <div class="popup-inner" style="width:463px;">
+                                        <div class="popup-head">
+                                            <p class="popup-head__tit">영수증 발급 내역</p>
+                                            <button type="button" name="popClose" data-id="orderReceipt" class="popup-close">
+                                                <img src="/image/common/icon/icon-popup-close.png" alt="">
+                                            </button>
+                                        </div>
+                                        <div class="popup-cont popup-cont--receipt">
+                                            <div class="receipt-wrap">
+                                                <div class="receipt-block receipt-block--num">
+                                                    <p>
+                                                        <span>주문번호</span>
+                                                        {{odNo}}
+                                                    </p>
+                                                    <button type="button" name="popOpen" data-id="buyReceipt" class="btn btn--white">구매영수증</button>
+                                                </div>
+                                                <div class="receipt-block p-10 py-20 border-bottom--1">
+                                                    <div class="d-flex">
+                                                        <p class="font-16 fontW-b color--txt">갤러리 K</p>
+                                                        <span class="ml-auto font-14 fontW-500 color--txt">배송비 2,500원</span>
+                                                    </div>
+                                                    <button type="button" name="popOpen" data-id="cardReceipt" class="btn btn--gray mt-15">카드영수증</button>
+                                                </div>
+                                                <div class="receipt-block p-10 py-20 border-bottom--1">
+                                                    <div class="d-flex">
+                                                        <span class="img-wrap">
+                                                            <img src="/image/sub/img-basket__item01.png" alt="">
+                                                        </span>
+                                                        <div class="txt-wrap">
+                                                            <p>디지털 판화, 안경쓴여인 POP!!</p>
+                                                            <span>120X70cm 원목 프액자</span>
+                                                            <strong>65,000원</strong>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" name="popOpen" data-id="cardReceipt" class="btn btn--gray mt-15">카드영수증</button>
+                                                </div>
+                                                <div class="receipt-block mt-20">
+                                                    <ul class="lists lists-dot lists-dot--big">
+                                                        <li>신용카드 매출전표는 결제완료 시 자동 발급되며, 결제완료 후 확인 및 출력이 가능합니다. </li>
+                                                    </ul>
+                                                    <p class="pl-10 mt-20 mb-5 color-blue font-12 fontW-700">현금영수증 안내</p>
+                                                    <ul class="lists lists-dot lists-dot--big">
+                                                        <li>현금영수증은 발급 완료된 주문건에 한해 조회 및 출력이 가능하며, 구매확정일 및 반품완료일 기준으로 발급됩니다.</li>
+                                                        <li>구매확정 전까지 [주문상세>영수증 조회>현금영수증 정보변경]에서 현금 영수증 신청정보를 변경할 수 있습니다. </li>
+                                                        <li>현금영수증에는 개인소득공제용과 사업자증빙용이 있으며, 세금계산서가 필요하신 경우 사업자증빙용 현금영수증을 신청하시면 됩니다. </li>
+                                                        <li>일회용컵 보증금과 리유저블컵 보증금은 현금영수증 발급대상에 포함되지 않습니다.</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="btn-wrap d-flex justify-center mt-30">
+                                                <button type="button" name="popClose" data-id="orderReceipt" class="btn btn--blue btn--round width--170 height-40 font-pre">확    인</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 주문내역 영수증 내역 확인 끝 -->
+
+                            <!-- 주문내역 구매 영수증 내역확인 -->
+                            <div class="popup-layout" id="buyReceipt">
+                                <div class="popup-wrap">
+                                    <div class="popup-inner" style="width:463px;">
+                                        <div class="popup-head">
+                                            <p class="popup-head__tit">구매 영수증</p>
+                                            <button type="button" name="popClose" data-id="buyReceipt" class="popup-close">
+                                                <img src="/image/common/icon/icon-popup-close.png" alt="">
+                                            </button>
+                                        </div>
+                                        <div class="popup-cont popup-copnt--payreceipt">
+                                            <div class="payreceipt-wrap">
+                                                <div class="payreceipt-block">
+                                                    <dl class="payreceipt-block__dl">
+                                                        <dt>주문번호</dt>
+                                                        <dd>{{odNo}}</dd>
+                                                        <dt>거래일시</dt>
+                                                        <dd>2023.02.20</dd>
+                                                        <dt>상품명</dt>
+                                                        <dd>디지털판화, 안경쓴여인(120X70cm 원목액자)</dd>
+                                                        <dt>합계</dt>
+                                                        <dd class="color-blue">65,0000원</dd>
+                                                        <dt>회사명</dt>
+                                                        <dd>갤러리 K</dd>
+                                                        <dt>서명</dt>
+                                                        <dd>홍길동</dd>
+                                                    </dl>
+                                                    <ul class="lists lists-dot lists-dot--big mt-10">
+                                                        <li>구매 영수증은 세금계산서 등 세무상 증빙서류로 활용할 수 없으며, 거래내역 및 거래금액을 확인하는 용도로만 사용 가능합니다. </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="btn-wrap d-flex justify-center mt-30">
+                                                <button type="button" name="popClose" data-id="buyReceipt" class="btn btn--blue btn--round width--170 height-40 font-pre">취소하기</button>
+                                                <button type="button" class="btn btn--blue btn--round width--170 height-40 ml-20 font-pre">인쇄하기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 주문내역 구매 영수증 내역확인 끝 -->
+
+                            <!-- 주문내역 카드 영수증 내역확인 -->
+                            <div class="popup-layout" id="cardReceipt">
+                                <div class="popup-wrap">
+                                    <div class="popup-inner" style="width:463px;">
+                                        <div class="popup-head">
+                                            <p class="popup-head__tit">카드 영 수 증</p>
+                                            <button type="button" name="popClose" data-id="cardReceipt" class="popup-close">
+                                                <img src="/image/common/icon/icon-popup-close.png" alt="">
+                                            </button>
+                                        </div>
+                                        <div class="popup-cont popup-cont--cardreceipt">
+                                            <div class="cardreceipt-wrap">
+                                                <p class="cardreceipt__tit">카드영수증</p>
+                                                <div class="cardreceipt-block">
+                                                    <dl>
+                                                        <dt>카드사/승인번호</dt>
+                                                        <dd>국민 / 30002980</dd>
+                                                        <dt>카드번호(유효기간)</dt>
+                                                        <dd></dd>
+                                                        <dt>거래종류/할부</dt>
+                                                        <dd></dd>
+                                                        <dt>결제일자</dt>
+                                                        <dd></dd>
+                                                        <dt>상품명</dt>
+                                                        <dd></dd>
+                                                        <dt>상품 주문번호</dt>
+                                                        <dd></dd>
+                                                    </dl>
+                                                </div>
+                                                <div class="cardreceipt-block">
+                                                    <p class="cardreceipt-block__tit">판매자 정보</p>
+                                                    <dl>
+                                                        <dt>판매자 상호</dt>
+                                                        <dd>갤러리 K</dd>
+                                                        <dt>대표자명</dt>
+                                                        <dd>유용상</dd>
+                                                        <dt>사업자등록번호</dt>
+                                                        <dd>669-81-12345</dd>
+                                                        <dt>전화번호</dt>
+                                                        <dd>010-123-4567</dd>
+                                                        <dt>사업장주소</dt>
+                                                        <dd>경기도 남양주시 화도읍 재재기로 123번길 49 1동 2층 (우:12199)</dd>
+                                                    </dl>
+                                                </div>
+                                                <div class="cardreceipt-block">
+                                                    <p class="cardreceipt-block__tit">가맹점 정보</p>
+                                                    <dl>
+                                                        <dt>가맹점 명</dt>
+                                                        <dd></dd>
+                                                        <dt>대표자 명</dt>
+                                                        <dd></dd>
+                                                        <dt>가맹점 번호</dt>
+                                                        <dd></dd>
+                                                        <dt>사업자등록번호</dt>
+                                                        <dd></dd>
+                                                        <dt>주소</dt>
+                                                        <dd></dd>
+                                                    </dl>
+                                                </div>
+                                                <div class="cardreceipt-block">
+                                                    <p class="cardreceipt-block__tit">금액</p>
+                                                    <dl>
+                                                        <dt>승인금액</dt>
+                                                        <dd>25,800</dd>
+                                                        <dt>공급가액</dt>
+                                                        <dd>23,455</dd>
+                                                        <dt>부가세액</dt>
+                                                        <dd>2,345</dd>
+                                                        <dt>봉사료</dt>
+                                                        <dd>0</dd>
+                                                    </dl>
+                                                </div>
+                                                <div class="cardreceipt-block">
+                                                    <p class="cardreceipt-block__tit">
+                                                        합계
+                                                        <span class="fontW-b">25,800</span>
+                                                    </p>
+                                                    <ul class="lists lists-dot lists-dot--big">
+                                                        <li>본 영수증은 인플럭스(주)에서 발행한 것이며, 부가가치세법 제 46조에 따른 신용카드 매출 전표입니다. </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="btn-wrap d-flex justify-center mt-30">
+                                                <button type="button" class="btn btn--white btn--round width--170 height-40 font-pre">PDF로 저장</button>
+                                                <button type="button" class="btn btn--blue btn--round width--170 height-40 ml-10 font-pre">인쇄하기</button>
+                                                <button type="button" name="popClose" data-id="cardReceipt" class="btn btn--gray btn--round width--170 height-40 ml-10 font-pre">닫    기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 주문내역 카드 영수증 내역확인 끝 -->
+                            {{/with}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /container -->
+
+   
+
+
+
+
+
+    <footer class="footer">
+        {{> footer}}
+    </footer>
+</template>

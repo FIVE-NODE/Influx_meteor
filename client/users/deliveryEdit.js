@@ -49,8 +49,8 @@ Template.deliveryEdit.events({
     },
     'click button[name=editSelectDeliv]'(evt, tmpl) {
         var selection = $(evt.currentTarget).first().text();
-        if(selection === '직접입력') $('input[name=delivReqEtc]').show();
-        else $('input[name=delivReqEtc]').hide();
+        if(selection === '직접입력') $('input[name=editDelivReqEtc]').show();
+        else $('input[name=editDelivReqEtc]').hide();
         selectDeliv.set(selection);
     },
     'change #check-addrWrite--default-edit'(evt, tmpl) {
@@ -100,11 +100,15 @@ Template.deliveryEdit.events({
 
         var delivReqEtc = $('input[name=editDelivReqEtc]').val();
 
-        if(recptnNm == '')                              messagePopup({message : '수령인을 입력해주세요'});
-        else if(mob1 == '' || mob2 == '' || mob3 == '') messagePopup({message : '휴대전화를 정확하게 입력해주세요'});
-        else if(!homePhChk.get()) if(homePhone1 == '' || homePhone2 == '' || homePhone3 == '') messagePopup({message : '전화번호를 입력해주세요'});
-        else if(addr2 == '')                            messagePopup({message : '주소를 입력해주세요'});
-        else { 
+        if(recptnNm == ''){
+            messagePopup({message : '수령인을 입력해주세요'});
+        } else if(mob1 == '' || mob2 == '' || mob3 == '') {
+            messagePopup({message : '휴대전화를 정확하게 입력해주세요'});
+        } else if((!homePhChk.get()) && (homePhone1 == '' || homePhone2 == '' || homePhone3 == '')) {
+            messagePopup({message : '전화번호를 입력해주세요'});
+        } else if(addr2 == '' || addr1 == '') {
+            messagePopup({message : '주소를 입력해주세요'});
+        } else { 
             var mobSet = mob1 + ' ' + mob2 + ' ' + mob3;
             var homePhSet = homePhone1 + ' ' + homePhone2 + ' ' + homePhone3;
 

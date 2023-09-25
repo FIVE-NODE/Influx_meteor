@@ -15,7 +15,7 @@ Meteor.clientCommonUtils = {
     },
     prevPage : function(curPage, total, limit, skip) {
         var res = true;
-        console.log(curPage.get());
+        
         if((curPage.get() -  1) == 0) ;
         else {
             curPage.set(curPage.get() - 1);
@@ -53,6 +53,14 @@ Meteor.clientCommonUtils = {
     
         return query;
     },
+    // 콤마 제거
+    delComma: function(str) {
+        return str.replace(/,/g, '');
+    },
+    // 숫자 만 입력 + 금액 콤마 설정
+    onlyNumAndComma: function(number) {
+        return number.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
     // 스크롤 이동
     scrollMove : function() {
         var location = $('#move').offset().top;
@@ -78,6 +86,8 @@ Meteor.clientCommonUtils = {
         var chk = /^[0-9]{3}-[0-9]{2}-[0-9]{5}$/;
         return chk.test(str);
     },
+    // 이메일 정합성 체크
+    
     // 이메일 벨리데이션
     emailConsistency : function(email) {
         var emailChk = /[^a-z0-9@_.-]/gi;

@@ -1,8 +1,6 @@
 import './deliveryReg.html';
 
 import '../popup/utilsPopUp.js';
-import { useInsertionEffect } from 'react';
-import { val } from 'cheerio/lib/api/attributes';
 
 Template.deliveryReg.onCreated(function() {
     // 배송 요청사항 내용
@@ -107,9 +105,11 @@ Template.deliveryReg.events({
 
         if(recptnNm == '')                              messagePopup({message : '수령인을 입력해주세요'});
         else if(mob1 == '' || mob2 == '' || mob3 == '') messagePopup({message : '휴대전화를 정확하게 입력해주세요'});
-        else if(!homePhChk.get()) if(homePhone1 == '' || homePhone2 == '' || homePhone3 == '') messagePopup({message : '전화번호를 입력해주세요'});
-        else if(addr2 == '')                            messagePopup({message : '주소를 입력해주세요'});
-        else { 
+        else if((!homePhChk.get()) && (homePhone1 == '' || homePhone2 == '' || homePhone3 == '')) {
+            messagePopup({message : '전화번호를 입력해주세요'});
+        } else if(addr2 == '' || addr1 == '') {
+            messagePopup({message : '주소를 입력해주세요'});
+        } else { 
             var mobSet = mob1 + ' ' + mob2 + ' ' + mob3;
             var homePhSet = homePhone1 + ' ' + homePhone2 + ' ' + homePhone3;
 
@@ -148,7 +148,10 @@ Template.deliveryReg.events({
                 homePhChk.set(false);
 
                 uInfo.set(Meteor.user().profile.uInfos);
+
                 messagePopup({message : '배송지 등록이 완료되었습니다.'});
+
+                $('#deliveryReg_popup').removeClass('is-open');
             });
         }
     }

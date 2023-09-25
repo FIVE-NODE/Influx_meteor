@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import fs from 'fs';
-import { Atwrk, Evnt, Pick } from '../lib/collections.js';
+import { Atwrk, Evnt, Pick, Order } from '../lib/collections.js';
 
 // 원화 는 원화만, 디지털 판화는 판화만 특정 카테고리만 조회 하는 서버로직
 
@@ -115,7 +115,8 @@ Meteor.methods({
         var normal = {
           'dtPrt.atwrkNm' : { $exists: true },
           "delYn" : "N",
-          "soldYn" : "N"
+          "soldYn" : "N",
+          "sellYn" : "Y"
         };
 
         let res = Atwrk.find(normal, { limit: 10, sort : { 'dtPrt.goodCnt' : -1 }}).fetch();
@@ -244,24 +245,27 @@ Meteor.methods({
           var areas = data.area;
           var area = {};
           
-          if(Array.isArray(areas)) {
+          if(Array.isArray(areas) || Array.isArray(kindCode.evntTp)) {
             // 검색으로 리스트로 넘어 왔을때
-            for(idx in areas) {
 
-              if(areas[idx].length != 2) {
+            if(Array.isArray(areas) != undefined) {
+              for(idx in areas) {
 
-                var splitVal = areas[idx].split('.');
+                if(areas[idx].length != 2) {
 
-                for(num in splitVal) {
-                  areasSch.push({ 'glry.area' : { $regex : splitVal[num]} });  
+                  var splitVal = areas[idx].split('.');
+
+                  for(num in splitVal) {
+                    areasSch.push({ 'glry.area' : { $regex : splitVal[num]} });  
+                  }
+
+                } else {
+                  areasSch.push({ 'glry.area' : { $regex : areas[idx]} });
                 }
-
-              } else {
-                areasSch.push({ 'glry.area' : { $regex : areas[idx]} });
               }
             }
 
-            kindCode = data.kindCode != undefined ? { evntTp : { $in : data.kindCode }} : {};
+            kindCode = Object.keys(data.kindCode).length > 0 ? { evntTp : { $in : data.kindCode }} : {};
           } else if(areas != undefined){
             // 퀵메뉴 통해 들어와서 검색을 이용했을때
             areas = areas.trim();
@@ -279,14 +283,7 @@ Meteor.methods({
           var queryData = areasSch.length == 0 ? 
             { $and : [normal, glryNm, kindCode, area ] } :
             { $and : [normal, glryNm, kindCode], $or : areasSch};
-          
-          console.log('normal : ', normal);
-          console.log('glryNm : ', glryNm);
-          console.log('kindCode : ', kindCode);
-          console.log('area : ', area);
-          console.log('areasSch : ', areasSch);
-          console.log(queryData);
-
+        
           res.total = Evnt.find(queryData).count();
           res.list = Evnt.find(queryData, option).fetch();
         } else {
@@ -306,7 +303,13 @@ Meteor.methods({
     // 관심작품 조회 List
     sltInterestAtwrk: function(data, option) {
       try {
-        let res = Atwrk.find({ _id : { $in : data } }).fetch();
+        var normal = {
+          _id : { $in : data },
+          "delYn" : "N",
+          "soldYn" : "N",
+          "sellYn" : "Y"
+        };
+        let res = Atwrk.find(normal).fetch();
 
         return res;
       } catch(e) {
@@ -320,7 +323,13 @@ Meteor.methods({
     // 관심작품 리스트 cnt
     sltInterestAtwrkCnt: function(data) {
       try {
-        let res = Atwrk.find({ _id : { $in : data } }).count();
+        var normal = {
+          _id : { $in : data },
+          "delYn" : "N",
+          "soldYn" : "N",
+          "sellYn" : "Y"
+        };
+        let res = Atwrk.find(normal).count();
 
         return res;
       } catch(e) {
@@ -333,7 +342,14 @@ Meteor.methods({
     },
     sltUserCart: function(data) {
       try {
-        let res = Atwrk.find({ _id : { $in : data } }).fetch();
+        var normal = { 
+          _id : { $in : data },
+          'soldYn' : 'N',
+          'delYn' : 'N',
+          'sellYn' : 'Y'
+        };
+
+        let res = Atwrk.find(normal).fetch();
 
         return res;
       }  catch(e) {
@@ -507,7 +523,7 @@ Meteor.methods({
         // let res = Atwrk.remove(query);
         let res = Atwrk.update(query, { $set : { delYn : 'Y'}});
         let userId = this.userId;
-        
+      
         // 갤러리 대표 작품에서 삭제
         Meteor.users.update({_id : userId}, { $pull : { 'profile.uInfos.rprsnAtwrk' : { atwrkID : query._id }} });
 
@@ -524,7 +540,7 @@ Meteor.methods({
         Meteor.users.update({'profile.uInfos.cart.atwrkId' : query._id}, { $pull : { 'profile.uInfos.cart.atwrkId' : query._id }});
 
         // 큐레이터 픽 에서 삭제
-        Pick.update({'atstAtwrk.atwrkID' : query._id}, { $pull : { 'atstAtwrk.atwrkID' : query._id }});
+        Pick.update({'atstAtwrk.atwrkID' : query._id}, { $pull : { atstAtwrk : { atwrkID : query._id } } });
         
         return res;
       } catch(e) {
@@ -628,6 +644,20 @@ Meteor.methods({
           '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
         );
       } 
+    },
+    // 주문상세내역 조회
+    seltOrderDetail: function(orderId) {
+      try {
+        let res = Order.findOne({ _id : orderId });
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
     }
 });
 

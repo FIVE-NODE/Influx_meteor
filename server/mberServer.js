@@ -391,14 +391,34 @@ Meteor.methods({
         );
       }
     },
+    // 판매등록용 작품 ID 조회
+    seltAtwrkSellSet: function(_id) {
+      try{
+        let normal = {
+          '_id' : _id,
+          "delYn" : "N",
+          "soldYn" : "N"
+        };
+
+        let res = Atwrk.findOne(normal);
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
     // 작품 ID 로 작품 조회
-    selectAtwrkDetail: function(_id) {
+    selectAtwrkDetail: function(_id, sellYn) {
       try{
         let normal = {
           '_id' : _id,
           "delYn" : "N",
           "soldYn" : "N",
-          "sellYn" : "Y"
+          sellYn
         };
 
         let res = Atwrk.findOne(normal);

@@ -22,7 +22,6 @@ Template.exhibitionEvnt.onCreated(function() {
     // 헤더 검색으로 왔을때
     headerSch = new ReactiveVar();
 
-
     query = {};
 
     if(this.data.schQueryData() != undefined)  {
@@ -39,28 +38,43 @@ Template.exhibitionEvnt.onCreated(function() {
         limit: limit.get()
     };
 
-    this.selectExhigitionEvntBanr = function() {
-        Meteor.call('selectExhigitionEvntBanr', query, options, function(err, res) {
-            evntBanr.set(res);
-        });
-    }
+    selectExhigitionEvntBanr();
 
-    this.selectExhigitionEvntList = function() {
-        Meteor.call('selectExhigitionEvntList', query, options, function(err, res) {
-            total.set(res.total);
-            evntList.set(res.list);
-        });
-    }
+    if(this.data.schQueryData() == undefined) selectExhigitionEvntList();
 
-    this.selectExhigitionEvntBanr();
+    this.autorun(function() {
+        if(Template.currentData().schQueryData() !== undefined) {
+            let filterData = JSON.parse(Template.currentData().schQueryData());
+            if(filterData != undefined && Object.keys(filterData).length > 0) {
+                headerSch.set(filterData);
 
-    this.selectExhigitionEvntList();
+                query = {
+                    kindCode : headerSch.get().EVNT,
+                    area : headerSch.get().REGION,
+                    glryNm : headerSch.get().glryNm,
+                }
 
+                selectExhigitionEvntList();
+            }
 
+        }
+    });
 });
 
+function selectExhigitionEvntBanr() {
+    Meteor.call('selectExhigitionEvntBanr', query, options, function(err, res) {
+        evntBanr.set(res);
+    });
+}
+
+function selectExhigitionEvntList() {
+    Meteor.call('selectExhigitionEvntList', query, options, function(err, res) {
+        total.set(res.total);
+        evntList.set(res.list);
+    });
+}
+
 Template.exhibitionEvnt.onRendered(function() {
-    if(this.data.schQueryData() != undefined) 
     if(headerSch.get() != undefined) {
         var kinds = $('button[name=kind]');
         var headerSchData = headerSch.get();
@@ -68,7 +82,7 @@ Template.exhibitionEvnt.onRendered(function() {
         if(headerSchData.EVNT != undefined) {
             for(var i=0; i < kinds.length; i++) {
                 if(headerSchData.EVNT[0] == kinds[i].value) {
-                    $('input[name=kinds]').text(Meteor.clientCommonUtils.commonCodeToName(kinds[i].value, 'EVENT_TYPE'));
+                    $('button[name=kinds]').text(Meteor.clientCommonUtils.commonCodeToName(kinds[i].value, 'EVENT_TYPE'));
                     $(kinds[i]).addClass('is-active');
                 }
             }
@@ -111,13 +125,13 @@ Template.exhibitionEvnt.events({
     'click button[name=pageVal]'(evt, tmpl) {
         limit.set(parseInt($(evt.currentTarget).val()));
         setQuery();
-        tmpl.selectExhigitionEvntList();
+        selectExhigitionEvntList();
     },
     // page당 갯수 이벤트
     'click button[name=pageVal]'(evt, tmpl) {
         limit.set(parseInt($(evt.currentTarget).text()));
         setQuery();
-        tmpl.selectExhigitionEvntList();
+        selectExhigitionEvntList();
         setTimeout(function() { $('#pageNum1').click(); }, 50);
     },
     'click button[name=kind]'(evt, tmpl) {
@@ -134,14 +148,14 @@ Template.exhibitionEvnt.events({
 
         setQuery();
 
-        tmpl.selectExhigitionEvntList();
+        selectExhigitionEvntList();
     },
     // 페이지
     'click a[name=prev]'(evt, tmpl) {
         if(Meteor.clientCommonUtils.prevPage(curPage, total.get(), limit, skip));
         else {
             setQuery();
-            tmpl.selectExhigitionEvntList();
+            selectExhigitionEvntList();
             scrollMove();
         } 
     },
@@ -149,7 +163,7 @@ Template.exhibitionEvnt.events({
         if(Meteor.clientCommonUtils.nextPage(curPage, total.get(), limit, skip)) ;
         else {
             setQuery();
-            tmpl.selectExhigitionEvntList();
+            selectExhigitionEvntList();
             scrollMove();
         }
     },
@@ -157,7 +171,7 @@ Template.exhibitionEvnt.events({
         if(Meteor.clientCommonUtils.pageNum(curPage, skip, limit, this.num));
         else {
             setQuery();
-            tmpl.selectExhigitionEvntList();
+            selectExhigitionEvntList();
             scrollMove();
         }
     }

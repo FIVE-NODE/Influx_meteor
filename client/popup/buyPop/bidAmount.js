@@ -14,15 +14,24 @@ Template.bidAmount.events({
         var selectPric = $(evt.currentTarget).val();
         $('input[name=bidPric]').val(Meteor.commonUtils.priceComma(selectPric));
     },
+    'keyup input[name=bidPric]'(evt, tmpl) {
+        var pric = $(evt.currentTarget).val();
+        var setNumPric = Number(Meteor.clientCommonUtils.delComma(pric));
+        if(setNumPric > this.ogPrt.bid.immdPurchPric) {
+            $(evt.currentTarget).val(Meteor.clientCommonUtils.onlyNumAndComma(String(this.ogPrt.bid.immdPurchPric)));
+        } else {
+            $(evt.currentTarget).val(Meteor.clientCommonUtils.onlyNumAndComma(pric));
+        }
+    },
     'keydown input[name=bidPric]'(evt, tmpl) {
         if(evt.keyCode == 13) {
             evt.preventDefault();
         }
     },
-    'change input[name=bidPric]'(evt, tmpl) {
-        var pric = $(evt.currentTarget).val();
-        $('input[name=bidPric]').val(Meteor.commonUtils.priceComma(pric));
-    },
+    // 'change input[name=bidPric]'(evt, tmpl) {
+    //     var pric = $(evt.currentTarget).val();
+    //     $('input[name=bidPric]').val(Meteor.commonUtils.priceComma(pric));
+    // },
     'click button[name=nextBtn]'(evt, tmpl) {
         var selectPric = $('input[name=bidPric]').val();
         selectPric = parseInt(selectPric.replace(/,/g, ""));
@@ -47,7 +56,6 @@ Template.bidAmount.helpers({
     },
     autoPricBid(perSent) {
         if(this.ogPrt.bid.nPric != undefined) {
-            console.log(perSent)
             var nPric = this.ogPrt.bid.nPric;
             var chPric = Math.floor((nPric * perSent) + nPric);
             return chPric;

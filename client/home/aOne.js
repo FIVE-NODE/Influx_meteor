@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
-import { Pick } from '../../lib/collections.js';
+import { Pick, PageList } from '../../lib/collections.js';
 import { clientAtwrk, clientDtpHome, clientOgHome, clientEvntHome, clientBsnsMber, clientBanr } from '../lib/clientCollections.js';
 
 import 'lazysizes';
@@ -95,6 +95,7 @@ function selectBanr() {
 
 Template.aOne.onCreated(async function() {
     Meteor.subscribe('Pick');
+    Meteor.subscribe('PageList');
 
     const instance = this;
     instance.connectoin = new ReactiveVar();
@@ -205,9 +206,10 @@ Template.aOne.helpers({
     },
     pick() { 
         if(pickCategory.get() != undefined) {
-            let data = Pick.findOne({
-                thmTp : pickCategory.get(),
-            });
+            // let query = Meteor.commonUtils.normalSetQuy();
+            let query = {};
+            query.thmTp = pickCategory.get();
+            let data = Pick.findOne(query);
             
             if(data != undefined) {
                 var atstAtwrkList = data.atstAtwrk;
@@ -222,7 +224,7 @@ Template.aOne.helpers({
     },
     atwrk() {
         let res = clientAtwrk.find(Meteor.commonUtils.normalSetQuy()).fetch();
-        if(res != undefined) {
+        if(res != undefined) {    
             return res;
         }
     },

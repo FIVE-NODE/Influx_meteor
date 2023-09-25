@@ -291,7 +291,7 @@ A seriese
   font-weight: 500;
 }
 .section-seperate--join .form-input .code-inquire__input[type=text] + span {
-  margin-right: 2rem;
+  margin-right: 1rem;
   color: rgba(255, 0, 0, 0.6);
   font-weight: 500;
 }
@@ -6806,6 +6806,12 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* 신규추가 CSS */
+.btn-broken-use {
+  padding: 0 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
 .txt-align-right {
   text-align: right;
 }

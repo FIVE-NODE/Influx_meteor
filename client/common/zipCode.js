@@ -3,10 +3,20 @@ import './zipCode.html';
 
 function address(instance) {
     var searchAddr = document.getElementById('searchAddr');
-
+    
     // 현재 scroll 위치를 저장해놓는다.
     var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+
     new daum.Postcode({
+        onclose: function(state) {
+            if(state === 'FORCE_CLOSE'){
+                //사용자가 브라우저 닫기 버튼을 통해 팝업창을 닫았을 경우, 실행될 코드를 작성하는 부분입니다.
+            } else if(state === 'COMPLETE_CLOSE'){
+                //사용자가 검색결과를 선택하여 팝업창이 닫혔을 경우, 실행될 코드를 작성하는 부분입니다.
+                //oncomplete 콜백 함수가 실행 완료된 후에 실행됩니다.
+                address(instance);
+            }
+        },
         oncomplete: function(data) {
             // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
@@ -66,7 +76,10 @@ function address(instance) {
             document.body.scrollTop = currentScroll;
 
             flag.set(true);
+            $('body').css('overflow', '');
+            $('.popup-close').click();
             $('#addrs-Popup').removeClass('is-open');
+
         },
         // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
         onresize : function(size) {
@@ -99,11 +112,8 @@ Template.zipCode.onCreated(function() {
 });
 
 Template.zipCode.onRendered(function() {
-
     const instance = this;
-
     address(instance);
-
 });
 
 Template.zipCode.events({

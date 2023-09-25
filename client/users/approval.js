@@ -71,7 +71,6 @@ function setPricData(data) {
         if(flag == 'ogPrt') {
             totalProPric += atInfo.atwrkInfo[flag].pric;
         } else {
-            console
             var size = atInfo.option.size.toLowerCase();
             totalProPric += atInfo.atwrkInfo[flag][`${size}Pric`]
             delivPric += (6000 * parseInt(atInfo.cnt));
@@ -111,7 +110,7 @@ Template.approval.onCreated(function() {
     // 선택한 배송지 방법
     seltDeliv = new ReactiveVar();
 
-    // 결재 작품 리스트
+    // 결제 작품 리스트
     approAtList = new ReactiveVar();
 
     // 금액 데이터
@@ -121,15 +120,16 @@ Template.approval.onCreated(function() {
     if(ifba == 'dir') {
         Meteor.call('decrypt', localStorage.getItem('crt_bundle'), function(err, res) {
             var data = JSON.parse(res);
-            approAtList.set([data]);
+            if(!Array.isArray(data)) data = [data];
+            approAtList.set(data);
             setPricData(data);
-        })
+        });
     } else if(ifba == 'all') {
         Meteor.call('decrypt', localStorage.getItem('crt_bundle'), function(err, res) {
             var data = JSON.parse(res);
             approAtList.set(data);
             setPricData(data);
-        })
+        });
     }
     
 
@@ -284,7 +284,7 @@ Template.approval.events({
         else $('#check-basket-all').prop('checked', false);
     },
     'click button[name=approvalBtn]'(evt, tmpl) {
-        // 결재 약관
+        // 결제 약관
         var term1 = $('#check-basket-price01').is(':checked');
         var term2 = $('#check-basket-price02').is(':checked');
 
@@ -305,7 +305,7 @@ Template.approval.events({
         // 기본 배송지 설정 유/무
         var defDeli = defDelivYn.get();
 
-        // 결재 수단
+        // 결제 수단
         var approValFlag = payFlag.get();
 
         // 배송시 요청사항
@@ -316,7 +316,7 @@ Template.approval.events({
         else if(!homePhChk.get()) {
             if(homePhone1 == '' || homePhone2 == '' || homePhone3 == '') messagePopup({message : '전화번호를 입력해주세요'});
         } else if(zipCode == '' || addr2 == '')           messagePopup({message : '주소를 입력해주세요'});
-        else if(approValFlag == undefined)              messagePopup({message : '결재 수단을 선택해주세요'});
+        else if(approValFlag == undefined)              messagePopup({message : '결제 수단을 선택해주세요'});
         else if(!term1 || !term2)                        messagePopup({message : '필수 약관을 모두 동의해주세요'});
         else {
             if(defDeli) {

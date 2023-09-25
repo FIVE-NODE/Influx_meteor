@@ -47,6 +47,18 @@ Template.glyAppEntry.events({
     'input input[name=smaPhone3]'(evt, tmpl) {
         maxLengthCheck(evt.currentTarget);
     },
+    'input input[name=bNum1]'(evt, tmpl) {
+        maxLengthCheck(evt.currentTarget);
+    },
+    'input input[name=bNum2]'(evt, tmpl) {
+        maxLengthCheck(evt.currentTarget);
+    },
+    'input input[name=bNum3]'(evt, tmpl) {
+        maxLengthCheck(evt.currentTarget);
+    },
+    'click button[name=addrsBtn]'(evt, tmpl) {
+        // addresLib.addres(tmpl);
+    },
     'click .popup-close'(evt, tmpl) {
     },
     'click button[name=bsNumChk]' (evt, tmpl) {
@@ -117,6 +129,9 @@ Template.glyAppEntry.events({
             messagePopup({message : '주소를 입력해주세요'});
             Meteor.clientCommonUtils.scrollToName('address');
         } else {
+            $('button[name=bnsSubmit]').prop('disabled', true);
+            $('img[name=loading]').css('display', '');
+
             var _id = Meteor.commonUtils.generateUUID();
             
             var rendomPass = Random.hexString(13);
@@ -153,14 +168,16 @@ Template.glyAppEntry.events({
     
             var uEmail = smaEmail;
             var id = bsnsID.get();
-    
+
             Accounts.createUser({
                 email : smaEmail,
                 password : rendomPass,
                 profile : bsnsData
             }, function(error) {
-                if(error) console.log(error);
-                else {
+                if(error) {
+                    console.log(error);
+                    if(error.error == 403) messagePopup({message : '이미 등록된 갤러리 이메일 입니다.'});
+                } else {
                     // messagePopup({message : '계정 생성 및 메시지 전송까지 3초정도 소요됩니다.'});
     
                     Meteor.logout(function(err) {
@@ -182,6 +199,7 @@ Template.glyAppEntry.events({
                     }, function(err, res) {
                         if(err) console.log('send email : ', err);
                         else {
+                            
                             FlowRouter.go('/login');
                             alert('임시 비밀번호를 메일로 전송하였습니다.');
                         }
@@ -199,7 +217,8 @@ function messagePopup(message) {
 }
 
 function maxLengthCheck(object){
-    if (object.value.length > object.maxLength){
+    object.value = object.value.replace(/[^-\.0-9]/g,'');
+    if (object.value.length >= object.maxLength){
         object.value = object.value.slice(0, object.maxLength);
         var name = $(object).attr('name');
         var chName = name.replace(/[0-9]/g, "");
@@ -213,7 +232,6 @@ function maxLengthCheck(object){
             default:
                 break;
         }
-            
     }
 }
 

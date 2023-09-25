@@ -176,13 +176,22 @@ Template.changeMberInfo.events({
         nicNmChgFlag.set(false);
         nicSubDesc.set('현재 닉네임 : ' + uInfo.get().nicNm);
     },
+    'click button[name=emailChgCancel]' (evt, tmpl) {
+        // 이메일 변경 취소
+        emailChgFlag.set(false);
+        clearInterval(timerId.get());
+        sendDoneEmail.set(false);
+        emailAuthCode.set();
+        timeValue.set();
+    },
     'click button[name=defDeliEdit]'(evt, tmpl) {
         $('#deliveryEdit_popup').addClass('is-open');
 
         var defadres = {};
         var deliv = uInfo.get().deliv;
+        
         deliv.forEach(function(val, num) {
-            if(val.defDelivYn === 'Y') defadres = val;
+            if(val.defDelivYn == 'Y') defadres = val;
         });
 
         var mobList = defadres.mob.split(' ');
@@ -229,33 +238,36 @@ Template.changeMberInfo.events({
     // 이메일 인증하기 버튼
     'click button[name=emailSendBtn]' (evt, tmpl) {
         var inputVal = $('input[name=email]').val();
-        Meteor.call('chgEmailChk', inputVal, function(err, res) {
-            if(res != undefined) messagePopup({message : '이미 존재하는 이메일입니다.'});
-            else {
-                var code = Random.hexString(6);
 
-                var email = $('input[name=email]');
-                email.prop('disabled', true);
+        if(inputVal != undefined && inputVal.trim() != '' && emailChkVal.test(inputVal)) {
+            Meteor.call('chgEmailChk', inputVal, function(err, res) {
+                if(res != undefined) messagePopup({message : '이미 존재하는 이메일입니다.'});
+                else {
+                    var code = Random.hexString(6);
+    
+                    var email = $('input[name=email]');
+                    email.prop('disabled', true);
+    
+                    emailBtnChg(false);
+    
+                    emailTimeChk();
 
-                emailBtnChg(false);
-
-                emailTimeChk();
-
-                Meteor.call('sendEmail', {
-                    to: inputVal,
-                    from: 'patrick@5node.co.kr',
-                    subject: '[SJLab] 이메일 변경 인증 코드 입니다.',
-                    text: '이메일 인증 코드 : ' + code
-                }, function() {
-                    sendDoneEmail.set(true);
-                    emailAuthCode.set(code);
-                    $('button[name=emailAuthChk]').css({'background-color' : '#007aff;'});
-                    $('button[name=emailAuthChk]').prop('disabled', false);
-                });
-
-                messagePopup({message : '이메일이 전송되었습니다.'});
-            }
-        });
+                    Meteor.call('sendEmail', {
+                        to: inputVal,
+                        from: 'patrick@5node.co.kr',
+                        subject: '[SJLab] 이메일 변경 인증 코드 입니다.',
+                        text: '이메일 인증 코드 : ' + code
+                    }, function() {
+                        sendDoneEmail.set(true);
+                        emailAuthCode.set(code);
+                        $('button[name=emailAuthChk]').css({'background-color' : '#007aff;'});
+                        $('button[name=emailAuthChk]').prop('disabled', false);
+                    });
+    
+                    messagePopup({message : '이메일이 전송되었습니다.'});
+                }
+            });
+        }
     },
     // 이메일 코드 재전송
     'click a[name=reSendEmail]'(evt, tmpl) {
@@ -277,6 +289,9 @@ Template.changeMberInfo.events({
                     $('button[name=emailAuthChk]').css({'background-color' : '#007aff;'});
                     $('button[name=emailAuthChk]').prop('disabled', false);
                 });
+
+                messagePopup({message : '이메일이 전송되었습니다.'});
+
         } else messagePopup({message : '이메일 전송 후 클릭해주세요'});
     },
     // 이메일 코드 확인
@@ -416,13 +431,17 @@ Template.changeMberInfo.helpers({
         return nm != undefined ? true : false;
     },
     maskingEmail(email) {
-        var originStr = email;
+        if(email != '' && email != null && email != undefined) {
+            var originStr = email;
 
-        var emId = "*".repeat(email.split("@")[0].length -2);
-        
-        var addr = originStr.toString().split('@')[1].split('.')[0];
+            var emId = "*".repeat(email.split("@")[0].length -2);
+            
+            var addr = originStr.toString().split('@')[1].split('.')[0];
 
-        return email[0] + email[1] + emId + '@' + addr.replace(/[a-zA-Z0-9._-]/g, '*') + '.com';
+            return email[0] + email[1] + emId + '@' + addr.replace(/[a-zA-Z0-9._-]/g, '*') + '.com';
+        } else {
+            return '';
+        }
     },
     emailChk(cert) {
         return cert === 'Y' ? true : false;

@@ -61,10 +61,12 @@
                                                         <img class="orderListImg" src="{{selectMainImage atwrkData}}" alt="">
                                                 </span>
                                                 <p>
-                                                    <em>{{dateFormatChg ../odNo "."}}. 결재</em>
+                                                    <em>{{dateFormatChg ../odNo "."}}. 결제</em>
                                                     <span>{{atwrkData.ogPrt.atwrkNm}}, {{atwrkData.ogPrt.wSize}}X{{atwrkData.ogPrt.hSize}}cm, {{atwrkData.glry.glryNm}}</span>
                                                     <strong>{{commaPric amt}}원</strong>
-                                                    <button type="button">주문상세 &gt;</button>
+                                                    {{#if lastItemChk @index}}
+                                                        <button type="button" name="orderDetail" id="{{../_id}}">주문상세 &gt;</button>
+                                                    {{/if}}
                                                 </p>
                                             </div>
                                             {{/each}}

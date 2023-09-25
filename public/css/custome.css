@@ -1,0 +1,9 @@
+.popupOverFlow {
+    width: 551px;
+    overflow: scroll;
+    max-height: 800px;
+}
+
+.rest-margin-tops {
+    margin-top: 0px;
+}

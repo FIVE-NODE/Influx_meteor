@@ -30,8 +30,12 @@ Template.atwrkSalesReg.onCreated(function() {
     // 흥정셋팅 저장용
     setBargain = new ReactiveDict();
 
-    Meteor.call('selectAtwrkDetail', this.data.atwrkId(), function(err, res) {
+    // 디지털판화면일때
+    onlyDtpChk = new ReactiveVar(false);
+
+    Meteor.call('seltAtwrkSellSet', this.data.atwrkId(), function(err, res) {
         atwrkInfo.set(res);
+        if(Object.keys(res.ogPrt).length == 0) onlyDtpChk.set(true);
     });
 
     this.autorun(() => {
@@ -76,6 +80,15 @@ Template.atwrkSalesReg.onRendered(function() {
     $('span[name=dtSeltStrTime]').text(toTime);
     $('span[name=dtSeltEndDate]').text(today);
     $('span[name=dtSeltEndTime]').text(toTime);
+
+
+    setTimeout(function() {
+        if(onlyDtpChk.get()) {
+            let dtSell = $('#check-saleCondition--permit01');
+            dtSell.click();
+            dtSell.attr('disabled', true);
+        }
+    }, 600);
 
 });
 
@@ -228,13 +241,13 @@ Template.atwrkSalesReg.events({
             $('input[name=dtSellCnt]').val(cnt);
         }
     },
-    'click button[name=sellDone]' (evt, tmpl) {
+    'click button[name=salesRegBtn]' (evt, tmpl) {
         // kind 종류 001(정찰가) 002(비딩) 003(흥정) 004(가격문의)
+
         if(sellkindFlag.get() == undefined) alert('판매 방식을 선택해주세요');
         else {
             let atInfos = atwrkInfo.get();
             var today = moment(new Date()).format('YYYYMMDD hh:mm A');
-            console.log('today : ', today);
             var ogValidation = false;
             var dtValidation = true;
             var pupMsg = '';
@@ -308,14 +321,15 @@ Template.atwrkSalesReg.events({
                     atInfos.dtPrt.leCnt = selCnt;
                     atInfos.dtPrt.selCnt = selCnt;
                     
-
                     dtValidation = true;
                 }
             }
 
             // 모든 벨리데이션 통과시 판매등록 처리
             if(ogValidation && dtValidation) {
+                $('button[name=salesRegBtn]').off('click');
                 atInfos.ogPrt.sellTp = sellkindFlag.get();
+
                 Meteor.call('updateSalesAtwrk', atInfos, function(err, res) {
                     if(err) console.log(err);
                     else {
@@ -412,10 +426,12 @@ Template.atwrkSalesReg.helpers({
         }
     },
     seltBargain2() {
-        setBargain
         if(setBargain.get('seltBargain2') != undefined)  {
             return setBargain.get('seltBargain2');
         }
+    },
+    onlyDtp() {
+        return onlyDtpChk.get();
     }
     
 });
