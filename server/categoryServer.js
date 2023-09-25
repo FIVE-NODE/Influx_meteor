@@ -523,7 +523,7 @@ Meteor.methods({
         // let res = Atwrk.remove(query);
         let res = Atwrk.update(query, { $set : { delYn : 'Y'}});
         let userId = this.userId;
-        
+      
         // 갤러리 대표 작품에서 삭제
         Meteor.users.update({_id : userId}, { $pull : { 'profile.uInfos.rprsnAtwrk' : { atwrkID : query._id }} });
 
@@ -540,7 +540,7 @@ Meteor.methods({
         Meteor.users.update({'profile.uInfos.cart.atwrkId' : query._id}, { $pull : { 'profile.uInfos.cart.atwrkId' : query._id }});
 
         // 큐레이터 픽 에서 삭제
-        Pick.update({'atstAtwrk.atwrkID' : query._id}, { $pull : { 'atstAtwrk.atwrkID' : query._id }});
+        Pick.update({'atstAtwrk.atwrkID' : query._id}, { $pull : { atstAtwrk : { atwrkID : query._id } } });
         
         return res;
       } catch(e) {
