@@ -8,6 +8,7 @@ $(document).ready(function(){
     dealBox();
     datepickerFn();
     tableSwiper();
+    filterFn();
 });
 
 var $win = $(window);
@@ -21,6 +22,14 @@ function gallerySlide(){
             nextEl: '.gallery-mainSlide .swiper-button-next',
             prevEl: '.gallery-mainSlide .swiper-button-prev',
         },
+        breakpoints:{
+            320:{
+                slidesPerView: 1,
+            },
+            1024:{
+                slidesPerView: 2,
+            }
+        }
     })
 }
 
@@ -36,6 +45,11 @@ function lnbFn(){
     $('.lnb-cont--artist .lnb-cont__list button').on('click',function(){
         $('.lnb-cont--artist .lnb-cont__list button').removeClass('is-active');
         $(this).addClass('is-active');
+    })
+}
+function filterFn(){
+    $('.btn-filter').on('click', function(){
+        $('.lnb-wrap').toggleClass('is-open');
     })
 }
 

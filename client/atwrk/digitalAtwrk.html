@@ -24,51 +24,58 @@
                                 <div class="product-hot">
                                     <div class="product-hot__inner">
                                         <p class="product-hot__tit ta-c">HOT 인기 디지털 에디션 판화 </p>
-                                        <div class="hot-list">
-                                            {{#if hotAtwrk}}
-                                                {{#each hotAtwrk}}
-                                                    <div class="hot-item">
-                                                        <a href="" name="toDetails">
-                                                            <span class="hot-item__img">
-                                                                {{#each image}}
-                                                                    {{#if imgChk this}}
-                                                                        <img 
-                                                                            src=""
-                                                                            data-src="{{this.imgID}}"
-                                                                            class="hotDigital lazyload"
-                                                                            alt=""
-                                                                        >
-                                                                    {{/if}}
-                                                                {{/each}}
-                                                            </span>
-                                                            <span class="hot-item__tit">
-                                                                {{dtPrt.atwrkNm}}  |  {{atstInfo.atstNm}}
-                                                            </span>
-                                                            <span class="hot-item__price">{{commaPric dtPrt.sPric}}원</span>
-                                                            <span class="hot-item__comp">{{glry.glryNm}} 갤러리</span>
-                                                        </a>
-                                                    </div>
-                                                {{/each}}
-                                            {{else}}
-                                                {{#if dataChk}}
+                                        <div class="hot-list-wrap">
+                                            <div class="hot-list">
+                                                {{#if hotAtwrk}}
+                                                    {{#each hotAtwrk}}
+                                                        <div class="hot-item">
+                                                            <a href="" name="toDetails">
+                                                                <span class="hot-item__img">
+                                                                    {{#each image}}
+                                                                        {{#if imgChk this}}
+                                                                            <img 
+                                                                                src=""
+                                                                                data-src="{{this.imgID}}"
+                                                                                class="hotDigital lazyload"
+                                                                                alt=""
+                                                                            >
+                                                                        {{/if}}
+                                                                    {{/each}}
+                                                                </span>
+                                                                <span class="hot-item__tit">
+                                                                    {{dtPrt.atwrkNm}}  |  {{atstInfo.atstNm}}
+                                                                </span>
+                                                                <span class="hot-item__price">{{commaPric dtPrt.sPric}}원</span>
+                                                                <span class="hot-item__comp">{{glry.glryNm}} 갤러리</span>
+                                                            </a>
+                                                        </div>
+                                                    {{/each}}
                                                 {{else}}
-                                                    {{{ loadingHotDigital "hotDigital" }}}
+                                                    {{#if dataChk}}
+                                                    {{else}}
+                                                        {{{ loadingHotDigital "hotDigital" }}}
+                                                    {{/if}}
                                                 {{/if}}
-                                            {{/if}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-wrap" id="move">
-                                    <div class="form-select form-select-custom custom-select--order width--149">
-                                        <button type="button" class="custom-select__tit">정렬</button>
-                                        <ul class="custom-select__options" style="display: none;">
-                                            <li class="is-active"><button type="button">정렬</button></li>
-                                            <li><button name="sortList" value="date" type="button">최신 입점작 순</button></li>
-                                            <li><button name="sortList" value="lowPric" type="button">낮은 가격 순</button></li>
-                                            <li><button name="sortList" value="highPric" type="button">높은 가격 순</button></li>
-                                            <li><button name="sortList" value="good" type="button">좋아요 순</button></li>
-                                            <li><button name="sortList" value="view" type="button">많이 본 순</button></li>
-                                        </ul>
+                                <div class="sort-group">
+                                    <div class="button-wrap filter-wrap">
+                                        <button type="button" class="btn-filter">filter</button>
+                                    </div>
+                                    <div class="form-wrap" id="move">
+                                        <div class="form-select form-select-custom custom-select--order width--149">
+                                            <button type="button" class="custom-select__tit">정렬</button>
+                                            <ul class="custom-select__options" style="display: none;">
+                                                <li class="is-active"><button type="button">정렬</button></li>
+                                                <li><button name="sortList" value="date" type="button">최신 입점작 순</button></li>
+                                                <li><button name="sortList" value="lowPric" type="button">낮은 가격 순</button></li>
+                                                <li><button name="sortList" value="highPric" type="button">높은 가격 순</button></li>
+                                                <li><button name="sortList" value="good" type="button">좋아요 순</button></li>
+                                                <li><button name="sortList" value="view" type="button">많이 본 순</button></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="product-group">

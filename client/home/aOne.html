@@ -2,45 +2,45 @@
     <script type="text/javascript" src="/libs/common.js"></script>
     <section class="container" id="move">
         <div class="content">
-            <div class="content__inner">
-                <article class="slide-list slide-list--product">
-                    <div class="slide-wrap slide-wrap--banr">
-                        <div class="swiper">
-                            <div class="swiper-wrapper">
-                                {{#if banr}}
-                                    {{#each banr}}
-                                        <div class="swiper-slide">
-                                            <div class="banner-item">
-                                                <a href="">
-                                                    <span class="banner-item__img">
-                                                        <!-- <div id="loadings" class='testSample sampleBaner'> -->
-                                                            <!-- /image/common/simpleLoading.gif -->
-                                                        <img
-                                                            src=""
-                                                            data-src="{{image}}"
-                                                            class="testSample sampleBaner lazyload"
-                                                            alt=""
-                                                        >
-                                                        <!-- </div> -->
-                                                    </span>
-                                                    <span class="banner-item__txt">
-                                                        <strong>{{title}}</strong>
-                                                        <b>{{addInput1}}</b>
-                                                        <en>{{addInput2}}</en>
-                                                    </span>
-                                                </a>
-                                            </div>
+            <article class="slide-list slide-list--product">
+                <div class="slide-wrap slide-wrap--banr">
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            {{#if banr}}
+                                {{#each banr}}
+                                    <div class="swiper-slide">
+                                        <div class="banner-item">
+                                            <a href="">
+                                                <span class="banner-item__img">
+                                                    <!-- <div id="loadings" class='testSample sampleBaner'> -->
+                                                        <!-- /image/common/simpleLoading.gif -->
+                                                    <img
+                                                        src=""
+                                                        data-src="{{image}}"
+                                                        class="testSample sampleBaner lazyload"
+                                                        alt=""
+                                                    >
+                                                    <!-- </div> -->
+                                                </span>
+                                                <span class="banner-item__txt">
+                                                    <strong>{{title}}</strong>
+                                                    <b>{{addInput1}}</b>
+                                                    <en>{{addInput2}}</en>
+                                                </span>
+                                            </a>
                                         </div>
-                                    {{/each}}
-                                {{else}}
-                                    {{{loadingScr "sampleBaner"}}}
-                                {{/if}}
-                            </div>
+                                    </div>
+                                {{/each}}
+                            {{else}}
+                                {{{loadingScr "sampleBaner"}}}
+                            {{/if}}
                         </div>
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
                     </div>
-                </article>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </article>
+            <div class="content__inner">
                 <article class="slide-list slide-list--product">
                     <div class="slide-list__tit">
                         <a href="curatorPick">

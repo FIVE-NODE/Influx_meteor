@@ -4,32 +4,34 @@
             <p class="artwork-tit__p">갤 러 리</p>
         </div>
         <div class="artwork-wrap  is-open col-10 d-flex">
-            <div class="artwork-group col-7 justify-around">
-                <div class="artwork-list col-6 ml-auto artwork-list--area">
-                    <p class="artwork-list__tit">지역별</p>
-                    {{#each region}}
-                        <div class="artwork-item">
-                            <div class="form-input form-check  form-row">
-                                <input value="REGION-{{code}}-{{name}}" name="glryChk" type="checkbox" class="form-check__input" id="check-gallery__area{{code}}" />
-                                <span class="form-check__span"></span>
-                                <label for="check-gallery__area{{code}}" class="form-check__label">{{name}}</label>
+            <div class="artwork-box col-7">
+                <div class="artwork-group justify-around">
+                    <div class="artwork-list col-6 ml-auto artwork-list--area">
+                        <p class="artwork-list__tit">지역별</p>
+                        {{#each region}}
+                            <div class="artwork-item">
+                                <div class="form-input form-check  form-row">
+                                    <input value="REGION-{{code}}-{{name}}" name="glryChk" type="checkbox" class="form-check__input" id="check-gallery__area{{code}}" />
+                                    <span class="form-check__span"></span>
+                                    <label for="check-gallery__area{{code}}" class="form-check__label">{{name}}</label>
+                                </div>
                             </div>
-                        </div>
-                    {{/each}}
-                </div>
-                <div class="artwork-list col-3 ml-auto">
-                    <p class="artwork-list__tit">전시회 및 이벤트</p>
-                    {{#each evnt}}
-                        <div class="artwork-item">
-                            <div class="form-input form-check  form-row">
-                                <input value="EVNT-{{code}}" name="glryChk" type="checkbox" class="form-check__input" id="check-gallery__event{{code}}" />
-                                <span class="form-check__span"></span>
-                                <label for="check-gallery__event{{code}}" class="form-check__label">{{name}}</label>
+                        {{/each}}
+                    </div>
+                    <div class="artwork-list col-3 ml-auto">
+                        <p class="artwork-list__tit">전시회 및 이벤트</p>
+                        {{#each evnt}}
+                            <div class="artwork-item">
+                                <div class="form-input form-check  form-row">
+                                    <input value="EVNT-{{code}}" name="glryChk" type="checkbox" class="form-check__input" id="check-gallery__event{{code}}" />
+                                    <span class="form-check__span"></span>
+                                    <label for="check-gallery__event{{code}}" class="form-check__label">{{name}}</label>
+                                </div>
                             </div>
-                        </div>
-                    {{/each}}
+                        {{/each}}
+                    </div>
+                    <p class="artwork-caution color--sea">*원하는 조건 선택 후 (가격외 복수 선택 가능)  검색 버튼  클릭해 주세요</p>
                 </div>
-                <p class="artwork-caution color--sea">*원하는 조건 선택 후 (가격외 복수 선택 가능)  검색 버튼  클릭해 주세요</p>
             </div>
             <div class="artwork-submit col-5">
                 <div class="form-sch">

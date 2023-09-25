@@ -1,10 +1,12 @@
 .content__inner {
   position: relative;
-  max-width: 1680px;
+  max-width: 1920px;
   margin: 0 auto;
   padding: 0 6rem;
 }
-
+.content > .slide-list .swiper-slide{
+  width:37.9rem;
+}
 .banner-list {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -13,7 +15,7 @@
 }
 .banner-item {
   position: relative;
-  width: 37.9rem;
+  /* width: 37.9rem; */
 }
 .banner-item + .banner-item {
   margin-left: 1.4rem;
@@ -162,12 +164,20 @@
   padding: 0 1.5rem;
   text-align: left;
 }
+
 .slide-list--gallery .swiper-slide {
   position: relative;
+  max-height:56rem;
+  max-width:45rem;
 }
-.slide-list--gallery .swiper-slide img {
+/* .slide-list--gallery .swiper-slide img {
   width: 100%;
-}
+  min-width:auto;
+  max-width:100%;
+  max-height:100%;
+  min-height:auto;
+  object-fit: cover;;
+} */
 .slide-list--gallery .swiper-slide__cont {
   position: absolute;
   bottom: 1.5rem;
@@ -244,8 +254,8 @@
   right: 1rem;
 }
 .btn-slide--check button {
-  width: 3rem;
-  height: 3rem;
+  width: auto;
+  height: auto;
   border-radius: 100%;
   background-color: #fff;
 }
@@ -280,4 +290,60 @@
   max-height: 380px;
   min-height: 380px;
   object-fit: cover;
+}
+
+/* 20230923 수정 */
+.content > .slide-list{
+  padding:0 5rem;
+}
+.slide-wrap--curator .swiper-slide, .slide-wrap--newProduct .swiper-slide, .slide-wrap--digital .swiper-slide, .slide-wrap--original .swiper-slide{
+  width:auto;
+}
+.slide-wrap--curator .swiper-slide img, .slide-wrap--newProduct .swiper-slide img, .slide-wrap--digital .swiper-slide img, .slide-wrap--original .swiper-slide img{
+  width:100%;
+  object-fit: contain;
+  background:transparent;
+}
+.slide-wrap--event .swiper-slide img{
+  max-width:100%;
+  max-height:100%;
+  min-height:100%;
+}
+.slide-wrap--gallery .swiper-slide{
+  max-width:100%
+}
+.slide-wrap--gallery .swiper-slide img{
+  max-width:100%;
+  object-fit: cover;
+}
+
+@media (min-width:1920px){
+  .content > .slide-list{
+    max-width:4000px;
+    margin:0 auto;
+  }
+}
+
+@media (max-width:1280px){
+  .content > .slide-list{
+    padding:0 2.4rem;
+  }
+  .content__inner{
+    padding:0 2.4rem;
+  }
+  .slide-wrap--event .swiper-slide{
+    max-width:30rem;
+  }
+  .btn-slide--check{
+    justify-content: flex-end;
+    position:initial;
+    display:flex;
+    margin-bottom:1rem;
+    opacity:1;
+  }
+}
+@media (max-width:720px){
+  .slide-wrap--event .swiper-slide{
+    max-width:25rem;
+  }
 }
