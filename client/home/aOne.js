@@ -206,7 +206,8 @@ Template.aOne.helpers({
     },
     pick() { 
         if(pickCategory.get() != undefined) {
-            let query = Meteor.commonUtils.normalSetQuy();
+            // let query = Meteor.commonUtils.normalSetQuy();
+            let query = {};
             query.thmTp = pickCategory.get();
             let data = Pick.findOne(query);
             
