@@ -159,15 +159,19 @@ Template.aOne.events({
         if(Meteor.userId() == null) messagePopup({message : '로그인 후 이용해주세요'});
         else { 
             // 작품 원화 or 디지털 판화 체크
-            if(atwrkFlag == 'dtPrt') messagePopup({message : '디지털 판화는 작품상세보기에서 옵션 선택후 추가해주세요'});
-            else {
-                var setData = { atwrkId, atwrkFlag };
-                Meteor.call('insertBasket', setData, function(err, res) {
-                    if(err) console.log(err);
-                    else {
-                        messagePopup({message : '장바구니 등록이 완료되었습니다.'});
-                    }
-                });    
+            if(Meteor.commonUtils.glryUserLimitEvt()) {
+                if(atwrkFlag == 'dtPrt') messagePopup({message : '디지털 판화는 작품상세보기에서 옵션 선택후 추가해주세요'});
+                else {
+                    var setData = { atwrkId, atwrkFlag };
+                    Meteor.call('insertBasket', setData, function(err, res) {
+                        if(err) console.log(err);
+                        else {
+                            messagePopup({message : '장바구니 등록이 완료되었습니다.'});
+                        }
+                    });    
+                }
+            } else {
+                messagePopup({message : '갤러리 회원은 좋아요를 등록할 수 없습니다.'});
             }
         }
     },
@@ -179,9 +183,15 @@ Template.aOne.events({
         // 로그인 체크
         if(Meteor.userId() == null) messagePopup({message : '로그인 후 이용해주세요'});
         else {
-            // 좋아요 등록
-            Meteor.clientCommonUtils.goodBtnEvnt(atwrkId, atwrkFlag, false);
-            messagePopup({message : '좋아요 등록이 완료되었습니다.'});   
+
+            if(Meteor.commonUtils.glryUserLimitEvt()) {
+                // 좋아요 등록
+                Meteor.clientCommonUtils.goodBtnEvnt(atwrkId, atwrkFlag, false);
+                messagePopup({message : '좋아요 등록이 완료되었습니다.'});   
+            } else {
+                messagePopup({message : '갤러리 회원은 좋아요를 등록할 수 없습니다.'});
+            }
+            
         }
     },
     'click a[name=atDetail]'(evt, tmpl) {

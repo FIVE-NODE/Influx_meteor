@@ -78,7 +78,6 @@ Template.glryAtwrks.events({
         FlowRouter.go('/ogAtwrkCr', {}, {atwrkId});
     },
     'click button[name=inventory]'(evt, tmpl) {
-        console.log('inventory');
         FlowRouter.go('/inventoryMode');
     },
     'click button[name=crAtwrk]'(evt, tmpl) {
@@ -160,6 +159,8 @@ Template.glryAtwrks.events({
             
             glryAtwrkList();
         } else {
+            filters.set({});
+
             setQuery();
 
             glryAtwrkList();
@@ -281,7 +282,7 @@ Template.glryAtwrks.helpers({
         if(atwrkInfo.get() != undefined) {
             let res = {};
             res.total = total.get();
-            res.selling = (atwrkInfo.get().filter(e => e.sellYn == 'Y')).length;
+            res.selling = (atwrkInfo.get().filter(e => (e.ogPrt.selStrDt != undefined || e.dtPrt.selStrDt != undefined))).length;
             res.notSelling = (res.total - res.selling);
 
             return res;

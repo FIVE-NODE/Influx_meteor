@@ -91,7 +91,6 @@ Template.atwrkDetail.onCreated(function() {
         }
 
         if(FlowRouter.getParam('_id')) {
-            console.log(' === ! ');
             selectAtwrkDetail();
         }
     });
@@ -309,75 +308,90 @@ Template.atwrkDetail.events({
     'click button[name=otherBasket]' (evt, tmpl) {
         // 로그인 체크
         if(Meteor.userId() == null) messagePopup({message : '로그인 후 이용해주세요'});
-        else { 
-            var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
-            var atwrkFlag = $(evt.currentTarget).val();
+        else {
+            if(Meteor.commonUtils.glryUserLimitEvt()) {
+                var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
+                var atwrkFlag = $(evt.currentTarget).val();
 
-            // 작품 원화 or 디지털 판화 체크
-            if(atwrkFlag == 'dtPrt') messagePopup({message : '디지털 판화는 작품상세보기에서 옵션 선택후 추가해주세요'});
-            else {
-                var setData = { atwrkId, atwrkFlag };
-                Meteor.call('insertBasket', setData, function(err, res) {
-                    if(err) console.log(err);
-                    else {
-                        messagePopup({message : '장바구니 등록이 완료되었습니다.'});
-                    }
-                });    
+                // 작품 원화 or 디지털 판화 체크
+                if(atwrkFlag == 'dtPrt') messagePopup({message : '디지털 판화는 작품상세보기에서 옵션 선택후 추가해주세요'});
+                else {
+                    var setData = { atwrkId, atwrkFlag };
+                    Meteor.call('insertBasket', setData, function(err, res) {
+                        if(err) console.log(err);
+                        else {
+                            messagePopup({message : '장바구니 등록이 완료되었습니다.'});
+                        }
+                    });    
+                }
+
+            } else {
+                messagePopup({message : '갤러리 회원은 장바구니를 등록할 수 없습니다.'});
             }
         }
     },
     // 장바구니
     'click a[name=shBasket]'(evt, tmpl) {
         if(userInfos.get() != undefined) {
-            var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
-            var atwrkFlag = tabFlag.get();
-            var setData = atwrkFlag == 'ogPrt' ?
-                {
-                    atwrkId,
-                    atwrkFlag : atwrkFlag
-                } : listProduct.get();
-            
-            Meteor.call('insertBasket', setData, function(err, res) {
-                messagePopup({
-                    message : '장바구니 등록이 완료되었습니다.<br>장바구니로 이동 하시겠습니까?',
-                    btn : [{ name : "예", route : "/userCart"}, { name : "아니요", route : "" }]
+            if(Meteor.commonUtils.glryUserLimitEvt()) {
+                var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
+                var atwrkFlag = tabFlag.get();
+                var setData = atwrkFlag == 'ogPrt' ?
+                    {
+                        atwrkId,
+                        atwrkFlag : atwrkFlag
+                    } : listProduct.get();
+                
+                Meteor.call('insertBasket', setData, function(err, res) {
+                    messagePopup({
+                        message : '장바구니 등록이 완료되었습니다.<br>장바구니로 이동 하시겠습니까?',
+                        btn : [{ name : "예", route : "/userCart"}, { name : "아니요", route : "" }]
+                    });
                 });
-            });
-            
-
+            } else {
+                messagePopup({message : '갤러리 회원은 장바구니를 등록할 수 없습니다.'});
+            }
         } else {
             messagePopup({message : '로그인 후 이용해주세요'});
         }
     },
     // 구매하기 원화
     'click a[name=ogPrtBuy]'(evt, tmpl) {
-        let dataSet = [
-            {
-                atwrkFlag : tabFlag.get(),
-                atwrkInfo : this,
-                atwrkId : this._id
-            }
-        ]
-            
-        Meteor.call('encrypt', JSON.stringify(dataSet), function(err, res){
-            localStorage.setItem('if.ba.to', JSON.stringify({l : 'all'}));
-            localStorage.setItem('crt_bundle', res);
-            FlowRouter.go('/approval', {});
-        });
+        if(Meteor.commonUtils.glryUserLimitEvt()) {
+            let dataSet = [
+                {
+                    atwrkFlag : tabFlag.get(),
+                    atwrkInfo : this,
+                    atwrkId : this._id
+                }
+            ]
+                
+            Meteor.call('encrypt', JSON.stringify(dataSet), function(err, res){
+                localStorage.setItem('if.ba.to', JSON.stringify({l : 'all'}));
+                localStorage.setItem('crt_bundle', res);
+                FlowRouter.go('/approval', {});
+            });
+        } else {
+            messagePopup({message : '갤러리 회원은 작품을 구매 할 수 없습니다.'});
+        }
     },
     // 구매하기 디지털 판화
     'click a[name=dtPrtBuy]'(evt, tmpl) {
-        let dtpData = listProduct.get();
+        if(Meteor.commonUtils.glryUserLimitEvt()) {
+            let dtpData = listProduct.get();
     
-        for(var i=0; i<dtpData.length; i++) {
-             dtpData[i].atwrkInfo = this;;
+            for(var i=0; i<dtpData.length; i++) {
+                 dtpData[i].atwrkInfo = this;;
+            }
+    
+            Meteor.call('encrypt', JSON.stringify(dtpData), function(err, res) {
+                localStorage.setItem('if.ba.to', JSON.stringify({l : 'dir'}));
+                localStorage.setItem('crt_bundle', res);
+                FlowRouter.go('/approval', {});
+            });
+        } else {
+            messagePopup({message : '갤러리 회원은 작품을 구매 할 수 없습니다.'});
         }
-
-        Meteor.call('encrypt', JSON.stringify(dtpData), function(err, res) {
-            localStorage.setItem('if.ba.to', JSON.stringify({l : 'dir'}));
-            localStorage.setItem('crt_bundle', res);
-            FlowRouter.go('/approval', {});
-        });
     },
     // 드래그 투 무브 이벤트
     'click button[name=imgInterior]'(evt, tmpl) {
@@ -391,62 +405,75 @@ Template.atwrkDetail.events({
         // 로그인 체크
         if(Meteor.userId() == null) messagePopup({message : '로그인 후 이용해주세요'});
         else {
-            // 좋아요 등록
-            Meteor.clientCommonUtils.goodBtnEvnt(atwrkId, atwrkFlag, bothFlag.get());
-            messagePopup({message : '좋아요 등록이 완료되었습니다.'});   
+            if(Meteor.commonUtils.glryUserLimitEvt()) {
+                // 좋아요 등록
+                Meteor.clientCommonUtils.goodBtnEvnt(atwrkId, atwrkFlag, bothFlag.get());
+                messagePopup({message : '좋아요 등록이 완료되었습니다.'});   
+            } else {
+                messagePopup({message : '갤러리 회원은 좋아요를 등록할 수 없습니다.'});
+            }
         }
     },
     // 좋아요 버튼 이벤트
     'click .goodBtnEvt'(evt, tmpl) {
         // 좋아요 로직
         if(Meteor.userId() != undefined) {
-            $('.imgGroup-detail__favor').toggleClass('is-click');
+            if(Meteor.commonUtils.glryUserLimitEvt()) {
+                $('.imgGroup-detail__favor').toggleClass('is-click');
 
-            var ogGoodCnt = $('span[name=ogPrtGoodCnt]');
-            var dtGoodCnt = $('span[name=dtPrtGoodCnt]');
+                var ogGoodCnt = $('span[name=ogPrtGoodCnt]');
+                var dtGoodCnt = $('span[name=dtPrtGoodCnt]');
 
-            var goodBtn = $('button[name=goodBtn]');
-            
-            if(goodBtn.hasClass('is-click') === false) {
-                if(bothFlag) {
-                    ogGoodCnt.text(ogGoodCnt.text() - 1);
-                    dtGoodCnt.text(dtGoodCnt.text() - 1);
+                var goodBtn = $('button[name=goodBtn]');
+                
+                if(goodBtn.hasClass('is-click') === false) {
+                    if(bothFlag) {
+                        ogGoodCnt.text(ogGoodCnt.text() - 1);
+                        dtGoodCnt.text(dtGoodCnt.text() - 1);
+                    } else {
+                        if(tabFlag.get() === 'ogPrt') ogGoodCnt.text(ogGoodCnt.text() - 1);
+                        else dtGoodCnt.text(dtGoodCnt.text() - 1);
+                    }
                 } else {
-                    if(tabFlag.get() === 'ogPrt') ogGoodCnt.text(ogGoodCnt.text() - 1);
-                    else dtGoodCnt.text(dtGoodCnt.text() - 1);
+                    if(bothFlag) {
+                        ogGoodCnt.text(parseInt(ogGoodCnt.text()) + 1);
+                        dtGoodCnt.text(parseInt(dtGoodCnt.text()) + 1);
+                    } else {
+                        if(tabFlag.get() === 'ogPrt') ogGoodCnt.text(parseInt(ogGoodCnt.text()) + 1);
+                        else dtGoodCnt.text(parseInt(dtGoodCnt.text()) + 1);
+                    }
                 }
+
+                var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
+                var atwrkFlag = tabFlag.get();
+
+                Meteor.clientCommonUtils.goodBtnEvnt(atwrkId, atwrkFlag, bothFlag.get());
             } else {
-                if(bothFlag) {
-                    ogGoodCnt.text(parseInt(ogGoodCnt.text()) + 1);
-                    dtGoodCnt.text(parseInt(dtGoodCnt.text()) + 1);
-                } else {
-                    if(tabFlag.get() === 'ogPrt') ogGoodCnt.text(parseInt(ogGoodCnt.text()) + 1);
-                    else dtGoodCnt.text(parseInt(dtGoodCnt.text()) + 1);
-                }
+                messagePopup({message : '갤러리 회원은 좋아요를 등록할 수 없습니다.'});
             }
-
-            var atwrkId = Object.keys(this).includes('atwrkID') ? this.atwrkID : this._id;
-            var atwrkFlag = tabFlag.get();
-
-            Meteor.clientCommonUtils.goodBtnEvnt(atwrkId, atwrkFlag, bothFlag.get());
         } else messagePopup({message : '로그인 후 이용해주세요'});
         
     },
     // 소식받기 이벤트
     'click button[name=getNews]'(evt, tmpl) {
         if(userInfos.get() != undefined) {
-            var bsnsID = this.glry.bsnsID;
+            if(Meteor.commonUtils.glryUserLimitEvt()) {
+                var bsnsID = this.glry.bsnsID;
 
-            if(ntcnFlagChk.get()) {
-                Meteor.call('deleteNotice', userId, bsnsID, function(err, res) {
-                    ntcnFlagChk.set(false);
-                    messagePopup({message : '소식받기 적용이 해제되었습니다.'});
-                });
+                if(ntcnFlagChk.get()) {
+                    Meteor.call('deleteNotice', userId, bsnsID, function(err, res) {
+                        ntcnFlagChk.set(false);
+                        messagePopup({message : '소식받기 적용이 해제되었습니다.'});
+                    });
+                } else {
+                    Meteor.call('insertNotice', userId, bsnsID, function(err, res) {
+                        ntcnFlagChk.set(true);
+                        messagePopup({message : '소식받기 적용이 완료되었습니다.'});
+                    });
+                }
+
             } else {
-                Meteor.call('insertNotice', userId, bsnsID, function(err, res) {
-                    ntcnFlagChk.set(true);
-                    messagePopup({message : '소식받기 적용이 완료되었습니다.'});
-                });
+                messagePopup({message : '갤러리 회원은 소식받기를 등록할 수 없습니다.'});
             }
 
         } else {
@@ -522,9 +549,10 @@ Template.atwrkDetail.events({
         }
     },
     'click a[name=otherAtwrk]'(evt, tmpl) {
+        // 수정필요 !!!!!!
         var atwrkId = $(evt.currentTarget).attr('id');
         FlowRouter.go(`/atwrkDetail/${atwrkId}`);
-        // location.reload();
+        location.reload();
     }
 });
 

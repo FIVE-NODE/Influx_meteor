@@ -90,6 +90,7 @@ Template.purchaseList.events({
 
         if(seltDay > today) {
             $(evt.currentTarget).val(moment(today).format('YYYY-MM-DD'));
+            if(seltDay > endDay) $('input[name=endDate').val(moment(today).format('YYYY-MM-DD'));
         } else if(seltDay > endDay) {
             $(evt.currentTarget).val(moment(endDay).format('YYYY-MM-DD'));
         }

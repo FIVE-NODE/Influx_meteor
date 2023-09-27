@@ -265,8 +265,8 @@ Meteor.methods({
                 }
               }
             }
-
-            kindCode = Object.keys(data.kindCode).length > 0 ? { evntTp : { $in : data.kindCode }} : {};
+            
+            kindCode = data.kindCode != undefined ? { evntTp : { $in : data.kindCode }} : {};
           } else if(areas != undefined){
             // 퀵메뉴 통해 들어와서 검색을 이용했을때
             areas = areas.trim();
@@ -407,6 +407,7 @@ Meteor.methods({
         var kind = query.KIND != undefined ? query.KIND : {};
         var og = [];
         var dt = [];
+
         if(query.KIND != undefined) {
           for(i=0; i<kind.length; i++) {
             if(kind[i] == 'ogPrt') og.push('ogPrt');
@@ -432,6 +433,11 @@ Meteor.methods({
 
         res.list = Atwrk.aggregate([
           { $match : queryData },
+          {
+            $addFields : {
+              'mkYY' : { $cond : [{ $ne : [ { $type :  "$ogPrt.mkYY"}, 'missing' ] }, '$ogPrt.mkYY', '$dtPrt.mkYY'] },
+            }
+          },
           options
         ]);
 
@@ -452,10 +458,12 @@ Meteor.methods({
         query._id = this.userId;
 
         var normal = { 
-          'ogPrt.selStrDt' : { $exists : true }, 
-          'dtPrt.selStrDt' : { $exists : true },
+          $or : [ 
+            { 'ogPrt.selStrDt' : { $exists : true } },
+            { 'dtPrt.selStrDt' : { $exists : true } } 
+          ],
           'soldYn' : 'N',
-          'delYn' : 'N' 
+          'delYn' : 'N'
          };
         
         var sellTp = query.sellTp != undefined ? {'ogPrt.sellTp' : query.sellTp} : {};
@@ -501,6 +509,11 @@ Meteor.methods({
           {
             $addFields : {
                 "sortDateNum" : { $cond : [{ $ne : [ { $type : "$str" }, 'missing'] }, { $subtract : [ { $toDate : "$end"} , { $toDate : "$str"} ] },  '']},
+            }
+          },
+          {
+            $addFields : {
+              'mkYY' : { $cond : [{ $ne : [ { $type :  "$ogPrt.mkYY"}, 'missing' ] }, '$ogPrt.mkYY', '$dtPrt.mkYY'] },
             }
           },
           options

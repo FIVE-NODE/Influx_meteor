@@ -38,6 +38,9 @@ Template.header.onCreated(function() {
                 sltInterestAtwrkCnt(data);
             }
         }
+
+
+
     });
 
 });
@@ -190,6 +193,7 @@ Template.header.helpers({
             || currentPageName == 'eventsCrList' || currentPageName == 'bMsgManage'
             || currentPageName == 'inventoryMode'|| currentPageName == 'glryAtwrks'
             || currentPageName == 'atwrkSalesReg') res = false;
+        
         return res;
     },
     glryInfo() {

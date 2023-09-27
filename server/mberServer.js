@@ -334,7 +334,8 @@ Meteor.methods({
         var normal = {
           'glry.bsnsID' : _id,
           "delYn" : "N",
-          "soldYn" : "N"
+          "soldYn" : "N",
+          "sellYn" : "Y"
       };
 
         if(Object.keys(data).length > 0) {
@@ -398,6 +399,26 @@ Meteor.methods({
           '_id' : _id,
           "delYn" : "N",
           "soldYn" : "N"
+        };
+
+        let res = Atwrk.findOne(normal);
+
+        return res;
+      } catch(e) {
+        console.log(e);
+        throw new Meteor.Error(
+          500, 
+          '서버 접속 오류가 발생하였습니다.  <br /> 잠수 후 다시 시도해주세요.'
+        );
+      }
+    },
+    // 갤러리 관리자 용 작품 ID 작품 조회
+    seltGlryAtwrkDetail: function(_id, sellYn) {
+      try{
+        let normal = {
+          '_id' : _id,
+          "delYn" : "N",
+          "soldYn" : "N",
         };
 
         let res = Atwrk.findOne(normal);

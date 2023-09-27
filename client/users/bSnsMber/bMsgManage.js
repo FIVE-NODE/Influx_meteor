@@ -33,17 +33,19 @@ Template.bMsgManage.events({
 
         if(seltDay < strDay) {
             $(evt.currentTarget).val(moment(today).format('YYYY-MM-DD'));
-            alert('시작날짜 보다 종료날짜가 더 작습니다');
         }
     },
     'blur input[name=strDate]' (evt, tmpl) {
         var evtDay = $(evt.currentTarget).val();
         var today = moment(new Date()).format('YYYYMMDD');
+        var endDay = moment($('input[name=endDate]').val()).format();
         var seltDay = moment(evtDay).format('YYYYMMDD');
 
         if(seltDay > today) {
             $(evt.currentTarget).val(moment(today).format('YYYY-MM-DD'));
-            alert('오늘날짜 이후는 선택하실수 없습니다.');
+            if(seltDay > endDay) $('input[name=endDate').val(moment(today).format('YYYY-MM-DD'));
+        } else if(seltDay > endDay) {
+            $(evt.currentTarget).val(moment(endDay).format('YYYY-MM-DD'));
         }
     },
     'click button[name=seltDate]'(evt, tmpl) {

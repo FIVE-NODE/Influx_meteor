@@ -68,6 +68,7 @@ function selectExhigitionEvntBanr() {
 }
 
 function selectExhigitionEvntList() {
+    console.log(' ====== ', query);
     Meteor.call('selectExhigitionEvntList', query, options, function(err, res) {
         total.set(res.total);
         evntList.set(res.list);

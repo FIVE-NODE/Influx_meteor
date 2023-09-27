@@ -34,6 +34,12 @@ Template.zFive.events({
         dropDownTit = $this.parent();
         dropDownTit.toggleClass('is-click').next().slideToggle();
     },
+    'input input[name=contactEmail]'(evt, tmpl) {
+        let email = $(evt.currentTarget).val();
+
+        $(evt.currentTarget).val(Meteor.clientCommonUtils.emailConsistency(email));
+
+    },
     'click button[name=sendEmail]' (evt, tmpl) {
         var contactNm = $('input[name=contactName').val();
         var contactEmail = $('input[name=contactEmail').val();

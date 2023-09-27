@@ -283,6 +283,8 @@ Template.atwrkSalesReg.events({
                         nPric : bidStrPric
                     };
 
+                    console.log('setAtInfos : ', atInfos);
+
                     ogValidation = true;
                     break;
                 default:

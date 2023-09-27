@@ -95,7 +95,6 @@ Template.eventsCrDetail.events({
         $('input[name=seltAllChk]').prop('checked', false);
     },
     'change input[name=seltAllChk]'(evt, tmpl) {
-        console.log($(evt.currentTarget).prop('checked'));
         if($(evt.currentTarget).prop('checked')) {
             $('input[name=seltAtwrk]').prop('checked', true);
         } else {
@@ -194,7 +193,7 @@ Template.eventsCrDetail.events({
             var seltEndTime = moment(seltEndDay + ' ' + $('#ogEndTime').val(), 'YYYYMMDD hh:mm A');
 
             var timeChk = moment.duration(seltEndTime.diff(seltStrTime)).asMinutes();
-            console.log(timeChk);
+            
             if(timeChk > -1) setDateTime('ogEndDateTime');
             else alert('시작 날짜의 시간은 종료날짜의 시간보다 빠를수 없습니다.');
         } else setDateTime('ogEndDateTime');

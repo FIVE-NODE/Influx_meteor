@@ -211,6 +211,3 @@ $(window).on('scroll', function(){
         $('.product-group').removeClass('move-dowm');
     }
 }).trigger('scroll');
-
-
-// javascript

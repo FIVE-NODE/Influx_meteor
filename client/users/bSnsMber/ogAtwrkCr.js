@@ -47,7 +47,7 @@ Template.ogAtwrkCr.onCreated(function() {
     deleteList = new ReactiveVar([]);
 
     if(this.data.atwrkId() != undefined) {
-        Meteor.call('selectAtwrkDetail', this.data.atwrkId(), 'N', function(err, res) {
+        Meteor.call('seltGlryAtwrkDetail', this.data.atwrkId(), 'N', function(err, res) {
             atwrkInfo.set(res);
 
             // 업데이트 수정 로직 (데이터 셋)
@@ -60,6 +60,7 @@ Template.ogAtwrkCr.onCreated(function() {
                 else $('#check-writeInfo--productAdmit--03').click();
 
                 atwrkFlag.set(atInfo.atwrkTp);
+                console.log('flag : ', atwrkFlag.get());
 
                 var image = atInfo.image;
 
@@ -175,13 +176,13 @@ Template.ogAtwrkCr.onCreated(function() {
 });
 
 Template.ogAtwrkCr.onRendered(function() {
-    if(atwrkFlag.get() == '001') {
-        pricDisalbledSet(atwrkFlag.get());
-        $('#check-writeInfo--productAdmit--01').prop('checked', true);
-    } else if(atwrkFlag.get() == '002') {
-        pricDisalbledSet(atwrkFlag.get());
-        $('#check-writeInfo--productAdmit--02').prop('checked', true);
-    }
+    // if(atwrkFlag.get() == '001') {
+    //     pricDisalbledSet(atwrkFlag.get());
+    // } else if(atwrkFlag.get() == '002') {
+    //     pricDisalbledSet(atwrkFlag.get());
+    // } else {
+    //     pricDisalbledSet(atwrkFlag.get());
+    // }
 });
 
 // 인풋 콤마 찍기
@@ -213,13 +214,13 @@ function flagSetDislay(display) {
 function pricDisalbledSet(flag) {
     switch(flag) {
         case '003':
-            $('input[name=001Pric]').prop('disabled', false);
             $('dt[name=001Dt]').removeClass('disable');
             $('div[name=001Div]').removeClass('disable');
+            $('input[name=001Pric]').prop('disabled', false);
             
-            $('input[name=002Pric]').prop('disabled', false);
             $('dt[name=002Dt]').removeClass('disable');
             $('div[name=002Div]').removeClass('disable');
+            $('input[name=002Pric]').prop('disabled', false);
 
             $('dt[name=baseDt]').css('display', '');
             $('dd[name=baseDd]').css('display', '');

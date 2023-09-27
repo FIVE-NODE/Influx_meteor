@@ -217,8 +217,8 @@
         {{#if quickChk}}
         <div class="header__bottom">
             <div class="header__bottom__inner">
+                {{#if quickMenuChk}}
                 <div class="gnb swiper">
-                    {{#if quickMenuChk}}
                     <div class="swiper-wrapper">
                         {{#each quickMu}}
                         <div class="swiper-slide">
@@ -231,8 +231,8 @@
                         </div>
                         {{/each}}
                     </div>
-                    {{/if}}
                 </div>
+                {{/if}}
                 {{#unless currentUser}}
                     <div class="bradCrumb">
                         <a href="/login">로 그 인 </a>

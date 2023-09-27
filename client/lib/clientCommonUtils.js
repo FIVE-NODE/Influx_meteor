@@ -221,10 +221,10 @@ Meteor.clientCommonUtils = {
                 res = { 'ogPrt.pric' : 1, 'dtPrt.sPric' : 1 };
                 break;
             case 'newMkyy':
-                res = {'ogPrt.mkYY' : -1, 'dtPrt.mkYY' : -1}
+                res = {'mkYY' : -1};
                 break;
             default:
-                res = {'ogPrt.mkDt' : 1, 'dtPrt.mkDt' : 1}
+                res = {'mkYY' : 1};
                 break;
         }
 
@@ -255,10 +255,10 @@ Meteor.clientCommonUtils = {
                 break;
             case 'newMkdt':
                 // res = {'ogPrt.mkDt' : -1, 'dtPrt.mkDt' : -1 }
-                res = {'dtPrt.mkDt' : -1 , 'ogPrt.mkDt' : -1}
+                res = {'mkYY' : -1};
                 break;
             case 'oldMkdt':
-                res = { 'dtPrt.mkDt' : 1, 'ogPrt.mkDt' : 1 }
+                res = {'mkYY' : 1};
                 break;
             default:
                 break;
