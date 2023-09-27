@@ -1,4 +1,8 @@
 <template name="eventsUpDetail">
+    <link rel="stylesheet" href="/css/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/ux-common.css">
+    <script type="text/javascript" src="/libs/common.js"></script>
+    <script type="text/javascript" src="/libs/sub.js"></script>
     <section class="container">
         <div class="content">
             <div class="content__inner">
@@ -15,16 +19,16 @@
                                     <p>전시 및 작품  등록</p>
                                     <div class="btn-wrap ml-auto">
                                         <button type="button" name="cancel" class="btn btn--round btn--white width--90 color-blue">취   소</button>
-                                        <button type="button" name=saveInfo class="btn btn--round btn--white width--90 color-blue">저   장</button>
+                                        <button type="button" name="saveInfo" class="btn btn--round btn--white width--90 color-blue">저   장</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-info tab-info--write width--1315 mx-auto border-0">
                                 <div class="d-flex">
                                     <dl class="tab-info__dl col-11">
-                                        <dt>대표 사진 올리기</dt>
+                                        <dt>대표 사진 올리기<span class="essential">*</span></dt>
                                         <dd>
-                                            <div class="upload-box" style="background-size: contain; background-image: url(); background-repeat: no-repeat;
+                                            <div name="evntMainImage" class="upload-box" style="background-size: contain; background-image: url(); background-repeat: no-repeat;
                                                     background-position: center center;">
                                                 <p class="upload-box__txt">
                                                     이미지를 드래그하여<br>업로드 할수 있습니다
@@ -33,7 +37,7 @@
                                                 <button name="upload-btn" type="button" class="upload-box__btn">사진 올리기</button>
                                             </div>
                                         </dd>
-                                        <dt>전시유형</dt>
+                                        <dt>전시유형<span class="essential">*</span></dt>
                                         <dd>
                                             <div class="form-wrap form-kind">
                                                 <div class="form-row">
@@ -56,21 +60,33 @@
                                                 </div>
                                             </div>
                                         </dd>
-                                        <dt class="font-pre">기        간</dt>
-                                        <dd>달력</dd>
-                                        <dt class="font-pre">제        목</dt>
+                                        <dt class="font-pre">기        간<span class="essential">*</span></dt>
+                                        <dd>
+                                            <div class="saleCondition-block d-flex justify-between  align-center mt-10 width--412">
+                                                <button type="button" class="js-popup saleCondition-block__dataBtn" data-id="salesMethod_dateStart" title="전시회 기간 시작">
+                                                    <span name="seltStrDate" class="saleCondition-block__dataBtn--date"></span>
+                                                    <span name="seltStrTime" class="saleCondition-block__dataBtn--time rest-margin-tops"></span>
+                                                </button>
+                                                <span class="saleCondition-block__hyphen">-</span>
+                                                <button type="button" class="js-popup saleCondition-block__dataBtn" data-id="salesMethod_dateEnd" title="전시회 기간 끝">
+                                                    <span name="seltEndDate" class="saleCondition-block__dataBtn--date"></span>
+                                                    <span name="seltEndTime" class="saleCondition-block__dataBtn--time rest-margin-tops"></span>
+                                                </button>
+                                            </div>
+                                        </dd>
+                                        <dt class="font-pre">제        목<span class="essential">*</span></dt>
                                         <dd>
                                             <div class="form-wrap">
                                                 <div class="form-input">
-                                                    <input type="text" class="width--650">
+                                                    <input type="text" name="title" class="width--650">
                                                 </div>
                                             </div>
                                         </dd>
-                                        <dt class="font-pre">설        명</dt>
+                                        <dt class="font-pre">설        명<span class="essential">*</span></dt>
                                         <dd>
                                             <div class="form-wrap">
                                                 <div class="form-textarea">
-                                                    <textarea name="" id="" class="width--650 p-15"></textarea>
+                                                    <textarea name="desc" id="" class="width--650 p-15"></textarea>
                                                 </div>
                                             </div>
                                         </dd>
@@ -78,7 +94,7 @@
                                         <dd>
                                             <div class="form-wrap">
                                                 <div class="form-input">
-                                                    <input type="text" class="width--650" placeholder="전시 장소 및 오프닝 일시" />
+                                                    <input type="text" name="areas" class="width--650" placeholder="전시 장소 및 오프닝 일시" />
                                                 </div>
                                             </div>
                                         </dd>
@@ -110,7 +126,7 @@
                                             <th scope="col">
                                                 <div class="form-wrap">
                                                     <div class="form-check">
-                                                        <input type="checkbox" name="" id="" class="form-check__input form-check--all">
+                                                        <input type="checkbox" name="seltAllChk" id="" class="form-check__input form-check--all">
                                                     </div>
                                                 </div>
                                             </th>
@@ -126,45 +142,57 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {{#each atstAtwrk}}
                                         <tr>
                                             <td>
                                                 <div class="form-wrap">
                                                     <div class="form-check">
-                                                        <input type="checkbox" name="" id="" class="form-check__input">
+                                                        <input type="checkbox" name="seltAtwrk" id="" class="form-check__input">
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <span class="img-wrap">
-                                                    <img src="/image/sub/img-curator-list01.png" alt="">
-                                                </span>
-                                            </td>
-                                            <td>백 남 준</td>
-                                            <td>색의 변주곡, 900 x 350,  캔버스위에 유화</td>
-                                            <td>1998</td>
-                                            <td>32,000,000</td>
-                                            <td>
-                                                <span class="font-14 fontW-b color--sea">판 매 중 </span>
-                                            </td>
-                                            <td>
-                                                <div class="form-wrap">
-                                                    <div class="form-check">
-                                                        <label class="switch">
-                                                            <input type="checkbox" name="" id="">
-                                                            <span class="check-slide check-slide--round"></span>
-                                                        </label>
+                                            {{#with atwrkInfo atwrkID}}
+                                                <td>
+                                                    <span class="img-wrap">
+                                                        <!-- 임시 100px 적용 -->
+                                                        <img style="width: 100px;" src="{{selectMainImage this}}" alt="">
+                                                    </span>
+                                                </td>
+                                                {{#if dtPrtChk this}}
+                                                    <td>{{atstInfo.atstNm}}</td>
+                                                    <td>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}} x {{ogPrt.hSize}},  {{codeToName atwrkDetail.ogPrt.metRias "MATERIAL"}}</td>
+                                                    <td>{{ogPrt.mkYY}}</td>
+                                                    <td>{{commaPric ogPrt.pric}}</td>
+                                                {{else}}
+                                                    <td>{{atstInfo.atstNm}}</td>
+                                                    <td>{{ogPrt.atwrkNm}}, {{codeToName dtPrt.base "BASE"}}</td>
+                                                    <td>{{ogPrt.mkYY}}</td>
+                                                    <td>{{commaPric dtPrt.sPric}}</td>
+                                                {{/if}}
+                                                <td>
+                                                    <span class="font-14 fontW-b color--sea">판 매 중 </span>
+                                                </td>
+                                                <td>
+                                                    <div class="form-wrap">
+                                                        <div class="form-check">
+                                                            <label class="switch">
+                                                                <input type="checkbox" name="" id="">
+                                                                <span class="check-slide check-slide--round"></span>
+                                                            </label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn--round btn--white-blue">판매등록/수정</button>
-                                            </td>
-                                            <td>
-                                                <button type="button">
-                                                    <img src="/image/sub/icon/icon-delete.png" alt="">
-                                                </button>
-                                            </td>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn--round btn--white-blue">판매등록/수정</button>
+                                                </td>
+                                                <td>
+                                                    <button type="button">
+                                                        <img src="/image/sub/icon/icon-delete.png" alt="">
+                                                    </button>
+                                                </td>
+                                            {{/with}}
                                         </tr>
+                                        {{/each}}
                                     </tbody>
                                 </table>
                                 <div class="d-flex mt-20">
@@ -182,11 +210,11 @@
                                 </div>
                                 <div class="pagination-wrap mb-40 d-flex pos-rel">
                                     <div class="btn-wrap d-flex">
-                                        <button type="button" class="btn btn-cancel btn--round border-1 ml-20">
+                                        <button type="button" name="allSeltCancel" class="btn btn-cancel btn--round border-1 ml-20">
                                             일괄 선택 취소
                                         </button>
                                     </div>
-                                    <div class="pagination pos-abs pos-center">
+                                    <!-- <div class="pagination pos-abs pos-center">
                                         <a href="" class="link-prev"></a>
                                         <a href="" class="is-active">1</a>
                                         <a href="">2</a>
@@ -194,7 +222,7 @@
                                         <a href="">4</a>
                                         <a href="">5</a>
                                         <a href="" class="link-next"></a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -203,8 +231,67 @@
             </div>
         </div>
     </section>
+
+     <!-- popup -->
+     <div class="popup-layout" id="salesMethod_dateStart" title="전시회 기간 시작 팝업">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:257px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit">전시회 시작일</p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont popup-cont--datePop">
+                    <div class="datetime-wrap">
+                        <div class="date-wrap">
+                            <div id="datepicker1"></div>
+                        </div>
+                        <div class="time-wrap">
+                            <input type="text" id="ogStrTime" class="form-control timepicker" />
+                        </div>
+                    </div>
+                    <div class="btn-wrap d-flex justify-center mt-30">
+                        <button type="button" class="btn btn--white btn--round width--90 height-30 font-pre popup-close">닫    기</button>
+                        <button type="button" name="ogStrDateTime" class="btn btn--blue btn--round width--90 height-30 ml-10 font-pre">확    인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- popup -->
+    <div class="popup-layout" id="salesMethod_dateEnd" title="전시회 기간 끝 팝업">
+        <div class="popup-wrap">
+            <div class="popup-inner" style="width:257px;">
+                <div class="popup-head">
+                    <p class="popup-head__tit">전시회 종료일</p>
+                    <button type="button" class="popup-close">
+                        <img src="/image/common/icon/icon-popup-close.png" alt="">
+                    </button>
+                </div>
+                <div class="popup-cont popup-cont--datePop">
+                    <div class="datetime-wrap">
+                        <div class="date-wrap">
+                            <div id="datepicker2"></div>
+                        </div>
+                        <div class="time-wrap">
+                            <input type="text" id="ogEndTime" class="form-control timepicker" />
+                        </div>
+                    </div>
+                    <div class="btn-wrap d-flex justify-center mt-30">
+                        <button type="button" class="btn btn--white btn--round width--90 height-30 font-pre popup-close">닫    기</button>
+                        <button type="button" name="ogEndDateTime" class="btn btn--blue btn--round width--90 height-30 ml-10 font-pre">확    인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- /container -->
     <footer class="footer">
         {{> footer}}
     </footer>
+    <!-- 팝업 템플릿 -->
+    {{> utilsPopUp popup}}
 </template>

@@ -172,17 +172,25 @@ Template.ogAtwrkCr.onCreated(function() {
                 updateFlag.set(true);
             }
         });
+    } else {
+        // 수정아 아닌 작품등록에서 들어왔을때
+        atwrkFlag.set(this.data.flag());
     }
 });
 
 Template.ogAtwrkCr.onRendered(function() {
-    // if(atwrkFlag.get() == '001') {
-    //     pricDisalbledSet(atwrkFlag.get());
-    // } else if(atwrkFlag.get() == '002') {
-    //     pricDisalbledSet(atwrkFlag.get());
-    // } else {
-    //     pricDisalbledSet(atwrkFlag.get());
-    // }
+    // 수정 아닌 작품등록 드어왔을때 실행 로직
+    switch(atwrkFlag.get()) {
+        case '001':
+            $('#check-writeInfo--productAdmit--01').click();
+            break;
+        case '002':
+            $('#check-writeInfo--productAdmit--02').click();
+            break;
+        case '003':
+            $('#check-writeInfo--productAdmit--03').click();
+            break;
+    }
 });
 
 // 인풋 콤마 찍기
@@ -398,24 +406,6 @@ Template.ogAtwrkCr.events({
         var imgAll = imgUrl.all();
         delete imgAll.uploadAtstImg;
 
-        var mainImgSize = '';
-        var imgSize = new Image();
-        var _height;
-
-        imgSize.src = '/temps/' + imgAll.mainUploadImg;
-        _height = imgSize.height;
-
-        if(_height < 320) mainImgSize = 'S';
-        else if(_height > 320 && _height < 480) {
-            var size1 = _height - 320;
-            var size2 = 480 - _height;
-            mainImgSize = size1 < size2 ? 'S' : 'M';
-        } else if(_height > 480 && _height < 700) {
-            var size1 = _height - 480;
-            var size2 = 700 - _height;
-            mainImgSize = size1 < size2 ? 'M' : 'L';
-        } else mainImgSize = 'L';
-
         var atstNm = $('input[name=atstNm]').val().trim();
         var atstDesc = $('textarea[name=atstDesc]').val().trim();
         var atstAddDesc = $('textarea[name=atstAddDesc]').val().trim();
@@ -432,26 +422,26 @@ Template.ogAtwrkCr.events({
         var style2Val = style2.get();
         var guarant = guarantee.get();
         var catlog = catalog.get();
-        var ogPric = $('input[name=001Pric]').val();
-        var dtPric = $('input[name=002Pric]').val();
+        var ogPric = Meteor.clientCommonUtils.delComma($('input[name=001Pric]').val());
+        var dtPric = Meteor.clientCommonUtils.delComma($('input[name=002Pric]').val());
 
         var atFlag = atwrkFlag.get();
 
         var atstImage = imgUrl.get('uploadAtstImg') == undefined ? '' : imgUrl.get('uploadAtstImg');
         var mainImg = imgAll.mainUploadImg == undefined ? '' : imgAll.mainUploadImg;;
 
-        if(atFlag == undefined)                 {   messagePopup({message : '원화 또는 디지털판화를 선택해주세요'});  }
-        else if(mainImg == '')                      messagePopup({message : '작품사진 은 필수 입니다.'});
-        else if(Object.keys(imgAll).length < 3)     messagePopup({message : '작품사진 포함 디테일 사진 2개 이상 올려주셔야 합니다.'});
-        else if(atstNm == '')                   {   messagePopup({message : '작가이름은 필수 입니다.'});    $('input[name=atstNm]').focus();     }
-        else if(atstDesc == '')                 {   messagePopup({message : '작가 소개 는 필수 입니다.'});  $('input[name=atstDesc]').focus();   }
-        else if(atwrkNm == '')                  {   messagePopup({message : '작품이름은 필수 입니다.'});    $('input[name=atwrkNm]').focus();    }
-        else if(mkYY == '')                     {   messagePopup({message : '제작년도은 필수 입니다.'});    $('input[name=mkYY]').focus();       }
-        else if(hSize == '')                    {   messagePopup({message : '작품높이는 필수 입니다.'});    $('input[name=hSize]').focus();    }
-        else if(wSize == '')                    {   messagePopup({message : '작품너비은 필수 입니다.'});    $('input[name=wSize]').focus();      }
-        else if(dSize == '')                    {   messagePopup({message : '작품깊이은 필수 입니다.'});    $('input[name=dSize]').focus();      }
+        if(atFlag == undefined)                 {   messagePopup({message : '원화 또는 디지털판화를 선택해주세요'});                             }
+        else if(mainImg == '')                  {    messagePopup({message : '작품사진 은 필수 입니다.'});                                      }
+        else if(Object.keys(imgAll).length < 3) {    messagePopup({message : '메인 작품사진 포함 디테일 사진 3개 이상 올려주셔야 합니다.'});      }
+        else if(atstNm == '')                   {   messagePopup({message : '작가이름은 필수 입니다.'});    $('input[name=atstNm]').focus();    }
+        else if(atstDesc == '')                 {   messagePopup({message : '작가 소개 는 필수 입니다.'});  $('input[name=atstDesc]').focus();  }
+        else if(atwrkNm == '')                  {   messagePopup({message : '작품이름은 필수 입니다.'});    $('input[name=atwrkNm]').focus();   }
+        else if(mkYY == '')                     {   messagePopup({message : '제작년도은 필수 입니다.'});    $('input[name=mkYY]').focus();      }
+        else if(hSize == '')                    {   messagePopup({message : '작품높이는 필수 입니다.'});    $('input[name=hSize]').focus();     }
+        else if(wSize == '')                    {   messagePopup({message : '작품너비은 필수 입니다.'});    $('input[name=wSize]').focus();     }
+        else if(dSize == '')                    {   messagePopup({message : '작품깊이은 필수 입니다.'});    $('input[name=dSize]').focus();     }
         else if((atFlag == '002' || atFlag == '003') && baseVal == undefined)
-                                                {   messagePopup({message : '베이스를 선택해주세요'});  }
+                                                {   messagePopup({message : '베이스를 선택해주세요'});              }
         else if((atFlag == '001' || atFlag == '003') && mediumVal == undefined)         
                                                 {   messagePopup({message : '미디움 선택은 필수 입니다.'});         }
         else if((atFlag == '001' || atFlag == '003') && materialVal == undefined)
@@ -459,12 +449,36 @@ Template.ogAtwrkCr.events({
         else if(style1Val == undefined)         {   messagePopup({message : '스타일1 선택은 필수 입니다.'});        }
         else if(style2Val == undefined)         {   messagePopup({message : '스타일2 선택은 필수 입니다.'});        }
         else if(atFlag == '001' && ogPric == ''){   messagePopup({message : '원화 금액을 입력해주세요'});           }
+        else if(atFlag == '001' && ogPric < 99999)
+                                                {   messagePopup({message : '금액은 10만원 이상이여야 합니다.'});   }
         else if(atFlag == '002' && dtPric == ''){   messagePopup({message : '디지털 판화 금액을 입력해주세요'});    }
+        else if(atFlag == '002' && dtPric < 99999)
+                                                {   messagePopup({message : '금액은 10만원 이상이여야 합니다.'});   }
         else if(atFlag == '003' && (ogPric == '' || dtPric == ''))
-                                                {   messagePopup({message : '원화 또는 판화 금액을 입력해주세요'});  }
-        else if(guarant == undefined)           {   messagePopup({message : '보증서 여/부는 필수 선택입니다.'});      }
-        else if(catlog == undefined)            {   messagePopup({message : '카다로그 여/부는 필수 선택입니다.'});    }
+                                                {   messagePopup({message : '원화 또는 판화 금액을 입력해주세요'}); }
+        else if(atFlag == '003' && (dtPric < 99999 || ogPric < 99999))
+                                                {   messagePopup({message : '금액은 10만원 이상이여야 합니다.'});   }
+        else if(guarant == undefined)           {   messagePopup({message : '보증서 여/부는 필수 선택입니다.'});    }
+        else if(catlog == undefined)            {   messagePopup({message : '카다로그 여/부는 필수 선택입니다.'});  }
         else {
+            var mainImgSize = '';
+            var imgSize = new Image();
+            var _height;
+    
+            imgSize.src = '/temps/' + imgAll.mainUploadImg;
+            _height = imgSize.height;
+    
+            if(_height < 320) mainImgSize = 'S';
+            else if(_height > 320 && _height < 480) {
+                var size1 = _height - 320;
+                var size2 = 480 - _height;
+                mainImgSize = size1 < size2 ? 'S' : 'M';
+            } else if(_height > 480 && _height < 700) {
+                var size1 = _height - 480;
+                var size2 = 700 - _height;
+                mainImgSize = size1 < size2 ? 'M' : 'L';
+            } else mainImgSize = 'L';
+
             let data = {
                 deleteList : deleteList.get(),
                 updateFlag : updateFlag.get(),

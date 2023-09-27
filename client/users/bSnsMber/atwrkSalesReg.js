@@ -113,30 +113,27 @@ Template.atwrkSalesReg.events({
     },
     'keyup input[name=endPric]'(evt, tmpl) {
         inputComma($(evt.currentTarget));
+
+        var pric = $(evt.currentTarget).val().replace(delComma, "");
+        if(pric == '') ogTotalPric.set(0);
+        else {
+            pric = Number(pric);
+            ogTotalPric.set(Math.round(pric + (pric * 0.05)));
+        }
     },
     'keyup input[name=pric]'(evt, tmpl) {
         inputComma($(evt.currentTarget));
+
+        var pric = $(evt.currentTarget).val().replace(delComma, "");
+        if(pric == '') ogTotalPric.set(0);
+        else {
+            pric = Number(pric);
+            ogTotalPric.set(Math.round(pric + (pric * 0.05)));
+        }
     },
     'keyup input[name=dtPric]'(evt, tmpl) {
         inputComma($(evt.currentTarget));
-    },
-    'change input[name=pric]'(evt, tmpl) {
-        var pric = $(evt.currentTarget).val().replace(delComma, "");
-        if(pric == '') ogTotalPric.set(0);
-        else {
-            pric = Number(pric);
-            ogTotalPric.set(Math.round(pric + (pric * 0.05)));
-        }
-    },
-    'change input[name=endPric]'(evt, tmpl) {
-        var pric = $(evt.currentTarget).val().replace(delComma, "");
-        if(pric == '') ogTotalPric.set(0);
-        else {
-            pric = Number(pric);
-            ogTotalPric.set(Math.round(pric + (pric * 0.05)));
-        }
-    },
-    'change input[name=dtPric]'(evt, tmpl) {
+
         var pric = $(evt.currentTarget).val().replace(delComma, "");
         if(pric == '') dtTotalPric.set(0);
         else {
@@ -209,7 +206,8 @@ Template.atwrkSalesReg.events({
         history.back();
     },
     // 흥정용 가격 선택1, 선택2 셋팅
-    'blur #bargain' (evt, tmpl) {
+    'keyup #bargain' (evt, tmpl) {
+    
         var pric = Number($(evt.currentTarget).val().replace(delComma, ''));
         pric = pric + (pric * 0.05);
 
@@ -282,8 +280,6 @@ Template.atwrkSalesReg.events({
                         immdPurchPric,
                         nPric : bidStrPric
                     };
-
-                    console.log('setAtInfos : ', atInfos);
 
                     ogValidation = true;
                     break;
@@ -406,9 +402,6 @@ Template.atwrkSalesReg.helpers({
         return sellkindFlag.get() == '002';
     },
     scoutBargain() {
-        if(sellkindFlag.get() == '003') {
-            
-        }
         return sellkindFlag.get() == '003';
     },
     ogTotalPric() {

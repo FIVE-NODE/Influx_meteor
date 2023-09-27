@@ -159,7 +159,8 @@ Template.header.helpers({
         || currentPageName == 'myPageSelling' || currentPageName == 'ogAtwrkCr'
         || currentPageName == 'eventsCrList' || currentPageName == 'bMsgManage'
         || currentPageName == 'inventoryMode'|| currentPageName == 'glryAtwrks'
-        || currentPageName == 'myCollection') res = true;
+        || currentPageName == 'myCollection' || currentPageName == 'eventsCrDetail'
+        || currentPageName == 'eventsUpDetail') res = true;
         return res;
     },
     glryMidHeaderChk() {
@@ -168,7 +169,8 @@ Template.header.helpers({
         var currentPageName = FlowRouter.getRouteName();
         if(currentPageName == 'myPageSelling' || currentPageName == 'ogAtwrkCr'
         || currentPageName == 'eventsCrList' || currentPageName == 'bMsgManage'
-        || currentPageName == 'inventoryMode' || currentPageName == 'glryAtwrks') res = true;
+        || currentPageName == 'inventoryMode' || currentPageName == 'glryAtwrks'
+        || currentPageName == 'eventsCrDetail' || currentPageName == 'eventsUpDetail') res = true;
 
         return res;
     },
@@ -192,7 +194,8 @@ Template.header.helpers({
         if(currentPageName == 'myPageSelling' || currentPageName == 'ogAtwrkCr'
             || currentPageName == 'eventsCrList' || currentPageName == 'bMsgManage'
             || currentPageName == 'inventoryMode'|| currentPageName == 'glryAtwrks'
-            || currentPageName == 'atwrkSalesReg') res = false;
+            || currentPageName == 'atwrkSalesReg' || currentPageName == 'eventsCrDetail'
+            || currentPageName == 'eventsUpDetail') res = false;
         
         return res;
     },

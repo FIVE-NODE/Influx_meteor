@@ -151,6 +151,8 @@ Template.eventsCrDetail.events({
         else if(desc == undefined) messagePopup({message : '설명을 입력해주세요.'});
         else if(areas == '') messagePopup({message : '세부정보를 입력해주세요'});
         else {
+            let post = {};
+
             if(imgUrl.get() != undefined) post.image = imgUrl.get();
         
             // Meteor.call('savePick', tabFlag.get(), post, function(err, res) {
