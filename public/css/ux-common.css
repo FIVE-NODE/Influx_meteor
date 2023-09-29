@@ -904,7 +904,12 @@ body {
   font-size: 1.2rem;
   font-weight: 400;
 }
-.header__mid-menu {
+.header__mid-menu{
+  width: calc(100% - 40rem);
+  padding: 0 10rem;
+  padding-right: 0;
+}
+.header__mid-menu__inner {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -913,9 +918,13 @@ body {
           align-items: center;
   -ms-flex-pack: distribute;
       justify-content: space-around;
-  width: calc(100% - 40rem);
-  padding: 0 10rem;
-  padding-right: 0;
+}
+.header__mid-menu__inner .swiper-slide{
+  width:auto;
+}
+.header__mid-menu__inner .swiper-wrapper{
+  justify-content: space-between;
+  align-items: center;
 }
 .header__mid-menu a {
   display: -webkit-box;
@@ -3007,6 +3016,9 @@ input[class*=js-datepicker] {
       -ms-flex-align: start;
           align-items: flex-start;
 }
+.form-row.mt-15{
+  margin-top:1.5rem;
+}
 
 @media print {
   .no-print, no-print * {
@@ -3197,7 +3209,7 @@ input[class*=js-datepicker] {
     flex-flow:row-reverse wrap;
     justify-content: space-between;
     width:100%;
-    padding:2rem 2.5rem;
+    padding:2rem 0;
   }
   .artwork-box{
     overflow-y:hidden;
@@ -3223,6 +3235,12 @@ input[class*=js-datepicker] {
     width:100%;
     background-color:#fff;
     z-index:2;
+  }
+  .header__top.solid + .header__mid{
+    padding-top:10rem;
+  }
+  .header__top.solid + .header__mid + .header__bottom.move-down{
+    padding-top:0;
   }
   .header__bottom__inner .bradCrumb{
     display:none;
@@ -3283,8 +3301,43 @@ input[class*=js-datepicker] {
   .swiper-button-prev, .swiper-button-next{
     display:none;
   }
-  button[name="galleryMenu"], button[name="artistMenu"]{
+  button[name="galleryMenu"], button[name="artMenu"]:first-child{
     display:none;
+  }
+  .slideMenu > button:not(.slideMenu-sch) + button:not(.slideMenu-sch)::before{
+    display:none;
+  }
+  .slideMenu-cont--artist .artwork-group{
+    width:90rem;
+    justify-content:space-between;
+  }
+  .header__mid__inner{
+    flex-wrap:wrap;
+    height:auto;
+    padding:1.2rem 2.4rem;
+  }
+  .header__mid-menu{
+    justify-content: space-between;
+    width:100%;
+    padding-left:0;
+    margin-top:1rem;
+  }
+}
+@media (max-width:1024px){
+  .slideMenu-cont--artist .artwork-group{
+    width:70rem;
+  }
+}
+@media (max-width:900px){
+  .artwork-submit .form-sch{
+    justify-content: flex-end;
+    width:100%;
+    margin-left:auto;
+    margin-top:3rem;
+    order:2;
+  }
+  .slideMenu-cont--artist .check-reset{
+    margin-right:auto;
   }
 }
 @media (max-width:720px){
@@ -3300,6 +3353,7 @@ input[class*=js-datepicker] {
   .artwork-tit{
     flex-flow:row wrap;
     width:100%;
+    margin-top:3rem;
   }
   .artwork-wrap{
     width:100%;
@@ -3365,5 +3419,31 @@ input[class*=js-datepicker] {
   }
   .footer .sns-wrap a img{
     width:100%;
+  }
+  .slideMenu-cont--artist .artwork-group{
+    width:55rem;
+    padding-bottom:3rem;
+  }
+  .slideMenu-cont--artist .form-sch{
+    width:100%;
+  }
+  .slideMenu-cont--artist .form-sch .form-input{
+    width:calc(100% - 7.3rem);
+  }
+  .slideMenu-cont--artist .form-sch .form-sch__input{
+    width:100%;
+  }
+  .slide-list__tit{
+    flex-wrap:wrap;
+  }
+  .header__mid-info{
+    flex-wrap:wrap;
+  }
+  .header__mid-info__tit{
+    width:100%;
+    margin-bottom:1rem;
+  }
+  .header__mid-menu__inner .swiper-slide{
+    width:13rem;
   }
 }

@@ -178,6 +178,10 @@ function mobileMenu(){
         $('.sideMenu-mo').removeClass('is-open');
         $('body').css('overflow', 'initial');
     })
+    $('.btn-sideMenu__box a:not(".sjLab")').on('click', function(){
+        $('.sideMenu-mo').removeClass('is-open');
+        $('body').css('overflow', 'initial');
+    })
 }
 
 $(window).on('scroll', function(){

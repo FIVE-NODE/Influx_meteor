@@ -9,6 +9,7 @@ $(document).ready(function(){
     datepickerFn();
     tableSwiper();
     filterFn();
+    mypageSlide();
 });
 
 var $win = $(window);
@@ -33,6 +34,21 @@ function gallerySlide(){
     })
 }
 
+function mypageSlide(){
+    var mypageSlide = new Swiper('.header__mid-menu__inner.swiper', {
+        slidesPerView:'auto',
+        breakpoints:{
+            320:{
+                allowTouchMove:true,
+                spaceBetween:20,
+            },
+            720:{
+                allowTouchMove:false,
+            }
+        }
+    })
+}
+
 function lnbFn(){
     $('.lnb-tit').click(function(){
         $(this).toggleClass('is-close');
@@ -50,6 +66,9 @@ function lnbFn(){
 function filterFn(){
     $('.btn-filter').on('click', function(){
         $('.lnb-wrap').toggleClass('is-open');
+    });
+    $('.filter-close').on('click', function(){
+        $('.lnb-wrap').removeClass('is-open');
     })
 }
 

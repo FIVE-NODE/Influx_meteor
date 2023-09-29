@@ -59,23 +59,23 @@
                                 {{#if pick}}
                                     {{#each pick}}
                                         <div class="swiper-slide">
-                                            <div class="btn-wrap btn-slide--check">
-                                                <button name="shBasket" value="{{_id}}" type="button" title="장바구니 넣기">
-                                                    <img src="/image/main/icon/icon-basket.png" alt="">
-                                                </button>
-                                                {{#if chkDtp}}
-                                                    <button name="goodBtn" value="{{_id}}" type="button" title="찜하기">
-                                                        <img src="/image/main/icon/icon-favor.png" alt="">
-                                                    </button>
-                                                {{else}}
-                                                    <button value="dtPrt" name="goodBtn" type="button" title="찜하기">
-                                                        <img src="/image/main/icon/icon-favor.png" alt="">
-                                                    </button>
-                                                {{/if}}
-                                            </div>
                                             <a class="" href="" name="atDetail" value="{{atwrkID}}">
                                                 <img src="{{testImage}}" class="sampleTest" >
                                             </a>
+                                            <div class="btn-wrap btn-slide--check">
+                                                <button name="shBasket" value="{{_id}}" type="button" title="장바구니 넣기">
+                                                    <img src="/image/main/icon/icon-cart.svg" alt="">
+                                                </button>
+                                                {{#if chkDtp}}
+                                                    <button name="goodBtn" value="{{_id}}" type="button" title="찜하기">
+                                                        <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                    </button>
+                                                {{else}}
+                                                    <button value="dtPrt" name="goodBtn" type="button" title="찜하기">
+                                                        <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                    </button>
+                                                {{/if}}
+                                            </div>
                                             <p class="swiper-slide__tit">{{atstNm}}</p>
                                             <p class="swiper-slide__txt">
                                                 <em>{{atwrkNm}}, {{wSize}}x{{hSize}}{{#if chkDtp}}, {{codeToName metRias "MATERIAL"}}{{/if}}</em>
@@ -107,14 +107,6 @@
                                 {{#if atwrk}}
                                     {{#each atwrk}}
                                         <div class="swiper-slide">
-                                            <div class="btn-wrap btn-slide--check">
-                                                <button name="shBasket" type="button" value="ogPrt" title="장바구니 넣기">
-                                                    <img src="/image/main/icon/icon-basket.png" alt="">
-                                                </button>
-                                                <button name="goodBtn" value="{{_id}}" type="button" title="찜하기">
-                                                    <img src="/image/main/icon/icon-favor.png" alt="">
-                                                </button>
-                                            </div>
                                             {{#each image}}
                                                 {{#if mainImgChk rprsn}}
                                                     <a href="/atwrkDetail/{{../_id}}" name="atDetail">
@@ -129,6 +121,14 @@
                                                     </a>
                                                 {{/if}}
                                             {{/each}}
+                                            <div class="btn-wrap btn-slide--check">
+                                                <button name="shBasket" type="button" value="ogPrt" title="장바구니 넣기">
+                                                    <img src="/image/main/icon/icon-cart.svg" alt="">
+                                                </button>
+                                                <button name="goodBtn" value="{{_id}}" type="button" title="찜하기">
+                                                    <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                </button>
+                                            </div>
                                             <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
                                             <p class="swiper-slide__txt">
                                                 <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName ogPrt.metRias "MATERIAL"}}
@@ -161,14 +161,6 @@
                                 {{#if dtpHome}}
                                     {{#each dtpHome}}
                                         <div class="swiper-slide">
-                                            <div class="btn-wrap btn-slide--check">
-                                                <button name="shBasket" type="button" value="dtPrt" title="장바구니 넣기">
-                                                    <img src="/image/main/icon/icon-basket.png" alt="">
-                                                </button>
-                                                <button value="dtPrt" name="goodBtn"  type="button" title="찜하기">
-                                                    <img src="/image/main/icon/icon-favor.png" alt="">
-                                                </button>
-                                            </div>
                                             {{#each image}}
                                                 {{#if mainImgChk rprsn}}
                                                     <a href="/atwrkDetail/{{../_id}}">
@@ -182,6 +174,14 @@
                                                     </a>
                                                 {{/if}}
                                             {{/each}}
+                                            <div class="btn-wrap btn-slide--check">
+                                                <button name="shBasket" type="button" value="dtPrt" title="장바구니 넣기">
+                                                    <img src="/image/main/icon/icon-cart.svg" alt="">
+                                                </button>
+                                                <button value="dtPrt" name="goodBtn"  type="button" title="찜하기">
+                                                    <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                </button>
+                                            </div>
                                             <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
                                             <p class="swiper-slide__txt">
                                                 <em>{{dtPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName dtPrt.base "BASE"}}
@@ -210,14 +210,6 @@
                                 {{#if ogHome}}
                                     {{#each ogHome}}
                                         <div class="swiper-slide">
-                                            <div class="btn-wrap btn-slide--check">
-                                                <button name="shBasket" type="button" value="ogPrt" title="장바구니 넣기">
-                                                    <img src="/image/main/icon/icon-basket.png" alt="">
-                                                </button>
-                                                <button name="goodBtn" type="button" title="찜하기">
-                                                    <img src="/image/main/icon/icon-favor.png" alt="">
-                                                </button>
-                                            </div>
                                             {{#each image}}
                                                 {{#if mainImgChk rprsn}}
                                                     <a href="/atwrkDetail/{{../_id}}">
@@ -231,6 +223,14 @@
                                                     </a>
                                                 {{/if}}
                                             {{/each}}
+                                            <div class="btn-wrap btn-slide--check">
+                                                <button name="shBasket" type="button" value="ogPrt" title="장바구니 넣기">
+                                                    <img src="/image/main/icon/icon-cart.svg" alt="">
+                                                </button>
+                                                <button name="goodBtn" type="button" title="찜하기">
+                                                    <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                </button>
+                                            </div>
                                             <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
                                             <p class="swiper-slide__txt">
                                                 <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName ogPrt.metRias "MATERIAL"}}</em>

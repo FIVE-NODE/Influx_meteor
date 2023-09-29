@@ -35,25 +35,25 @@
                     </button>
                     <div class="btn-sideMenu__list">
                         <div class="btn-sideMenu__box">
-                            <a href="" class="is-active sjLab">SJ Lab</a>
-                            <a href="">원화</a>
-                            <a href="">디지털에디션 판화</a>
-                            <a href="">큐레이터Pick</a>
-                            <a href="">NEW!! 입점작품</a>
-                            <a href="">갤러리</a>
-                            <a href="">전시회/이벤트</a>
-                            <a href="">유화</a>
-                            <a href="">카툰/일러스트</a>
-                            <a href="">20만원 미만(디지털)</a>
-                            <a href="">500만원 이상(원화)</a>
+                            <a href="javascript:void(0)" class="is-active sjLab">SJ Lab</a>
+                            <a href="/originalAtwrk">원화</a>
+                            <a href="/digitalAtwrk">디지털에디션 판화</a>
+                            <a href="/curatorPick">큐레이터Pick</a>
+                            <a href="/newEntryAtwrk">NEW!! 입점작품</a>
+                            <a href="/glyHome">갤러리</a>
+                            <a href="/exhibitionEvnt">전시회/이벤트</a>
+                            <a href="/originalAtwrk?data=%257B%2522MATERIAL%2522%253A%255B%2522001%2522%255D%257D">유화</a>
+                            <a href="/digitalAtwrk?data=%257B%2522BASE%2522%253A%255B%2522003%2522%255D%257D">카툰/일러스트</a>
+                            <a href="/digitalAtwrk?data=%257B%2522ARTWORK_PRICE_DTPRT%2522%253A%255B%257B%2522code%2522%253A%2522004%2522%252C%2522min%2522%253A100000%252C%2522max%2522%253A300000%252C%2522name%2522%253A%252210~30%2520%25EB%25A7%258C%25EC%259B%2590%2522%257D%255D%257D">20만원 미만(디지털)</a>
+                            <a href="/originalAtwrk?data=%257B%2522ARTWORK_PRICE_OGPRT%2522%253A%255B%257B%2522code%2522%253A%2522004%2522%252C%2522min%2522%253A5000000%252C%2522max%2522%253A10000000%252C%2522name%2522%253A%2522500~1%252C000%2520%25EB%25A7%258C%25EC%259B%2590%2522%257D%255D%257D">500만원 이상(원화)</a>
                         </div>
                         <div class="btn-sideMenu__box">
-                            <a href="" class="is-active">알림</a>
+                            <a href="/interestAtwrk" class="is-active">알림</a>
                             <a href="" class="is-active">MY페이지</a>
                         </div>
                         <div class="btn-sideMenu__box">
-                            <a href="">로그인</a>
-                            <a href="">회원가입</a>
+                            <a href="/login">로그인</a>
+                            <a href="/signUp">회원가입</a>
                         </div>
                     </div>
                 </div>
@@ -122,48 +122,66 @@
                 </div>
 
                 <div class="header__mid-menu">
-                    <a href="" name="glryMenu" id="/glryAtwrks" class="{{pageChk 'glryAtwrks'}}">
-                        <span class="img-wrap">
-                            <img src="/image/sub/icon/icon-header__mid--admit.png" alt="">
-                        </span>
-                        <span class="txt-wrap">작품등록</span>
-                    </a>
-                    <a href="" id="/myPageSelling" name="glryMenu" class="{{pageChk 'myPageSelling'}}">
-                        <span class="img-wrap">
-                            <img src="/image/sub/icon/icon-header__mid--sailing.png" alt="">
-                        </span>
-                        <span class="txt-wrap">판매중 작품</span>
-                    </a>
-                    <a href="" id="/eventsCrList" name="glryMenu" class="{{pageChk 'eventsCrList'}}">
-                        <span class="img-wrap">
-                            <img src="/image/sub/icon/icon-header__mid--event.png" alt="">
-                        </span>
-                        <span class="txt-wrap">전시 및 행사 등록</span>
-                    </a>
-                    <a href="" name="glryMenu" id="" class="{{pageChk ''}}">
-                        <span class="img-wrap">
-                            <img src="/image/sub/icon/icon-header__mid--bidding.png" alt="">
-                        </span>
-                        <span class="txt-wrap">비딩관리</span>
-                    </a>
-                    <a href="" id="/bMsgManage" name="glryMenu" class="{{pageChk 'bMsgManage'}}">
-                        <span class="img-wrap">
-                            <img src="/image/common/icon/icon-header__mid--mail.png" alt="">
-                        </span>
-                        <span class="txt-wrap">메세지 관리</span>
-                    </a>
-                    <a href="" id="" name="glryMenu" class="{{pageChk ''}}">
-                        <span class="img-wrap">
-                            <img src="/image/common/icon/icon-header__mid--delivery.png" alt="">
-                        </span>
-                        <span class="txt-wrap">주문배송내역</span>
-                    </a>
-                    <a href="" id="" name="glryMenu" class="{{pageChk ''}}">
-                        <span class="img-wrap">
-                            <img src="/image/sub/icon/icon-header__mid--pencil.png" alt="">
-                        </span>
-                        <span class="txt-wrap">정산내역</span>
-                    </a>
+                    <div class="header__mid-menu__inner swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <a href="" name="glryMenu" id="/glryAtwrks" class="{{pageChk 'glryAtwrks'}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/sub/icon/icon-header__mid--admit.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">작품등록</span>
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="" id="/myPageSelling" name="glryMenu" class="{{pageChk 'myPageSelling'}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/sub/icon/icon-header__mid--sailing.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">판매중 작품</span>
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="" id="/eventsCrList" name="glryMenu" class="{{pageChk 'eventsCrList'}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/sub/icon/icon-header__mid--event.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">전시 및 행사 등록</span>
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="" name="glryMenu" id="" class="{{pageChk ''}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/sub/icon/icon-header__mid--bidding.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">비딩관리</span>
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="" id="/bMsgManage" name="glryMenu" class="{{pageChk 'bMsgManage'}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/common/icon/icon-header__mid--mail.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">메세지 관리</span>
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="" id="" name="glryMenu" class="{{pageChk ''}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/common/icon/icon-header__mid--delivery.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">주문배송내역</span>
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="" id="" name="glryMenu" class="{{pageChk ''}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/sub/icon/icon-header__mid--pencil.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">정산내역</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {{else}}
@@ -177,36 +195,50 @@
                     <p class="header__mid-info__capt">(회원정보변경)</p>
                 </div>
                 <div class="header__mid-menu">
-                    <a href="/interestAtwrk" class="{{pageChk 'interestAtwrk'}}">
-                        <span class="img-wrap">
-                            <img src="/image/common/icon/icon-header__mid--heart.png" alt="">
-                        </span>
-                        <span class="txt-wrap">관심 리스트</span>
-                    </a>
-                    <a href="/userCart" class="{{pageChk 'userCart'}}">
-                        <span class="img-wrap">
-                            <img src="/image/common/icon/icon-header__mid--cart.png" alt="">
-                        </span>
-                        <span class="txt-wrap">장바구니</span>
-                    </a>
-                    <a href="/msgManage" class="{{pageChk 'msgManage'}}">
-                        <span class="img-wrap">
-                            <img src="/image/common/icon/icon-header__mid--mail.png" alt="">
-                        </span>
-                        <span class="txt-wrap">메세지 관리</span>
-                    </a>
-                    <a href="/purchaseList" class="{{pageChk 'purchaseList'}}">
-                        <span class="img-wrap">
-                            <img src="/image/common/icon/icon-header__mid--delivery.png" alt="">
-                        </span>
-                        <span class="txt-wrap">주문배송내역</span>
-                    </a>
-                    <a href="/myCollection" id="" class="{{pageChk 'myCollection'}}">
-                        <span class="img-wrap">
-                            <img src="/image/common/icon/icon-header__mid--pic.png" alt="">
-                        </span>
-                        <span class="txt-wrap">MY 컬렉션</span>
-                    </a>
+                    <div class="header__mid-menu__inner swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <a href="/interestAtwrk" class="{{pageChk 'interestAtwrk'}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/common/icon/icon-header__mid--heart.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">관심 리스트</span>
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="/userCart" class="{{pageChk 'userCart'}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/common/icon/icon-header__mid--cart.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">장바구니</span>
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="/msgManage" class="{{pageChk 'msgManage'}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/common/icon/icon-header__mid--mail.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">메세지 관리</span>
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="/purchaseList" class="{{pageChk 'purchaseList'}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/common/icon/icon-header__mid--delivery.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">주문배송내역</span>
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="/myCollection" id="" class="{{pageChk 'myCollection'}}">
+                                    <span class="img-wrap">
+                                        <img src="/image/common/icon/icon-header__mid--pic.png" alt="">
+                                    </span>
+                                    <span class="txt-wrap">MY 컬렉션</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {{/if}}
             </div>

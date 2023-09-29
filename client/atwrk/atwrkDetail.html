@@ -309,14 +309,6 @@
                                         <div class="swiper-wrapper">
                                             {{#each atwrkList}}
                                                 <div class="swiper-slide">
-                                                    <div class="btn-wrap btn-slide--check">
-                                                        <button type="button" name="otherBasket" value="{{flag}}" title="장바구니 넣기" >
-                                                            <img src="/image/main/icon/icon-basket.png" alt="">
-                                                        </button>
-                                                        <button type="button" title="찜하기" name="otherGoodBtn">
-                                                            <img src="/image/main/icon/icon-favor.png" alt="">
-                                                        </button>
-                                                    </div>
                                                     <a href="/atwrkDetail/{{_id}}" name="otherAtwrk" id="{{_id}}">
                                                         <!-- 임시로 max-width/min 280px 넣음 -->
                                                         <img 
@@ -328,6 +320,14 @@
                                                         >
                                                         <!-- <img style="max-width: 280px;" src="{{imgInfo.imgID}}" alt=""> ADDSCC -->
                                                     </a>
+                                                    <div class="btn-wrap btn-slide--check">
+                                                        <button type="button" name="otherBasket" value="{{flag}}" title="장바구니 넣기" >
+                                                            <img src="/image/main/icon/icon-cart.svg" alt="">
+                                                        </button>
+                                                        <button type="button" title="찜하기" name="otherGoodBtn">
+                                                            <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                        </button>
+                                                    </div>
                                                     <p class="swiper-slide__tit">{{atstNm}}</p>
                                                     <p class="swiper-slide__txt">
                                                         {{#if dtpChk flag}}

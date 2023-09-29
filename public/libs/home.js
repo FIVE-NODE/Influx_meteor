@@ -23,6 +23,9 @@ $(function() {
                 slidesPerView:3,
             },
             1280:{
+                slidesPerView:4,
+            },
+            1920:{
                 slidesPerView:'auto',
             }
         }
