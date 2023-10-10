@@ -2803,12 +2803,42 @@ input[class*=js-datepicker] {
   width: 100%;
   border: none;
 }
-.date-wrap .ui-datepicker .ui-datepicker-prev {
+/* 팝업 달력 버튼 비 활성화 시 */
+/* .date-wrap .ui-datepicker .ui-datepicker-prev {
   display: none;
-}
-.date-wrap .ui-datepicker .ui-datepicker-next {
+} */
+/* .date-wrap .ui-datepicker .ui-datepicker-next {
   display: none;
+} */
+/* 팝업 달력 버튼 추가 */
+.date-wrap .ui-datepicker .ui-datepicker-prev{
+  width:1.5rem;
+  height:1.5rem;
 }
+.date-wrap .ui-datepicker .ui-datepicker-prev, .date-wrap .ui-datepicker .ui-datepicker-next{
+  top:50%;
+  width:1.5rem;
+  height:1.5rem;
+  transform:translateY(-50%)
+}
+.date-wrap .ui-datepicker .ui-datepicker-prev span{
+  top:0;right:0;left:0;
+  width:100%;
+  margin-left:0;margin-top:0;
+  background:url(../image/sub/icon/icon-calendar--prev.svg) no-repeat center center/auto;
+}
+.date-wrap .ui-datepicker .ui-datepicker-next span{
+  top:0;right:0;left:0;
+  width:100%;
+  margin-left:0;margin-top:0;
+  background:url(../image/sub/icon/icon-calendar--next.svg) no-repeat center center/auto;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus, .ui-button:hover, .ui-button:focus{
+  border:none;background:transparent;
+}
+.date-wrap .ui-datepicker .ui-datepicker-next-hover{right:2px;}
+.date-wrap .ui-datepicker .ui-datepicker-prev-hover{left:2px;}
+/* 버튼 추가 완료 */
 .date-wrap .ui-datepicker .ui-datepicker-title {
   font-size: 1.2rem;
   font-weight: 700;
@@ -2989,7 +3019,8 @@ input[class*=js-datepicker] {
   transition: all 0.5s ease-in-out;
   opacity: 0;
   z-index: 3;
-  left: 82%;
+  /* left: 82%; */
+  right: 6rem;
   top: 9%;
 }
 

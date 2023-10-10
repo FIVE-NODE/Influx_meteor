@@ -13,6 +13,8 @@ Template.eventsCrDetail.onCreated(function() {
     preViewList = new ReactiveVar();
 
     imgUrl = new ReactiveVar();
+
+    deleteList = new ReactiveVar([]);
 });
 
 // 팝업 메시지 띄우기
@@ -71,7 +73,7 @@ Template.eventsCrDetail.onRendered(function() {
         dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
         dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],*/
         showMonthAfterYear: true,
-        yearSuffix: '년'
+        yearSuffix: '년',
     });
     
     var today = moment(new Date()).format('YYYY.MM.DD');
@@ -90,6 +92,9 @@ Template.eventsCrDetail.onRendered(function() {
 });
 
 Template.eventsCrDetail.events({
+    'click button[name=crAtwrkBtn]' (evt, tmpl) {
+        messagePopup({message : '1차 미포함 화면 입니다.'});
+    },
     'click button[name=allSeltCancel]'(evt, tmpl) {
         $('input[name=seltAtwrk]').prop('checked', false);
         $('input[name=seltAllChk]').prop('checked', false);
@@ -102,25 +107,52 @@ Template.eventsCrDetail.events({
         }
     },
     'change input[name=img-upload]'(evt, tmpl) {
+        var imgId = $(evt.currentTarget).attr('id');
+
         var fileReader = new FileReader();
         var fileName = evt.currentTarget.files[0].name;
         var file = evt.currentTarget.files[0];
+        var type = evt.currentTarget.files[0].type;
         
-        fileReader.onload = (file) => {
-            var image = {
-                blob : file.srcElement.result,
-                name : fileName,
-                encoding : 'binary'
+        
+        if(type.indexOf('image/') > -1) {
+            fileReader.onload = (file) => {
+                var image = {
+                    blob : file.srcElement.result,
+                    name : fileName,
+                    encoding : 'binary'
+                };
+                Meteor.call('saveFile', image, function(err, res) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        // 삭제용 리스트 
+                        if(imgUrl.get() != undefined) {
+                            var deleteData = deleteList.get();
+                            deleteData.push(imgUrl.get());
+                            deleteList.set(deleteData);
+                        }
+
+                        imgUrl.set(res.fileName);
+                        
+                        console.log(imgUrl.get());
+                        console.log(deleteList.get());
+                        console.log(imgId);
+
+                        $(`div[name=${imgId}]`).css({
+                            'background-size' : 'contain',
+                            'background-image' : `url(/temps/${imgUrl.get()})`,
+                            'background-repeat': 'no-repeat',
+                            'background-position': 'center center'
+                        });
+                    }
+                });
             };
-            Meteor.call('saveFile', image, function(err, res) {
-                if(err) {
-                    console.log(err);
-                } else {
-                    imgUrl.set(res.fileName);
-                }
-            });
-        };
-        fileReader.readAsBinaryString(file);
+            fileReader.readAsBinaryString(file);
+
+        } else {
+            alert('이미지 파일만 업로드 해주세요'); 
+        }
     },
     'change input[name=check-eventKind]'(evt, tmpl) {
         var checked = $(evt.currentTarget).is(':checked');
@@ -142,8 +174,8 @@ Template.eventsCrDetail.events({
         var desc = $('input[name=desc]').val();
         var areas = $('input[name=areas]').val();
 
-        var sellStrDt = moment($('span[name=seltStrDate]').text() + ' ' + $('span[name=seltStrTime]').text(), 'YYYYMMDD hh:mm A').format('YYYYMMDDHHmm');
-        var sellEndDt = moment($('span[name=seltEndDate]').text() + ' ' + $('span[name=seltEndTime]').text(), 'YYYYMMDD hh:mm A').format('YYYYMMDDHHmm');
+        var evtStrDt = moment($('span[name=seltStrDate]').text() + ' ' + $('span[name=seltStrTime]').text(), 'YYYYMMDD hh:mm A').format('YYYYMMDDHHmm');
+        var evtEndDt = moment($('span[name=seltEndDate]').text() + ' ' + $('span[name=seltEndTime]').text(), 'YYYYMMDD hh:mm A').format('YYYYMMDDHHmm');
 
         if(imgUrl.get() == undefined) messagePopup({message : '이미지를 올려주세요.'});
         else if(code == undefined) messagePopup({message : '전시 유형을 선택해주세요.'});
@@ -154,6 +186,15 @@ Template.eventsCrDetail.events({
             let post = {};
 
             if(imgUrl.get() != undefined) post.image = imgUrl.get();
+
+            post.code = code;
+            post.title = title;
+            post.desc = desc;
+            post.areas = areas;
+            post.strDt = evtStrDt;
+            post.enddt = evtEndDt;
+
+            console.log(post);
         
             // Meteor.call('savePick', tabFlag.get(), post, function(err, res) {
             //     seltPickSch();
@@ -163,8 +204,6 @@ Template.eventsCrDetail.events({
             //     imgUrl.set();
             // });
         }
-
-        // FlowRouter.go();
     },
     'click button[name=ogStrDateTime]' (evt, tmpl) {
         var today = moment(new Date()).format('YYYY.MM.DD');
