@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import fs from 'fs';
+import fs, { fsyncSync } from 'fs';
 import { Session } from 'meteor/session';
 import {  Atwrk, Pick, Evnt, Files, Chunk, Banr, BsnsMber, Mber, PageList } from '../lib/collections.js';
 
@@ -312,6 +312,24 @@ Meteor.methods({
         }
       }
 
+      Pick.update({ 'atstAtwrk.atwrkID' : data._id, 'thmTp' : '002' }, 
+        { 
+          $set : {
+              'atstAtwrk.$.selStrDt' : data.dtPrt.selStrDt,
+              'atstAtwrk.$.selEndDt' : data.dtPrt.selEndDt
+            },
+        }
+      );
+
+      Pick.update({ 'atstAtwrk.atwrkID' : data._id, 'thmTp' : { $ne : '002' } }, 
+        { 
+          $set : {
+              'atstAtwrk.$.selStrDt' : data.ogPrt.selStrDt,
+              'atstAtwrk.$.selEndDt' : data.ogPrt.selEndDt
+            },
+        }
+      );
+
       return res;
     } catch(e) {
       console.log('Error : ', e);
@@ -469,11 +487,15 @@ Meteor.methods({
       toDate = moment(toDate).format('YYYYMMDD');
       agoDate = moment(agoDate).format('YYYYMMDD');
 
+      var sellToDate = moment(toDate).format('YYYYMMDDHHmm');
+
       var normal = {
         'ogPrt.atwrkNm' : { $exists: true },
         "delYn" : "N",
         "soldYn" : "N",
         "sellYn" : "Y",
+        'ogPrt.selStrDt' : { $lte : toDate},
+        'ogPrt.selEndDt' : { $gt : toDate},
         insDt : {$gte : agoDate, $lte : toDate},
       };
 
@@ -491,8 +513,12 @@ Meteor.methods({
   selectDtpHome: function() {
     // 디지털 에디션 판화
     try {
+      let toDate = moment(new Date()).format('YYYYMMDDHHmm');
+
       let res = Atwrk.find({
-        'dtPrt.atwrkNm' : { $exists : true }
+        'dtPrt.atwrkNm' : { $exists : true },
+        'dtPrt.selStrDt' : { $lte : toDate},
+        'dtPrt.selEndDt' : { $gt : toDate},
       }, {sort : {'dtPrt.goodCnt' : -1}, limit : 20}).fetch();
 
       return res;
@@ -506,8 +532,15 @@ Meteor.methods({
   },
   selectOgHome: function() {
     try {
-      
-      let res = Atwrk.find({'ogPrt.atwrkNm' : { $exists : true }}, {sort : {'ogPrt.goodCnt' : -1}, limit : 20}).fetch();
+      let toDate = moment(new Date()).format('YYYYMMDDHHmm');
+      let res = Atwrk.find({
+        'ogPrt.atwrkNm' : { $exists : true },
+        'ogPrt.selStrDt' : { $lte : toDate},
+        'ogPrt.selEndDt' : { $gt : toDate},
+      }, {
+        sort : {'ogPrt.goodCnt' : -1}
+        , limit : 20
+      }).fetch();
 
       return res;
     } catch(e) {

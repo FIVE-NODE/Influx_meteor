@@ -508,9 +508,10 @@ Meteor.methods({
       }
     },
     // 갤러리 ID(사업자 ID) 로 최신작 10개 조회
-    selectLatestGlryList: function(_id) {
+    selectLatestGlryList: function(_id, detailId) {
       try{
         let normal = {
+          _id : { $ne : detailId },
           'glry.bsnsID' : _id,
           "delYn" : "N",
           "soldYn" : "N",

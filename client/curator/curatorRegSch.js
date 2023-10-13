@@ -168,8 +168,8 @@ Template.curatorRegSch.events({
                         style2 : info[atFlag].style2,
                         pric : info[atFlag].pric != undefined ? info[atFlag].pric : info[atFlag].sPric,
                         sellTp : info[atFlag].sellTp,
-                        strDt : info[atFlag].selStrDt,
-                        endDt : info[atFlag].selEndDt,
+                        selStrDt : info[atFlag].selStrDt,
+                        selEndDt : info[atFlag].selEndDt,
                         wSize : info[atFlag].wSize,
                         hSize : info[atFlag].hSize,
                         glryNm : info.glry.glryNm

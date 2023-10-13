@@ -206,16 +206,26 @@ Template.eventsCrDetail.events({
         }
     },
     'click button[name=ogStrDateTime]' (evt, tmpl) {
-        var today = moment(new Date()).format('YYYY.MM.DD');
+        var today = moment(new Date()).format('YYYYMMDD');
         var toTime =  moment(new Date()).format('hh:mm A');
         var seltDay = $('#datepicker1').val();
 
-        var seltEndDay = moment($('#datepicker2').val()).format('YYYYMMDD');
+        var nowTime = moment(new Date()).format('HHmm');
+        var seltTime =  moment($('#ogStrTime').val(), 'hh:mm A').format('HHmm');
+
+        // var seltEndDay = moment($('#datepicker2').val()).format('YYYYMMDD');
         if(today > seltDay) {
             alert('전시회 시작일은 오늘이거나 오늘 이후 여야합니다.');
             $('span[name=seltStrDate]').text(today);
             $('span[name=seltStrTime]').text(toTime);
-        } else setDateTime('ogStrDateTime');
+        } else {
+            if(today == seltDay) {
+                if((seltTime - nowTime) <= 30 ) alert('현재시간 보다 30분 이상 차이가 나야합니다.');
+                else setDateTime('ogStrDateTime');
+            } else {
+                setDateTime('ogStrDateTime');
+            }    
+        }
     },
     'click button[name=ogEndDateTime]' (evt, tmpl) {
         var seltStrDay = moment($('span[name=seltStrDate]').text()).format('YYYYMMDD');
@@ -255,5 +265,3 @@ Template.eventsCrDetail.helpers({
         if(popUpMessage.get() != undefined) return popUpMessage.get();
     }
 });
-
-

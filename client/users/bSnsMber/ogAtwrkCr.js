@@ -139,6 +139,7 @@ Template.ogAtwrkCr.onCreated(function() {
                     $('input[name=001Pric]').val(atInfo.ogPrt.pric.toString().replace(comma,','));
 
                     if(atInfo.atwrkTp == '003') $('input[name=002Pric]').val(atInfo.dtPrt.sPric.toString().replace(comma,','));
+                    
                 }
 
                 if(Object.keys(atInfo.ogPrt) != 0) {

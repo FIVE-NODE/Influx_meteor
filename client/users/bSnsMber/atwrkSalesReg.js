@@ -153,12 +153,21 @@ Template.atwrkSalesReg.events({
     },
     'click button[name=ogStrDateTime]' (evt, tmpl) {
         var today = moment(new Date()).format('YYYYMMDD');
+        var nowTime = moment(new Date()).format('HHmm');
         var seltDay = $('#datepicker1').val();
+        var seltTime =  moment($('#ogStrTime').val(), 'hh:mm A').format('HHmm');
 
         var seltEndDay = moment($('#datepicker2').val()).format('YYYYMMDD');
         if(today > seltDay) {
             alert('선택하신 날짜가 오늘 날짜보다 전 입니다.');
-        } else setDateTime('ogStrDateTime');
+        } else {
+            if(today == seltDay) {
+                if((seltTime - nowTime) <= 30 ) alert('현재시간 보다 30분 이상 차이가 나야합니다.');
+                else setDateTime('ogStrDateTime');
+            } else {
+                setDateTime('ogStrDateTime');
+            }    
+        }
     },
     'click button[name=ogEndDateTime]' (evt, tmpl) {
         var seltStrDay = moment($('span[name=seltStrDate]')).format('YYYYMMDD');
@@ -245,7 +254,7 @@ Template.atwrkSalesReg.events({
         if(sellkindFlag.get() == undefined) alert('판매 방식을 선택해주세요');
         else {
             let atInfos = atwrkInfo.get();
-            var today = moment(new Date()).format('YYYYMMDD hh:mm A');
+            var today = moment(new Date()).format('YYYYMMDDHHmm');
             var ogValidation = false;
             var dtValidation = true;
             var pupMsg = '';
@@ -298,6 +307,14 @@ Template.atwrkSalesReg.events({
 
             atInfos.ogPrt.selStrDt = sellStrDt;
             atInfos.ogPrt.selEndDt = sellEndDt;
+        
+            if(sellStrDt < today) {
+                alert('시작 날짜가 현재시간보다 전 입니다.');
+                return false;
+            } else if(sellEndDt < today) {
+                alert('종료 날짜가 현재시간보다 전 입니다.');
+                return false;
+            }
 
             // 디지털 판화 동시판매에 따른 벨리데이션 체크
             if(digitalBoth.get()) {
@@ -327,7 +344,7 @@ Template.atwrkSalesReg.events({
             if(ogValidation && dtValidation) {
                 $('button[name=salesRegBtn]').off('click');
                 atInfos.ogPrt.sellTp = sellkindFlag.get();
-
+                
                 Meteor.call('updateSalesAtwrk', atInfos, function(err, res) {
                     if(err) console.log(err);
                     else {

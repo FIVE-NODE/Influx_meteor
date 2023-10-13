@@ -212,7 +212,9 @@ Meteor.methods({
     // 큐레이터 픽 등록시 선택 화면
     seltPickSch: function(thmTp, options) {
         try {
+
             let res = Pick.findOne(
+                // query,
                 { thmTp },
                 options
                 // {

@@ -58,6 +58,13 @@ Template.registerHelper('dateFormatChg', function(date, form) {
     return date.replace(format, `$1${form}$2${form}$3`);
 });
 
+// 날짜와 시간 포맷을 출력한다
+Template.registerHelper('dateAndTimeFormatChg', function(date, form) {
+    if(date == undefined || date == null || date == '') return '';
+    var format = moment(date, 'YYYYMMDDHHmm').format(`YYYY${form}MM${form}DD HH:mm`);
+    return format;
+});
+
 
 Template.registerHelper('filterRes', function() {
     
@@ -236,4 +243,20 @@ Template.registerHelper('dataSetChk', function(data) {
     } else {
         return true;
     }
+});
+
+// 사용자 좋아요 체크
+Template.registerHelper('userGoodChk', function(flag) {
+        if(Meteor.user() != undefined) {
+        let atwrkId = this.atwrkID == undefined ? this._id : this.atwrkID;
+        let userInfo = Meteor.user();
+
+        let ogGoodList = userInfo.profile.uInfos.ogPrtGood;
+        if(flag != 'ogPrt') ogGoodList = userInfo.profile.uInfos.dtPrtGood;
+        
+        let goodData = ogGoodList.filter(e => e == atwrkId);
+
+        if(goodData.length > 0)return 'icon-heart-on.svg';
+        else return 'icon-heart.svg';
+    } else return 'icon-heart.svg';
 });

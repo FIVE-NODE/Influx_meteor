@@ -12,13 +12,17 @@ Meteor.methods({
     selectOrgAtwrk: function(data, option) {
         try {
             let res = {};
+
+            let nowDate = moment(new Date()).format('YYYYMMDDHHmm');
             
             // 원화 작품 있는 것만 셋팅
             var normal = {
               'ogPrt.atwrkNm' : { $exists: true },
               "delYn" : "N",
               "soldYn" : "N",
-              "sellYn" : "Y"
+              "sellYn" : "Y",
+              'ogPrt.selStrDt' : { $lte : nowDate},
+              'ogPrt.selEndDt' : { $gt : nowDate},
             };
 
             if(!(Object.keys(data).length === 0)) {
@@ -111,12 +115,16 @@ Meteor.methods({
     // 디지털 에디션 판화 HOT 인기 작품 랭킹 10개 조회
     selectDigHotAtwrk: function() {
       try {
+        let nowDate = moment(new Date()).format('YYYYMMDDHHmm');
+
         // 디지털 판화 작품 있는 것만 셋팅
         var normal = {
           'dtPrt.atwrkNm' : { $exists: true },
           "delYn" : "N",
           "soldYn" : "N",
-          "sellYn" : "Y"
+          "sellYn" : "Y",
+          'dtPrt.selStrDt' : { $lte : nowDate},
+          'dtPrt.selEndDt' : { $gt : nowDate},
         };
 
         let res = Atwrk.find(normal, { limit: 10, sort : { 'dtPrt.goodCnt' : -1 }}).fetch();
@@ -135,12 +143,16 @@ Meteor.methods({
       try {
         let res = {};
 
+        let nowDate = moment(new Date()).format('YYYYMMDDHHmm');
+
         // 디지털 판화 작품 있는 것만 셋팅
         var normal = {
           'dtPrt.atwrkNm' : { $exists: true },
           "delYn" : "N",
           "soldYn" : "N",
-          "sellYn" : "Y"
+          "sellYn" : "Y",
+          'dtPrt.selStrDt' : { $lte : nowDate},
+          'dtPrt.selEndDt' : { $gt : nowDate},
         };
 
         if(!(Object.keys(data).length === 0)) {

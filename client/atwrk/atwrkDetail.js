@@ -165,7 +165,7 @@ Template.atwrkDetail.onCreated(function() {
     }
 
     function selectLatestGlryList(_id) {
-        Meteor.call('selectLatestGlryList', _id, function(err, res) {
+        Meteor.call('selectLatestGlryList', _id, FlowRouter.getParam('_id'), function(err, res) {
             latestList.set(res);
         });
     }

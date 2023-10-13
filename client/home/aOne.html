@@ -68,11 +68,12 @@
                                                 </button>
                                                 {{#if chkDtp}}
                                                     <button name="goodBtn" value="{{_id}}" type="button" title="찜하기">
-                                                        <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                        <!-- <img src="/image/main/icon/icon-heart.svg" alt=""> -->
+                                                        <img src="/image/main/icon/{{userGoodChk 'ogPrt'}}" alt="">
                                                     </button>
                                                 {{else}}
                                                     <button value="dtPrt" name="goodBtn" type="button" title="찜하기">
-                                                        <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                        <img src="/image/main/icon/{{userGoodChk 'dtPrt'}}" alt="">
                                                     </button>
                                                 {{/if}}
                                             </div>
@@ -126,7 +127,7 @@
                                                     <img src="/image/main/icon/icon-cart.svg" alt="">
                                                 </button>
                                                 <button name="goodBtn" value="{{_id}}" type="button" title="찜하기">
-                                                    <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                    <img src="/image/main/icon/{{userGoodChk 'ogPrt'}}" alt="">
                                                 </button>
                                             </div>
                                             <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
@@ -134,7 +135,7 @@
                                                 <em>{{ogPrt.atwrkNm}}, {{ogPrt.wSize}}x{{ogPrt.hSize}}, {{codeToName ogPrt.metRias "MATERIAL"}}
                                                 </em>
                                                 <em>{{glry.glryNm}}</em>
-                                                <em>{{ogPrt.pric}} 원</em>
+                                                <em>{{commaPric ogPrt.pric}} 원</em>
                                             </p>
                                         </div>
                                     {{/each}}
@@ -179,7 +180,7 @@
                                                     <img src="/image/main/icon/icon-cart.svg" alt="">
                                                 </button>
                                                 <button value="dtPrt" name="goodBtn"  type="button" title="찜하기">
-                                                    <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                    <img src="/image/main/icon/{{userGoodChk 'dtPrt'}}" alt="">
                                                 </button>
                                             </div>
                                             <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>
@@ -228,7 +229,7 @@
                                                     <img src="/image/main/icon/icon-cart.svg" alt="">
                                                 </button>
                                                 <button name="goodBtn" type="button" title="찜하기">
-                                                    <img src="/image/main/icon/icon-heart.svg" alt="">
+                                                    <img src="/image/main/icon/{{userGoodChk 'ogPrt'}}" alt="">
                                                 </button>
                                             </div>
                                             <p class="swiper-slide__tit">{{atstInfo.atstNm}}</p>

@@ -127,13 +127,13 @@
 }
 .slide-list--product .swiper-button-next {
   right: -5rem;
-  background: url("../image/main/icon/icon-slideList--product--right.png") no-repeat 0 0/contain;
-  /* background: url("../image/main/icon/right-arrow.png") no-repeat 0 0/contain; */
+  background: url("/image/main/icon/icon-slideList--product--right.png") no-repeat 0 0/contain;
+  /* background: url("/image/main/icon/right-arrow.png") no-repeat 0 0/contain; */
 }
 .slide-list--product .swiper-button-prev {
   left: -5rem;
-  background: url("../image/main/icon/icon-slideList--product--left.png") no-repeat 0 0/contain;
-  /* background: url("../image/main/icon/left-arrow.png") no-repeat 0 0/contain; */
+  background: url("/image/main/icon/icon-slideList--product--left.png") no-repeat 0 0/contain;
+  /* background: url("/image/main/icon/left-arrow.png") no-repeat 0 0/contain; */
 }
 .slide-list--product .swiper-button-disabled {
   pointer-events: auto !important;
@@ -218,11 +218,11 @@
 }
 .slide-list--gallery .swiper-button-next {
   right: -5rem;
-  background: url("../image/main/icon/icon-slideList--product--right.png") no-repeat 0 0/contain;
+  background: url("/image/main/icon/icon-slideList--product--right.png") no-repeat 0 0/contain;
 }
 .slide-list--gallery .swiper-button-prev {
   left: -5rem;
-  background: url("../image/main/icon/icon-slideList--product--left.png") no-repeat 0 0/contain;
+  background: url("/image/main/icon/icon-slideList--product--left.png") no-repeat 0 0/contain;
 }
 .slide-list--gallery .swiper-button-disabled {
   pointer-events: auto !important;

@@ -35,11 +35,13 @@ function seltPickSch() {
     Meteor.call('seltPickSch', tabFlag.get(), {}, function(err, res) {
         pickData.set(res)
         // total.set(res.atstAtwrk.length);
-
         var idLists = [];
-        var atwrkList = res.atstAtwrk;
-        for(idx in atwrkList) {
-            idLists.push(atwrkList[idx].atwrkID);
+        
+        if(res != undefined) {
+            var atwrkList = res.atstAtwrk;
+            for(idx in atwrkList) {
+                idLists.push(atwrkList[idx].atwrkID);
+            }
         }
 
         inAtwrkList.set(idLists);

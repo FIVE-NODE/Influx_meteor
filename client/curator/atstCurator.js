@@ -54,11 +54,9 @@ Template.atstCurator.onRendered(function() {
     scrollMove();
 });
 
+// 조회
 function selectOrgAtwrk() {
-    Meteor.call('selectOrgAtwrk', query, options, function(err, res) {
-        total.set(res.total);
-        atwrkInfo.set(res.list);
-    });
+    Meteor.commonUtils.commonOriginalAtwrk(query, options);
 }
 
 // 선택해제 버튼 이벤트용 Func

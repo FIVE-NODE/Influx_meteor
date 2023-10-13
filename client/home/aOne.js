@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
-import { Pick, PageList } from '../../lib/collections.js';
+import { Pick, Atwrk } from '../../lib/collections.js';
 import { clientAtwrk, clientDtpHome, clientOgHome, clientEvntHome, clientBsnsMber, clientBanr } from '../lib/clientCollections.js';
 
 import 'lazysizes';
@@ -95,7 +95,7 @@ function selectBanr() {
 
 Template.aOne.onCreated(async function() {
     Meteor.subscribe('Pick');
-    Meteor.subscribe('PageList');
+    Meteor.subscribe('Atwrk');
 
     const instance = this;
     instance.connectoin = new ReactiveVar();
@@ -134,7 +134,7 @@ Template.aOne.onRendered(function() {
 
 Template.aOne.events({
     'click button[name=pickOg]'(evt, tmpl) {
-        // 큐레잍픽 원화
+        // 큐레이터 픽 원화
         selectPickCategory('pickOg');
         pickCategory.set('001');
     },
@@ -216,19 +216,24 @@ Template.aOne.helpers({
     },
     pick() { 
         if(pickCategory.get() != undefined) {
-            // let query = Meteor.commonUtils.normalSetQuy();
+            let toDate = moment(new Date()).format('YYYYMMDDHHmm');
             let query = {};
+
             query.thmTp = pickCategory.get();
+            
             let data = Pick.findOne(query);
             
             if(data != undefined) {
                 var atstAtwrkList = data.atstAtwrk;
+                let retList = [];
                 atstAtwrkList.forEach(function(ele) {
-                    ele.pric = Meteor.commonUtils.priceComma(ele.pric);
+                    if(ele.selEndDt > toDate && ele.selStrDt <= toDate) {
+                        ele.pric = Meteor.commonUtils.priceComma(ele.pric);
+                        retList.push(ele);
+                    }
                 });
-                data.atstAtwrk = atstAtwrkList;
 
-                return data.atstAtwrk;
+                return retList;
             }
         }
     },

@@ -1455,10 +1455,10 @@ address {
   margin-left: 1.5rem;
 }
 .pagination > a.link-prev {
-  background: #D9D9D9 url(../image/common/icon/icon-pagination-clamp--prev.png) no-repeat center center/auto;
+  background: #D9D9D9 url(/image/common/icon/icon-pagination-clamp--prev.png) no-repeat center center/auto;
 }
 .pagination > a.link-next {
-  background: #D9D9D9 url(../image/common/icon/icon-pagination-clamp--next.png) no-repeat center center/auto;
+  background: #D9D9D9 url(/image/common/icon/icon-pagination-clamp--next.png) no-repeat center center/auto;
 }
 .pagination > a.is-active {
   background-color: #585858;
@@ -2079,7 +2079,7 @@ input[type=text]:disabled, input[type=password]:disabled, input[type=number]:dis
 }
 .form-select--default select {
   font-size: 1.4rem;
-  background: url(../image/common/icon/icon-select--default.png) no-repeat calc(100% - 1.5rem) center/1rem 0.7rem;
+  background: url(/image/common/icon/icon-select--default.png) no-repeat calc(100% - 1.5rem) center/1rem 0.7rem;
 }
 .form-select--default select option {
   font-size: 1.4rem;
@@ -2355,7 +2355,7 @@ input[type=text]:disabled, input[type=password]:disabled, input[type=number]:dis
   left: 1rem;
   width: 1.4rem;
   height: 1.4rem;
-  background: url(../image/sub/icon/icon-select-oder.png) no-repeat 0 0/cover;
+  background: url(/image/sub/icon/icon-select-oder.png) no-repeat 0 0/cover;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   content: "";
@@ -2374,7 +2374,7 @@ input[type=text]:disabled, input[type=password]:disabled, input[type=number]:dis
   padding-left: 2rem;
   border: 1px solid #B9B9B9;
   border-radius: 0.5rem;
-  background: url(../image/common/icon/icon-select--down.png) no-repeat calc(100% - 2rem) center/auto;
+  background: url(/image/common/icon/icon-select--down.png) no-repeat calc(100% - 2rem) center/auto;
   font-size: 1.4rem;
   font-weight: 700;
   color: #585858;
@@ -2433,7 +2433,7 @@ input[type=text]:disabled, input[type=password]:disabled, input[type=number]:dis
 
 input[class*=js-datepicker] {
   width: 100%;
-  background: #fff url("../image/sub/icon/icon-calendar.png") no-repeat 90% center/17px 17px;
+  background: #fff url("/image/sub/icon/icon-calendar.png") no-repeat 90% center/17px 17px;
 }
 
 .bootstrap-datetimepicker-widget table td .glyphicon-chevron-up,
@@ -2825,13 +2825,13 @@ input[class*=js-datepicker] {
   top:0;right:0;left:0;
   width:100%;
   margin-left:0;margin-top:0;
-  background:url(../image/sub/icon/icon-calendar--prev.svg) no-repeat center center/auto;
+  background:url(/image/sub/icon/icon-calendar--prev.svg) no-repeat center center/auto;
 }
 .date-wrap .ui-datepicker .ui-datepicker-next span{
   top:0;right:0;left:0;
   width:100%;
   margin-left:0;margin-top:0;
-  background:url(../image/sub/icon/icon-calendar--next.svg) no-repeat center center/auto;
+  background:url(/image/sub/icon/icon-calendar--next.svg) no-repeat center center/auto;
 }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus, .ui-button:hover, .ui-button:focus{
   border:none;background:transparent;
@@ -2902,7 +2902,7 @@ input[class*=js-datepicker] {
   font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.4rem;
-  background: url("../image/common/icon/icon-clock.png") no-repeat 1.5rem center;
+  background: url("/image/common/icon/icon-clock.png") no-repeat 1.5rem center;
 }
 
 .timepicker-popover {
