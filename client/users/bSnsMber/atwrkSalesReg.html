@@ -18,7 +18,6 @@
                             <div class="saleCondition__inner width--950 mx-auto">
                                 <div class="saleCondition-checks">
                                     {{#if onlyDtp}}
-                                        <div style="margin-top: 150px; margin-bottom: 150px;"></div>
                                     {{else}}
                                     <h4 class="saleCondition__tit">판매 방식선택</h4>
                                     <div class="saleCondition-block saleCondition-block--method mt-10">
@@ -177,71 +176,93 @@
                                     {{/if}}
 
                                     <h4 class="saleCondition__tit"></h4>
-                                    {{#if dtPrtChk}}
                                     <div class="saleCondition-block saleCondition-block--permit mt-30">
-                                        <div class="form-wrap">
-                                            <div class="form-check">
-                                                    <label for="check-saleCondition--permit01">
-                                                        <span name="dtText">디지털 판화 동시판매 허용 </span>
-                                                        <input type="checkbox" id="check-saleCondition--permit01">
-                                                    </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{/if}}
-                                    <div name="digitalSell" style="display: none;">
-                                    <h4 class="saleCondition__tit mt-30">가격 입력</h4>
-                                    <div class="saleCondition-block saleCondition-block--price mt-10">
-                                        <div class="form-wrap">
-                                            <div class="form-input">
-                                                <input type="text" name="dtPric">
-                                                <label >원</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h4 class="saleCondition__tit mt-30">허용작품수</h4>
-                                    <div class="saleCondition-block saleCondition-block--permitNum mt-10">
-                                        <div class="form-wrap">
-                                            <div class="form-row">
-                                                <div class="form-select form-select-custom">
-                                                    <button type="button" class="custom-select__tit height-55 pl-10">100</button>
-                                                    <ul class="custom-select__options" style="display: none;">
-                                                        <li class="is-active"><button name="seltDtCnt" type="button">100</button></li>
-                                                        <li><button name="seltDtCnt" type="button">200</button></li>
-                                                        <li><button name="seltDtCnt" type="button">300</button></li>
-                                                        <li><button name="seltDtCnt" type="button">직접입력</button></li>
-                                                    </ul>
+                                    {{#if dtPrtChk}}
+                                        {{#if onlyDtp}}    
+                                        {{else}}
+                                                <div class="form-wrap">
+                                                    <div class="form-check">
+                                                            <label for="check-saleCondition--permit01">
+                                                                <span name="dtText">디지털 판화 동시판매 허용 </span>
+                                                                <input type="checkbox" id="check-saleCondition--permit01">
+                                                            </label>
+                                                    </div>
                                                 </div>
-                                                <div class="calc-box">
+                                        {{/if}}
+                                    {{/if}}
+                                        <div name="digitalSell" style="display: none;">
+                                            {{#if onlyDtp}}
+                                                <h4 class="saleCondition__tit">
+                                                    판매 방식
+                                                    <span class="ml-30 font-16 fontW-b color-blue">
+                                                        정 찰 가
+                                                        <em class="ml-5 font-12 color--sky">( 디지털 에디션 판화는 정찰가만 가능합니다. )</em>
+                                                    </span>
+                                                </h4>
+                                            {{/if}}
+                                            <h4 class="saleCondition__tit mt-30">가격 입력</h4>
+                                            <div class="saleCondition-block saleCondition-block--price mt-10">
+                                                <div class="form-wrap">
+                                                    <div class="form-input">
+                                                        <input type="text" name="dtPric">
+                                                        <label >원</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h4 class="saleCondition__tit mt-30">허용작품수</h4>
+                                            <div class="saleCondition-block saleCondition-block--permitNum mt-10">
+                                                <div class="form-wrap">
+                                                    <div class="form-row">
+                                                        <div class="form-select form-select-custom">
+                                                            <button type="button" class="custom-select__tit height-55 pl-10">100</button>
+                                                            <ul class="custom-select__options" style="display: none;">
+                                                                <li class="is-active"><button name="seltDtCnt" type="button">100</button></li>
+                                                                <li><button name="seltDtCnt" type="button">200</button></li>
+                                                                <li><button name="seltDtCnt" type="button">300</button></li>
+                                                                <li><button name="seltDtCnt" type="button">직접입력</button></li>
+                                                            </ul>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="calc-box mt-10">
                                                     <input name="dtSellCnt" disabled type="number" value=100 style="font-size: 1.4rem; font-weight: 700; color: #585858;background-color: #FFFFFF; border: 0px; width: 100%;">
                                                     <label style="width: 35px;">작품</label>
                                                 </div>
                                             </div>
+                                        
+                                            <h4 class="saleCondition__tit mt-30">판매기간</h4>
+                                            <div class="saleCondition-block d-flex justify-between  align-center mt-10 width--412">
+                                                <button type="button" class="js-popup saleCondition-block__dataBtn" data-id="salesDigital_dateStart" title="판매 방식에 따른 판매기간 시작">
+                                                    <span name="dtSeltStrDate" class="saleCondition-block__dataBtn--date"></span>
+                                                    <span name="dtSeltStrTime" class="saleCondition-block__dataBtn--time"></span>
+                                                </button>
+                                                <span class="saleCondition-block__hyphen">-</span>
+                                                <button type="button" class="js-popup saleCondition-block__dataBtn" data-id="salesDigital_dateEnd" title="판매 방식에 따른 판매기간 끝">
+                                                    <span name="dtSeltEndDate" class="saleCondition-block__dataBtn--date"></span>
+                                                    <span name="dtSeltEndTime" class="saleCondition-block__dataBtn--time"></span>
+                                                </button>
+                                            </div>
+                                        
+                                            <h4 class="saleCondition__tit mt-40">
+                                                디지털판화출력
+                                                <span class="ml-10 font-14 fontW-m ">
+                                                    (기본사이즈 M사이즈, 80x40 cm)
+                                                    <em class="ml-20 font-16 fontW-b color-blue">50,0000원</em>
+                                                </span>
+                                            </h4>
+                                            <h4 class="saleCondition__tit font-12 color--sea mt-10" style="font-size:1.2rem;font-weight:400;color:#02A4FF">( 사이즈와 액자에 따라 가격이 변할 수 있습니다.  )</h4>
+                                        
+                                        
+                                            <h4 class="saleCondition__tit mt-30">
+                                                판매수수료
+                                                <span class="ml-100 font-18 fontW-b color--sea">5%</span>
+                                            </h4>
+                                            <div class="txt-wrap d-flex width--465 mt-30 justify-between">
+                                                <p class="font-24 fontW-b">최종 판매 개시 금액</p>
+                                                <span class="font-24 fontW-b font-pre">{{dtTotalPric}}   원</span> 
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <h4 class="saleCondition__tit mt-30">판매기간</h4>
-                                    <div class="saleCondition-block d-flex justify-between  align-center mt-10 width--412">
-                                        <button type="button" class="js-popup saleCondition-block__dataBtn" data-id="salesDigital_dateStart" title="판매 방식에 따른 판매기간 시작">
-                                            <span name="dtSeltStrDate" class="saleCondition-block__dataBtn--date"></span>
-                                            <span name="dtSeltStrTime" class="saleCondition-block__dataBtn--time"></span>
-                                        </button>
-                                        <span class="saleCondition-block__hyphen">-</span>
-                                        <button type="button" class="js-popup saleCondition-block__dataBtn" data-id="salesDigital_dateEnd" title="판매 방식에 따른 판매기간 끝">
-                                            <span name="dtSeltEndDate" class="saleCondition-block__dataBtn--date"></span>
-                                            <span name="dtSeltEndTime" class="saleCondition-block__dataBtn--time"></span>
-                                        </button>
-                                    </div>
-                                    
-
-                                    <h4 class="saleCondition__tit mt-30">
-                                        판매수수료
-                                        <span class="ml-100 font-18 fontW-b color--sea">5%</span>
-                                    </h4>
-                                    <div class="txt-wrap d-flex width--465 mt-30 justify-between">
-                                        <p class="font-24 fontW-b">최종 판매 개시 금액</p>
-                                        <span class="font-24 fontW-b font-pre">{{dtTotalPric}}   원</span> 
-                                    </div>
                                     </div>
                                 </div>
                                 {{#with atInfo}}

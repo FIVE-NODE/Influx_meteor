@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import fs, { fsyncSync } from 'fs';
-import { Session } from 'meteor/session';
+import fs from 'fs';
+import fse from 'fs-extra';
+import path from 'path';
 import {  Atwrk, Pick, Evnt, Files, Chunk, Banr, BsnsMber, Mber, PageList } from '../lib/collections.js';
 
 import '../lib/common.js';
@@ -11,6 +12,8 @@ import './mberServer.js';
 import './utilsServer.js';
 import './noticeServer.js';
 import './categoryServer.js';
+
+import './cron.js';
 
 import './rest.js';
 
@@ -671,24 +674,28 @@ Meteor.methods({
     fsWriteFile(path + fileName, image.blob, image.encoding);
 
     return {fileName:fileName, name:image.name};
-  }
-  // fileFinds: function(filename) {
-  //   try {
-  //     let data =  Files.findOne({filename : filename});
-  //     let file =  Chunk.findOne({files_id : data._id});
+  },
 
-  //     var blob = new Uint8Array(file.data);
-  //     // var base64String = btoa(String.fromCharCode.apply(null, blob));
-  //     // var src = 'data:image/png;base64,' + base64String + '';
+  // 파일 삭제 배치
+  tempDelImgFile() {
+    try {
+      if(fs.existsSync(tempPath)) {
+        const files = fs.readdirSync(tempPath);
       
+        files.forEach((file) => {
+          const filePath = path.join(tempPath, file);
+          fs.unlinkSync(filePath);
+        });
+      
+        var data = moment(new Date()).format('YYYY.MM.DD HH:mm:ss');
+        console.log('delete temps img - ', data);
+      } else {
+        throw new Meteor.Error('folder-not-found', 'The specified folder does not exist.');
+      }
+    } catch(e) {
+      console.log('error : ', e);
+    }
+  }
 
-  //   } catch(e) {
-  //     console.log('Error : ', e);
-  //     throw new Meteor.Error(
-  //       500,
-  //       '서버 접속 오류가 발생하였습니다. <br /> 잠수 후 다시 시도해주세요.'
-  //     );
-  //   }
-  // }
 });
  

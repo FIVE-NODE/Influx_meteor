@@ -42,7 +42,10 @@ Template.atwrkSalesReg.onCreated(function() {
         if(atwrkInfo.get() != undefined) {
             renderFlag.set(true);
         }
-        
+
+        if(onlyDtpChk.get() == true) {
+            $('div[name=digitalSell]').css('display', '');
+        }
     });
 });
 
@@ -88,7 +91,7 @@ Template.atwrkSalesReg.onRendered(function() {
             dtSell.click();
             dtSell.attr('disabled', true);
         }
-    }, 600);
+    }, 300);
 
 });
 
@@ -138,7 +141,7 @@ Template.atwrkSalesReg.events({
         if(pric == '') dtTotalPric.set(0);
         else {
             pric = Number(pric);
-            dtTotalPric.set(Math.round(pric + (pric * 0.05)));
+            dtTotalPric.set(Math.round(pric + (pric * 0.05)) + 50000);
         }
     },
     'change input[name=check-saleCondition--method]'(evt, tmpl) {
@@ -444,6 +447,11 @@ Template.atwrkSalesReg.helpers({
     },
     onlyDtp() {
         return onlyDtpChk.get();
+    },
+    inScript() {
+        setTimeout(function() {
+            return true;
+        }, 100);
     }
     
 });
