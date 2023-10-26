@@ -38,3 +38,4 @@ momentjs:moment
 accounts-base
 accounts-password
 accounts-ui
+littledata:synced-cron
