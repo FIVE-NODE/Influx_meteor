@@ -21,7 +21,7 @@ Template.atwrkSalesReg.onCreated(function() {
     // 랜더링 완료 여부
     renderFlag = new ReactiveVar(false);
 
-    // 원화 최종 만매 개시 금액
+    // 원화 최종 판매 개시 금액
     ogTotalPric = new ReactiveVar(0);
 
     // 디지털 판화 최종 판매 개시 금액
@@ -44,6 +44,7 @@ Template.atwrkSalesReg.onCreated(function() {
         }
 
         if(onlyDtpChk.get() == true) {
+            sellkindFlag.set('001');
             $('div[name=digitalSell]').css('display', '');
         }
     });
@@ -254,6 +255,7 @@ Template.atwrkSalesReg.events({
     'click button[name=salesRegBtn]' (evt, tmpl) {
         // kind 종류 001(정찰가) 002(비딩) 003(흥정) 004(가격문의)
 
+
         if(sellkindFlag.get() == undefined) alert('판매 방식을 선택해주세요');
         else {
             let atInfos = atwrkInfo.get();
@@ -296,7 +298,14 @@ Template.atwrkSalesReg.events({
                     ogValidation = true;
                     break;
                 default:
-                    var pric = Number($('input[name=pric]').val().replace(delComma, ""));
+                    var pric = 0;
+
+                    if(onlyDtpChk.get()) {
+                        pric = dtTotalPric.get();
+                    } else {
+                        pric = Number($('input[name=pric]').val().replace(delComma, ""));
+                    }
+
                     if(pric == 0 || pric < 100000) {
                         pupMsg = '금액은 0이 될수 없으며 최소 100,000 원 이상이여야 합니다.';
                         break;
@@ -308,8 +317,11 @@ Template.atwrkSalesReg.events({
                     break;
             }
 
-            atInfos.ogPrt.selStrDt = sellStrDt;
-            atInfos.ogPrt.selEndDt = sellEndDt;
+            if(!onlyDtpChk.get()) {
+                atInfos.ogPrt.selStrDt = sellStrDt;
+                atInfos.ogPrt.selEndDt = sellEndDt;
+            }
+            
         
             if(sellStrDt < today) {
                 alert('시작 날짜가 현재시간보다 전 입니다.');
@@ -320,7 +332,7 @@ Template.atwrkSalesReg.events({
             }
 
             // 디지털 판화 동시판매에 따른 벨리데이션 체크
-            if(digitalBoth.get()) {
+            if(digitalBoth.get() || onlyDtpChk.get()) {
                 dtValidation = false;
 
                 var selCnt = Number($('input[name=dtSellCnt]').val());

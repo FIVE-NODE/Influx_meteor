@@ -304,14 +304,14 @@ Meteor.methods({
 
       if(data.dtPrt.selStrDt == undefined) {
         // 원화만 있을 경우
-        res = Atwrk.update({ _id : data._id}, {  $set : { ogPrt : data.ogPrt, sellRegYn : 'Y' } });
+        res = Atwrk.update({ _id : data._id}, {  $set : { ogPrt : data.ogPrt, sellYn : 'Y' } });
       } else {
         if(data.ogPrt.selStrDt == undefined) {
           // 디지털 판화만 있을 경우
-          res = Atwrk.update({ _id : data._id}, { $set : {  dtPrt : data.dtPrt, sellRegYn : 'Y' }});
+          res = Atwrk.update({ _id : data._id}, { $set : {  dtPrt : data.dtPrt, sellYn : 'Y' }});
         } else {
           // 원화 + 디지털 판화
-          res = Atwrk.update({ _id : data._id}, { $set : { ogPrt : data.ogPrt, dtPrt : data.dtPrt, sellRegYn : 'Y' } });
+          res = Atwrk.update({ _id : data._id}, { $set : { ogPrt : data.ogPrt, dtPrt : data.dtPrt, sellYn : 'Y' } });
         }
       }
 

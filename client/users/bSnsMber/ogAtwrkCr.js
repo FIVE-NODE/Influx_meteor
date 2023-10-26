@@ -432,15 +432,15 @@ Template.ogAtwrkCr.events({
         var mainImg = imgAll.mainUploadImg == undefined ? '' : imgAll.mainUploadImg;;
 
         if(atFlag == undefined)                 {   messagePopup({message : '원화 또는 디지털판화를 선택해주세요'});                             }
-        else if(mainImg == '')                  {    messagePopup({message : '작품사진 은 필수 입니다.'});                                      }
-        else if(Object.keys(imgAll).length < 3) {    messagePopup({message : '메인 작품사진 포함 디테일 사진 3개 이상 올려주셔야 합니다.'});      }
+        else if(mainImg == '')                  {   messagePopup({message : '작품사진 은 필수 입니다.'});                                      }
+        else if(Object.keys(imgAll).length < 3) {   messagePopup({message : '메인 작품사진 포함 디테일 사진 3개 이상 올려주셔야 합니다.'});      }
         else if(atstNm == '')                   {   messagePopup({message : '작가이름은 필수 입니다.'});    $('input[name=atstNm]').focus();    }
         else if(atstDesc == '')                 {   messagePopup({message : '작가 소개 는 필수 입니다.'});  $('input[name=atstDesc]').focus();  }
         else if(atwrkNm == '')                  {   messagePopup({message : '작품이름은 필수 입니다.'});    $('input[name=atwrkNm]').focus();   }
         else if(mkYY == '')                     {   messagePopup({message : '제작년도은 필수 입니다.'});    $('input[name=mkYY]').focus();      }
-        else if(hSize == '')                    {   messagePopup({message : '작품높이는 필수 입니다.'});    $('input[name=hSize]').focus();     }
-        else if(wSize == '')                    {   messagePopup({message : '작품너비은 필수 입니다.'});    $('input[name=wSize]').focus();     }
-        else if(dSize == '')                    {   messagePopup({message : '작품깊이은 필수 입니다.'});    $('input[name=dSize]').focus();     }
+        else if((atFlag == '001' || atFlag == '003') && hSize == '')                    {   messagePopup({message : '작품높이는 필수 입니다.'});    $('input[name=hSize]').focus();     }
+        else if((atFlag == '001' || atFlag == '003') && wSize == '')                    {   messagePopup({message : '작품너비은 필수 입니다.'});    $('input[name=wSize]').focus();     }
+        else if((atFlag == '001' || atFlag == '003') && dSize == '')                    {   messagePopup({message : '작품깊이은 필수 입니다.'});    $('input[name=dSize]').focus();     }
         else if((atFlag == '002' || atFlag == '003') && baseVal == undefined)
                                                 {   messagePopup({message : '베이스를 선택해주세요'});              }
         else if((atFlag == '001' || atFlag == '003') && mediumVal == undefined)         
@@ -459,8 +459,8 @@ Template.ogAtwrkCr.events({
                                                 {   messagePopup({message : '원화 또는 판화 금액을 입력해주세요'}); }
         else if(atFlag == '003' && (dtPric < 99999 || ogPric < 99999))
                                                 {   messagePopup({message : '금액은 10만원 이상이여야 합니다.'});   }
-        else if(guarant == undefined)           {   messagePopup({message : '보증서 여/부는 필수 선택입니다.'});    }
-        else if(catlog == undefined)            {   messagePopup({message : '카다로그 여/부는 필수 선택입니다.'});  }
+        else if((atFlag == '001' || atFlag == '003') && guarant == undefined)           {   messagePopup({message : '보증서 여/부는 필수 선택입니다.'});    }
+        else if((atFlag == '001' || atFlag == '003') && catlog == undefined)            {   messagePopup({message : '카다로그 여/부는 필수 선택입니다.'});  }
         else {
             var mainImgSize = '';
             var imgSize = new Image();
