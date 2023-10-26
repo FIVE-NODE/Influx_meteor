@@ -7330,6 +7330,9 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 @media (max-width:1024px){
+  .favor-item {
+    width: 325px;
+  }
   .faq-wrap {
     width: 100%;
   }
@@ -7443,6 +7446,10 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 @media (max-width:720px){
+  .favor-item {
+    width: unset;
+    margin-left: unset;
+  }
   .faq-wrap {
     width: 100%;
   }
@@ -7638,6 +7645,9 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 @media (max-width:450px){
+  .favor-wrap {
+    padding: 0px 10.4rem;
+  }
   .atwrkInteriorSample {
     max-width: 300px;
     max-height: calc(100% - 65%);
