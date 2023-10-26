@@ -87,12 +87,12 @@ Meteor.clientCommonUtils = {
         return chk.test(str);
     },
     // 이메일 정합성 체크
-    
-    // 이메일 벨리데이션
     emailConsistency : function(email) {
-        var emailChk = /[^a-z0-9@_.-]/gi;
-        return email.replace(emailChk, '');
+        // var emailChk = /[^a-z0-9@_.-]/gi;
+        var emailChk = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        return emailChk.test(email);
     },
+
     // 날짜 포맷
     dateFormatChg : function(date) {
         var format = /(\d{4})(\d{2})(\d{2})/g;

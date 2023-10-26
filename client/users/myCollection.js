@@ -84,16 +84,19 @@ Template.myCollection.events({
             }
 
             // popUpList.set(dataList);
+
             $('#swiperLists').html(outHtml);
 
-            const swiper = new Swiper('.swiper', {       
+            const myCollectionSwiper = new Swiper('.fullscreenView-wrap .swiper', {
                 navigation:{
-                    nextEl: '.my-button-next',
-                    prevEl: '.my-button-prev',
+                    nextEl: '.fullscreenView-wrap .my-button-next',
+                    prevEl: '.fullscreenView-wrap .my-button-prev',
                 },
+                // loop : true,
                 observer: true,
                 observeParents: true
             });
+            
         } else {
             messagePopup({message : '작품을 선택해주세요'});
         }

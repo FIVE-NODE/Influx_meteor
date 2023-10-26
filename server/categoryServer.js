@@ -187,7 +187,8 @@ Meteor.methods({
           var glryNmSch = data.atstGlrySch != undefined ?
           { 'glry.glryNm' : { $regex : new RegExp(data.atstGlrySch, 'i') }} : {};
 
-          var queryData = { $and : [ inAtwrkList, normal, dtCurator,sPrice, mPrice, lPrice, base, style1, style2 ], $or : [ atstSch, glryNmSch ]};
+          // mPrice, lPrice,
+          var queryData = { $and : [ inAtwrkList, normal, dtCurator, sPrice, base, style1, style2 ], $or : [ atstSch, glryNmSch ]};
 
           res.total = Atwrk.find(queryData).count();
           res.list = Atwrk.find(queryData, option).fetch();
@@ -316,11 +317,23 @@ Meteor.methods({
     // 관심작품 조회 List
     sltInterestAtwrk: function(data, option) {
       try {
+        var nowDate = moment(new Date()).format('YYYYMMDDHHmm');
+
         var normal = {
           _id : { $in : data },
           "delYn" : "N",
           "soldYn" : "N",
-          "sellYn" : "Y"
+          "sellYn" : "Y",
+          $or : [ 
+            { 
+              'ogPrt.selStrDt' : { $lte : nowDate},
+              'ogPrt.selEndDt' : { $gt : nowDate},
+            },
+            { 
+              'dtPrt.selStrDt' : { $lte : nowDate},
+              'dtPrt.selEndDt' : { $gt : nowDate},
+            }
+          ],
         };
         let res = Atwrk.find(normal).fetch();
 
@@ -336,12 +349,25 @@ Meteor.methods({
     // 관심작품 리스트 cnt
     sltInterestAtwrkCnt: function(data) {
       try {
+        var nowDate = moment(new Date()).format('YYYYMMDDHHmm');
+
         var normal = {
           _id : { $in : data },
           "delYn" : "N",
           "soldYn" : "N",
-          "sellYn" : "Y"
+          "sellYn" : "Y",
+          $or : [ 
+            { 
+              'ogPrt.selStrDt' : { $lte : nowDate},
+              'ogPrt.selEndDt' : { $gt : nowDate},
+            },
+            { 
+              'dtPrt.selStrDt' : { $lte : nowDate},
+              'dtPrt.selEndDt' : { $gt : nowDate},
+            }
+          ],
         };
+        
         let res = Atwrk.find(normal).count();
 
         return res;
@@ -355,11 +381,23 @@ Meteor.methods({
     },
     sltUserCart: function(data) {
       try {
+        var nowDate = moment(new Date()).format('YYYYMMDDHHmm');
+
         var normal = { 
           _id : { $in : data },
           'soldYn' : 'N',
           'delYn' : 'N',
-          'sellYn' : 'Y'
+          'sellYn' : 'Y',
+          $or : [ 
+            { 
+              'ogPrt.selStrDt' : { $lte : nowDate},
+              'ogPrt.selEndDt' : { $gt : nowDate},
+            },
+            { 
+              'dtPrt.selStrDt' : { $lte : nowDate},
+              'dtPrt.selEndDt' : { $gt : nowDate},
+            }
+          ],
         };
 
         let res = Atwrk.find(normal).fetch();

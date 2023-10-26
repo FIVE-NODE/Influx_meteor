@@ -29,6 +29,8 @@ Template.header.onCreated(function() {
 
     likeAtwrkList = new ReactiveVar();
 
+    cartAtwrkList= new ReactiveVar();
+
     selectQuickMu();
 
     this.autorun(function() {
@@ -36,6 +38,10 @@ Template.header.onCreated(function() {
             if(Meteor.user().profile.uInfos.ogPrtGood != undefined) {
                 let data = Meteor.user().profile.uInfos.ogPrtGood.concat(Meteor.user().profile.uInfos.dtPrtGood);
                 sltInterestAtwrkCnt(data);
+                let cartList = Meteor.user().profile.uInfos.cart;
+                let listData = [];
+                for(var idx in cartList) listData.push(cartList[idx].atwrkId);
+                sltCartAtwrkCnt(listData);
             }
         }
 
@@ -58,15 +64,23 @@ function sltInterestAtwrkCnt(data)  {
     Meteor.call('sltInterestAtwrkCnt', data, function(err, res) {
         likeAtwrkList.set(res);
     });
-};
+}
+
+function sltCartAtwrkCnt(data) {
+    Meteor.call('sltUserCart', data, function(err, res) {
+        cartAtwrkList.set(res);
+    });
+}
 
 
 Template.header.events({
-    'click button[name=headerBtnMenu]'(evt, tmpl) {
-        var link = $(evt.currentTarget).val();
+    'click [name=headerBtnMenu]'(evt, tmpl) {
+        console.log('headerBtnMenu');
+        var link = $(evt.currentTarget).attr('value');
 
         var logedIn = Meteor.user();
         
+        console.log('logedIn : ', logedIn);
         if(logedIn != null && logedIn != undefined) {
             if(link != '') {
                 switch(link) {
@@ -79,8 +93,7 @@ Template.header.events({
                         break;
                 }
             } else messagePopup({message : '화면 준비중 입니다.'});
-        }
-        else messagePopup({message : '로그인 후 이용해주세요'});
+        } else messagePopup({message : '로그인 후 이용해주세요'});
     },
     'click a[name=quickMu]'(evt, tmpl) {
         var kind = $(evt.currentTarget).children('h2').text();
@@ -216,9 +229,8 @@ Template.header.helpers({
         else return '';
     },
     cartCount() {
-        if(Meteor.user() != undefined) {
-            var uInfos = Meteor.user().profile.uInfos;
-            if(uInfos.cart != undefined) return uInfos.cart.length;
+        if(cartAtwrkList.get() != undefined) {
+            return cartAtwrkList.get().length;
         }
     },
     likeCount() {

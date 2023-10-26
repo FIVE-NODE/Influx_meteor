@@ -3355,11 +3355,17 @@ input[class*=js-datepicker] {
   }
 }
 @media (max-width:1024px){
+  .width--900 {
+    width: 100%;
+  }
   .slideMenu-cont--artist .artwork-group{
     width:70rem;
   }
 }
 @media (max-width:900px){
+  .width--900 {
+    width: 100%;
+  }
   .artwork-submit .form-sch{
     justify-content: flex-end;
     width:100%;
@@ -3372,6 +3378,16 @@ input[class*=js-datepicker] {
   }
 }
 @media (max-width:720px){
+  .width--420 {
+    width:100%;
+  }
+  .px-100 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .width--900 {
+    width: 100%;
+  }
   .header__top__inner{
     padding:0 1rem;
   }

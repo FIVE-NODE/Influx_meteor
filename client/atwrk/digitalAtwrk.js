@@ -52,6 +52,7 @@ Template.digitalAtwrk.onCreated(function() {
 function selectDigAtwrk() {
     if(filters.get() != undefined) setQuery();
 
+    console.log(query);
     Meteor.call('selectDigAtwrk', query, options, function(err, res) {
         total.set(res.total);
         atwrkInfo.set(res.list);

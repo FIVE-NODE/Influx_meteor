@@ -510,12 +510,26 @@ Meteor.methods({
     // 갤러리 ID(사업자 ID) 로 최신작 10개 조회
     selectLatestGlryList: function(_id, detailId) {
       try{
+        var date = new Date();
+        date = moment(date).format('YYYYMMDDHHmmss');
+
         let normal = {
           _id : { $ne : detailId },
           'glry.bsnsID' : _id,
           "delYn" : "N",
           "soldYn" : "N",
-          "sellYn" : "Y"
+          "sellYn" : "Y",
+          $or : [
+            {
+              'ogPrt.selStrDt' : { $lte : date},
+              'ogPrt.selEndDt' : { $gt : date}
+            },
+            {
+              'dtPrt.selStrDt' : { $lte : date},
+              'dtPrt.selEndDt' : { $gt : date}
+            }
+          ]
+          
         };
 
 

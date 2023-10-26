@@ -29,14 +29,23 @@ Template.glyAppEntry.onRendered(function() {
     Meteor.clientCommonUtils.scrollToClass('subTit__inner');
 });
 
+function valiedEmail(name, color) {
+    $(name).css('outline-color', color);
+    $(name).css('border-color', color);
+}
+
 Template.glyAppEntry.events({
     'keyup input[name=homeUrl]'(evt, tmpl) {
         var evtTarget = $(evt.target);
-        evtTarget.val(Meteor.clientCommonUtils.emailConsistency(evtTarget.val()));
+        var chk = Meteor.clientCommonUtils.emailConsistency(evtTarget.val());
+        if(chk) valiedEmail('input[name=homeUrl]', '');    
+        else valiedEmail('input[name=homeUrl]', 'red');
     },
     'keyup input[name=smaEmail]'(evt, tmpl) {
         var evtTarget = $(evt.target);
-        evtTarget.val(Meteor.clientCommonUtils.emailConsistency(evtTarget.val()));
+        var chk = Meteor.clientCommonUtils.emailConsistency(evtTarget.val());
+        if(chk) valiedEmail('input[name=smaEmail]', '');    
+        else valiedEmail('input[name=smaEmail]', 'red');
     },
     'input input[name=smaPhone1]'(evt, tmpl) {
         maxLengthCheck(evt.currentTarget);

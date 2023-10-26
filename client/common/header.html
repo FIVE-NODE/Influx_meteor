@@ -48,13 +48,16 @@
                             <a href="/originalAtwrk?data=%257B%2522ARTWORK_PRICE_OGPRT%2522%253A%255B%257B%2522code%2522%253A%2522004%2522%252C%2522min%2522%253A5000000%252C%2522max%2522%253A10000000%252C%2522name%2522%253A%2522500~1%252C000%2520%25EB%25A7%258C%25EC%259B%2590%2522%257D%255D%257D">500만원 이상(원화)</a>
                         </div>
                         <div class="btn-sideMenu__box">
-                            <a href="/interestAtwrk" class="is-active">알림</a>
-                            <a href="" class="is-active">MY페이지</a>
+                            <a value="alarm" name="headerBtnMenu" class="is-active">알림</a>
+                            <a value="/interestAtwrk" name="headerBtnMenu" class="is-active">MY페이지</a>
                         </div>
-                        <div class="btn-sideMenu__box">
-                            <a href="/login">로그인</a>
-                            <a href="/signUp">회원가입</a>
-                        </div>
+                        {{#if loginChk}}
+                        {{else}}
+                            <div class="btn-sideMenu__box">
+                                <a href="/login">로그인</a>
+                                <a href="/signUp">회원가입</a>
+                            </div>
+                        {{/if}}
                     </div>
                 </div>
                 <nav>
